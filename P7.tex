@@ -1,0 +1,41 @@
+\input{setup/preamble.tex}% package inclusion and set up of the document
+\input{setup/hyphenations.tex}% 
+\input{setup/macros.tex}% my new macros
+
+\usepackage{textcomp}
+\usepackage{gensymb}% To use with degrees sign
+\parindent=0pt %Identation of the first line in a paragraph
+
+\begin{document}
+%frontmatter
+ 
+\pagestyle{empty} %disable headers and footers
+\pagenumbering{roman} %use roman page numbering in the frontmatter
+ 
+
+\inputS{frontpage} 
+\inputS{colophon}  
+\inputS{titlepages}
+\input{sections/Summary.tex}
+\input{sections/preface.tex}
+\cleardoublepage 
+\null\newpage
+\pdfbookmark[0]{Contents}{label:contents}
+\pagestyle{fancy} %enable headers and footers again 
+%\listoftodos
+\cleardoublepage
+\tableofcontents
+\null\newpage
+
+%mainmatter
+\pagenumbering{arabic} %use arabic page numbering in the mainmatter
+\input{setup/chapters.tex}
+%\nocite{*}
+\bibliography{bib/lib}
+\label{bib:mybiblio}
+\appendix
+\input{sections/appAname.tex}\newpage
+
+\PFR %Kilde mangler, fix og ret counter
+\end{document}
+\grid

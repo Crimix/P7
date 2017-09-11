@@ -1,0 +1,417 @@
+%  A simple AAU report template.   
+%  2014-09-13 v. 1.1.0
+%  Copyright 2010-2014 by Jesper Kjær Nielsen <jkn@es.aau.dk>
+%
+%  This is free software: you can redistribute it and/or modify
+%  it under the terms of the GNU General Public License as published by
+%  the Free Software Foundation, either version 3 of the License, or
+%  (at your option) any later version.
+%
+%  This is distributed in the hope that it will be useful,
+%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%  GNU General Public License for more details.
+%
+%  You can find the GNU General Public License at <http://www.gnu.org/licenses/>.
+%
+%
+%
+% see, e.g., http://en.wikibooks.org/wiki/LaTeX/Customizing_LaTeX#New_commands
+% for more information on how to create macros
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros for the titlepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Creates the aau titlepage
+\newcommand{\aautitlepage}[3]{%
+  {
+    %set up various length
+    \ifx\titlepageleftcolumnwidth\undefined
+      \newlength{\titlepageleftcolumnwidth}
+      \newlength{\titlepagerightcolumnwidth}
+    \fi
+    \setlength{\titlepageleftcolumnwidth}{0.5\textwidth-\tabcolsep}
+    \setlength{\titlepagerightcolumnwidth}{\textwidth-2\tabcolsep-\titlepageleftcolumnwidth}
+    %create title page
+    \thispagestyle{empty}
+    \noindent%
+    \begin{tabular}{@{}ll@{}}
+      \parbox{\titlepageleftcolumnwidth}{
+        \iflanguage{danish}{%
+          \includegraphics[width=\titlepageleftcolumnwidth]{figures/aau_logo_da}
+        }{%
+          \includegraphics[width=\titlepageleftcolumnwidth]{figures/aau_logo_en}
+        }
+      } &
+      \parbox{\titlepagerightcolumnwidth}{\raggedleft\sf\small
+        #2
+      }\bigskip\\
+       #1 &
+      \parbox[t]{\titlepagerightcolumnwidth}{%
+      \textbf{Abstract:}\bigskip\par
+        \fbox{\parbox{\titlepagerightcolumnwidth-2\fboxsep-2\fboxrule}{%
+          #3
+        }}
+      }\\
+    \end{tabular}
+    \vfill
+    \iflanguage{danish}{%
+      \noindent{\footnotesize\emph{Rapportens indhold er frit tilgængeligt, men offentliggørelse (med kildeangivelse) må kun ske efter aftale med forfatterne.}}
+    }{%
+      \noindent{\footnotesize\emph{The content of this report is freely available, but publication (with reference) may only be pursued due to agreement with the author.}}
+    }
+    \clearpage
+  }
+}
+
+%Create english project info
+\newcommand{\englishprojectinfo}[7]{%
+  \parbox[t]{\titlepageleftcolumnwidth}{
+    \textbf{Title:}\\ #1\bigskip\par
+    \textbf{Theme:}\\ #2\bigskip\par
+    \textbf{Project Period:}\\ #3\bigskip\par
+    \textbf{Project Group:}\\ #4\bigskip\par
+    \textbf{Participants:}\\ #5\bigskip\par
+    \textbf{Supervisor:}\\ #6\bigskip\par
+    \textbf{Page Numbers:} \pageref{LastPage}\bigskip\par
+    \textbf{Date of Completion:}\\ #7
+  }
+}
+
+%Create danish project info
+\newcommand{\danishprojectinfo}[7]{%
+  \parbox[t]{\titlepageleftcolumnwidth}{
+    \textbf{Titel:}\\ #1\bigskip\par
+    \textbf{Tema:}\\ #2\bigskip\par
+    \textbf{Projektperiode:}\\ #3\bigskip\par
+    \textbf{Projektgruppe:}\\ #4\bigskip\par
+    \textbf{Deltager(e):}\\ #5\bigskip\par
+    \textbf{Vejleder(e):}\\ #6\bigskip\par
+    \textbf{Sidetal:} \pageref{LastPage}\bigskip\par
+    \textbf{Afleveringsdato:}\\ #7
+  }
+}
+
+\newcommand{\name}{\namep\ }
+
+\newcommand{\ph}{Placeholder\ldots}
+
+\newcommand{\say}[1]{\textit{``#1''}} 
+
+\newcommand{\textc}[1]{\texttt{#1}} 
+
+\newcommand{\ttt}[1]{\textc{#1}} 
+
+\newcommand{\rlib}{\ttt{REST-Api-Client-Lib}}
+
+\newcommand{\lapp}{\ttt{Launcher}}
+
+\newcommand{\clib}{\ttt{Giraf-Component-Lib}}
+
+\newcommand{\wapp}{\ttt{Weekplanner}}
+
+\newcommand{\rmlib}{\ttt{REST-Models}}
+
+\newcommand{\plib}{\ttt{PictoSearch-Lib}}
+
+\newcommand{\names}{\namep '\
+}
+
+\newcommand{\namep}{Waking the RESTing GIRAF}
+
+\newif\iffirst
+\firsttrue
+
+\newif\ifps
+\pstrue
+
+\newif\ifret
+\rettrue
+
+\newif\ifbs
+\bstrue
+
+\newif\iftd
+\tdtrue
+
+\newcommand{\BadSource}{
+{\textcolor{red}{\large{Bad Source}}}}
+
+\newcounter{ToDoCounter}
+\newcommand{\ToDo}{
+\iftd
+	\label{todoRefMacro}
+	\tdfalse
+\else
+\fi
+\addtocounter{ToDoCounter}{1}{\textbf{\textcolor{red}{\large{To Do}}}}}
+
+\newcommand{\todoCount}{
+\LARGE{There are \arabic{ToDoCounter} thing(s) To Do}
+ \autopageref{todoRefMacro}\\}
+
+\newcounter{PSCounter}
+\newcommand{\Source}{
+\ifps
+	\label{psRefMacro}
+	\psfalse
+\else
+\fi
+\addtocounter{PSCounter}{1}{\textcolor{red}{\large{(Source missing)}}}}
+
+\newcommand{\psCount}{
+\LARGE{I dette dokument er der \arabic{PSCounter} steder der mangler
+kilder} \autopageref{psRefMacro}\\}
+
+\newcommand{\psCountEn}{
+\LARGE{There is missing \arabic{PSCounter} sources} \autopageref{psRefMacro}\\}
+
+\newcounter{FixCounter}
+\newcommand{\fix}[2]
+{\iffirst
+	\label{fixRefMacro}
+	\firstfalse
+\else
+\fi
+\addtocounter{FixCounter}{1}{\textcolor{red}{#1 }\textcolor{blue}{\large{-
+#2}}}}
+
+\newcommand{\fixCount}{
+\LARGE{I dette dokument er der \arabic{FixCounter} steder der skal
+fixes} \autopageref{fixRefMacro}\\}
+
+\newcommand{\fixCountEn}{
+\LARGE{There are \arabic{FixCounter} places that needs fixing} \autopageref{fixRefMacro}\\}
+
+
+\newcounter{RetCounter}
+\newcommand{\ret}{
+\ifret
+	\label{retRefMacro}
+	\retfalse
+\else
+\fi
+\addtocounter{RetCounter}{1} {\textcolor{red}{\large{Rettelse
+Mangler }}}}
+
+\newcommand{\retCount}{
+\LARGE{I dette dokument er der \arabic{RetCounter} steder der skal
+rettes} \autopageref{retRefMacro}\\}
+
+\newcommand{\retCountEn}{
+\LARGE{There are \arabic{RetCounter} places that needs to be corrected} \autopageref{retRefMacro}\\}
+
+\newcounter{BSCounter}
+\newcommand{\KT}
+{
+\ifbs
+	\label{bsRefMacro}
+	\bsfalse
+\else
+\fi
+\addtocounter{BSCounter}{1}
+{\textcolor{purple}{\large{Source needs checking}}}}
+
+\newcommand{\BSCount}{
+\LARGE{There are \arabic{BSCounter} sources that needs checking}
+\autopageref{bsRefMacro}\\}
+
+\newcommand{\PFR}{
+\ifps
+\else
+	\psCountEn
+\fi
+\iffirst
+\else
+	\fixCountEn
+\fi
+\ifret
+\else
+	\retCountEn
+\fi
+\ifbs
+\else
+	\BSCount
+\fi
+\iftd
+\else
+	\todoCount
+\fi
+}
+
+\newcommand{\figx}[3][0.5]{
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[keepaspectratio=true,scale=#1]{figures/#2}
+  \caption{#3}
+  \label{#2}
+\end{center}
+\end{figure}
+}
+
+\newcommand{\figPH}[3][0.5]{
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[keepaspectratio=true,scale=#1]{figures/Placeholder}
+  \caption{Placeholder: #3}
+  \label{#2}
+\end{center}
+\end{figure}
+}
+
+\newcommand{\figxs}[4][0.5]{
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[keepaspectratio=true,scale=#1]{figures/#2}
+  \caption{#3}
+  \label{#2}
+  \caption*{\textbf{Source:} #4}
+\end{center}
+\end{figure}
+}
+
+\newcounter{Graph}
+\renewcommand{\theGraph}{Graph \arabic{Graph}}
+\newenvironment{graphEnv}{%
+\refstepcounter{Graph}%
+}%
+{}%
+\newfloat{graphFloat}{H}{gop}
+\floatname{graphFloat}{Graph}
+
+\newcommand{\graph}[5]{%
+\begin{graphEnv}
+\begin{graphFloat}
+\centering
+\begin{tikzpicture}
+	\begin{axis}[xlabel={#1}, ylabel={#2}, xmin=0,
+	ymin=0, minor tick num = 3, /pgfplots/grid = both, axis lines = left] 
+	\forcsvlist{\ap}{#3}
+	\end{axis}
+\end{tikzpicture}
+\caption{#4}
+\end{graphFloat}
+\label{graph:#5}
+\end{graphEnv}
+}
+\newcommand{\graphNL}[5]{%
+\begin{graphEnv}
+\begin{graphFloat}
+\centering
+\begin{tikzpicture}
+	\begin{axis}[xlabel={#1}, ylabel={#2}, xmin=0,
+	ymin=0, minor tick num = 3,only marks, /pgfplots/grid = both, axis lines =
+	left]
+	\forcsvlist{\ap}{#3}
+	\end{axis}
+\end{tikzpicture}
+\caption{#4}
+\end{graphFloat}
+\label{graph:#5}
+\end{graphEnv}
+}
+\newcommand{\dataTable}[3]{%
+\begin{table}[H]
+\centering
+\pgfplotstabletypeset[every head row/.style={before row=\hline,after row=\hline\hline},
+every last row/.style={after row=\hline},
+every first column/.style={
+column type/.add={|}{}},
+every column/.style={
+column type/.add={}{|}
+},string type]{data/#1.dat}
+\caption{#2}
+\label{table:#3}
+\end{table}
+}
+
+\newcommand{\graphL}[6]{%
+\begin{graphEnv}
+\begin{graphFloat}
+\centering
+\begin{tikzpicture}
+	\begin{axis}[xlabel={#1}, ylabel={#2}, xmin=0,
+	ymin=0, minor tick num = 3, /pgfplots/grid = both, axis lines = left,legend
+	style={ at={(1.3,0.5)}, anchor=center},] 
+	\forcsvlist{\ap}{#3}
+	\forcsvlist{\al}{#4}
+	\end{axis}
+\end{tikzpicture}
+\caption{#5}
+\end{graphFloat}
+\label{graph:#6}
+\end{graphEnv}
+}
+
+\newcommand{\graphLNo}[6]{%
+\begin{graphEnv}
+\begin{graphFloat}
+\centering
+\begin{tikzpicture}
+	\begin{axis}[xlabel={#1}, ylabel={#2}, xmin=0,
+	ymin=0, minor tick num = 3, only marks, /pgfplots/grid = both, axis lines =
+	left,legend style={ at={(1.3,0.5)}, anchor=center},] 
+	\forcsvlist{\ap}{#3}
+	\forcsvlist{\al}{#4}
+	\end{axis}
+\end{tikzpicture}
+\caption{#5}
+\end{graphFloat}
+\label{graph:#6}
+\end{graphEnv}
+}
+\newcommand{\ap}[1]{\addplot table {data/#1.dat};}
+\newcommand{\al}[1]{\addlegendentry{#1}}
+
+\newcommand{\michael}[1]{%
+\begin{itemize}
+  \forcsvlist{\mc}{#1}
+\end{itemize}
+}
+
+\newcommand{\mc}[1]{\item #1}
+
+
+
+\newcounter{def}
+\renewcommand{\thedef}{definition \thechapter.\arabic{def}}
+\newenvironment{defi}[1]{%
+\refstepcounter{def}%
+\noindent\textbf{Definition \thechapter.\arabic{def}: #1}%
+}%
+{}%
+
+\newcommand{\definition}[2]{
+\begin{center}
+\colorbox{diff}{
+\begin{minipage}{0.8\linewidth}
+\begin{defi}{#1}
+
+#2\nl
+
+\end{defi}
+\end{minipage}\nl}
+\end{center}
+}
+
+\newcommand{\inputPA}[1]{
+\input{sections/Problemanalyse/#1.tex}}
+\newcommand{\inputPS}[1]{
+\input{sections/Problemloesning/#1.tex}}
+\newcommand{\inputS}[1]{
+\input{sections/#1.tex}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% An example environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremheaderfont{\normalfont\bfseries}
+\theorembodyfont{\normalfont}
+\theoremstyle{break}
+\def\theoremframecommand{{\color{aaublue!50}\vrule width 5pt \hspace{5pt}}}
+\newshadedtheorem{exa}{Example}[chapter]
+\newenvironment{example}[1]{%
+		\begin{exa}[#1]
+}{%
+		\end{exa}
+}

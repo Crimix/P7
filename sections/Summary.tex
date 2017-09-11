@@ -1,0 +1,85 @@
+\chapter*{Summary\markboth{Summary}{Summary}} 
+In this report, we present our work
+on the GIRAF multi-project which was started in 2011. It is a
+collaborative software development project shared between the Software bachelor
+students at Aalborg University. The GIRAF multi-project is focused on developing
+a suite of applications for Android tablets, which are aimed at supporting
+autistic citizens in planning and structuring their daily lives.\\
+Due to the scale of the project, the development has spanned across multiple
+years, with numerous project groups. The project is focused on code maintenance
+and developing a complex software system in a larger development
+environment.\nl
+
+The project development is shared between 7 groups of up to 4 people.
+These groups are organized using the SCRUM of SCRUMs organizational approach, in
+which each group has a SCRUM representative which engages with other
+representatives in order to organize the project direction at weekly SCRUM
+meetings. In addition to these weekly SCRUM meetings, the project tasks are
+planned at sprint meetings at the start of each sprint, in which all members of
+the project participates.\nl
+
+The project is split into four sprints, which each has a specified
+set of tasks and a defined sprint goal. The tasks range from implementing
+specific features, researching possible solutions, planning meetings, writing
+development guides, and refactoring old code. The tasks themselves are based on
+user feedback, internal discussion, and the backlog from last year's
+students.\nl
+
+The main focus for this semester is to replace the server-to-client
+communications framework, as it is of insufficient quality to be used for any
+further development. This new framework makes use of the constraints
+defined in the \textc{REST} (Representational State Transfer) model.\\
+Our group's responsibility is to improve and
+repair the \textc{Launcher} application, and the libraries it is dependent
+upon.
+As such, we have to familiarize ourselves with the \textc{Giraf-Component-Lib}
+library and the \textc{Launcher} application to the point where we are capable
+of replacing the current backend with the \textc{REST} client and server
+developed by other project groups. Based on this responsibility, this report is focused on
+the implementation of the new \textc{REST-Api-Client-Lib} library, and the
+preparatory work needed in order to complete this process.\nl
+
+In general, most of the semester was spent preparing for the finalization of the
+\textc{REST} framework, such that it could be implemented in the
+\textc{Launcher} and \textc{Giraf-Component-Lib}.\\
+The first sprint is used to familiarize ourselves with the GIRAF code base by
+refactoring the \textc{Launcher}, \textc{Giraf-Component-Lib} and
+\textc{PictoSearch-Lib}. It allowed us to increase the code quality, and to make
+sure that the code used a consistent style. We also began fixing a number of
+bugs, which were passed on to us through the backlog of the previous year's
+students.\nl
+
+
+
+In the second sprint, we worked on fixed some security issues, discussed design
+decisions with other groups, and fixed more bugs. During the second sprint, our
+build tools broke down, which prevented us from building our project. Due to
+this problem, the second sprint was spent developing potential solutions to
+problems defined by the GIRAF users. Additionally, we designed a new login
+screen based on user feedback.\nl
+
+For the third sprint, we were tasked with helping to restore our build tools,
+and to implement a grayscale option for the GIRAF GUI. During the third sprint,
+our build tools became operational once again, and we could begin to implement
+the new login screen and the grayscale option. Additionally, we began to remove
+the old server-to-client communication in order to prepare for the new
+\textc{REST} framework.\nl
+
+The final sprint was focused on implementing a beta version of the
+\\\textc{REST-Api-Client-Lib} into the \textc{Launcher} application and the
+\textc{Giraf-Component-Lib} library. As the \textc{REST-Api-Client-Lib} did not
+contain all necessary functionality, parts of the sprint were also spent holding
+meetings with the other groups in order to determine the final design of the
+\textc{REST} framework. Additionally, we have delegated \textc{PictoSearch-Lib}
+to group SW612. This sprint ended with the \textc{Launcher} in a mostly finished
+state, and \textc{Giraf-Component-Lib} in a finished state. The functionality
+missing from the \textc{Launcher} is due to the partly unfinished state of the
+\textc{REST} framework.\nl
+
+In conclusion, we have managed to familiarize ourselves with a larger existing
+code base. We have managed to implement a new login system, where the design was
+based on user feedback. We have also implemented a grayscale
+functionality in the \textc{Launcher}. We have also familiarized ourselves
+with our build tools (Artifactory, Gradle, and Jenkins), and how to manage these tools in
+a project setting. Finally, we have implemented the \textc{REST} framework into
+the \textc{Launcher} and the \textc{Giraf-Component-Lib} library.
