@@ -1,0 +1,51 @@
+\chapter{Facebook Analysis}\label{chap:facebook-analysis}
+
+In the context of social networks, Facebook is difficult to miss\citep{FacebookPopularity} and as
+such it had to be looked at to see if it could be used in the project.
+The initial thoughts were to look at a specific user and then perform some sort of analysis on the user and their
+influences from friends, pages and various forms of media.
+It could also involve looking at which posts they agreed with either by sharing them or reacting to them positively.
+
+\nl
+Facebook has different entities that can interact with one another in different ways.
+First and foremost there are the users, which are a central part of the platform, and these are connected via
+``friendships''.
+A similar entity are ``pages'' which are basically profiles for companies as well as individuals who are or want to be
+famous in some way.
+Users can mark these pages as ``liked'' which can be used both to get updates from the page, as well as to mark an
+interest that others can see on the user's profile.
+
+\nl
+Facebook prohibits crawling/scraping of their site with a few exceptions such as Google's search crawler.
+To access data on their site they have created the Facebook Graph API as part of their developer platform, which
+requires a registration of ones application, along with an accompanying API key used when performing queries.
+In addition to this requirement there's also a strict requirement of consent from the user of an application, which
+needs to specify all the different types of data that the application wants to access.
+
+\nl
+An analysis of Facebook's Graph API revealed that while the platform had previously allowed for a lot of freedom in
+gathering information about a user and their social circles, this was no longer the case since version 2.0 of the API.
+The current version of the API is 2.10, as of September 12th, 2017.
+Older versions of the API are phased out over time, as new versions are released, meaning it is not possible to access
+the needed information for the initial plan.
+At least not using the Graph API.
+
+\nl
+The current API is limited to only listing those of the user's friends that are using the same app and have given
+consent to let the app use their details.
+Access to the user's ``likes'' is limited to the interests listed on their profile, such as their favourite movies and
+pages on Facebook that they have marked as ``liked''.
+
+\nl
+It is possible to access the user's posts and details regarding these, including whether or not they were originally
+posted by another user or entity and then shared by the user in question.
+These posts can then be traced back one or more steps depending on the privacy settings of each link in the
+``share--chain'', but only limited information can be gathered about the users on the chain.
+
+\nl
+Based on this information it would be possible to use Facebook's API to find further connections between existing users
+of the system.
+Knowledge of these users, based on what the system has found out via other means, could then be used to either confirm
+or update the system's knowledge of these individuals.
+In addition a lot of news outlets and other companies have pages on Facebook, which could also be used by looking at
+what the user has marked as ``liked''.
