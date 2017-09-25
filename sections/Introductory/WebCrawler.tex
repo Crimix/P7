@@ -1,0 +1,79 @@
+\section{Web crawling}
+
+%What is a web crawler?
+A web crawler, also known as a spider, crawls the web in order to gather
+information from the internet by reading the content of a page and indexing it.
+Each page can contain additional links to other pages which can then be
+crawled, continueing the crawl.
+
+There are two main concerns which the crawler needs to consider are:
+\begin{enumerate}
+  \item \textbf{Robustness}: It needs to avoid getting stuck fetching an
+  infinite number of pages from a domain.
+  \item \textbf{Politeness}: It needs to follow policies regarding what it can
+  crawl and how fast it can crawl. 
+\end{enumerate}
+
+By considering this the crawler can crawl a more diverse diverse amount of
+domains and avoid getting blacklisted or crashing the site.
+
+Additionally the crawler should also provide:
+\begin{enumerate}
+  \item \textbf{Distributed}: The crawler should be execute across multiple
+  mashines.
+  \item \textbf{Scalable}: The crawler should be able to speed up by adding more
+  machines and bandwidth.
+  \item \textbf{Performance}: The crawler should make efficient use of
+  resources.
+  \item \textbf{Quality}: The crawler should be biased towards fetching
+  ``useful'' pages.
+  \item \textbf{Freshness}: The crawler should be able to refetch pages it has
+  already crawled, in order to ensure they are updated.
+  \item \textbf{Extensible}: The crawler architecture should be modular.
+\end{enumerate}
+\citep{manning2008introduction}{Ch.20}
+
+%How does it get/crawl data?
+
+
+%How could we use it for filter bubble
+
+
+
+--------
+
+Crawler must provide:
+Robustness: Avoid getting stuck fetching an infinite number of pages from a particular domain, either through traps or bad web design.
+Politeness: Web servers have both implicit and explicit policies regulating the rate at which a crawler can visit them. 
+
+Crawler should provide:
+Distributed: Execute in a distributed fashion across multiple machines.
+Scalable: Can speed up scale crawl by adding more machines and bandwidth.
+Performance and efficiency: Make efficient use of system resources. 
+Quality: The crawler should be biased towards fetching “useful” pages first.
+Freshness: The crawler should operate in continuous mode: it should obtain fresh copies of previously fetched pages.
+Extensible: The crawler architecture be modular.
+
+Basic properties any non-professional crawler should satisfy:
+ Only one connection should be open to any given host at a time.
+ A waiting time of a few seconds should occur between successive requests to a host.
+Politeness restrictions. We should not perform denial-of-service by repeated pings. Certain places of off limits, this is denoted by the ROBOTS EXCLUSION PROTOCOL.
+
+Fig 1: Basic crawler architecture
+
+Short description of a basic web crawler:
+A crawler thread begins by taking a URL from the frontier and fetching the web page at that URL, generally using the http protocol. The fetched page is then written into a temporary store, where a number of operations are performed on it. Next, the page is parsed and the text as well as the links in it are extracted. The text (with any tag information – e.g., terms in boldface) is passed on to the indexer. Link information including anchor text is also passed on to the indexer for use in ranking. In addition, each extracted link goes through a series of tests to determine whether the link should be added to the URL frontier
+Content Seen? module: Tests whether the content has been seen, try using a fingerprint such as the checksum or perform shingling.
+URL filter module: Can exclude domains and performs the Robots Exclusion Protocol, which is seen in a file called robots.txt which is at the root of the URL hierarchy. Robots filtering must be performed before attempting to fetch a page. URL’s should be normalized. 
+Duplicate URL Elimination module: Check to see whether the normalized URL is in the frontier. If it is not in the frontier it should receive a priority and be added.
+
+
+How do the various nodes of a distributed crawler communicate and share URLs? The idea is to replicate the flow of Fig 1 at each node, with one essential difference: following the URL filter, we use a host splitter to dispatch each surviving URL to the crawler node responsible for the URL; thus the set of hosts being crawled is partitioned among the nodes. This version can be seen in figure 2.
+
+
+Fig 2: Distributed webcrawler
+
+During DNS resolution, the program that wishes to perform this translation (in our case, a component of the web crawler) contacts a DNS server that returns the translated IP address.
+Due to the distributed nature of the Domain Name Service, DNS resolution may entail multiple requests and round-trips across the internet, requiring seconds and sometimes even longer. There is another important difficulty in DNS resolution; the lookup implementations in standard libraries (likely to be used by anyone developing a crawler) are generally synchronous. This means that once a request is made to the Domain Name Service, other crawler threads at that node are blocked until the first request is completed.
+
+The URL frontier at a node is given a URL by its crawl process (or by the host splitter of another crawl process). It maintains the URLs in the frontier and regurgitates them in some order whenever a crawler thread seeks a URL. The priority of a page should be a function of both its change rate and its quality.
