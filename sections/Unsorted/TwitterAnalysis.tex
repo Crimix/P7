@@ -60,11 +60,30 @@ Twitter's data \citep{TwitterREST}. In addition, by using the OAuth protocol
 access the data.\nl
 
 As Twitter makes use of a REST API, all requests must be made by using the HTTP
-protocol. These requests are structured differently based on the requested data.
+protocol. These requests are structured differently based on the requested
+data. An example of a HTTP request can be seen in \autoref{httpReq}, where each
+of the requests parts have been denoted with a number, and is further described
+in \autoref{httpElaboration}.
 
 \figx{httpReq}{Structure of Twitter HTTP Request}
 
-
+\begin{table}[H] 
+\begin{centering}
+\begin{tabular}{|l|p{9cm}|l|}
+Nr.			&	Description 		\\\hline
+1			&	Denotes the type of request: GET, POST, DELETE. 					\\\hline
+2			&	Address for the Twitter API					\\\hline
+3			&	Name of the requested resource					\\\hline
+4			&	Format of the requested resource					\\\hline
+5			&	Index of the page of the requested data. In case all data can't be
+retrieved in a single page \\\hline 
+6			&	Extra parameters such as name of the requested user					\\\hline
+7			&	Number of data points requested. Maximum of 5000 per page					\\\hline
+\end{tabular}
+\caption{Elaboration on the Twitter HTTP requests}
+\label{httpElaboration}
+\end{centering}
+\end{table}
 
 
 
