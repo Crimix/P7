@@ -13,11 +13,11 @@
 \pagenumbering{roman} %use roman page numbering in the frontmatter
  
 
-\inputS{frontpage} 
-\inputS{colophon}  
-\inputS{titlepages}
-\input{sections/Summary.tex}
-\input{sections/preface.tex}
+\input{setup/Preface/frontpage} 
+\input{setup/Preface/colophon}  
+\input{setup/Preface/titlepages}
+\input{setup/Preface/Summary.tex}
+\input{setup/Preface/preface.tex}
 \cleardoublepage 
 \null\newpage
 \pdfbookmark[0]{Contents}{label:contents}
@@ -34,7 +34,7 @@
 \bibliography{bib/lib}
 \label{bib:mybiblio}
 \appendix
-\input{sections/appAname.tex}\newpage
+\input{setup/Preface/appAname.tex}\newpage
 
 \PFR %Kilde mangler, fix og ret counter
 \end{document}

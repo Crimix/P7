@@ -1,19 +1,19 @@
 \section{Twitter Analysis}\label{sec:twitter-analysis}
 Twitter is a global social media site with more than 328 million active users
-\citep{aboutTwitter}. Twitters users can generally be split into two groups,
+\citep{aboutTwitter}. Twitter's users can generally be split into two groups,
 private citizens and businesses. While businesses might use twitter for
-announcements and marketing, private citizens are more likely to use
-twitter for general communication, and to discuss global and local events. In
-general twitter defines itself as being used for the following purposes
+announcements and marketing, private citizens are more likely to use twitter for
+general communication, and to discuss global and local events. In general
+twitter defines itself as being used for the following purposes
 \citep{StartingTwitter}:
 
-\begin{enumerate}
+\begin{enumerate}    
   \item News and Politics
-  \item Sports
-  \item Pop Culture
-  \item Influencers
-  \item Utility
-\end{enumerate} 
+  \item Sports 
+  \item Pop Culture 
+  \item Influencers 
+  \item Utility 
+\end{enumerate}
 
 As this project attempts to widen a given users input of news information, we
 are going to focus on the first topic, namely ``News and Politics''.
@@ -43,14 +43,37 @@ in relation to the original tweet.
 Whenever a users tweets or retweets they can add a ``hashtag'', which can be
 used to group the tweet with others using the same hashtag. A hashtag can be
 used a general tag such as \#Politics or \#Sports, or in order to specify the
-users stance on a subject e.g. \fix{\#HitlerDidNothingWrong}{Plz find better
-hashtag}.
-In general hashtags are used for searching and filtering purposes.
+users stance on a subject e.g. \#Idiotic. In general hashtags are used for
+searching and filtering.
 
 \subsection{Twitter API's}
-Twitter has three main API's categories which developers can use, namely REST
-API's, Streaming API's and Ads API \citep{TwitterDevDocs}.
+In order for developers to retrieve data about users, tweets and trending
+hashtags, Twitter has three main API, namely the REST API's, the Streaming API's
+and the ADs API \citep{TwitterDevDocs}. For the purpose of this project,
+we will make use of the REST api, as it allows us to read historical twitter
+data.
 
-%% Mangler at skrive om de forskelligeheder der er
+\subsubsection{REST API}
+The REST api makes use of http request in order to allow developers to access
+Twitter's data \citep{TwitterREST}. In addition, by using the OAuth protocol
+\citep{TwitterOAuth} Twitter ensures that only authorized applications can
+access the data.\nl
+
+As Twitter makes use of a REST API, all requests must be made by using the HTTP
+protocol. These requests are structured differently based on the requested data.
+
+\figx{httpReq}{Structure of Twitter HTTP Request}
+
+
+
+
+
+
+
+
+
+
+
+
 
 \subsection{Crawling Twitter}
