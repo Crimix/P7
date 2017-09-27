@@ -5,8 +5,9 @@ A web crawler, also known as a spider, crawls the web in order to gather
 information from the internet by reading the content of a page and indexing it.
 Each page can contain additional links to other pages which can then be
 crawled, continuing the crawl. During the crawl it must be able to avoid
-getting stuck fetching an infinite number of pages from the same domain, as this
-will 
+getting stuck fetching an infinite number of pages from the same domain, as
+this only acceptable if you want to crawl that specific site. The crawler also
+needs to be polite, as too many requests to the same server can crash the it. 
 
 There are two main concerns which a crawler needs provide:
 \begin{enumerate}
