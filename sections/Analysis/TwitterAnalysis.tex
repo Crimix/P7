@@ -40,23 +40,23 @@ tweet into a tweet of their own. As such, the user can make comments or remarks
 in relation to the original tweet.
 
 \subsubsection{Hashtag}
-Whenever a users tweets or retweets they can add a ``hashtag'', which can be
+Whenever a user tweets or retweets, they can add a ``hashtag'', which can be
 used to group the tweet with others using the same hashtag. A hashtag can be
-used a general tag such as \#Politics or \#Sports, or in order to specify the
-users stance on a subject e.g. \#Idiotic. In general hashtags are used for
+used as a general tag, such as \#Politics or \#Sports, or in order to specify
+the users stance on a subject e.g. \#Idiotic. In general, hashtags are used for
 searching and filtering.
 
 \subsection{Twitter API's}
 In order for developers to retrieve data about users, tweets and trending
 hashtags, Twitter has three main API, namely the REST API's, the Streaming API's
 and the ADs API \citep{TwitterDevDocs}. For the purpose of this project,
-we will make use of the REST api, as it allows us to read historical twitter
+we use the REST api, as it allows us to read historical twitter
 data.
 
 \subsubsection{REST API}
-The REST api makes use of http request in order to allow developers to access
+The REST api makes use of http requests in order to allow developers to access
 Twitter's data \citep{TwitterREST}. In addition, by using the OAuth protocol
-\citep{TwitterOAuth} Twitter ensures that only authorized applications can
+\citep{TwitterOAuth}, Twitter ensures that only authorized applications can
 access the data.\nl
 
 As Twitter makes use of a REST API, all requests must be made by using the HTTP
@@ -70,14 +70,14 @@ in \autoref{httpElaboration}.
 \begin{table}[H] 
 \begin{centering}
 \begin{tabular}{|l|p{9cm}|l|}
-Nr.			&	Description 		\\\hline
-1			&	Denotes the type of request: GET, POST, DELETE. 					\\\hline
+No.			&	Description 		\\\hline
+1			&	Denotes the type of request: GET, POST, DELETE 					\\\hline
 2			&	Address for the Twitter API					\\\hline
 3			&	Name of the requested resource					\\\hline
 4			&	Format of the requested resource					\\\hline
-5			&	Index of the page of the requested data. In case all data can't be
+5			&	Index of the page of the requested data. In case all data can not be
 retrieved in a single page \\\hline 
-6			&	Extra parameters such as name of the requested user					\\\hline
+6			&	Extra parameters such as the name of the requested user					\\\hline
 7			&	Number of data points requested. Maximum of 5000 per page					\\\hline
 \end{tabular}
 \caption{Elaboration on the Twitter HTTP requests}
