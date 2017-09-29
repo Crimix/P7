@@ -9,14 +9,14 @@ A web crawler, also known as a spider, crawls the web in order to gather
 information from the internet by reading the content of a page and indexing it.
 Each page can contain additional links to other pages which can then be
 crawled, continuing the crawl. During the crawl, it must be able to avoid
-getting stuck fetching an infinite number of pages from the same domain, as this only
-acceptable if you want to crawl that specific site. The crawler also needs to
-be polite, about how frequently it requests makes its request, as too many
+getting stuck fetching an infinite number of pages from the same domain, as this
+is only acceptable if you want to crawl that specific site. The crawler also
+needs to be polite about how frequently it makes its request, as too many
 requests to the same server can crash it. The crawler should also respect
 what it is and is not allowed to access from a given domain.
-Additionally the crawler should also be able to refetch older sites, in order to
-see if they have been updated. It should favor fetching pages that are more
-like to have quality content.\nl
+Additionally, the crawler should also be able to refetch older sites, in order
+to see if they have been updated. It should favor fetching pages that are more
+likely to have quality content.\nl
 
 
 The data gathered through the crawl is then passed to a language module, which
