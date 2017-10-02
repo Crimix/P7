@@ -1,0 +1,40 @@
+\chapter{Initial Ideas}
+By researching how to break the filter bubble, we have identified two potential
+solutions. These sulutions aim to break the filter bubble by analyzing what
+information the user is presented with, and categorizing it based on the media
+source, and the words the users friends use to describe this information.\nl
+
+In general, both solutions will make use of a neural network in order to
+categorize tweets and determine the filter bubble.
+
+\section{Analyze News Media}
+The first solution is to analyze tweets and retweets in order to identify all
+news articles, and what news media they originate from. These news media would
+be classified based on their political bias, and this information will be use to
+determine the filter bubble for the given user.\nl
+
+The benefit of this solution is that it should be easy to determine a users
+source of news information, and that information already exists about news
+sources politiacal biases. In addition, if we can identify a political bias
+amound the tweets a user is presented with, it should be possible to break the
+filter bubble by presenting information from another point on the political
+spectrum.
+
+\section{Analyze Words}
+Another solution is to analyze the content of each individual tweet, and
+determine any nouns and the adjectives used to describe them. Based on the
+positive/negative connotation of these words, we can determine what people think
+about a given subject.\nl
+
+The benefit of this solution would be, that it is not limited to using news
+sources, but instead can be used on all nouns present in tweets. As such, it can
+be used to determine a users filter bubble on any given subject. The problem
+with this solution is that it would be difficult to break the filter bubble, as
+we cannot easily determine what information to present the user.
+
+\section{Combined Solution}
+Another solution would be a combination of the prior two, where we attempt to
+determine the bias of a users news sources, and attempt to strengthen our model
+by analyzing what users think of the presented news articles. This would
+strengthen our model, as we would be able to identify if a retweeted article is
+based in a users support or dislike of said article.
