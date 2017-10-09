@@ -1,68 +1,67 @@
 \chapter{Crawling}
-%Small introduction to chapter?
+% Small introduction to chapter?
 
-A crawler, also known as a spider, crawls the web in order to gather
-information from the internet by reading the content of a page. Each page
-usually contain multiple links to other pages which can then be crawled and
-indexed. During the crawl there are several things to consider, the crawler
-must be able to avoid getting stuck fetching an infinite number of pages from
-the same domain, as this is only acceptable if you want to crawl that specific
-site. The crawler also needs to be 'polite' about how frequently it makes its
-request, as too many requests to the same server can crash it. The crawler
-should also respect what it is and is not allowed to access from a given
-domain. Additionally, the crawler should also be able to refetch older sites,
-in order to see if they have been updated. It should favor fetching pages that
-are more likely to have quality content
+A crawler, also known as a spider, crawls the web to gather information from the
+internet by reading the content of a web-page. Each page usually contains
+multiple links to other pages which can then be crawled and indexed. During a
+crawl there are several things to consider, the crawler must be able to avoid
+getting stuck fetching an infinite number of pages from the same domain, as this
+is only acceptable if you want to crawl that specific site. The crawler needs to
+be ''polite'' about how frequently it makes its request, as too many requests to
+the same server can crash it, or cause the server to consider the crawlers an
+attacker and block it. The crawler should respect what it is and is not
+permitted to access from a given domain. Additionally, the crawler should also
+be able to re-fetch older sites, in order to see if they have been updated. It
+should favour fetching pages that are more likely to have quality content
 \citep[Ch. 20.1]{manning2008introduction}.\nl
 
-%General webcrawler structure
-\section{Crawler design}
-The crawler architecture, a basic version be seen in \autoref{BasicWC}, is
-designed to be modular. The 'Fetch' module is designed to take a URL from the
-frontier and request access to the corresponding site. The site content is then
-passed to the 'Parse' module, where it is parsed, see \autoref{sec:parsing}.
-The content is then verified to see if has been seen before. The URLs are then
+% General webcrawler structure
+\section{Crawler design}%Fluffy start på section The crawler architecture is
+designed to be modular, a basic version can be seen in \autoref{BasicWC}. The
+'Fetch' module is designed to take a URL from the frontier and request access to
+the corresponding site. The site content is passed to the 'Parse' module, see
+\autoref{sec:parsing}.
+The content is verified to see if it has been crawled before. The URLs are then
 filtered according to the domains ``/robots.txt'', which describes what the
-crawler is allowed to access. Finally the duplicate URLs are eliminated and the
-new URLs are added to the frontier.
+crawler is allowed to access. Finally, the duplicate URLs are eliminated, and
+the new URLs are added to the frontier.
 
-\figx[0.8]{BasicWC}{The basic crawler architech \citep[Fig
-20.1]{manning2008introduction}}
+\figx[0.8]{BasicWC}{The basic crawler architech \citep[p.
+446]{manning2008introduction}.}
 
-%Flesh out more
-A more advanced version of the crawler involves managing multiple distributed
+% Flesh out more
+A more advanced version of a crawler involves managing multiple distributed
 crawlers, such that they are able to work together efficiently.
 
-%Should it be called parsing instead?
+% Should it be called parsing instead?
 \section{Parsing} \label{sec:parsing}
-
-Parsing is used to extract important information from a document and then
-indexing it for later use. Indexing is an essential part of crawling, as it
-speeds up the information retrieval process immensely. This is because it is a
-lot faster to search through a list of indexes than to scan through every
-single page every time a query is performed.
+Parsing is a method used to extract important information from a document and
+indexing it for later use. Indexing is used to speed up the information
+retrieval process immensely. This is because it is faster to search through a
+list of indexes, compared to scaning through every single page every time a
+query is performed.
 
 \subsection{Document Parsing}
 The first part of parsing a document consists of removing the unnecessary
-information such as HTML tags, while retaining the important information such
+information, such as HTML tags, while retaining the important information, such
 as links and the body text. Depending on the document, it may be necessary to
-decode the document format and character encodings.
+decode the document format and its character encodings.
 
 \subsubsection{Tokenization}
-The second step is to tokenize the text, which means to split up the text in the
-smallest meaningful entities, which in this context are words. The tokens are
-then saved in a list. Depending on how advanced the tokenizer is  handle
-abbreviations such as ``aren't'' or ``kg''. Another importent part of the
-tokenizer is to remove stopwords. Stopwords are words that do not contain any
-meaningful information, and should therefore not be indexed. Examples of this
-are words such as``the'' and ``a''. These words do not refer to anything in
-particular, a query should not match indexed pages based on them \citep[Ch.
+The second step is to tokenize the text, which means splitting up the text into
+the smallest meaningful entities, which in this context are words. Depending on
+how advanced the tokenizer is, it should be able to handle abbreviations,
+such as ``aren't'' or ``kg''. The tokenizer should also remove stopwords,
+which are words that do not contain any meaningful information,
+and should therefore not be indexed. Examples of this are words such as``the'' and ``a''.
+These words do not refer to anything in particular, a query should not match
+indexed pages based on them \citep[Ch.
 2]{manning2008introduction}.
 
 \subsubsection{Indexing}
-There are different types of indexes which depends on the way that the
-tokens and documents refer to each other. The two main types are the forward
-index and inverted index and \autoref{iIndex}.
+There are different types of indexes which depends on the way that the tokens
+and documents refer to each other. The two main types are the forward index and
+inverted index and \autoref{iIndex}.
 
 \begin{minipage}{.40\textwidth}
   \centering
@@ -94,10 +93,10 @@ sauce & Doc3 \\ \hline
   \end{table}  
 \end{minipage}
 
-In the forward index, the pages themselves are indexed with a reference to the
+In the forward index the pages themselves are indexed with a reference to the
 tokens they contain, see \autoref{fIndex}. An inverted index is made up of
 tokens referencing the documents which contains them, this is useful for
-querying for specific tokens \citep{Index3}.
+querying for specific tokens, see \citep{Index3}.
 
 
 
