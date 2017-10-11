@@ -17,16 +17,16 @@ should favour fetching pages that are more likely to have quality content
 
 % General webcrawler structure
 \section{Crawler design}%Fluffy start på section The crawler architecture is
-designed to be modular, a basic version can be seen in \autoref{BasicWC}. The
+A basic version, designed to be modular, can be seen in \autoref{BasicWC}. The
 'Fetch' module is designed to take a URL from the frontier and request access to
 the corresponding site. The site content is passed to the 'Parse' module, see
 \autoref{sec:parsing}.
 The content is verified to see if it has been crawled before. The URLs are then
-filtered according to the domains ``/robots.txt'', which describes what the
+filtered according to the domains ``/robots.txt'', which describes what each
 crawler is allowed to access. Finally, the duplicate URLs are eliminated, and
 the new URLs are added to the frontier.
 
-\figx[0.8]{BasicWC}{The basic crawler architech \citep[p.
+\figx[0.8]{BasicWC}{The basic crawler architecture \citep[p.
 446]{manning2008introduction}.}
 
 % Flesh out more
@@ -53,8 +53,9 @@ the smallest meaningful entities, which in this context are words. Depending on
 how advanced the tokenizer is, it should be able to handle abbreviations,
 such as ``aren't'' or ``kg''. The tokenizer should also remove stopwords,
 which are words that do not contain any meaningful information,
-and should therefore not be indexed. Examples of this are words such as``the'' and ``a''.
-These words do not refer to anything in particular, a query should not match
+and should therefore not be indexed. Examples of this are words such as ``the''
+and ``a''.
+As these words do not refer to anything in particular, a query should not match
 indexed pages based on them \citep[Ch.
 2]{manning2008introduction}.
 
