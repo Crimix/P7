@@ -1,4 +1,4 @@
-\subsection{Data Gathering}
+\section{Data Gathering}
 The biggest social media sites with most activity, are currently Facebook and
 YouTube \citep{SocialMediaStats}.
 However, YouTube is largely based on videos which are a less easy media to
@@ -26,11 +26,11 @@ should favour fetching pages that are more likely to have quality content
 \citep[Ch. 20.1]{manning2008introduction}.\nl
 
 % General webcrawler structure
-\section{Crawler design}%Fluffy start på section The crawler architecture is
-A basic version, designed to be modular, can be seen in \autoref{BasicWC}. The
-'Fetch' module is designed to take a URL from the frontier and request access to
-the corresponding site. The site content is passed to the 'Parse' module, see
-\autoref{sec:parsing}.
+\subsection{Crawler design}%Fluffy start på section 
+The crawler architecture is designed to be modular, can be seen in
+\autoref{BasicWC}. The 'Fetch' module is designed to take a URL from the
+frontier and request access to the corresponding site. The site content is
+passed to the 'Parse' module, see \autoref{sec:parsing}.
 The content is verified to see if it has been crawled before. The URLs are then
 filtered according to the domains ``/robots.txt'', which describes what each
 crawler is allowed to access. Finally, the duplicate URLs are eliminated, and
