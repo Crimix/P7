@@ -1,32 +1,22 @@
-\section{Data Gathering}
-The biggest social media sites with most activity, are currently Facebook and
-YouTube \citep{SocialMediaStats}.
-However, YouTube is largely based on videos which are a less easy media to
-manage, therefore YouTube will not be inspected further. Other services which
-focus on private direct messages between users will also be dismissed. The most
-suitable opinion based social media for data gathering is sites with many users
-openly interacting with each other, and opinions and information comes through
-text. This report will examine Facebook with 2,047, Twitter with 328 and
-Reddit with 1285 million users. To find out which one is the best fit, to inspect and
-find if a user is in a bubble on a subject.
-
-\subsection{Crawling}
+\section{Data Gathering}\label{sec:DataGathering}
 A crawler, also known as a spider, crawls the web to gather information from the
 internet by reading the content of a web-page. Each page usually contains
-multiple links to other pages which can then be crawled and indexed. During a
-crawl there are several things to consider, the crawler must be able to avoid
-getting stuck fetching an infinite number of pages from the same domain, as this
-is only acceptable if you want to crawl that specific site. The crawler needs to
-be ''polite'' about how frequently it makes its request, as too many requests to
-the same server can crash it, or cause the server to consider the crawlers an
-attacker and block it. The crawler should respect what it is and is not
-permitted to access from a given domain. Additionally, the crawler should also
-be able to re-fetch older sites, in order to see if they have been updated. It
-should favour fetching pages that are more likely to have quality content
-\citep[Ch. 20.1]{manning2008introduction}.\nl
+multiple links to other pages which can also be crawled and indexed. This
+recursive behaviour allows a crawler to gather data from internet.
 
 % General webcrawler structure
 \subsection{Crawler design}%Fluffy start på section 
+During a crawl there are several things to consider, the crawler must be able
+to avoid getting stuck fetching an infinite number of pages from the same
+domain, as this is only acceptable if you want to crawl that specific site. The
+crawler needs to be ''polite'' about how frequently it makes its request, as
+too many requests to the same server can crash it, or cause the server to
+consider the crawler an attacker and block it. The crawler should respect what
+it is and is not permitted to access from a given domain. Additionally, the
+crawler should also be able to re-fetch older sites, in order to see if they
+have been updated. It should favour fetching pages that are more likely to have
+quality content \citep[Ch. 20.1]{manning2008introduction}.\nl
+
 The crawler architecture is designed to be modular, can be seen in
 \autoref{BasicWC}. The 'Fetch' module is designed to take a URL from the
 frontier and request access to the corresponding site. The site content is
@@ -41,50 +31,47 @@ the new URLs are added to the frontier.
 
 % Flesh out more
 A more advanced version of a crawler involves managing multiple distributed
-crawlers, such that they are able to work together efficiently.
+crawlers, such that they are able to work together efficiently and not crawl
+the same sites multiple times.
 
 % Should it be called parsing instead?
-\section{Parsing} \label{sec:parsing}
-Parsing is a method used to extract important information from a document and
-indexing it for later use. Indexing is used to speed up the information
-retrieval process immensely. This is because it is faster to search through a
-list of indexes, compared to scaning through every single page every time a
-query is performed.
-
-\subsection{Document Parsing}
-The first part of parsing a document consists of removing the unnecessary
-information, such as HTML tags, while retaining the important information, such
-as links and the body text. Depending on the document, it may be necessary to
-decode the document format and its character encodings.
-
-\subsubsection{Tokenization}
-The second step is to tokenize the text, which means splitting up the text into
-the smallest meaningful entities, which in this context are words. Depending on
-how advanced the tokenizer is, it should be able to handle abbreviations,
-such as ``aren't'' or ``kg''. The tokenizer should also remove stopwords,
-which are words that do not contain any meaningful information,
+\subsection{Parsing} \label{sec:parsing}
+Parsing is a method used to extract information from a document and
+index it for later use. The first part of parsing a document consists of
+removing the unnecessary information, such as HTML tags, while retaining the
+important information, such as links and the body text. Depending on the
+document, it may be necessary to decode the document format and its character
+encodings. 
+The second step is to tokenize the text, which means splitting up
+the text into the smallest meaningful entities, which in this context are
+words. Depending on how advanced the tokenizer is, it should be able to handle
+abbreviations, such as ``aren't'' or ``kg''. The tokenizer should also remove
+stopwords, which are words that do not contain any meaningful information,
 and should therefore not be indexed. Examples of this are words such as ``the''
-and ``a''.
-As these words do not refer to anything in particular, a query should not match
-indexed pages based on them \citep[Ch.
+and ``a''. As these words do not refer to anything in particular, a query should
+not match indexed pages based on them \citep[Ch.
 2]{manning2008introduction}.
 
-\subsubsection{Indexing}
+\subsection{Indexing}
+Indexing is used to speed up the information retrieval process, as it is faster
+to search an index, than to scan through every single page every time a query is
+performed.
+
 There are different types of indexes which depends on the way that the tokens
 and documents refer to each other. The two main types are the forward index and
-inverted index and \autoref{iIndex}.
+inverted index.
 
 \begin{minipage}{.40\textwidth}
   \centering
   \begin{table}[H]
 	\centering
-    \label{fIndex}
     \begin{tabular}{|l|l|}
 \hline
 Doc1 & fresh, tomato, soup \\ \hline
 Doc2 & fresh, potato, soup \\ \hline
 Doc3 & fresh, tomato, sauce \\ \hline
 	\end{tabular}
+	\label{fIndex}
 	\caption{A forward index}
   \end{table}
 \end{minipage}
@@ -92,7 +79,6 @@ Doc3 & fresh, tomato, sauce \\ \hline
   \centering
   \begin{table}[H]
 	\centering
-    \label{iIndex}
     \begin{tabular}{|l|l|}
 \hline
 fresh & Doc1, Doc2, Doc3 \\ \hline
@@ -100,53 +86,17 @@ tomato & Doc1, Doc3 \\ \hline
 soup & Doc1, Doc2 \\ \hline
 sauce & Doc3 \\ \hline
 	\end{tabular}
+	\label{iIndex}
 	\caption{A simple inverted index}
-  \end{table}  
+  \end{table}
+
 \end{minipage}
 
 In the forward index the pages themselves are indexed with a reference to the
 tokens they contain, see \autoref{fIndex}. An inverted index is made up of
 tokens referencing the documents which contains them, this is useful for
-querying for specific tokens, see \citep{Index3}.
-
-
-
-%How could we use it for filter bubble
-
-
-
-% Crawler must provide:
-% Robustness: Avoid getting stuck fetching an infinite number of pages from a particular domain, either through traps or bad web design.
-% Politeness: Web servers have both implicit and explicit policies regulating the rate at which a crawler can visit them. 
-% 
-% Crawler should provide:
-% Distributed: Execute in a distributed fashion across multiple machines.
-% Scalable: Can speed up scale crawl by adding more machines and bandwidth.
-% Performance and efficiency: Make efficient use of system resources. 
-% Quality: The crawler should be biased towards fetching “useful” pages first.
-% Freshness: The crawler should operate in continuous mode: it should obtain fresh copies of previously fetched pages.
-% Extensible: The crawler architecture be modular.
-% 
-% Basic properties any non-professional crawler should satisfy:
-%  Only one connection should be open to any given host at a time.
-%  A waiting time of a few seconds should occur between successive requests to a host.
-% Politeness restrictions. We should not perform denial-of-service by repeated pings. Certain places of off limits, this is denoted by the ROBOTS EXCLUSION PROTOCOL.
-% 
-% Fig 1: Basic crawler architecture
-% 
-% Short description of a basic web crawler:
-% A crawler thread begins by taking a URL from the frontier and fetching the web page at that URL, generally using the http protocol. The fetched page is then written into a temporary store, where a number of operations are performed on it. Next, the page is parsed and the text as well as the links in it are extracted. The text (with any tag information – e.g., terms in boldface) is passed on to the indexer. Link information including anchor text is also passed on to the indexer for use in ranking. In addition, each extracted link goes through a series of tests to determine whether the link should be added to the URL frontier
-% Content Seen? module: Tests whether the content has been seen, try using a fingerprint such as the checksum or perform shingling.
-% URL filter module: Can exclude domains and performs the Robots Exclusion Protocol, which is seen in a file called robots.txt which is at the root of the URL hierarchy. Robots filtering must be performed before attempting to fetch a page. URL’s should be normalized. 
-% Duplicate URL Elimination module: Check to see whether the normalized URL is in the frontier. If it is not in the frontier it should receive a priority and be added.
-% 
-% 
-% How do the various nodes of a distributed crawler communicate and share URLs? The idea is to replicate the flow of Fig 1 at each node, with one essential difference: following the URL filter, we use a host splitter to dispatch each surviving URL to the crawler node responsible for the URL; thus the set of hosts being crawled is partitioned among the nodes. This version can be seen in figure 2.
-% 
-% 
-% Fig 2: Distributed webcrawler
-% 
-% During DNS resolution, the program that wishes to perform this translation (in our case, a component of the web crawler) contacts a DNS server that returns the translated IP address.
-% Due to the distributed nature of the Domain Name Service, DNS resolution may entail multiple requests and round-trips across the internet, requiring seconds and sometimes even longer. There is another important difficulty in DNS resolution; the lookup implementations in standard libraries (likely to be used by anyone developing a crawler) are generally synchronous. This means that once a request is made to the Domain Name Service, other crawler threads at that node are blocked until the first request is completed.
-% 
-% The URL frontier at a node is given a URL by its crawl process (or by the host splitter of another crawl process). It maintains the URLs in the frontier and regurgitates them in some order whenever a crawler thread seeks a URL. The priority of a page should be a function of both its change rate and its quality.
+querying for specific tokens \citep{Index3}, see \autoref{iIndex}. More advanced
+indexes can be expanded to include a ranking of the tokens in order to better
+evaluate a documents information value. This ranking is usually determined by
+how often the token appears in the documents and how many times it appears in a
+specific document.
