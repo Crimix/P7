@@ -15,22 +15,22 @@ from the page, as well as to show others, what they like.\nl
 Facebook prohibits crawling/scraping of their site with a few exceptions such as
 Googlebot and Applebot, which are crawlers made by Google and Apple
 respectively. \citep{FacebookRobotsTxt}.
-To access data on their site, they have created the Facebook Graph API as part
+To access data on their site, they have created the Facebook Graph \ac{API} as part
 of their developer platform, which requires a registration of one's application,
-along with an accompanying API key used when performing queries.
+along with an accompanying \ac{API} key used when performing queries.
 In addition to this requirement, there is also a strict requirement of consent
 from the user of an application, which needs to specify all the different types
 of data that the application wants to access \citep{FacebookGraphApiAccessTokens}.\nl
 
-An analysis of Facebook's Graph API \citep{FacebookGraphApiDocumentation} revealed that while the platform had
+An analysis of Facebook's Graph \ac{API} \citep{FacebookGraphApiDocumentation} revealed that while the platform had
 previously allowed for a lot of freedom in gathering information about a user
 and their social circles, this was no longer the case since version 2.0 of the
 API \citep{FacebookChangesInGraphTwoPointOh}.
-Older versions of the API are phased out over time, as new versions are released, meaning it is not possible to access
+Older versions of the \ac{API} are phased out over time, as new versions are released, meaning it is not possible to access
 the needed information for the initial plan using the Graph
 API.\nl
 
-The current API is limited to only listing those of the user's friends that are using the same app and have given
+The current \ac{API} is limited to only listing those of the user's friends that are using the same app and have given
 consent to let the app use their details \citep{FacebookChangesInGraphTwoPointOh}.
 Access to the user's ``likes'' is limited to the interests listed on their profile, such as their favourite movies and
 pages on Facebook that they have marked as ``liked''
@@ -42,7 +42,7 @@ These shared posts can then be traced back one or more steps depending on the
 privacy settings of each link in the ``share--chain'', but only limited
 information can be gathered about the users on the chain \citep{FacebookGraphApiUserFeed}.\nl
 
-Based on this information, it is possible to use Facebook's API to find
+Based on this information, it is possible to use Facebook's \ac{API} to find
 further connections between existing users of the system.
 Knowledge of these users, based on what the system has found out via other
 sources, can then be used to either confirm or update the system's knowledge of

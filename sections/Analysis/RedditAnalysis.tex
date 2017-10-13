@@ -1,0 +1,33 @@
+\section{Reddit Analysis}\label{sec:reddit-analysis}
+
+Reddit is a social news aggregation and discussion website with over 250 million users \citep{AdvertiseOnReddit}.
+It is split into so-called ``subreddits'' wherein users can post entries.
+These can be links to other websites, including links to \nl
+
+The news items are ranked by the users who can either ``upvote'' or ``downvote''.
+This is true for news items as well as comments. \citep{AboutReddit}\nl
+
+\subsection{Reddit API}\label{subsec:reddit-api}
+
+Reddit has an exhaustive \ac{REST} \ac{API} that provides access to a user's informations, posts and comments in
+subreddits, as well as moderation tools that allows manipulation of these \citep{RedditApi}.
+Software that interacts with the \ac{API} must follow certain rules.
+These include using OAuth2 to ensure that a user has given consent and all requests will be seen as coming from that
+user, as well as checking the rate-limiting headers returned with every server response and making sure to uphold them.
+Additionally every client should provide a specially tailored \ttt{User-Agent} \ac{HTTP} header field, following the
+template: \citep{RedditApiRules}\nl
+
+\begin{center}
+  \ttt{<platform>:<app ID>:<version string> (by /u/<reddit username>)}, where
+\end{center}\nl
+
+\begin{description}
+  \item[\ttt{platform}] is a descriptive name for the platform type on which the client is running
+  \item[\ttt{app ID}] is a unique name for the client, which could be formed like a Java package namespace
+  \item[\ttt{version string}] identifies the version of the client uniquely within the given \ttt{app ID}
+  \item[\ttt{reddit username}] is the username of the creator of the client who should be contacted by the Reddit team
+  in case of problems
+\end{description}\nl
+
+Spoofing another client or a browser using the \ttt{User-Agent} \ac{HTTP} header field is strictly prohibited and
+results in a ban if discovered. \citep{RedditApiRules}\nl
