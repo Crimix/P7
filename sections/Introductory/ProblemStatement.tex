@@ -1,26 +1,34 @@
 
-Throughtout the analysis we have investigated how to identify and break out of a
-filter bubble, and can now summarize the conclusions.\nl
+Throughout the analysis we have investigated how to identify and break out of a
+filter bubble. As such, this section will be used summarize the
+conclusions, and define a final problem statement.\nl
 
-In \autoref{sec:SocialMediaAnalysis} we came to the conclusion the twitter is
-most suitable for gathering data, as it provides an API that allows us to easily
-request tweets from \ldots \fix{}{needs better conclusion based on SMA
-conclusion}.\nl
+In \autoref{sec:SocialMediaAnalysis} we came to the conclusion, that twitter
+is most suitable for gathering data, as it provides an API that allows us to easily
+request all relevant data for a user. This data can be requested for any user
+who have not set their account to private. The data consists of tweets,
+followers, and friends for any such user.\nl
 
-In \autoref{sec:DataGathering} ??\nl
+In \autoref{sec:DataGathering} we determined that while it is possible to use
+a regular crawler to gather data, we are better off using the official
+Twitter API. We made this decision, as the API gives access to all relevant
+data by using a simple set of HTML requests, while a crawler has to adhere to a
+stricter set of limitations.\nl
 
-In \autoref{emotions} we decided to identifty a users filter bubble by how
-``emotional'' they were about certain topics.\nl
+In \autoref{emotions} we determined that we can identify a users filter
+bubble by how ``emotional'' they were about certain topics. This can be done
+by pairing key topical words like names of political figures, with emotional
+words like ``like", ``good", and ``hate".\nl
 
-Based on these conclusions, we can establish the following problem statement:
+Based on these conclusions, we can establish the following problem statements:
 
 \begin{center}
-\begin{minipage}{0.8\linewidth}
+\begin{minipage}{0.95\linewidth} 
 
-\textit{How can a software solution be developed to permit a user to break out of
-a filter bubble, using information gathered from social media.
-Can a user input a topic and find out that their are in a filter bubble and be
-provided with articels from outside?}
+\textbk{How can a software solution be developed as to permit a user to break
+out of a filter bubble by using information gathered from social media. And how
+can the developed software allow identify a user's filter bubble, and present
+the user with information from outside of it?.}
 
 \end{minipage}
 \end{center}
