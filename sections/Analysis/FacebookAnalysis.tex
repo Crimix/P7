@@ -1,46 +1,60 @@
 \section{Facebook Analysis}\label{sec:facebook-analysis}
-In the context of social networks, Facebook is difficult to miss
-\citep{FacebookPopularity}.
-There are billions of users sharing posts and personal details, all of which are
-useful in the analysis and detection of a person's \fb\ .\nl
+Facebooks is a social media site with more than a billion users, each
+sharing sharing posts and personal details, all of which are useful in the analysis and
+detection of a person's \fbp Facebook is used by both private citizens and
+businesses in order to organize events, communicate and share ideas. 
 
-Facebook has different entities that can interact with one another in different ways.
-First and foremost, there are the users, which are a central part of the
-platform. These are connected via ``friendships''.
-A similar entity is ``pages'' which is essentially profiles for companies or
-public personalities.
-Users can mark these pages as ``liked'' which can be used both to get updates
-from the page, as well as to show others, what they like.\nl
 
+
+\subsection{Using Facebook}
+Facebook has two different entities that can interact with one another in
+different ways.
+
+\subsubsection{User}
+A user is by a private citizen to share information. A core part of the user is
+``feed'' which continiously shows new posts from other other users and pages.
+Users are able to connect with other users via ``friendships'', which allows
+the user to see some of the posts on their feed.
+
+\subsubsection{Page}
+A page can be used to either organize an event, as discussion forum or as a
+profile for a company. Users can mark these pages as ``liked'' which can be
+used both to get updates from the page, as well as to show others, what they
+like
+
+\subsection{Facebook API}
 Facebook prohibits crawling/scraping of their site with a few exceptions such as
-Googlebot and Applebot, which are crawlers made by Google and Apple
-respectively \citep{FacebookRobotsTxt}.
-To access data on their site, they have created the Facebook Graph \ac{API} as part
-of their developer platform, which requires a registration of one's application,
-along with an accompanying \ac{API} key used when performing queries.
+Googlebot and Applebot, which are crawlers made by Google and Apple respectively
+\citep{FacebookRobotsTxt}.
+To access data on their site, they have created the Facebook Graph \ac{API} as
+part of their developer platform, which requires a registration of one's
+application, along with an accompanying \ac{API} key used when performing
+queries.
 In addition to this requirement, there is also a strict requirement of consent
 from the user of an application, which needs to specify all the different types
 of data that the application wants to access \citep{FacebookGraphApiAccessTokens}.\nl
 
-An analysis of Facebook's Graph \ac{API} \citep{FacebookGraphApiDocumentation} revealed that while the platform had
-previously allowed for a lot of freedom in gathering information about a user
-and their social circles, this was no longer the case since version 2.0 of the
-API \citep{FacebookChangesInGraphTwoPointOh}.
-Older versions of the \ac{API} are phased out over time, as new versions are released, meaning it is not possible to access
-the needed information for the initial plan using the Graph
-API.\nl
+An analysis of Facebook's Graph \ac{API} \citep{FacebookGraphApiDocumentation}
+reveals that while the platform had previously allowed for a lot of freedom in
+gathering information about a user and their social circles, this is no longer
+the case as of version 2.0 of the API \citep{FacebookChangesInGraphTwoPointOh}.
+Older versions of the \ac{API} are phased out over time, as new versions are
+released, meaning it is not possible to access the needed information for the
+initial plan using the Graph API.\nl
 
-The current \ac{API} is limited to only listing those of the user's friends that are using the same app and have given
-consent to let the app use their details \citep{FacebookChangesInGraphTwoPointOh}.
-Access to the user's ``likes'' is limited to the interests listed on their profile, such as their favourite movies and
-pages on Facebook that they have marked as ``liked''
+The current \ac{API} is limited to only listing those of the user's friends
+that are using the same app and have given consent to let the app use their
+details \citep{FacebookChangesInGraphTwoPointOh}. Access to the user's ``likes''
+is limited to the interests listed on their profile, such as their favourite
+movies and pages on Facebook that they have marked as ``liked''
 \citep{FacebookGraphApiUserLikes} \citep{FacebookGraphApiUserEdges}.\nl
 
-It is possible to access the user's posts and details regarding these, including whether they were originally
-posted by the user or shared from another poster.
-These shared posts can then be traced back one or more steps depending on the
-privacy settings of each link in the ``share--chain'', but only limited
-information can be gathered about the users on the chain \citep{FacebookGraphApiUserFeed}.\nl
+It is possible to access the user's posts and details regarding these,
+including whether they were originally posted by the user or shared from
+another poster. These shared posts can then be traced back one or more steps
+depending on the privacy settings of each link in the ``share--chain'', but
+only limited information can be gathered about the users on the chain
+\citep{FacebookGraphApiUserFeed}.\nl
 
 Based on this information, it is possible to use Facebook's \ac{API} to find
 further connections between existing users of the system.
