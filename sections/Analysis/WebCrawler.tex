@@ -1,31 +1,40 @@
-A crawler, also known as a spider, crawls the web to gather information from the
-internet by reading the content of a web-page. Each page usually contains
-multiple links to other pages which can also be crawled and indexed. This
-recursive behaviour allows a crawler to gather data from internet.
+A crawler, which is also known as a spider, systematically crawls the internet
+and gathers information by reading and analyzing the content of a web-pages.
+Web-pages are usually connected to eachother by using hyperlinks, which the
+crawler can use to move between pages. This recursive approach to accessing
+web-pages allows to crawler to systematically access large parts of the
+internet, and gather data along the way.
 
 % General webcrawler structure
-\section{Crawler design}
-During a crawl there are several things to consider, the crawler must be able
-to avoid getting stuck fetching an infinite number of pages from the same
-domain, as this is only acceptable if you want to crawl that specific site. The
-crawler needs to be ''polite'' about how frequently it makes its request, as
-too many requests to the same server can crash it, or cause the server to
-consider the crawler an attacker and block it. The crawler should respect what
-it is and is not permitted to access from a given domain. Additionally, the
-crawler should also be able to re-fetch older sites, in order to see if they
-have been updated. It should favour fetching pages that are more likely to have
-quality content \citep[Ch. 20.1]{manning2008introduction}.\nl
-
-The crawler architecture is designed to be modular, can be seen in
-\autoref{BasicWC}. The 'Fetch' module is designed to take a URL from the
-frontier and request access to the corresponding site. The site content is
-passed to the 'Parse' module, see \autoref{sec:parsing}.
+\subsection{Crawler design}%Fluffy start på section During execution, there are
+several things for a crawler to consider.
+The crawler must be able to avoid getting stuck fetching an infinite number of
+pages from the same domain, as this is only acceptable if you want to crawl that
+specific site.
+The crawler needs to be ''polite'' about how frequently it makes request to a
+server, as too many requests to the same server can crash it, or cause the
+server to consider the crawler an attacker and block it.
+The crawler should respect what it is, and is not, permitted to access from a
+given domain. Additionally, the crawler should also be able to re-fetch data
+from older sites, in order to see if they have been updated. Aditionally, it
+should favour fetching pages that are more likely to have quality content \citep[Ch.
+20.1]{manning2008introduction}.\nl
+ 
+Generally, a crawler's architecture is made with a modular, which
+can be seen in \autoref{BasicWC}. 
+The 'Fetch' module is designed to take a URL from the
+frontier and request access to the corresponding site. 
+The site content is passed to the 'Parse' module, see \autoref{sec:parsing}.
 The content is verified to see if it has been crawled before. The URLs are then
 filtered according to the domains ``/robots.txt'', which describes what each
 crawler is allowed to access. Finally, the duplicate URLs are eliminated, and
-the new URLs are added to the frontier.
+the new URLs are added to the frontier.\nl
 
-\figx[0.8]{BasicWC}{The basic crawler architecture \citep[p.
+\fix{}{Terminology like ``frontier'' needs to be explained before or during
+this section}
+
+
+\figx[1.2]{BasicWC}{The basic crawler architecture \citep[p.
 446]{manning2008introduction}.}
 
 % Flesh out more
@@ -33,7 +42,8 @@ A more advanced version of a crawler involves managing multiple distributed
 crawlers, such that they are able to work together efficiently and not crawl
 the same sites multiple times.
 
-\section{Parsing} \label{sec:parsing}
+% Should it be called parsing instead?
+\subsection{Parsing} \label{sec:parsing}
 Parsing is a method used to extract information from a document and
 index it for later use. The first part of parsing a document consists of
 removing the unnecessary information, such as HTML tags, while retaining the
@@ -50,10 +60,10 @@ and ``a''. As these words do not refer to anything in particular, a query should
 not match indexed pages based on them \citep[Ch.
 2]{manning2008introduction}.
 
-\section{Indexing}
+\subsection{Indexing}
 Indexing is used to speed up the information retrieval process, as it is faster
 to search an index, than to scan through every single page every time a query is
-performed.\\
+performed.
 
 There are different types of indexes which depends on the way that the tokens
 and documents refer to each other. The two main types are the forward index and
@@ -69,8 +79,8 @@ Doc1 & fresh, tomato, soup \\ \hline
 Doc2 & fresh, potato, soup \\ \hline
 Doc3 & fresh, tomato, sauce \\ \hline
 	\end{tabular}
-	\caption{A forward index}
 	\label{fIndex}
+	\caption{A forward index}
   \end{table}
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
@@ -84,8 +94,8 @@ tomato & Doc1, Doc3 \\ \hline
 soup & Doc1, Doc2 \\ \hline
 sauce & Doc3 \\ \hline
 	\end{tabular}
-	\caption{A simple inverted index}
 	\label{iIndex}
+	\caption{A simple inverted index}
   \end{table}
 
 \end{minipage}
