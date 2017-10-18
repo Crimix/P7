@@ -1,36 +1,37 @@
 \section{Reddit Analysis}\label{sec:reddit-analysis}
 
-Reddit is a social news aggregation and discussion website with over 250 million users \citep{AdvertiseOnReddit}.
-It is split into ``subreddits'' wherein users can post entries such as plain
-text and links to other websites such as news outlets. \nl
+Reddit is a social news aggregation and discussion website with over 250 million
+users \citep{AdvertiseOnReddit}. The site is split into ``subreddits'' wherein
+users can post entries as plain text, pictures and links to other websites. \nl
 
-The news items are ranked by the users who can either ``upvote'' or ``downvote''.
-This is true for news items as well as comments. \citep{AboutReddit}\nl
+Entries are ranked by the users who can either ``upvote'' or ``downvote''. This
+is the case for entries and comments. \citep{AboutReddit}\nl
 
-Users can follow other users so that all activity from the followed users is
+Users can follow other users such that all activity from the followed users is
 shown in a designated tab.
 
 \subsection{Reddit API}\label{subsec:reddit-api}
 
-Reddit has an exhaustive \ac{REST} \ac{API} that provides access to a user's information, posts and comments in
-subreddits, as well as moderation tools that allows manipulation of these \citep{RedditApi}.
-Software that interacts with the \ac{API} must follow certain rules.
-These include using OAuth2 to ensure that a user has given consent and all
-requests are seen as coming from that user, as well as checking the
-rate-limiting headers returned with every server response and making sure to uphold them.
+Reddit has a \ac{REST} \ac{API} that provides access to a user's information,
+posts and comments in subreddits, as well as moderation tools, that allow for
+manipulation of these \citep{RedditApi}. Software that interacts with the
+\ac{API} must follow certain rules. These include using OAuth2 to ensure that a
+user has given consent and that all requests are seen as coming from that user,
+and checking the rate-limiting headers returned with every server response and
+making sure to uphold them.
 Additionally, every client should provide a specially tailored \ttt{User-Agent}
 \ac{HTTP} header field, following the template: \citep{RedditApiRules}\nl
 
 \begin{center}
-  \ttt{<platform>:<app ID>:<version string> (by /u/<reddit username>)}, where
+  \ttt{<platform>:<app ID>:<version string> (by /u/<reddit username>)}
 \end{center}\nl
-
 \begin{description}
-  \item[\ttt{platform}] is a descriptive name for the platform type on which the client is running
-  \item[\ttt{app ID}] is a unique name for the client, which could be formed like a Java package namespace
-  \item[\ttt{version string}] identifies the version of the client uniquely within the given \ttt{app ID}
+  \item[\ttt{platform}] a descriptive name for the platform type on which the client is running.
+  \item[\ttt{app ID}] a unique name for the client, which could be formed like a Java package namespace.
+  \item[\ttt{version string}] identifies the version of the client uniquely
+  within the given \ttt{app ID}.
   \item[\ttt{reddit username}] is the username of the creator of the client who should be contacted by the Reddit team
-  in case of problems
+  in case of problems.
 \end{description}\nl
 
 Spoofing another client or a browser using the \ttt{User-Agent} \ac{HTTP} header field is strictly prohibited and
