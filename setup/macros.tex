@@ -398,9 +398,12 @@ column type/.add={}{|}
 
 \newcounter{req}
 \renewcommand{\thereq}{requirement \thechapter.\arabic{req}}
-\newenvironment{requirement}[1]{%
+\newenvironment{requirement}[2][??]{%
 \refstepcounter{req}%
-\noindent\textbf{Requirement \thechapter.\arabic{req}: #1}\newline%
+\IfStrEq{#1}{??}{}{%
+  \label{#1}%
+}%
+\noindent\textbf{Requirement \thechapter.\arabic{req}: #2}\newline%
 }%
 {\nl%
 }
