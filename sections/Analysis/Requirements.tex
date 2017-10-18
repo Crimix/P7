@@ -6,11 +6,15 @@ following given a specific user.
 \end{requirement}
 
 \begin{requirement}{Retrieve tweets from a user}
-
+The program should be capable of retrieving tweets which a user has posted. The
+program should be capable of doing this from a supplied id or username.
 \end{requirement}
 
-\begin{requirement}{Follow Twitter API guideline}
-
+\begin{requirement}{Follow Twitter \ac{API} guideline}
+THe program should follow the Twitter \ac{API} guidelines such as not making
+more requests than the guidelines specifies per. 15 minutes. This means that the
+program should also be capable of keeping track of how many requests it has
+used, how many it is allowed to use and when the limit resets.
 \end{requirement}
 
 \begin{requirement}{Store / Load tweets}
