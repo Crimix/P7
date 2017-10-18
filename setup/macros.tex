@@ -396,6 +396,15 @@ column type/.add={}{|}
 \newcommand{\inputS}[1]{
 \input{sections/#1.tex}}
 
+\newcounter{req}
+\renewcommand{\thereq}{requirement \thechapter.\arabic{req}}
+\newenvironment{requirement}[1]{%
+\refstepcounter{req}%
+\noindent\textbf{Requirement \thechapter.\arabic{req}: #1}\newline%
+}%
+{\nl%
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % An example environment
