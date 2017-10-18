@@ -2,7 +2,7 @@
 
 \begin{requirement}[req:twitter-user-retrieval]{Retrieve user and pertinent information from Twitter}
 The program should be capable of retrieving the users a user is
-following given a specific user.
+following given a specific user's username.
 \end{requirement}
 
 \begin{requirement}{Retrieve tweets from a user}
@@ -18,30 +18,34 @@ used, how many it is allowed to use and when the limit resets.
 \end{requirement}
 
 \begin{requirement}{Store / Load tweets}
-The program should be able to store the downloaded tweets in a way such that it
-is possible to 
+The program should be able to store the downloaded tweets and store them
+efficiently in such a way that it is possible to store a large amount of tweets
+and also be able to load them into the program again, such that the data can be
+used for further analysis.
 \end{requirement}
 
 \begin{requirement}{Identify hashtags / links}
-
+The program should be able to identify hashtags and links in the downloaded
+tweets such that they can be used for bias analysis of the user who posted it or
+the user following the user that posted it.
 \end{requirement}
 
 \begin{requirement}{Compare links}
+The program should be able to use the links identified in the tweets and compare
+them to a list of bias news site which should be created and stored in the
+program. 
+\end{requirement}
 
+\begin{requirement}{Emotional  words}
+The program should be able to identify and use emotional word to examine a users
+view on different subjects in the tweets. 
 \end{requirement}
 
 \begin{requirement}{Identify political beliefs of a user }
-
+Using the links and comparing them to the list of bias news site and also taking
+into account the emotional words, the program should be able to identify and
+inform the user of his/her political beliefs. 
 \end{requirement}
-\begin{itemize}
- \item Be capable of collecting the followers of a specific user from a username
- \item Be capable of collecting tweets from a user
- \item Follow the guidelines and rules of the Twitter API
- \item Be capable of storeing the collected tweets in files such that they can
- be loaded again
- \item Identify hashtags and links in tweets
- \item Compare links from tweets to a built in list of baised news sites
- \item Indentify from the links of tweets the political beliefs of a user
-\end{itemize}
+
 
 \section{Usability Requirements}
