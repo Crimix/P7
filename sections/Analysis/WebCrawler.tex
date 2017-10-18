@@ -37,26 +37,26 @@ URLs are eliminated, and the new URLs are added to the frontier.\nl
 
 % Flesh out more
 A more advanced version of a crawler involves managing multiple distributed
-crawlers, such that they are able to work together efficiently and not crawl
-the same sites multiple times.
+crawlers, such that they are able to work together to cover more web-sites while
+not crawling the same sites multiple times.
 
 
 \subsection{Parsing} \label{sec:parsing}
-Parsing is a method used to extract information from a document and
-index it for later use. The first part of parsing a document consists of
-removing the unnecessary information, such as HTML tags, while retaining the
-important information, such as links and the body text. Depending on the
-document, it may be necessary to decode the document format and its character
-encodings. 
-The second step is to tokenize the text, which means splitting up
-the text into the smallest meaningful entities, which in this context are
-words. Depending on how advanced the tokenizer is, it should be able to handle
-abbreviations, such as ``aren't'' or ``kg''. The tokenizer should also remove
+Parsing is a method used to extract information from a document and index it for
+later use. In this case, a document is the raw content retrieved from a request,
+including text, HTML code and -tags.
+The first part of parsing a document consists of removing the unnecessary
+information, such as HTML tags, while retaining the important information, such
+as links and the body text. Depending on the document, it may be necessary to
+decode the document format and its character encodings.
+The second step is to tokenize the text, which means splitting up the text into
+the smallest meaningful entities, which in this context are words. Depending on
+how advanced the tokenizer is, it should be able to handle abbreviations, such
+as ``aren't'' or ``kg''. The tokenizer should also remove
 stopwords, which are words that do not contain any meaningful information,
 and should therefore not be indexed. Examples of this are words such as ``the''
 and ``a''. As these words do not refer to anything in particular, a query should
-not match indexed pages based on them \citep[Ch.
-2]{manning2008introduction}.
+not match indexed pages based on them \citep[Ch. 2]{manning2008introduction}.
 
 \subsection{Indexing}
 Indexing is used to speed up the information retrieval process, as it is faster
