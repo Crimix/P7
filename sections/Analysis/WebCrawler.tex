@@ -4,7 +4,7 @@ multiple links to other pages which can also be crawled and indexed. This
 recursive behaviour allows a crawler to gather data from internet.
 
 % General webcrawler structure
-\subsection{Crawler design}%Fluffy start på section 
+\section{Crawler design}
 During a crawl there are several things to consider, the crawler must be able
 to avoid getting stuck fetching an infinite number of pages from the same
 domain, as this is only acceptable if you want to crawl that specific site. The
@@ -33,8 +33,7 @@ A more advanced version of a crawler involves managing multiple distributed
 crawlers, such that they are able to work together efficiently and not crawl
 the same sites multiple times.
 
-% Should it be called parsing instead?
-\subsection{Parsing} \label{sec:parsing}
+\section{Parsing} \label{sec:parsing}
 Parsing is a method used to extract information from a document and
 index it for later use. The first part of parsing a document consists of
 removing the unnecessary information, such as HTML tags, while retaining the
@@ -51,10 +50,10 @@ and ``a''. As these words do not refer to anything in particular, a query should
 not match indexed pages based on them \citep[Ch.
 2]{manning2008introduction}.
 
-\subsection{Indexing}
+\section{Indexing}
 Indexing is used to speed up the information retrieval process, as it is faster
 to search an index, than to scan through every single page every time a query is
-performed.
+performed.\\
 
 There are different types of indexes which depends on the way that the tokens
 and documents refer to each other. The two main types are the forward index and
@@ -70,8 +69,8 @@ Doc1 & fresh, tomato, soup \\ \hline
 Doc2 & fresh, potato, soup \\ \hline
 Doc3 & fresh, tomato, sauce \\ \hline
 	\end{tabular}
-	\label{fIndex}
 	\caption{A forward index}
+	\label{fIndex}
   \end{table}
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
@@ -85,8 +84,8 @@ tomato & Doc1, Doc3 \\ \hline
 soup & Doc1, Doc2 \\ \hline
 sauce & Doc3 \\ \hline
 	\end{tabular}
-	\label{iIndex}
 	\caption{A simple inverted index}
+	\label{iIndex}
   \end{table}
 
 \end{minipage}
