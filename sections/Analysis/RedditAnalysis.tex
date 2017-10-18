@@ -1,23 +1,25 @@
 \section{Reddit Analysis}\label{sec:reddit-analysis}
 
 Reddit is a social news aggregation and discussion website with over 250 million users \citep{AdvertiseOnReddit}.
-It is split into so-called ``subreddits'' wherein users can post entries.
-These can be links to other websites, including links to \nl
+It is split into ``subreddits'' wherein users can post entries such as plain
+text and links to other websites such as news outlets. \nl
 
 The news items are ranked by the users who can either ``upvote'' or ``downvote''.
 This is true for news items as well as comments. \citep{AboutReddit}\nl
 
-\fix{}{can users be friends? how can they interact with each other?}
+Users can follow other users so that all activity from the followed users is
+shown in a designated tab.
 
 \subsection{Reddit API}\label{subsec:reddit-api}
 
-Reddit has an exhaustive \ac{REST} \ac{API} that provides access to a user's informations, posts and comments in
+Reddit has an exhaustive \ac{REST} \ac{API} that provides access to a user's information, posts and comments in
 subreddits, as well as moderation tools that allows manipulation of these \citep{RedditApi}.
 Software that interacts with the \ac{API} must follow certain rules.
-These include using OAuth2 to ensure that a user has given consent and all requests will be seen as coming from that
-user, as well as checking the rate-limiting headers returned with every server response and making sure to uphold them.
-Additionally every client should provide a specially tailored \ttt{User-Agent} \ac{HTTP} header field, following the
-template: \citep{RedditApiRules}\nl
+These include using OAuth2 to ensure that a user has given consent and all
+requests are seen as coming from that user, as well as checking the
+rate-limiting headers returned with every server response and making sure to uphold them.
+Additionally, every client should provide a specially tailored \ttt{User-Agent}
+\ac{HTTP} header field, following the template: \citep{RedditApiRules}\nl
 
 \begin{center}
   \ttt{<platform>:<app ID>:<version string> (by /u/<reddit username>)}, where
