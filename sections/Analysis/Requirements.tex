@@ -1,13 +1,8 @@
 \section{Functional Requirements}
 
 \begin{requirement}[req:twitter-user-retrieval]{Retrieve user and pertinent information from Twitter}
-The program should be capable of retrieving the users a user is
-following given a specific user's username.
-\end{requirement}
-
-\begin{requirement}{Retrieve tweets from a user}
-The program should be capable of retrieving tweets which a user has posted. The
-program should be capable of doing this from a supplied id or username.
+Given a Twitter username, the program should be capable of retrieving tweets and
+information about a user, including the accounts they are following.
 \end{requirement}
 
 \begin{requirement}{Follow Twitter \ac{API} guideline}
@@ -24,8 +19,8 @@ and also be able to load them into the program again, such that the data can be
 used for further analysis.
 \end{requirement}
 
-\begin{requirement}{Identify hashtags / links}
-The program should be able to identify hashtags and links in the downloaded
+\begin{requirement}{Identify hashtags / \acsp{URL}}
+The program should be able to identify hashtags and \acp{URL} in the downloaded
 tweets such that they can be used for bias analysis of the user who posted it or
 the user following the user that posted it.
 \end{requirement}
@@ -51,7 +46,7 @@ inform the user of his/her political beliefs.
 
 \section{Usability Requirements}
 
-\begin{requirement}[req:unnamed-usability]{Userfriendly interface}
+\begin{requirement}[req:userfriendly-interface]{Userfriendly interface}
 \begin{itemize}
   \item The \ac{GUI} should be simplistic upon launch, with every element immediately recognisable.
   \item There should be no doubts about what information is needed and which button(s) to press.
