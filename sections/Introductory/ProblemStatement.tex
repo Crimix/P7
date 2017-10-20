@@ -3,22 +3,27 @@ Throughout the analysis we have investigated how to identify and break out of a
 filter bubble. As such, this section will be used summarize the
 conclusions, and define a final problem statement.\nl
 
-In \autoref{sec:SocialMediaAnalysis} we came to the conclusion, that twitter
+In \autoref{cha:SocialMediaAnalysis} we came to the conclusion, that twitter
 is most suitable for gathering data, as it provides an API that allows us to easily
 request all relevant data for a user. This data can be requested for any user
 who have not set their account to private. The data consists of tweets,
 followers, and friends for any such user.\nl
 
-In \autoref{sec:DataGathering} we determined that while it is possible to use
-a regular crawler to gather data, we are better off using the official
-Twitter API. We made this decision, as the API gives access to all relevant
-data by using a simple set of HTML requests, while a crawler has to adhere to a
-stricter set of limitations.\nl
+In \autoref{cha:DataGathering} we discovered that there are restrictions to what
+are a crawler is allowed to access. We have determined that while it is
+possible to use a regular crawler to gather data, we are better off using the
+official Twitter API. We made this decision, as the API gives access to all
+relevant data by using a simple set of HTML requests, while a crawler has to
+adhere to a stricter set of limitations. However we are still able to use the
+crawler architeture as a guideline for how to design a solution.\nl
 
-In \autoref{emotions} we determined that we can identify a users filter
-bubble by how ``emotional'' they were about certain topics. This can be done
-by pairing key topical words like names of political figures, with emotional
-words like ``like", ``good", and ``hate".\nl
+
+
+
+% In \autoref{emotions} we determined that we can identify a users filter
+% bubble by how ``emotional'' they were about certain topics. This can be done
+% by pairing key topical words like names of political figures, with emotional
+% words like ``like", ``good", and ``hate".\nl
 
 Based on these conclusions, we can establish the following problem statements:
 
