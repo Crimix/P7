@@ -4,6 +4,8 @@ Web-pages are usually connected to eachother by using hyperlinks, which the
 crawler can use to move between pages. This recursive approach to accessing
 web-pages allows to crawler to systematically access large parts of the
 internet, and gather data along the way.
+%Klaus: Please tell the reader more about this chapter as an overview, also why
+% this chapter exists
 
 % General webcrawler structure
 \subsection{Crawler design}%Fluffy start på section 
@@ -31,9 +33,12 @@ which describes what each crawler is allowed to access. Finally, the duplicate
 URLs are eliminated, and the new URLs are added to the frontier.\nl
 
 
-
+%Vejleder vil gerne have fikset overfull boxes men det er på den måde i bogen.
 \figx[1.2]{BasicWC}{The basic crawler architecture \citep[p.
 446]{manning2008introduction}.}
+%Klaus: Some more sentances of explanation. It is always good to give the reader
+% some basic understanding of what is going on in the caption, even if it
+% doubles a bit with normal text
 
 % Flesh out more
 A more advanced version of a crawler involves managing multiple distributed
@@ -105,3 +110,6 @@ indexes can be expanded to include a ranking of the tokens in order to better
 evaluate a documents information value. This ranking is usually determined by
 how often the token appears in the documents and how many times it appears in a
 specific document.
+
+%What did we learn in this chapter? a conclusion would be nice. I realize that
+% one exists in the next section, but you cango into greater detail here.
