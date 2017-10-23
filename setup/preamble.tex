@@ -172,6 +172,11 @@
 % file. Hypperref should be loaded as one of the
 % last packages
 \usepackage{hyperref}
+\addto\extrasenglish{\renewcommand{\chapterautorefname}{Chapter}}
+\addto\extrasenglish{\renewcommand{\figureautorefname}{Figure}}
+\addto\extrasenglish{\renewcommand{\tableautorefname}{Table}}
+\addto\extrasenglish{\renewcommand{\sectionautorefname}{Section}}
+
 \hypersetup{%
 	%pdfpagelabels=true,%
 	plainpages=false,%
