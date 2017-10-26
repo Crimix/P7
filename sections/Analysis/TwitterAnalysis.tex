@@ -33,58 +33,57 @@ those tweets were not fiddled with to fit the length\cite{TweetL}.
 %Klaus: Aren't they testing 280 char tweets as well for some users?
 
 \subsubsection{Follow}
-A user can choose to follow other peoples accounts. This allows them to be
-notified whenever that account makes a tweet or retweets an existing tweet.
+A user can choose to follow other peoples accounts. Then they will get a
+notification whenever a followed account makes a tweet or retweets an existing
+tweet.
 
 \subsubsection{Retweet}
 Instead of making a tweet, a user can choose to forward a tweet made by another
 account. A user can either retweet the tweet as it is, or embed the tweet into a
-tweet of their own. The user can make comments or remarks in relation to the
+tweet of their own. A user can make comments or remarks in relation to the
 original tweet.
 
 \subsubsection{Hashtag}
 When a user tweets or retweets, they can add a ``hashtag'', which can be used to
-group the tweet, with others using the same hashtag. A hashtag is used as a
-general tag, such as \#Politics or \#Sports, or in order to specify the user's
+group the tweet, with other tweets using the same hashtag. A hashtag is used as
+a general tag, such as \#Politics or \#Sports, or to specify the user's
 opinion on a subject e.g. \#war \#Idiotic. In general, hashtags are used for
-searching and filtering.
+grouping, searching and filtering.
 
 \subsection{Twitter \acp{API}}
-For developers to retrieve data from users, tweets and trending hashtags,
-Twitter has three main \acp{API}, namely the \ac{REST} \ac{API}, the Streaming
+Twitter permit developers to retrieve data from their users, tweets and
+trending hashtags. Twitter has three main \acp{API}, namely the \ac{REST} \ac{API}, the Streaming
 \ac{API} and the Ads \ac{API} \citep{TwitterDevDocs}. For the purpose of this
-project, we use the \ac{REST} \ac{API}, as it allows us to read historical twitter
+project, the \ac{REST} \ac{API} is used, as it permits reading Twitter' user
 data.
 
 \subsubsection{REST API}
-The \ac{REST} \ac{API} makes use of \ac{HTTP} requests to allow developers access to
-Twitter's data \citep{TwitterREST}. In addition, by using the OAuth protocol
-\citep{TwitterOAuth}, Twitter ensures that only authorized applications can
-access Twitter's data.\nl
-
-Twitter makes use of a \ac{REST} \ac{API}. All requests must be made using the
+The \ac{REST} \ac{API} makes use of \ac{HTTP} requests to allow developers
+access to Twitter's data \citep{TwitterREST}. In addition, by using the OAuth protocol
+\citep{TwitterOAuth}, Twitter tries to enforce that only authorized applications
+can access Twitter's data. All requests must be made using the
 \ac{HTTP} protocol. These requests are structured differently based on the
 requested data. An example of a \ac{HTTP} request can be seen in
 \autoref{httpReq}, where each of the requests parts have been denoted with a
 number, and is further described in \autoref{httpElaboration}.
 
-\figx{httpReq}{Structure of Twitter HTTP Request}
+\figx{httpReq}{Structure of Twitter HTTP Request.}
 
 \begin{table}[H] 
 \begin{centering}
 \begin{tabular}{|l|p{9cm}|l|}
 \hline
-No.			&	Description 		\\\hline
-1			&	Denotes the type of request: GET, POST, DELETE 					\\\hline
-2			&	Address for the Twitter \ac{API}					\\\hline
-3			&	Name of the requested resource	   					\\\hline
-4			&	Format of the requested resource					\\\hline
+No.			&	Description. 												\\\hline
+1			&	Denotes the type of request: GET, POST, DELETE.				\\\hline
+2			&	Address for the Twitter \ac{API}.							\\\hline
+3			&	Name of the requested resource.	   							\\\hline
+4			&	Format of the requested resource.							\\\hline
 5			&	Index of the page of the requested data. In case all data can not be
-retrieved in a single page \\\hline 
-6			&	Extra parameters such as the name of the requested user					\\\hline
-7			&	Number of data points requested. Maximum of 5000 per page					\\\hline
+retrieved in a single page.													\\\hline 
+6			&	Extra parameters such as the name of the requested user.	\\\hline
+7			&	Number of data points requested. Maximum of 5000 per page.	\\\hline
 \end{tabular}
-\caption{Elaboration on the Twitter HTTP requests}
+\caption{Elaboration on the Twitter HTTP requests.}
 \label{httpElaboration}
 \end{centering}
 \end{table}
