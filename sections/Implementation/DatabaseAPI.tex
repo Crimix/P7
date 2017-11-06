@@ -1,7 +1,7 @@
 \chapter{Database API}
 As a part of the overall application, we need a database to store information
 used by the different workers. This is important, as we make use of the
-user's Twitter account to retreive data from the Twitter API. As such, this
+user's Twitter account to retrieve data from the Twitter API. As such, this
 section will be used to describe how we access and store this data, and how we
 make sure that it is only accessible to authorized users.
 
@@ -24,7 +24,7 @@ and \autoref{UserDBTable}.
 \end{table}
 
 The table in \autoref{TwitterDBTable} is used for storing data about analyzed
-twitter users, such that we can reference this data, if we should recieve
+twitter users, such that we can reference this data, if we should receive
 a request for that user to be analyzed again. This allows to to reduce overhead,
 as we can reuse data.
 
@@ -47,8 +47,8 @@ as a worker. This worker has an automatically generated name and password.
 
 \section{API Design}
 In order to access the database described in \autoref{DBDesign}, we have
-deveoped an API using the Laravel web development framework. This API functions
-as a layer on top of the database, to which we can make requests and retreive
+developed an API using the Laravel web development framework. This API functions
+as a layer on top of the database, to which we can make requests and retrieve
 data through the use of HTTP requests.
 
 \subsection{API Endpoints}
