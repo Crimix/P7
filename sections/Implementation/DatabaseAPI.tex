@@ -12,10 +12,12 @@ and \textc{Twitters}. These tables can be seen in \autoref{TwitterDBTable}
 and \autoref{UserDBTable}.
 
 \begin{table}[H]
-\begin{tabular}{l | l | l | l | l | l | l}
-\textbf{id} & \textbf{name} & \textbf{twitterID} & \textbf{pol\_var} & \textbf{lib\_var} & \textbf{created\_at} & \textbf{updated\_at}\\\hline
-1 & John123 & 4893758 & 4.1 & 3.5 & 03-11-2017 & 03-11-2017 \\\hline
-2 & MMan & 9302847 & 2.9 & 1.7 & 03-11-2017 & 03-11-2017 \\\hline
+\begin{tabular}{l | l | l | l | l | l | l | l	}
+\textbf{id} & \textbf{name} & \textbf{twitterID} & \textbf{pol\_var} &
+\textbf{lib\_var} & \textbf{protect} & \textbf{created\_at} & \textbf{updated\_at}
+\\\hline 1 & John123 & 4893758 & 4.1 & 3.5 & 1 & 03-11-2017 & 03-11-2017 
+\\\hline 2 & MMan & 9302847 & 2.9 & 1.7 & 0 & 03-11-2017 & 03-11-2017 
+\\\hline
 \end{tabular}
 \caption{Table containing twitter users and their determined values.}
 \label{TwitterDBTable}
@@ -27,21 +29,20 @@ a request for that user to be analyzed again. This allows to to reduce overhead,
 as we can reuse data.
 
 \begin{table}[H]
-\begin{tabular}{l | l | l | l | l | l}
-\textbf{id} & \textbf{name} & \textbf{password} & \textbf{authString} &
+\begin{tabular}{l | l | l | l | l }
+\textbf{id} & \textbf{name} & \textbf{password} &
 \textbf{created\_at} & \textbf{updated\_at}\\\hline
-1 & Worker\_1 & xyaAngeaG93AFk & A83hjgGAD8u4h & 03-11-2017 & 03-11-2017
+1 & Worker\_1 & xyaAngeaG93AFk & 03-11-2017 & 03-11-2017
 \\\hline
-2 & Worker\_2 & oLj7Ft89AFSA & fawef78GADKe & 03-11-2017 & 03-11-2017 \\\hline
+2 & Worker\_2 & oLj7Ft89AFSA & 03-11-2017 & 03-11-2017 \\\hline
 \end{tabular}
 \caption{Table containing twitter users and their determined values.}
 \label{UserDBTable}
 \end{table}
 
-The table in \autoref{TwitterDBTable} is used for authenticating workers. This
+The table in \autoref{UserDBTable} is used for authenticating workers. This
 means, that each time a users uses our application, that instance will be saved
-as a worker. This worker has an automatically generated name and password, and
-an authentication string, which is used for accessing Twitter's API.
+as a worker. This worker has an automatically generated name and password.
 
 
 \section{API Design}
@@ -67,7 +68,8 @@ data, we have the following endpoints:
 POST & api/user/post & 	\textc{string} name\\
 ~    & ~			 &  \textc{int} twitterID					      \\
 ~    & ~			 &  \textc{double} pol\_var					      \\
-~    & ~			 &  \textc{doble} lib\_var					      
+~    & ~			 &  \textc{double} lib\_var		\\
+~    & ~			 &  \textc{boolean} protect				      
 \\\hline
 POST & api/twitter/post & \textc{string} name					  \\
 ~    & ~			 &  \textc{string(Encrypted)} password					      
