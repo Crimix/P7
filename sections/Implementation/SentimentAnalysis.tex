@@ -9,29 +9,69 @@ model to predict the sentiment.
 
 \subsection{Feature extraction} 
 Feature extraction is used after the tokenization to choose which words are to
-be used to determine the sentiment. Depending on how simplistic the feature
-extraction is, a lot of sentiment can be lost. For instance there is a big
-difference between person 1 saying ``I love this movie'' and person 2 saying
-``I LOVE this movie!''. In this example both the capitalization of ``love'' and
-the exclamation mark help empathize that person 2 seems to have a stronger
-positive sentiment towards the movie. But these features can easily be lost if
-the text is simplified. It is also beneficial to consider emoticons such as
-``:-)'' as valuable tokens, as it is used to show sentiment clues.
+be used to determine the sentiment. A lot of sentiment can be lost if the
+feature extracter is simplistic. There are several ways which sentiment can be
+expressed in text, such as:
 
+\begin{itemize}
+  \item Capitalization 
+  \item Lengthening
+  \item Emoticons
+  \item Punctuation
+  \item Stopwords
+  \item Negation
+\end{itemize}
 
+For instance there is a big difference between person 1 saying ``I love this
+movie'' and person 2 saying ``I LOVE this movie!!!!''. In this example both the
+capitalization of ``love'' and the exclamation mark help empathize that person
+2 seems to have a stronger positive sentiment towards the movie. But these
+features can easily be lost if the text is simplified. It is also beneficial to
+consider emoticons such as ``:-)'' as valuable tokens, as it is used to show
+sentiment clues.\\
+
+An example of lengthening is the difference in sentiment between ``huuuungry'',
+``huuungry'' and ``hungry". The differences in sentiment between the first two
+variations of ``hungry" are probably minimal, but there is a clear difference
+between those and the last version. These features can be compressed by looking
+for tokens with more than two of the same letters repeated and removing the
+repeated letters. This will make the loss of sentiment minimal, while limiting
+the varitions of the same word.\nl
+
+The removal of stopwords, which are words that do not contain useful
+information, is dependent upon which classification model is used. Some models
+such as a Naive Bayes classifier will benefit from having the stopwords removed
+as they are useless information. Neural Networks work very differently from
+Naive Bayes classifiers, and are able to look past the noise given enough
+training data.\nl
+
+Negation also needs to be considered, as it can completely change the sentiment
+of the text. A simple way to handle negation is to add a tag such as ``NEG\_'' as
+a prefix for tokens after a word such as ``not'' and ``arent''.\nl 
+
+An example of how feature extraction is likely to look like can be seen in
+\autoref{tab:feature}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{6cm}|p{8cm}|}
+\hline
+Text & Features \\ \hline
+I LOVED the movie but I am sooooo hungry! & 
+``I'' ``LOVED'' ``movie'' ``I'' ``soo'' ``hungry'' ``!''
+\\ \hline 
+I hate this song, why do they keep playing it? &
+``I'' ``hate'' ``NEG\_song'' ``NEG\_why'' ``NEG\_keep'' ``NEG\_playing'' ``?''  
+\\ \hline
+\end{tabular}
+\caption{An example of transforming text into features}
+\label{tab:feature}
+\end{table}
 
 
 \subsection{Classification}
 
-
- By
-gathering and parsing the opinions which can be found online, extracting
-the features, and using a classification model
-
-people display their opinions using social media
-a lot of opinions are needed to get an accurate picture
-can be handled by a sentiment analysis
-
+The final part of sentiment analysis is classification. This 
 
 
 Baseline algorithm:
