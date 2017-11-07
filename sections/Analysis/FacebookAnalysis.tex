@@ -6,7 +6,7 @@ businesses in order to organize events, communicate and share ideas.
 
 \subsection{Using Facebook}
 Facebook has two different entities that can interact with one another in
-different ways.
+different ways \Source.
 
 \subsubsection{User}
 A user is a private citizen to share information. A core part of the user is
@@ -23,14 +23,17 @@ like
 \subsection{Facebook API}
 Facebook prohibits crawling/scraping of their site with a few exceptions such as
 crawlers made by Google and Apple respectively
-\citep{FacebookRobotsTxt}.
+\citep{FacebookRobotsTxt}\fix{}{How can a normal non-crawler making reader see
+this}.
 To access data on their site, they have created the Facebook Graph \ac{API} as
 part of their developer platform, which requires a registration of one's
 application, along with an accompanying \ac{API} key used when performing
 queries.
 In addition to this requirement, there is also a strict requirement of consent
 from the user of an application, which needs to specify all the different types
-of data that the application wants to access \citep{FacebookGraphApiAccessTokens}.\nl
+of data that the application wants to access
+\citep{FacebookGraphApiAccessTokens} \fix{}{Cant seem to find where this strict
+thing is defined in the text so\ldots.}\Source .\nl
 
 An analysis of Facebook's Graph \ac{API} \citep{FacebookGraphApiDocumentation}
 reveals that the platform previously allowed for more freedom when gathering
@@ -43,14 +46,17 @@ that are using the same app and have given consent to let the app use their
 details \citep{FacebookChangesInGraphTwoPointOh}. Access to the user's ``likes''
 is limited to the interests listed on their profile, such as their favourite
 movies and pages on Facebook, that they have marked as ``liked''
-\citep{FacebookGraphApiUserLikes} \citep{FacebookGraphApiUserEdges}.\nl
+\citep{FacebookGraphApiUserEdges} \citep{FacebookGraphApiUserLikes}
+\fix{}{Might be a bit hard for a reader to understand where you got that
+from these two sources}.\nl
 
 It is possible to access the user's posts and details regarding them,
 including whether they were originally posted by the user or shared from
 another poster. These shared posts can then be traced back one or more steps
 depending on the privacy settings of each link in the ``share--chain'', but
 only limited information can be gathered about the users on the chain
-\citep{FacebookGraphApiUserFeed}.\nl
+\citep{FacebookGraphApiUserFeed}\fix{}{Please explain to me, where you can
+see that about the share--chain}.\nl
 
 Based on this information, it is possible to use Facebook's \ac{API} to find
 further connections between existing users of the system.
