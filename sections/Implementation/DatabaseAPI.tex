@@ -26,7 +26,9 @@ and \autoref{UserDBTable}.
 The table in \autoref{TwitterDBTable} is used for storing data about analyzed
 twitter users, such that we can reference this data, if we should receive
 a request for that user to be analyzed again. This allows to to reduce overhead,
-as we can reuse data.
+as we can reuse data. One important aspect is that we need to respect a users
+privacy, as such we have introduced the ``proctect'' boolean to indicate if only
+the Twitter user which the result belong to is allowed to retrieve it.
 
 \begin{table}[H]
 \begin{tabular}{l | l | l | l | l }
