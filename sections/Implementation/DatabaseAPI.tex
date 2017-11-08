@@ -1,7 +1,7 @@
-\chapter{Database API}
+\chapter{Database \ac{API}}
 As a part of the overall application, we need a database to store information
 used by the different workers. This is important, as we make use of the
-user's Twitter account to retrieve data from the Twitter API. As such, this
+user's Twitter account to retrieve data from the Twitter \ac{API}. As such, this
 section will be used to describe how we access and store this data, and how we
 make sure that it is only accessible to authorized users.
 
@@ -47,20 +47,20 @@ means, that each time a users uses our application, that instance will be saved
 as a worker. This worker has an automatically generated name and password.
 
 
-\section{API Design}
+\section{\ac{API} Design}
 In order to access the database described in \autoref{DBDesign}, we have
-developed an API using the Laravel web development framework. This API functions
+developed an \ac{API} using the Laravel web development framework. This \ac{API} functions
 as a layer on top of the database, to which we can make requests and retrieve
-data through the use of HTTP requests.
+data through the use of \ac{HTTP} requests.
 
-\subsection{API Endpoints}
-As the API uses HTTP requests, we have to define a number of endpoints which are
-available to be used by external applications. These are based on the following
+\subsection{\ac{API} Endpoints}
+As the \ac{API} uses \ac{HTTP} requests, we have to define a number of
+endpoints which are available to be used by external applications. These are based on the following
 request:\nl
 
 \say{http://localhost:8000/api/}\nl
 
-In this example, the domain for the API is localhost on port 8000, as this is
+In this example, the domain for the \ac{API} is localhost on port 8000, as this is
 the default for locally hosted Laravel applications. In order to access the
 data, we have the following endpoints:
 
