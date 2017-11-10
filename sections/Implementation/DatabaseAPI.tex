@@ -1,0 +1,135 @@
+\chapter{Database \ac{API}}
+As a part of the overall application, we need a database to store information
+used by the different workers. This is important, as we make use of the
+user's Twitter account to retrieve data from the Twitter \ac{API}. As such, this
+section will be used to describe how we access and store this data, and how we
+make sure that it is only accessible to authorized users.
+
+\section{Database Design}\label{DBDesign}
+The database uses the MySQL framework, and is built as a standardized relational
+database. In order to store the general data, we have two tables; \textc{Users}
+and \textc{Twitters}. These tables can be seen in \autoref{TwitterDBTable}
+and \autoref{UserDBTable}.
+
+\begin{table}[H]
+\begin{tabular}{l | l | l | l | l | l | l | l	}
+\textbf{id} & \textbf{name} & \textbf{twitterID} & \textbf{pol\_var} &
+\textbf{lib\_var} & \textbf{protect} & \textbf{created\_at} & \textbf{updated\_at}
+\\\hline 1 & John123 & 4893758 & 4.1 & 3.5 & 1 & 03-11-2017 & 03-11-2017 
+\\\hline 2 & MMan & 9302847 & 2.9 & 1.7 & 0 & 03-11-2017 & 03-11-2017 
+\\\hline
+\end{tabular}
+\caption{Table containing twitter users and their determined values.}
+\label{TwitterDBTable}
+\end{table}
+
+The table in \autoref{TwitterDBTable} is used for storing data about analyzed
+twitter users, such that we can reference this data, if we should receive
+a request for that user to be analyzed again. This allows to to reduce overhead,
+as we can reuse data. One important aspect is that we need to respect a users
+privacy, as such we have introduced the ``proctect'' boolean to indicate if only
+the Twitter user which the result belong to is allowed to retrieve it.
+
+\begin{table}[H]
+\begin{tabular}{l | l | l | l | l }
+\textbf{id} & \textbf{name} & \textbf{password} &
+\textbf{created\_at} & \textbf{updated\_at}\\\hline
+1 & Worker\_1 & xyaAngeaG93AFk & 03-11-2017 & 03-11-2017
+\\\hline
+2 & Worker\_2 & oLj7Ft89AFSA & 03-11-2017 & 03-11-2017 \\\hline
+\end{tabular}
+\caption{Table containing twitter users and their determined values.}
+\label{UserDBTable}
+\end{table}
+
+The table in \autoref{UserDBTable} is used for authenticating workers. This
+means, that each time a users uses our application, that instance will be saved
+as a worker. This worker has an automatically generated name and password.
+
+
+\section{\ac{API} Design}
+In order to access the database described in \autoref{DBDesign}, we have
+developed an \ac{API} using the Laravel web development framework. This \ac{API} functions
+as a layer on top of the database, to which we can make requests and retrieve
+data through the use of \ac{HTTP} requests.
+
+\subsection{\ac{API} Endpoints}
+As the \ac{API} uses \ac{HTTP} requests, we have to define a number of
+endpoints which are available to be used by external applications. These are based on the following
+request:\nl
+
+\say{http://localhost:8000/api/}\nl
+
+In this example, the domain for the \ac{API} is localhost on port 8000, as this is
+the default for locally hosted Laravel applications. In order to access the
+data, we have the following endpoints:
+
+\begin{table}[H]
+\begin{tabular}{l | l | l}
+\textbf{TYPE} & \textbf{Endpoint} & \textbf{Required Data} \\\hline
+POST & api/user/post & 	\textc{string} name\\
+~    & ~			 &  \textc{int} twitterID					      \\
+~    & ~			 &  \textc{double} pol\_var					      \\
+~    & ~			 &  \textc{double} lib\_var		\\
+~    & ~			 &  \textc{boolean} protect				      
+\\\hline
+POST & api/twitter/post & \textc{string} name					  \\
+~    & ~			 &  \textc{string(Encrypted)} password					      
+\\\hline
+POST & oauth/token 	& \textc{grant\_type} password					  \\
+~    & ~			& \textc{client\_id} 2					\\
+~    & ~			& \textc{client\_secret} XIpLV3Jl\ldots					\\
+~    & ~			& \textc{username} Worker					\\
+~    & ~			& \textc{password(Encrypted)} ERExjM0rVvcC7zfJvSbU					\\
+~    & ~			& \textc{scope} *					     
+\\\hline
+GET & api/user/get/\{id\} & \\\hline
+GET & api/twitter/get/\{twitterID\} & \\\hline
+
+
+\end{tabular}
+\caption{Table containing twitter users and their determined values. Note that
+the variables in the token request are example values}
+\label{APIEndpointTable}
+\end{table}
+ 
+
+\subsection{Authorization}
+In order to make sure that data is only available to authorized users, we make
+use of Laravel Passports, which is a token-based authorization system. As such,
+in order to make a request to the database, the user has to supply a token,
+which is an encrypted string. This token is then verified by comparing it to a
+list of active tokens on the database.\nl
+
+In order to retrieve a token, a worker must make a request to the
+``oauth/token'' endpoint, while supplying a username, password, and client
+secret. The username and password are compared to those stored in the users
+table on the database, and the client\_secret is a static string.\nl
+
+If the supplied credentials are found on the database, the request responds with
+a token, which uniquely identifies the worker which made the request. When
+making requests for data on the database, the worker must supply this token,
+which is used to authenticate it.\nl
+
+\fix{}{This chapter was written while I was half blind, and very annoyed with my
+contact lenses. As such, it needs some more info in some parts (more tables,
+better description of requests and responses). Also proof read (half-blind,
+remember?). Also, add references to tables.}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

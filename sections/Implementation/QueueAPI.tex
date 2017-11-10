@@ -1,0 +1,31 @@
+\chapter{Queue \ac{API}}
+As a part of the overall application, we need to be able to queue jobs to be
+executed. A job is a request to our application to evaluate a specific Twitter
+users political side.
+
+\section{Implementation}
+The \ac{API} is implemented in a C\# program, such that it can interact with the
+QueueServer program which also is in C\#. This is the exect reason for why the
+\ac{API} has been implemented in C\# such that it can use the already written
+code for both the QueueServer which interacts with the Workers which downloads
+Tweets and calculates the political values.
+
+\fix{}{Need more implementation details about how it was done in the code, what
+was needed and used}
+
+\section{Requests}
+The \ac{API} has only one post request which is: \nl
+
+\say{http://localhost:62020/api/TwitterAcc}\nl
+
+where the Content-Type header must be ``application/x-www-form-urlencoded''
+then the two values a request needs can be sent in the body. The two values are
+TwitterName and TwitterApiKey.
+Then the request returns a response weather the job was added to the queue or
+not.
+
+\section{Authorization}
+\fix{}{Might need authorization in the api}
+
+
+
