@@ -125,14 +125,23 @@
 \newif\ifret
 \rettrue
 
-\newif\ifbs
-\bstrue
+\newif\ifkt
+\kttrue
 
 \newif\iftd
 \tdtrue
 
+\newif\ifbs
+\bstrue
+
+\newcounter{BadSourceCounter}
 \newcommand{\BadSource}{
-{\textcolor{red}{\large{Bad Source}}}}
+\ifbs
+	\label{badsourceRefMacro}
+	\bsfalse
+\else
+\fi
+\addtocounter{BadSourceCounter}{1}{\textbf{\textcolor{red}{\large{Bad Source}}}}}
 
 \newcounter{ToDoCounter}
 \newcommand{\ToDo}{
@@ -207,20 +216,23 @@ rettes} \autopageref{retRefMacro}\\}
 \newcommand{\retCountEn}{
 \LARGE{There are \arabic{RetCounter} places that needs to be corrected} \autopageref{retRefMacro}\\}
 
-\newcounter{BSCounter}
+\newcounter{KTCounter}
 \newcommand{\KT}
 {
-\ifbs
-	\label{bsRefMacro}
-	\bsfalse
+\ifkt
+	\label{ktRefMacro}
+	\ktfalse
 \else
 \fi
-\addtocounter{BSCounter}{1}
+\addtocounter{KTCounter}{1}
 {\textcolor{purple}{\large{Source needs checking here and below}}}}
 
+\newcommand{\KTCount}{
+\LARGE{There are \arabic{KTCounter} sources that needs checking}
+\autopageref{ktRefMacro}\\}
 \newcommand{\BSCount}{
-\LARGE{There are \arabic{BSCounter} sources that needs checking}
-\autopageref{bsRefMacro}\\}
+\LARGE{There are \arabic{BadSourceCounter} bad sources}
+\autopageref{badsourceRefMacro}\\}
 
 \newcommand{\PFR}{
 \ifps
@@ -234,6 +246,10 @@ rettes} \autopageref{retRefMacro}\\}
 \ifret
 \else
 	\retCountEn
+\fi
+\ifkt
+\else
+	\KTCount
 \fi
 \ifbs
 \else
