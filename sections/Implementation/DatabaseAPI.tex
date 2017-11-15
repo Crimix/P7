@@ -67,13 +67,13 @@ data, we have the following endpoints:
 \begin{table}[H]
 \begin{tabular}{l | l | l}
 \textbf{TYPE} & \textbf{Endpoint} & \textbf{Required Data} \\\hline
-POST & api/user/post & 	\textc{string} name\\
-~    & ~			 &  \textc{int} twitterID					      \\
-~    & ~			 &  \textc{double} pol\_var					      \\
-~    & ~			 &  \textc{double} lib\_var		\\
+POST & api/user      & 	\textc{string} name\\
+~    & ~			 &  \textc{int} twitterID\\
+~    & ~			 &  \textc{double} pol\_var\\
+~    & ~			 &  \textc{double} lib\_var\\
 ~    & ~			 &  \textc{boolean} protect				      
 \\\hline
-POST & api/twitter/post & \textc{string} name					  \\
+POST & api/twitter   & \textc{string} name\\
 ~    & ~			 &  \textc{string(Encrypted)} password					      
 \\\hline
 POST & oauth/token 	& \textc{grant\_type} password					  \\
@@ -83,8 +83,10 @@ POST & oauth/token 	& \textc{grant\_type} password					  \\
 ~    & ~			& \textc{password(Encrypted)} ERExjM0rVvcC7zfJvSbU					\\
 ~    & ~			& \textc{scope} *					     
 \\\hline
-GET & api/user/get/\{id\} & \\\hline
-GET & api/twitter/get/\{twitterID\} & \\\hline
+GET & api/user/\{id\} &
+\\\hline
+GET & api/twitter/\{twitterID\} &
+\\\hline
 
 
 \end{tabular}
