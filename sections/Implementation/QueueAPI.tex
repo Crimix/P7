@@ -10,6 +10,13 @@ QueueServer program which also is in C\#. This is the exect reason for why the
 code for both the QueueServer which interacts with the Workers which downloads
 Tweets and calculates the political values.
 
+\subsection{Queue Server}
+The queue server or what can be precived as the queue server is simply a little
+class in a libray that is used on each own thread when the \ac{API} is started. 
+Then when a request is recived then it adds it to the queue server for
+execution. The queue server then uses the worker class from our library which
+downloads the tweets a users friends tweets. 
+
 \fix{}{Need more implementation details about how it was done in the code, what
 was needed and used}
 
