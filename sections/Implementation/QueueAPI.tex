@@ -1,21 +1,18 @@
 \chapter{Queue \ac{API}}
 As a part of the overall application, we need to be able to queue jobs to be
-executed. A job is a request to our application to evaluate a specific Twitter
-users political side.
+executed, such that the first request gets handled first. A job is a request to
+our application to evaluate a specific Twitter users political side.
 
 \section{Implementation}
-The \ac{API} is implemented in a C\# program, such that it can interact with the
-QueueServer program which also is in C\#. This is the exect reason for why the
-\ac{API} has been implemented in C\# such that it can use the already written
-code for both the QueueServer which interacts with the Workers which downloads
-Tweets and calculates the political values.
+The \ac{API} is implemented in a C\# program, such that it uses the same
+language as the QueueServer program. This way, the \ac{API} can use already
+written code from the QueueServer and the Worker programs.
 
 \subsection{Queue Server}
-The queue server or what can be precived as the queue server is simply a little
-class in a libray that is used on each own thread when the \ac{API} is started. 
-Then when a request is recived then it adds it to the queue server for
-execution. The queue server then uses the worker class from our library which
-downloads the tweets a users friends tweets. 
+The Queue server is a class in a libray that is executed on its own thread when
+the \ac{API} is started. When a request is received, it adds it to the queue
+server for execution. The queue server then uses the worker class from our library which
+downloads the tweets that the requested user's friends tweet. 
 
 \fix{}{Need more implementation details about how it was done in the code, what
 was needed and used}
@@ -25,11 +22,11 @@ The \ac{API} has only one post request which is: \nl
 
 \say{http://localhost:62020/api/TwitterAcc}\nl
 
-where the Content-Type header must be ``application/x-www-form-urlencoded''
-then the two values a request needs can be sent in the body. The two values are
-TwitterName and TwitterApiKey.
-Then the request returns a response weather the job was added to the queue or
-not.
+Here, the Content-Type header must be ``application/x-www-form-urlencoded'',
+where the body contains a value for TwitterApiKey and TwitterName
+respectively.
+The request returns a response of whether the job was successfully added to the
+queue or not.
 
 \section{Authorization}
 \fix{}{Might need authorization in the api}
