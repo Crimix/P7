@@ -10,7 +10,7 @@ model to predict the sentiment.
 Feature extraction is used after the tokenization to choose which words are to
 be used to determine the sentiment. A lot of sentiment can be lost if the
 feature extracter is simplistic. There are several ways which sentiment can be
-expressed in text, such as\citep[Ch.2-4]{Sentiment}: 
+expressed in text, such as \fix{\citep[Ch.2-4]{Sentiment}}{Look at this again}: 
 
 \begin{itemize}
   \item Capitalization 
@@ -87,8 +87,8 @@ training methods, each suitable for different tasks.
   \item \textbf{Supervised learning} is when the training data is paired with a
   given result, for instance: ``This is a great movie'' can be paired with
   ``positive'' as a result. This allows the model to verify its prediction
-  whether it guesses correct or not \citep[Ch. 7.0]{MIBook}. This is useful as
-  it provides an easy way to validate the accuracy of the model. The main problem
+  whether it guesses correct or not \citep[Ch. 7.0]{MIBook}\KT. This is useful
+  as it provides an easy way to validate the accuracy of the model. The main problem
   is that most data is not labeled, which means that it has to be labeled to be
   useful.
   \item \textbf{Reinforcement learning} is similar to supervised learning with
@@ -98,7 +98,7 @@ training methods, each suitable for different tasks.
   \item \textbf{Unsupervised learning} is different as the training data no
   longer includes a result, and as such can no longer evaluate the accuracy.
   Instead it useful for clustering data and discovering common elements
-  \citep[Ch. 11.1]{MIBook}.
+  \citep[Ch. 11.1]{MIBook}\KT.
 \end{itemize}
 
 The model which is most used for sentiment analysis is the supervised learning
