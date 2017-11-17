@@ -1,5 +1,4 @@
-\section{Sentiment Analysis}\label{SEC:SentimentAnalysis}
-
+\section{Sentiment Analysis}
 Sentiment analysis is used to determine the opinions of people regarding
 specific topics, such as a movie or a person. This has become especially useful
 with the increasing usage of social media, as people increasingly discuss and
@@ -11,7 +10,7 @@ model to predict the sentiment.
 Feature extraction is used after the tokenization to choose which words are to
 be used to determine the sentiment. A lot of sentiment can be lost if the
 feature extracter is simplistic. There are several ways which sentiment can be
-expressed in text, such as: \Source
+expressed in text, such as \fix{\citep[Ch.2-4]{Sentiment}}{Look at this again}: 
 
 \begin{itemize}
   \item Capitalization 
@@ -21,8 +20,6 @@ expressed in text, such as: \Source
   \item Stopwords
   \item Negation
 \end{itemize}
-
-\fix{}{We are stil in the analysis, where are all the sources}
 
 For instance there is a big difference between person 1 saying ``I love this
 movie'' and person 2 saying ``I LOVE this movie!!!!''. In this example both the
@@ -70,6 +67,7 @@ I hate this song, why do they keep playing it? &
 \label{tab:feature}
 \end{table}
 
+%Add something about minimizing tokens by performing stemming?
 
 \subsection{Classification}
 
@@ -82,50 +80,42 @@ are of interest, a cursory description of the different models can be seen at
 \citep{Classification}.
 
 \subsubsection{Training}
-The training data is an important part of every model. Classification
-performed best by using the training method called supervised learning.
-There are two other types of learning methods, namely reinforcemet and
-unsupervised learning, these are better suited for other types of tasks such as
-clustering and robot behaviour \Source.
+The training data is an important part of every model. There are three different
+training methods, each suitable for different tasks. 
 
 \begin{itemize}
   \item \textbf{Supervised learning} is when the training data is paired with a
   given result, for instance: ``This is a great movie'' can be paired with
   ``positive'' as a result. This allows the model to verify its prediction
-  whether it guesses correct or not. This is useful as it provides an easy way
-  to validate the accuracy of the model. The main problem is that most data is
-  not labeled, which means that it has to be labeled by hand to be
-  useful \Source.
+  whether it guesses correct or not \citep[Ch. 7.0]{MIBook}\KT. This is useful
+  as it provides an easy way to validate the accuracy of the model. The main problem
+  is that most data is not labeled, which means that it has to be labeled to be
+  useful.
   \item \textbf{Reinforcement learning} is similar to supervised learning with
   key difference being that the model is only given a ``reward'' when it
   performs the best action. This type of learning method among is useful when
   using robotic agent \citep{Reinforcement}.
   \item \textbf{Unsupervised learning} is different as the training data no
   longer includes a result, and as such can no longer evaluate the accuracy.
-  Instead it useful for clustering data and discovering common elements \Source.
+  Instead it useful for clustering data and discovering common elements
+  \citep[Ch. 11.1]{MIBook}\KT.
 \end{itemize}
 
-The training itself is dependent on the model, as different models train in
-different ways. For instance training a Naive Bayes Classifier involves
-adjusting the percentages of each token as they appear, while a Neural Network
-adjusts the value of its weights. 
+The model which is most used for sentiment analysis is the supervised learning
+approach, as it is most useful for classification tasks.
 
 \subsubsection{Models}
 
-There are a lot of different models which can be used for sentiment analysis,
-see \autoref{sentiment}. Different models provide different levels of accuracy
+There are a lot of different models which can be used for sentiment analysis. 
+Different models provide different levels of accuracy as can be seen in
+\autoref{sentiment}, which shows a couple of different models on the same IMDB
+dataset with 3 different outputs\citep{Classification}.
 
 \figx[1.0]{sentiment}{Accuracy of different sentiment analysis models on the
 IMDB dataset \citep{Classification}}
 
+The different models which are shown in the graph are Naive Bayes using 
 
-
-There are two other methods, namely reinforcement and unsupervised learning,
-whcih can be 
-
-Reinforcement learning is similar to supervised learning with key difference
-being that the model is only given a ``reward'' when it guesses the correct
-action. 
 
 
 
