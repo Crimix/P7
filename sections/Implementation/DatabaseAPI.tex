@@ -2,13 +2,13 @@
 As a part of the overall application, we need a database to store information
 used by the different workers. This is important, as we make use of the
 user's Twitter account to retrieve data from the Twitter \ac{API}. As such, this
-section will be used to describe how we access and store this data, and how we
+section is used to describe how we access and store this data, and how we
 make sure that it is only accessible to authorized users.
 
 \section{Database Design}\label{DBDesign}
 The database uses the MySQL framework, and is built as a standardized relational
 database. In order to store the general data, we have two tables; \textc{Users}
-and \textc{Twitters}. These tables can be seen in \autoref{TwitterDBTable}
+and \textc{Twitters}, as seen on table \autoref{TwitterDBTable}
 and \autoref{UserDBTable}.
 
 \begin{table}[H]
@@ -23,12 +23,12 @@ and \autoref{UserDBTable}.
 \label{TwitterDBTable}
 \end{table}
 
-The table in \autoref{TwitterDBTable} is used for storing data about analyzed
-twitter users, such that we can reference this data, if we should receive
-a request for that user to be analyzed again. This allows to to reduce overhead,
-as we can reuse data. One important aspect is that we need to respect a users
-privacy, as such we have introduced the ``proctect'' boolean to indicate if only
-the Twitter user which the result belong to is allowed to retrieve it.
+Table \autoref{TwitterDBTable} is used for storing data about analyzed
+twitter users, such that we can reference this data if we should receive
+a request. This allows to reduce overhead, as we can reuse data. One important
+aspect is that we need to respect a user's privacy. As such, we have introduced
+the ``proctect'' boolean to indicate if only the Twitter user, which the result
+belong to, is allowed to retrieve it.
 
 \begin{table}[H]
 \begin{tabular}{l | l | l | l | l }
@@ -42,10 +42,9 @@ the Twitter user which the result belong to is allowed to retrieve it.
 \label{UserDBTable}
 \end{table}
 
-The table in \autoref{UserDBTable} is used for authenticating workers. This
-means, that each time a users uses our application, that instance will be saved
+Table \autoref{UserDBTable} is used for authenticating workers. This
+means that each time a users uses our application, that instance is saved
 as a worker. This worker has an automatically generated name and password.
-
 
 \section{\ac{API} Design}
 In order to access the database described in \autoref{DBDesign}, we have
@@ -105,7 +104,7 @@ list of active tokens on the database.\nl
 
 In order to retrieve a token, a worker must make a request to the
 ``oauth/token'' endpoint, while supplying a username, password, and client
-secret. The username and password are compared to those stored in the users
+secret. The username and password are compared to those stored in the user's
 table on the database, and the client\_secret is a static string.\nl
 
 If the supplied credentials are found on the database, the request responds with
