@@ -1,16 +1,17 @@
 \section{Sentiment Analysis}
 Sentiment analysis is used to determine the opinions of people regarding
-specific topics, such as a movie or a person. This has become especially useful
+specific topics, such as movies or products. This has become especially useful
 with the increasing usage of social media, as people increasingly discuss and
-post their opinions. It is done by gathering and parsing the opinions which can
-be found online into tokens. Extracting the features and using a classification
-model to predict the sentiment.
+post their opinions online. Sentiment analysis is done by gathering opinions
+online and extracting tokens which provide clues to the opinion. The tokens can
+then be used with classification model to predict the sentiment.
 
 \subsection{Feature extraction} 
-Feature extraction is used after the tokenization to choose which words are to
-be used to determine the sentiment. A lot of sentiment can be lost if the
-feature extracter is simplistic. There are several ways which sentiment can be
-expressed in text, such as \fix{\citep[Ch.2-4]{Sentiment}}{Look at this again}: 
+Feature extraction is used after the tokenization, in order to choose which
+words best determine the sentiment. A lot of the sentiment can be lost in the
+feature extracter, as the opinions are much more apparent in text, than as a
+series of tokens. There are several ways which sentiment can be expressed in
+text, such as\citep[Ch.3-4]{Sentiment}:
 
 \begin{itemize}
   \item Capitalization 
@@ -26,8 +27,8 @@ movie'' and person 2 saying ``I LOVE this movie!!!!''. In this example both the
 capitalization of ``love'' and the exclamation mark help empathize that person
 2 seems to have a stronger positive sentiment towards the movie. But these
 features can easily be lost if the text is simplified. It is also beneficial to
-consider emoticons such as ``:-)'' as valuable tokens, as it is used to show
-sentiment clues.\\
+consider emoticons such as ``:-)'' as tokens, as they are used to show
+emotions.\\
 
 An example of lengthening is the difference in sentiment between ``huuuungry'',
 ``huuungry'' and ``hungry". The differences in sentiment between the first two
@@ -37,18 +38,18 @@ for tokens with more than two of the same letters repeated and removing the
 repeated letters. This will make the loss of sentiment minimal, while limiting
 the varitions of the same word.\nl
 
-The removal of stopwords, which are words that do not contain useful
-information, is dependent upon which classification model is used. Some models
-such as a Naive Bayes classifier will benefit from having the stopwords removed
-as they are useless information. Neural Networks work very differently from
-Naive Bayes classifiers, and are able to look past the noise given enough
-training data \Source.\nl
+It is useful to remove stopwords, which are words that do not contain useful
+information. As they can appear in every type of sentence they can make
+classification more difficult, though it also mainly depends on the model,
+see \autoref{subsub:Models}.\nl
 
-Negation also needs to be considered, as it can completely change the sentiment
-of the text. A simple way to handle negation is to add a tag such as ``NEG\_'' as
-a prefix for tokens after a word such as ``not'' and ``arent''.\nl 
+Negation also needs to be considered, as the sentiment can be completely changed
+with a word ``not''. Since sentiment is extracted from tokens, it is difficult
+to judge how each tokens relate to others, when see individually. A simple way
+to handle negation is to prefix tokens with a tag such as ``NEG\_'' after a
+word like ``not'' and ``arent''.\nl
 
-An example of how feature extraction is likely to look like can be seen in
+An example of how feature extraction is can look like can be seen in
 \autoref{tab:feature}.
 
 \begin{table}[H]
@@ -59,18 +60,62 @@ Text & Features \\ \hline
 I LOVED the movie but I am sooooo hungry! & 
 ``I'' ``LOVED'' ``movie'' ``I'' ``soo'' ``hungry'' ``!''
 \\ \hline 
-I hate this song, why do they keep playing it? &
-``I'' ``hate'' ``NEG\_song'' ``NEG\_why'' ``NEG\_keep'' ``NEG\_playing'' ``?''  
-\\ \hline
+I don't like this song, why do they keep playing it? &
+``I'' ``dont'' ``like'' ``NEG\_song'' ``NEG\_why'' ``NEG\_keep'' ``NEG\_playing''
+``?'' \\ \hline
 \end{tabular}
 \caption{An example of transforming text into features}
 \label{tab:feature}
 \end{table}
 
-%Add something about minimizing tokens by performing stemming?
+There are a couple other methods that can affect the how much sentiment is
+retained in the text, such as stemming and using n-grams.
+
+\subsubsection{Stemming}
+Stemming can be used when performing feature extraction. It is used to collapse
+a word into its base, for instance ``finding'' can be stemmed to ``find''.
+Stemming is both useful and destructive. It allows for reduction in the number
+of terms as they can be collapsed. It is also destructive as sentiment clues
+can be lost easily. A lot of a words meaning can be tied to the ending of the
+word, such as ``captivating'' and ``captive''. By using the Porter Stemmer
+Algorithm both words will collapse to ``captiv'' which removes what
+differentiate them. There are other Stemmer algorithms but each provide similar
+problems. Stemming can also be useful as it can reduce the vocabulary, instead
+of remembering both ``captivating'' and ``captive'', it now only needs to
+remember ``captiv''. This can be useful for small datasets where each token is
+important, as it can reduce the vocabulary size and sharpen the result
+\citep[Ch 3.b]{Sentiment}.
+
+\subsubsection{N-Grams}
+N-grams are sequence of 'n' items and determines how much context is stored
+from a piece of text. An example of the 3 first n-grams can be seen in
+\autoref{tab:ngram}. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Text & ``I love horror movies'' \\ \hline
+Unigrams (1) &
+``I'' ``love'' ``horror'' ``movies''
+\\ \hline 
+Bigram (2) &
+``I love'' ``love horror'' ``horror movies''
+\\ \hline
+Trigram (3) &
+``I love horror'' ``love horror movies''
+\\ \hline
+\end{tabular}
+\caption{An example of different N-Grams}
+\label{tab:ngram}
+\end{table}
+
+It becomes obvious as sequence becomes longer that more context is stored in the
+token, but it also becomes less likely that a similar token is found in another
+text. This means that without a sizable sample it can be difficult to achieve
+precision with longer n-grams.
 
 \subsection{Classification}
-
 The final part of sentiment analysis is the classification task. This task
 consist of predicting the sentiment based on the features which were extracted
 earlier. The accuracy of the predictions are based on labeled data that was that
@@ -104,7 +149,7 @@ training methods, each suitable for different tasks.
 The model which is most used for sentiment analysis is the supervised learning
 approach, as it is most useful for classification tasks.
 
-\subsubsection{Models}
+\subsubsection{Models}\label{subsub:Models}
 
 There are a lot of different models which can be used for sentiment analysis. 
 Different models provide different levels of accuracy as can be seen in
@@ -129,3 +174,11 @@ classification:
 - Support Vector Machines
 - Neural Networks
 
+
+
+%needs something about how they work, and how stopwords affect them
+ is dependent upon which classification model is used. Some models
+such as a Naive Bayes classifier will benefit from having the stopwords removed
+as they are useless information. Neural Networks work very differently from
+Naive Bayes classifiers, and are able to look past the noise given enough
+training data \Source.\nl
