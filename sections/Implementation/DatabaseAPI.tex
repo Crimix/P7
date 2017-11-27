@@ -6,10 +6,10 @@ section is used to describe how we access and store this data, and how we
 make sure that it is only accessible to authorized users.
 
 \section{Database Design}\label{DBDesign}
-The database uses the MySQL framework, and is built as a standardized relational
-database. In order to store the general data, we have two tables; \textc{Users}
-and \textc{Twitters}, as seen on table \autoref{TwitterDBTable}
-and \autoref{UserDBTable}.
+We have opted to use MySQL as our \ac{DBS}, structuring our data in a
+standardized relational database. In order to store the general data, we have
+two tables; \textc{Users} and \textc{Twitters}, as seen in
+\autoref{TwitterDBTable} and \autoref{UserDBTable}.
 
 \begin{table}[H]
 \begin{tabular}{l | l | l | l | l | l | l | l	}
@@ -23,11 +23,11 @@ and \autoref{UserDBTable}.
 \label{TwitterDBTable}
 \end{table}
 
-Table \autoref{TwitterDBTable} is used for storing data about analyzed
+\textc{Twitters} is used for storing data about analyzed
 twitter users, such that we can reference this data if we should receive
 a request. This allows to reduce overhead, as we can reuse data. One important
 aspect is that we need to respect a user's privacy. As such, we have introduced
-the ``proctect'' boolean to indicate if only the Twitter user, which the result
+the ``protect'' boolean to indicate if only the Twitter user, which the result
 belong to, is allowed to retrieve it.
 
 \begin{table}[H]
@@ -42,9 +42,9 @@ belong to, is allowed to retrieve it.
 \label{UserDBTable}
 \end{table}
 
-Table \autoref{UserDBTable} is used for authenticating workers. This
-means that each time a users uses our application, that instance is saved
-as a worker. This worker has an automatically generated name and password.
+\textc{Users} is used for authenticating workers. This means that each time a
+user uses our application, that instance is saved as a worker. This worker has
+an automatically generated name and password.
 
 \section{\ac{API} Design}
 In order to access the database described in \autoref{DBDesign}, we have
@@ -66,13 +66,13 @@ data, we have the following endpoints:
 \begin{table}[H]
 \begin{tabular}{l | l | l}
 \textbf{TYPE} & \textbf{Endpoint} & \textbf{Required Data} \\\hline
-POST & api/user      & 	\textc{string} name\\
+POST & api/twitter   & 	\textc{string} name\\
 ~    & ~			 &  \textc{int} twitterID\\
 ~    & ~			 &  \textc{double} pol\_var\\
 ~    & ~			 &  \textc{double} lib\_var\\
 ~    & ~			 &  \textc{boolean} protect				      
 \\\hline
-POST & api/twitter   & \textc{string} name\\
+POST & api/user      & \textc{string} name\\
 ~    & ~			 &  \textc{string(Encrypted)} password					      
 \\\hline
 POST & oauth/token 	& \textc{grant\_type} password					  \\
