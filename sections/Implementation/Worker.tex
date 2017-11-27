@@ -1,1 +1,30 @@
 \chapter{Worker}
+The worker is the part of the system which collects the tweets and analyzes
+them. Each task in the queue corresponds to a worker. 
+
+\section{Implementation}
+The worker first retrieves the user which the twitter name corresponds to. Then
+it retrieves a list of tweets that the user has posted. The next step for the
+worker is to retrieve the list fo users that the user is following and then
+retrieve the tweets they have posted. All the retrieving of tweets is split
+into task such that the process can be in parallel. Then the tweets can be
+analyzed fro the political value. This is also done in a parallelised way.
+
+\subsection{Splitting into task}
+The retrieving of tweets needs to be split into different task which can run at
+the same time, to speed up th collection of tweets. The way that it split is
+that each user that a user is following, corresponds to a task, because for each
+of them a maximum of \fix{3200 tweets can be retrieved see \ldots}{We need
+to say it either in the analysis or here}. Therefor the tasks are equally split.
+When the worker analyzes the tweets it also need to split the list of tweets
+into task such that it is possible to work on a smaller subset of the problem, here
+the splitting is done such that each task gets an equal amount of tweets. The
+main difference between the two parts where the work load is split into task is,
+for the retrieving only a maximum number of tasks is running at any given time,
+even though a user follows more than the numbers of running task. When in the
+analyze part, the split is performed such that the number of tasks specified as
+a constant is at most the constant+1. This is because it first tries to split
+the tweets evenly between each task, the rest of the tweets is then in its own
+task.
+
+\fix{}{Needs more}
