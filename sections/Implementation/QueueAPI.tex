@@ -6,13 +6,20 @@ our application to evaluate a specific Twitter user's political orientation.
 \section{Implementation}
 The \ac{API} is implemented in a C\# program, such that it uses the same
 language as the QueueServer program. This way, the \ac{API} can use already
-written code from the QueueServer and the Worker programs.
+written code from the QueueServer and the Worker classes.
 
 \subsection{Queue Server}
-The Queue server is a class in a libray that is executed on its own thread when
-the \ac{API} is started. When a request is received, it adds it to the queue
-server for execution. The queue server then uses the worker class from our library which
-downloads the tweets of the requested user's friends. 
+The Queue server is a singleton class in a library that contains various
+queues and functions used to help execute tasks. When the GUI makes a request,
+the function AddTask is executed. This function adds the requested Twitter
+account to a queue called nonAddedRequests. TaskQueue is an asynchronous
+function that is executed on its own thread when the \ac{API} is started and runs for
+the entirety of it. In each iteration, it checks if there are any entries in
+nonAddedRequests. If there are, it makes a task for each of them and adds them
+to a queue of tasks called taskQueue. Afterwards, it starts each task
+asynchronously so that at most \fix{5}{if TASK_LIMIT is changed, change this}
+are running at the same time. Afterwards, it checks the list of
+running tasks and removes the finished ones.
 
 \fix{}{Need more implementation details about how it was done in the code, what
 was needed and used}
