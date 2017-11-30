@@ -1,58 +1,97 @@
-% 
-% 
-% 
-% All corrections on the report applied and a further grammar check on new stuff, introductions and conclusions are also added to the chapters. 
-% 
-% After the meeting Monday, we discussed how to expand the program we have written to be a web application, as such we decided that we need a gui web application in Laravel which connects to a queue server in c# through a rest api, then the queue server should start workers which are a modified version of our first program. The gui and workers communicate with a database though another rest api. The rest of the week was spent on trying first to make the database rest api in c# but it was then after many problems it was decided that the database rest api should be made in a separate Laravel project. Each of the for a mentioned items has been worked on during the week.
-% 
-% 
-% ML-stuff
-% In regards to classifying tweets the week has been spent investigating different types of ML, especially Support Vector Machines, Long Short Term Memory and basic Neural Networks, which have shown to be promising. There has been some thought regarding using different methods for sentiment analysis, such as bag of words vs NNs.
-% 
-% There has also been devoted time to figuring out whether we should write the ML part in python, as it has a lot of good libraries and documentation, or C# which has a what appears to be well regarded libraries and somewhat less documentation. 
-% 
-% There has been work on figuring out how to transform tweets into something useful, and so far a tweet parser has been built, which transform the tweet from a string to a list of string (tokens).
-% There has been thought about further transforming the list to a vector by mapping words with unique integers, which should be useful when used by a NN.
-% 
-% We have considered options for different methods of training, and arrived that we are going use the supervised method, though that means we will have to provide a lot of tweets which we will have to classify regarding political leaning.
-% 
-% Meeting:
+\section*{Week 43}
+\subsection*{What Happend This Week}
+Many corrections on the report, some missing introductions and conclusions.
+From the meeting we found out that we wanted a \ac{GUI} web application in
+Laravel \fix{ToDo}{Ref til Laravel} which should connect to a queue server in
+C\# through a \ac{REST} \ac{API}. Then the queue should start call a modified
+version of our workers: program fetching tweets from Twitter. The \ac{GUI} and
+workers communicate with a databse through another \ac{REST} \ac{API}.
+We split all members into different parts and progressed on all, investigating
+how and what we should do with them. We quickly found that the database
+\ac{REST} \ac{API} should be made in a separate Laravel project.
+
+\subsection*{Evaluation}
+During the presentation Monday we recieved a lot of feedback on everything, and
+some keywords or methods extreemly useful to us that we had not considered. A
+presentation meeting, where we show our solution and talk about our ideas and
+methods, is a very good idea and definetly strengthen the project. New projects
+for the solution, found through brainstorming, we had not considered before,
+was added to our complete solution.
+
+\subsection*{Next Week}
+During the next week we will continiue development on the parts, we have a lot
+to do after this meeting. And we will make some considerations on which type of
+user we want, university, highschool or other?
+The webcrawler chapter should also be expanded with more info on the \ac{API}
+and perhaps some information on why we describe the crawler, since we wont
+really use it.
+
+
+% All corrections on the report applied and a further grammar check on new
+% stuff, introductions and conclusions are also added to the chapters.
+%  After the meeting Monday, we discussed how to expand the program we have
+% written to be a web application, as such we decided that we need a gui web
+% application in Laravel which connects to a queue server in c# through a rest
+% api, then the queue server should start workers which are a modified version
+% of our first program. The gui and workers communicate with a database though
+% another rest api. The rest of the week was spent on trying first to make the
+% database rest api in c# but it was then after many problems it was decided
+% that the database rest api should be made in a separate Laravel project. Each
+% of the for a mentioned items has been worked on during the week.
+%   ML-stuff In regards to classifying tweets the week has been spent
+% investigating different types of ML, especially Support Vector Machines, Long
+% Short Term Memory and basic Neural Networks, which have shown to be promising.
+% There has been some thought regarding using different methods for sentiment
+% analysis, such as bag of words vs NNs.
+%  There has also been devoted time to figuring out whether we should write the
+% ML part in python, as it has a lot of good libraries and documentation, or C#
+% which has a what appears to be well regarded libraries and somewhat less
+% documentation.
+%  There has been work on figuring out how to transform tweets into something
+% useful, and so far a tweet parser has been built, which transform the tweet
+% from a string to a list of string (tokens).
+% There has been thought about further transforming the list to a vector by
+% mapping words with unique integers, which should be useful when used by a NN.
+%  We have considered options for different methods of training, and arrived
+% that we are going use the supervised method, though that means we will have to
+% provide a lot of tweets which we will have to classify regarding political
+% leaning.
+%  Meeting:
 % Presentation:
 % Click on spectrum. Which friends are where.
-% Tune what kind og people you want suggested. Very different, slightly different from you?
-% Suggest people with a minimum of intellect (University degree? Known speaker?)
-% Lookup existing recommendation systems. Current systems, reports, solutions?
-% ADs API can maybe group people a bit? Maybe look at hashtags?
-% What is our end goal? A plugin? Standalone application?
-% Take additional input from the user. What do they think at the moment? What other information to supply? 
-% Accuracy can partly be determined by user feedback. Do you agree with our conclusion?
-% Lookup study about what which hashtags imply about a political stance/leaning.
+% Tune what kind og people you want suggested. Very different, slightly
+% different from you? Suggest people with a minimum of intellect (University
+% degree? Known speaker?) Lookup existing recommendation systems. Current
+% systems, reports, solutions? ADs API can maybe group people a bit? Maybe look
+% at hashtags? What is our end goal? A plugin? Standalone application? Take
+% additional input from the user. What do they think at the moment? What other
+% information to supply? Accuracy can partly be determined by user feedback. Do
+% you agree with our conclusion? Lookup study about what which hashtags imply
+% about a political stance/leaning.
 % Look at related work to ours.
 % What is the complexity of our algorithm.
 % Store information for lookup later.
-% Have two approaches system based/neural network. How do they compare?
-% If we want to do preprocessing/plugin/(neural network?) we can ask for access to (something? computer??)
-% 
-% Meeting:
+% Have two approaches system based/neural network. How do they compare? If we
+% want to do preprocessing/plugin/(neural network?) we can ask for access to
+% (something? computer??)  Meeting:
 % Problem with information about reddit user numbers.
-% We could "potentially" just write about why our application would be easy to scale, and how we would do it
-% 
-% Should we find people to test the application?
+% We could "potentially" just write about why our application would be easy to
+% scale, and how we would do it  Should we find people to test the application?
 % - Maybe, if we can.
-% 
-% How do we expand our application:
-% - How would we deal with increased popularity
-% - We should probably do something with a browser (plugin/site/server/etc.)
-% 
-% What to do:
-% - User interface (Laravel)
-% - Describe Architecture MVC front-end. Unknown on back-end 
-% - Algorithm which uses emotional words, keywords, and hashtags
-% - If people log in using their own account, they get an amount of requests for themselves
-% - Convert system to run on a server
-% - Definitely do something to consider scalability e.g. multiple servers, or using users own requests
-% - Begin writing reflections (what should we have done? What did we do? The plan?)
-% - Plan how to systematically evaluate our application. User interface, testers, usability, functionality (does it work as intended).
-% - Look at lecture notes on how to design interfaces. Then do what the slides tell us to do. 
-% - Expand the webcrawler chapter with more info on the different parts of it, and in the end a conclusion with the reasonings why we won’t use it (and causes like spoofing and a very naughty crawler)
-% - Lookup existing recommendation systems. Current systems, reports, solutions?
+%  How do we expand our application:
+% - How would we deal with increased popularity - We should probably do
+% something with a browser (plugin/site/server/etc.)  What to do:
+% - User interface (Laravel) - Describe Architecture MVC front-end. Unknown on
+% back-end - Algorithm which uses emotional words, keywords, and hashtags - If
+% people log in using their own account, they get an amount of requests for
+% themselves - Convert system to run on a server - Definitely do something to
+% consider scalability e.g. multiple servers, or using users own requests -
+% Begin writing reflections (what should we have done? What did we do? The
+% plan?) - Plan how to systematically evaluate our application. User interface,
+% testers, usability, functionality (does it work as intended).
+% - Look at lecture notes on how to design interfaces. Then do what the slides
+% tell us to do.
+% - Expand the webcrawler chapter with more info on the different parts of it,
+% and in the end a conclusion with the reasonings why we won’t use it (and
+% causes like spoofing and a very naughty crawler) - Lookup existing
+% recommendation systems. Current systems, reports, solutions?
