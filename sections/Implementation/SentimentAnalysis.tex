@@ -111,20 +111,14 @@ The idea is that as bigger n-grams are used, more context is stored in the
 token. It becomes less likely to encounter a given token, which should
 improve accuracy if there is a large training sample. With smaller training
 samples it becomes necessary to use unigrams as there are not enough
-token occurances to justify using bigger n-grams. Though when used with
-suporvised machine learning models, \say{\ldots the use of bigrams and trigrams
-in your feature space may not necessarily yield any significant improvement.}
-\citep{NGrams}.
+token occurances to justify using bigger n-grams.
 
 
 \subsection{Classification}
 The final part of sentiment analysis is the classification task. This task
 consists of predicting the sentiment based on the features extracted earlier.
 The accuracy of the predictions are based on labeled data that was provided as
-training data, as well as the model that is used. While We do not go in depth
-about the models that are available, we describe the models that are of
-interest. A cursory description of the different models can be found in the
-citation \citep{Classification}.
+training data, as well as the model that is used. 
 
 \subsubsection{Training}
 The training data is an important part of every model. There are three different
@@ -155,28 +149,33 @@ approach, as it is the most useful for classification tasks.
 
 There are a lot of different models which can be used for sentiment analysis. 
 Different models provide different levels of accuracy, as seen in
-\autoref{sentiment}, which shows a couple of different models on the same IMDB
-dataset with three different outputs\citep{Classification}.
+\autoref{sentiment}, which shows a several of different models on the same IMDB
+dataset with three different outputs. While We do not go in depth about the
+models that are available, we will describe the models that are of interest. A
+cursory description of the different models can be found in the citation
+\citep{Classification}.
 
 \figx[1.0]{sentiment}{Accuracy of different sentiment analysis models on the
 IMDB dataset \citep{Classification}}
 
+\fix{The models that interest us are the Naive Bayes model, Support Vector Machines
+and Neural Networks. }{Decide which models we need to describe\ldots}
+
+\begin{itemize}
+  \item \textbf{Bag of Words} works by\ldots
+  \item \textbf{Naive Bayes Classifier} is a probabilistic model that tries to
+  predict which class a given a number of features belong to. 
+\end{itemize}
+
+
+
+
+
+
 The different models, which are shown in the graph, are Naive Bayes using 
 
-Baseline algorithm:
-tokens
-stemming which can destroy some of the sentiment
-feature extraction
 classification:
 - Naive Bayes
 - Support Vector Machines
 - Neural Networks
 
-
-
-%needs something about how they work, and how stopwords affect them
- is dependent upon which classification model is used. Some models
-such as a Naive Bayes classifier will benefit from having the stopwords removed
-as they are useless information. Neural Networks work very differently from
-Naive Bayes classifiers, and are able to look past the noise given enough
-training data \Source.\nl
