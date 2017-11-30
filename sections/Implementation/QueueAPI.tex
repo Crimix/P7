@@ -17,7 +17,7 @@ function that is executed on its own thread when the \ac{API} is started and run
 the entirety of it. In each iteration, it checks if there are any entries in
 nonAddedRequests. If there are, it makes a task for each of them and adds them
 to a queue of tasks called taskQueue. Afterwards, it starts each task
-asynchronously so that at most \fix{5}{if TASK_LIMIT is changed, change this}
+asynchronously so that at most \fix{5}{if TASK\_LIMIT is changed, change this}
 are running at the same time. Afterwards, it checks the list of
 running tasks and removes the finished ones.
 
