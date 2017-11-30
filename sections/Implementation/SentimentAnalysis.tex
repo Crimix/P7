@@ -2,16 +2,16 @@
 Sentiment analysis is used to determine the opinions of people regarding
 specific topics, such as movies or products. This has become especially useful
 with the increasing usage of social media, as people increasingly discuss and
-post their opinions online. Sentiment analysis is done by gathering opinions
-online and extracting tokens which provide clues to the opinion. The tokens can
-then be used with a classification model to predict the sentiment.
+post their opinions online. Sentiment analysis is done by
+gathering opinions and extracting tokens which provide clues to the opinion. The tokens can then be
+used with a classification model to predict the sentiment. 
 
 \subsection{Feature extraction} 
 Feature extraction is used after the tokenization, in order to choose which
 words best determine the sentiment. A lot of the sentiment can be lost in the
 feature extractor, as the opinions are much more apparent in text than as a
 series of tokens. There are several ways which sentiment can be expressed in
-text, such as\citep[Ch.3-4]{Sentiment}:
+text, such as\citep[Overview.3-4]{Sentiment}:
 
 \begin{itemize}
   \item Capitalization 
@@ -25,6 +25,7 @@ For instance, there is a big difference between person 1 saying ``I love this
 movie'' and person 2 saying ``I LOVE this movie!!!!''. In this example both the
 capitalization of ``love'' and the exclamation mark help empathize that person
 2 seems to have a stronger positive sentiment towards the movie.\\
+
 
 An example of lengthening is the difference in sentiment between ``huuuungry'',
 ``huuungry'' and ``hungry". The differences in sentiment between the first two
@@ -106,10 +107,15 @@ Trigram (3) &
 \label{tab:ngram}
 \end{table}
 
-It becomes obvious as sequence becomes longer that more context is stored in the
-token, but it also becomes less likely that a similar token is found in another
-text. This means that without a sizable sample it can be difficult to achieve
-precision with longer n-grams.
+The idea is that as bigger n-grams are used, more context is stored in the
+token. It becomes less likely to encounter a given token, which should
+improve accuracy if there is a large training sample. With smaller training
+samples it becomes necessary to use unigrams as there are not enough
+token occurances to justify using bigger n-grams. Though when used with
+suporvised machine learning models, \say{\ldots the use of bigrams and trigrams
+in your feature space may not necessarily yield any significant improvement.}
+\citep{NGrams}.
+
 
 \subsection{Classification}
 The final part of sentiment analysis is the classification task. This task
@@ -125,9 +131,9 @@ The training data is an important part of every model. There are three different
 training methods, each suitable for a different task. 
 
 \begin{itemize}
-  \item \textbf{Supervised learning} is when the training data is paired with a
-  given result, for instance: ``This is a great movie'' can be paired with
-  ``positive'' as a result. This allows the model to verify its prediction
+  \item \textbf{Supervised learning} is when the training data is paired as an
+  input-output pair, for instance: ``This is a great movie''
+  can be paired with ``positive''. This allows the model to verify its prediction
   whether it guesses correct or not \citep[Ch. 7.0]{MIBook}\KT. This is useful
   as it provides an easy way to validate the accuracy of the model. The main problem
   is that most data is not labeled, which means that it has to be labeled to be
@@ -135,11 +141,11 @@ training methods, each suitable for a different task.
   \item \textbf{Reinforcement learning} is similar to supervised learning with
   the key difference being that the model is only given a ``reward'' when it
   performs the best action. This type of learning method is useful when
-  using a robotic agent \citep{Reinforcement}.
+  training a robotic agent \citep{Reinforcement}.
   \item \textbf{Unsupervised learning} is different as the training data no
-  longer includes a result, and as such, it can no longer evaluate the accuracy.
-  Instead, it is useful for clustering data and discovering common elements
-  \citep[Ch. 11.1]{MIBook}\KT.
+  longer includes a result, and as such, it can no longer evaluate the accuracy
+  of the prediction. Instead, it is allows for clustering data and aims to
+  minimize prediction errors \citep[Ch. 11.1]{MIBook}\KT.
 \end{itemize}
 
 The model, which is most used for sentiment analysis, is the supervised learning
