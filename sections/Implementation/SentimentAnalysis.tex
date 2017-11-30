@@ -4,31 +4,27 @@ specific topics, such as movies or products. This has become especially useful
 with the increasing usage of social media, as people increasingly discuss and
 post their opinions online. Sentiment analysis is done by gathering opinions
 online and extracting tokens which provide clues to the opinion. The tokens can
-then be used with classification model to predict the sentiment.
+then be used with a classification model to predict the sentiment.
 
 \subsection{Feature extraction} 
 Feature extraction is used after the tokenization, in order to choose which
 words best determine the sentiment. A lot of the sentiment can be lost in the
-feature extracter, as the opinions are much more apparent in text, than as a
+feature extractor, as the opinions are much more apparent in text than as a
 series of tokens. There are several ways which sentiment can be expressed in
 text, such as\citep[Ch.3-4]{Sentiment}:
 
 \begin{itemize}
   \item Capitalization 
   \item Lengthening
-  \item Emoticons
   \item Punctuation
   \item Stopwords
   \item Negation
 \end{itemize}
 
-For instance there is a big difference between person 1 saying ``I love this
+For instance, there is a big difference between person 1 saying ``I love this
 movie'' and person 2 saying ``I LOVE this movie!!!!''. In this example both the
 capitalization of ``love'' and the exclamation mark help empathize that person
-2 seems to have a stronger positive sentiment towards the movie. But these
-features can easily be lost if the text is simplified. It is also beneficial to
-consider emoticons such as ``:-)'' as tokens, as they are used to show
-emotions.\\
+2 seems to have a stronger positive sentiment towards the movie.\\
 
 An example of lengthening is the difference in sentiment between ``huuuungry'',
 ``huuungry'' and ``hungry". The differences in sentiment between the first two
@@ -39,17 +35,17 @@ repeated letters. This will make the loss of sentiment minimal, while limiting
 the varitions of the same word.\nl
 
 It is useful to remove stopwords, which are words that do not contain useful
-information. As they can appear in every type of sentence they can make
+information. As they can appear in every type of sentence, they can make
 classification more difficult, though it also mainly depends on the model,
 see \autoref{subsub:Models}.\nl
 
 Negation also needs to be considered, as the sentiment can be completely changed
 with a word ``not''. Since sentiment is extracted from tokens, it is difficult
-to judge how each tokens relate to others, when see individually. A simple way
+to judge how each tokens relate to others when seen individually. A simple way
 to handle negation is to prefix tokens with a tag such as ``NEG\_'' after a
-word like ``not'' and ``arent''.\nl
+word like ``not'' and ``aren't''.\nl
 
-An example of how feature extraction is can look like can be seen in
+An example of what a feature extraction can look like can be seen on table
 \autoref{tab:feature}.
 
 \begin{table}[H]
@@ -68,7 +64,7 @@ I don't like this song, why do they keep playing it? &
 \label{tab:feature}
 \end{table}
 
-There are a couple other methods that can affect the how much sentiment is
+There are a couple of other methods that can affect how much sentiment is
 retained in the text, such as stemming and using n-grams.
 
 \subsubsection{Stemming}
@@ -76,8 +72,8 @@ Stemming can be used when performing feature extraction. It is used to collapse
 a word into its base, for instance ``finding'' can be stemmed to ``find''.
 Stemming is both useful and destructive. It allows for reduction in the number
 of terms as they can be collapsed. It is also destructive as sentiment clues
-can be lost easily. A lot of a words meaning can be tied to the ending of the
-word, such as ``captivating'' and ``captive''. By using the Porter Stemmer
+can be lost easily. A lot of the meaning of a word can be tied to the ending of
+the word, such as ``captivating'' and ``captive''. By using the Porter Stemmer
 Algorithm both words will collapse to ``captiv'' which removes what
 differentiate them. There are other Stemmer algorithms but each provide similar
 problems. Stemming can also be useful as it can reduce the vocabulary, instead
@@ -88,7 +84,7 @@ important, as it can reduce the vocabulary size and sharpen the result
 
 \subsubsection{N-Grams}
 N-grams are sequence of 'n' items and determines how much context is stored
-from a piece of text. An example of the 3 first n-grams can be seen in
+from a piece of text. An example of the 3 first n-grams can be seen on table
 \autoref{tab:ngram}. 
 
 \begin{table}[H]
@@ -117,16 +113,16 @@ precision with longer n-grams.
 
 \subsection{Classification}
 The final part of sentiment analysis is the classification task. This task
-consist of predicting the sentiment based on the features which were extracted
-earlier. The accuracy of the predictions are based on labeled data that was that
-provided as training data, as well as the model that is used. We will not go
-indepth about the models that are available but will describe the models that
-are of interest, a cursory description of the different models can be seen at
-\citep{Classification}.
+consists of predicting the sentiment based on the features extracted earlier.
+The accuracy of the predictions are based on labeled data that was provided as
+training data, as well as the model that is used. While We do not go in depth
+about the models that are available, we describe the models that are of
+interest. A cursory description of the different models can be found in the
+citation \citep{Classification}.
 
 \subsubsection{Training}
 The training data is an important part of every model. There are three different
-training methods, each suitable for different tasks. 
+training methods, each suitable for a different task. 
 
 \begin{itemize}
   \item \textbf{Supervised learning} is when the training data is paired with a
@@ -137,33 +133,29 @@ training methods, each suitable for different tasks.
   is that most data is not labeled, which means that it has to be labeled to be
   useful.
   \item \textbf{Reinforcement learning} is similar to supervised learning with
-  key difference being that the model is only given a ``reward'' when it
-  performs the best action. This type of learning method among is useful when
-  using robotic agent \citep{Reinforcement}.
+  the key difference being that the model is only given a ``reward'' when it
+  performs the best action. This type of learning method is useful when
+  using a robotic agent \citep{Reinforcement}.
   \item \textbf{Unsupervised learning} is different as the training data no
-  longer includes a result, and as such can no longer evaluate the accuracy.
-  Instead it useful for clustering data and discovering common elements
+  longer includes a result, and as such, it can no longer evaluate the accuracy.
+  Instead, it is useful for clustering data and discovering common elements
   \citep[Ch. 11.1]{MIBook}\KT.
 \end{itemize}
 
-The model which is most used for sentiment analysis is the supervised learning
-approach, as it is most useful for classification tasks.
+The model, which is most used for sentiment analysis, is the supervised learning
+approach, as it is the most useful for classification tasks.
 
 \subsubsection{Models}\label{subsub:Models}
 
 There are a lot of different models which can be used for sentiment analysis. 
-Different models provide different levels of accuracy as can be seen in
+Different models provide different levels of accuracy, as seen in
 \autoref{sentiment}, which shows a couple of different models on the same IMDB
-dataset with 3 different outputs\citep{Classification}.
+dataset with three different outputs\citep{Classification}.
 
 \figx[1.0]{sentiment}{Accuracy of different sentiment analysis models on the
 IMDB dataset \citep{Classification}}
 
-The different models which are shown in the graph are Naive Bayes using 
-
-
-
-
+The different models, which are shown in the graph, are Naive Bayes using 
 
 Baseline algorithm:
 tokens

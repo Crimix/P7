@@ -1,7 +1,7 @@
 \chapter{Queue \ac{API}}
 As a part of the overall application, we need to be able to queue jobs to be
 executed, such that the first request gets handled first. A job is a request to
-our application to evaluate a specific Twitter users political side.
+our application to evaluate a specific Twitter user's political orientation.
 
 \section{Implementation}
 The \ac{API} is implemented in a C\# program, such that it uses the same
@@ -12,13 +12,13 @@ written code from the QueueServer and the Worker programs.
 The Queue server is a class in a libray that is executed on its own thread when
 the \ac{API} is started. When a request is received, it adds it to the queue
 server for execution. The queue server then uses the worker class from our library which
-downloads the tweets that the requested user's friends tweet. 
+downloads the tweets of the requested user's friends. 
 
 \fix{}{Need more implementation details about how it was done in the code, what
 was needed and used}
 
 \section{Requests}
-The \ac{API} has only one post request which is: \nl
+The \ac{API} only has one post request, which is: \nl
 
 \say{http://localhost:62020/api/TwitterAcc}\nl
 
@@ -27,9 +27,6 @@ where the body contains a value for TwitterApiKey and TwitterName
 respectively.
 The request returns a response of whether the job was successfully added to the
 queue or not.
-
-\section{Authorization}
-\fix{}{Might need authorization in the api}
 
 
 
