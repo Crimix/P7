@@ -1,14 +1,20 @@
 \chapter{Queue \ac{API}}
-As a part of the overall application, we need to be able to queue jobs to be
-executed, such that the first request gets handled first. A job is a request to
-our application to evaluate a specific Twitter user's political orientation.
+As a part of the overall application, we have to be able to handle requests
+and queue them for execution as tasks, such that the first request gets handled
+first.
 
 \section{Implementation}
 The \ac{API} is implemented in a C\# program, such that it uses the same
 language as the QueueServer program. This way, the \ac{API} can use already
-written code from the QueueServer and the Worker classes.
+written code from the QueueServer library and the Worker class.
 
-\subsection{Queue Server}
+\subsection{\ac{REST} \ac{API}}
+The \ac{REST} \ac{API} utilises the ASP.net framework with an added controller
+class called AnalyzeTwitterAccountController. This controller handles the post
+request by the GUI by running the AddTask function from the QueueServerInstance
+described in \autoref{sub:queueserver}.
+
+\subsection{Queue Server} \label{sub:queueserver}
 The Queue server is a singleton class in a library that contains various
 queues and functions used to help execute tasks. When the GUI makes a request,
 the function AddTask is executed. This function adds the requested Twitter
