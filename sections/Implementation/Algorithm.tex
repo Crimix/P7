@@ -1,1 +1,120 @@
 \chapter{Algorithm}
+In order to classify the political leanings of a twitter user, we have developed
+two different algorithms. One makes use of a neural network, and the other uses
+an algorithmic approach using keywords and sentiment analysis. This chapter will be
+used to describe the algorithmic approach, and the machine intelligence model
+will be described in \autoref{}.
+
+\section{Basic Idea}
+The basic idea behind this algorithm is a three-pronged approach, where we
+analyze the general sentiment of a tweet, what keywords are present, and what
+news media the user is sharing. Using this approach, we can first determine the
+sentiment of the tweet, that is, if the user is happy, angry, or neutral. Based
+on this, we can apply this sentiment to certain keywords which are present in
+the tweet e.g. if the sentiment is positive, and the keyword is the name of a
+politician, we have a good indicator as to the users political affiliation.
+Additionally, we can analyze what news media the user shares. This can be
+useful, as news media often have some inherent political bias, which can be
+reflected in the people sharing their material.
+
+\section{Sentiment Analysis}
+As described in \autoref{SentiAnal}, the sentiment analysis consists of
+identifying words which are considered emotional, and using them to determine
+either the general emotional value of a text, or the emotional reaction to
+specific nouns in the text.\nl
+
+The algorithm makes use of a simplified sentimental analysis model, where we
+determine the general sentimental value of a tweet by counting the occurrences
+of positive and negative words. \fix{This approach is also known as a \ldots,
+and is generally used for \ldots}{}. These emotional words used for this
+analysis have been compiled by Minqing Hu and Bing Liu who are assosiated with
+the University of Illinois at Chicago \citep{Hu:2004:MSC:1014052.1014073}.\nl
+
+The implementation of the sentiment analysis can be seen in
+\autoref{sentiAnalCode}.\\
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Determining the sentiment of a tweet , label =
+sentiAnalCode] 
+public AnalysisResultObj AnalyzeAndDecorateTweets(List<Tweet> tweetList){
+...
+	var puncturation = tweet.Text.Where(Char.IsPunctuation).Distinct().ToArray(); 
+    List<String> wordList = tweet.Text.Split(' ').Select(x => x.Trim(puncturation)).ToList<String>();
+
+	foreach (string word in wordList){
+		int wordValue;
+    	if (analysisWords.ContainsKey(word) && analysisWords.TryGetValue(word, out wordValue)){
+           	
+            if (wordValue == 1){
+               	tweet.posList.Add(word);
+                tweet.positiveValue++;
+            }
+            else if (wordValue == -1){
+              	tweet.negList.Add(word);
+               	tweet.negativeValue++;
+          	} ...
+		} ...
+	} ...
+}
+\end{lstlisting}
+\end{minipage}
+
+On \textbf{lines 3-4} we start by removing the puncturation in the tweet, and
+continue by splitting the text on spaces, such that we split it into individual words. On
+\textbf{lines 6-8} we iterate over all words in the tweet, and check if our
+dictionary of emotional words contain an element with the scanned word as the key. If it does,
+we output the emotional value of that word to the variable \textc{wordValue}.
+Then on \textbf{lines 10-16} count and add the positive and negative words as
+information on the tweet object.
+
+\section{Keyword Analysis}
+The original idea was to analyze the hashtags contained in a tweet, and use them
+to determine the users political beliefs. As such, we started by compiling a
+list of hashtags which were often used in a political context. These hashtags
+was found by using the site Top-Hashtags, which allows users to view what
+hashtags are frequently used in conjunction. By searching for the hashtag
+``\#politics'' we were able to find the top ~200 hashtags most used together
+with ``\#politics''. 
+Based on this initial list, we determined that the words used as hashtags were
+often general enough to also be present in the tweet text itself. As an example,
+people would often create hashtags from politicians' names or the name of a
+piece of legislature. 
+As such, the analysis was expanded into a ``keyword analysis" which also
+searched the text body for ``hashtags''. In order to determine the user's
+opinion towards a specific keyword, the keyword analysis hase been combined with
+the sentiment analysis, such that we can determine the user's sentiment towards
+that keyword. The code used for this an
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = , label = ] 
+public AnalysisResultObj AnalyzeAndDecorateTweets(List<Tweet> tweetList){
+...
+	foreach (string word in wordList){
+		...
+		if (hashtags.ContainsKey(word) && 
+			!tweet.tagList.Contains(word, StringComparer.InvariantCultureIgnoreCase)){
+        	HashtagObj hashtagObj;
+			
+			if (hashtags.TryGetValue(word, out hashtagObj)){
+            	tweet.tagList.Add(word);
+				int sentiment = tweet.getSentiment();
+                if (sentiment > 1)
+	                tweet.hashtagBias += hashtagObj.Pos;
+                else if (sentiment < -1)
+    	            tweet.hashtagBias += hashtagObj.Neg;
+                else
+        	        tweet.hashtagBias += hashtagObj.Bas;
+            } ...
+    	} ...
+	} ...
+}
+\end{lstlisting}
+\end{minipage}
+
+\section{Special Cases}
+Quotes, Sarcasm
+
+\section{Media Analysis}
+
+
+\section{Tests}
