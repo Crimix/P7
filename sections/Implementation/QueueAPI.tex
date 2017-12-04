@@ -14,7 +14,7 @@ class called AnalyzeTwitterAccountController. This controller handles the post
 request by the GUI by running the AddTask function from the QueueServerInstance
 described in \autoref{sub:queueserver}.
 
-\subsection{Queue Server} \label{sub:queueserver}
+\subsection{Queue server} \label{sub:queueserver}
 The Queue server is a singleton class in a library that contains various
 queues and functions used to help execute tasks. When the GUI makes a request,
 the function AddTask is executed. This function adds the requested Twitter
@@ -25,10 +25,54 @@ nonAddedRequests. If there are, it makes a task for each of them and adds them
 to a queue of tasks called taskQueue. Afterwards, it starts each task
 asynchronously so that at most \fix{5}{if TASK\_LIMIT is changed, change this}
 are running at the same time. Afterwards, it checks the list of
-running tasks and removes the finished ones.
+running tasks and removes the finished ones. \nl
+
+A code example of how requests are converted to tasks can be seen on
+\autoref{taskqueue}. \\
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Adding tasks to the queue, label = taskqueue] 
+public async void TaskQueue()
+{
+...
+  while (ThereIsNewTask()) // Adds all requests to the queue as tasks.
+  {
+	TwitterAcc input = nonAddedRequests.Peek();
+	
+	Task newTask = new Task(() =>
+	{
+	    ServerTask st = new ServerTask(input);
+	    st.Run();
+	});
+	taskQueue.Enqueue(newTask);
+	nonAddedRequests.Dequeue();
+  }
+...  
+}
+
+\end{lstlisting}
+\end{minipage}
+
+On \textbf{line 4}, runs ensures that it runs once for every request. 
+On \textbf{lines 6}, it recieves the next request in line.
+On \textbf{lines 8-12}, it adds a servertask corresponding to the request.
+On \textbf{line 13 and 14}, it adds the task to the task queue and removes the
+request from the queue of requests.
 
 \fix{}{Need more implementation details about how it was done in the code, what
 was needed and used}
+
+\subsection{Twitter account}
+The class TwitterAcc is used for every instance of a twitter account. It
+contains all necessary information about a specific twitter account, such as its
+token, Twitter name and token secret. What these are, can be seen on 
+\fix{}{Insert reference to section about twitter account.}. 
+
+\subsection{Server task}
+An instance of the class ServerTask is created every time a task is created. It
+is used to parse the twitter api key and twitter name of the twitter account
+being processed to the worker.
+
 
 \section{Requests}
 The \ac{API} only has one post request, which is: \nl
