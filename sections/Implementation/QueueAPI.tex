@@ -14,7 +14,7 @@ class called AnalyzeTwitterAccountController. This controller handles the post
 request by the GUI by running the AddTask function from the QueueServerInstance
 described in \autoref{sub:queueserver}.
 
-\subsection{Queue Server} \label{sub:queueserver}
+\subsection{Queue server} \label{sub:queueserver}
 The Queue server is a singleton class in a library that contains various
 queues and functions used to help execute tasks. When the GUI makes a request,
 the function AddTask is executed. This function adds the requested Twitter
@@ -29,6 +29,18 @@ running tasks and removes the finished ones.
 
 \fix{}{Need more implementation details about how it was done in the code, what
 was needed and used}
+
+\subsection{Twitter account}
+The class TwitterAcc is used for every instance of a twitter account. It
+contains all necessary information about a specific twitter account, such as its
+token, Twitter name and token secret. What these are, can be seen on 
+\fix{}{Insert reference to section about twitter account.}. 
+
+\subsection{Server task}
+An instance of the class ServerTask is created every time a task is created. It
+is used to parse the twitter api key and twitter name of the twitter account
+being processed to the worker.
+
 
 \section{Requests}
 The \ac{API} only has one post request, which is: \nl
