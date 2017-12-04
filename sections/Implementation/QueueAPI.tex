@@ -25,7 +25,39 @@ nonAddedRequests. If there are, it makes a task for each of them and adds them
 to a queue of tasks called taskQueue. Afterwards, it starts each task
 asynchronously so that at most \fix{5}{if TASK\_LIMIT is changed, change this}
 are running at the same time. Afterwards, it checks the list of
-running tasks and removes the finished ones.
+running tasks and removes the finished ones. \nl
+
+A code example of how requests are converted to tasks can be seen on
+\autoref{taskqueue}. \\
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Adding tasks to the queue, label = taskqueue] 
+public async void TaskQueue()
+{
+...
+  while (ThereIsNewTask()) // Adds all requests to the queue as tasks.
+  {
+	TwitterAcc input = nonAddedRequests.Peek();
+	
+	Task newTask = new Task(() =>
+	{
+	    ServerTask st = new ServerTask(input);
+	    st.Run();
+	});
+	taskQueue.Enqueue(newTask);
+	nonAddedRequests.Dequeue();
+  }
+...  
+}
+
+\end{lstlisting}
+\end{minipage}
+
+On \textbf{line 4}, runs ensures that it runs once for every request. 
+On \textbf{lines 6}, it recieves the next request in line.
+On \textbf{lines 8-12}, it adds a servertask corresponding to the request.
+On \textbf{line 13 and 14}, it adds the task to the task queue and removes the
+request from the queue of requests.
 
 \fix{}{Need more implementation details about how it was done in the code, what
 was needed and used}
