@@ -1,21 +1,78 @@
 \chapter{Queue \ac{API}}
-As a part of the overall application, we need to be able to queue jobs to be
-executed, such that the first request gets handled first. A job is a request to
-our application to evaluate a specific Twitter user's political orientation.
+As a part of the overall application, we have to be able to handle requests
+and queue them for execution as tasks, such that the first request gets handled
+first.
 
 \section{Implementation}
 The \ac{API} is implemented in a C\# program, such that it uses the same
 language as the QueueServer program. This way, the \ac{API} can use already
-written code from the QueueServer and the Worker programs.
+written code from the QueueServer library and the Worker class.
 
-\subsection{Queue Server}
-The Queue server is a class in a libray that is executed on its own thread when
-the \ac{API} is started. When a request is received, it adds it to the queue
-server for execution. The queue server then uses the worker class from our library which
-downloads the tweets of the requested user's friends. 
+\subsection{\ac{REST} \ac{API}}
+The \ac{REST} \ac{API} utilises the ASP.net framework with an added controller
+class called AnalyzeTwitterAccountController. This controller handles the post
+request by the GUI by running the AddTask function from the QueueServerInstance
+described in \autoref{sub:queueserver}.
+
+\subsection{Queue server} \label{sub:queueserver}
+The Queue server is a singleton class in a library that contains various
+queues and functions used to help execute tasks. When the GUI makes a request,
+the function AddTask is executed. This function adds the requested Twitter
+account to a queue called nonAddedRequests. TaskQueue is an asynchronous
+function that is executed on its own thread when the \ac{API} is started and runs for
+the entirety of it. In each iteration, it checks if there are any entries in
+nonAddedRequests. If there are, it makes a task for each of them and adds them
+to a queue of tasks called taskQueue. Afterwards, it starts each task
+asynchronously so that at most \fix{5}{if TASK\_LIMIT is changed, change this}
+are running at the same time. Afterwards, it checks the list of
+running tasks and removes the finished ones. \nl
+
+A code example of how requests are converted to tasks can be seen on
+\autoref{taskqueue}. \\
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Adding tasks to the queue, label = taskqueue] 
+public async void TaskQueue()
+{
+...
+  while (ThereIsNewTask()) // Adds all requests to the queue as tasks.
+  {
+	TwitterAcc input = nonAddedRequests.Peek();
+	
+	Task newTask = new Task(() =>
+	{
+	    ServerTask st = new ServerTask(input);
+	    st.Run();
+	});
+	taskQueue.Enqueue(newTask);
+	nonAddedRequests.Dequeue();
+  }
+...  
+}
+
+\end{lstlisting}
+\end{minipage}
+
+On \textbf{line 4}, it runs ensures that it runs once for every request. \\
+On \textbf{lines 6}, it recieves the next request in line.\\
+On \textbf{lines 8-12}, it adds a servertask corresponding to the request.\\
+On \textbf{line 13 and 14}, it adds the task to the task queue and removes the
+request from the queue of requests.\\
 
 \fix{}{Need more implementation details about how it was done in the code, what
 was needed and used}
+
+\subsection{Twitter account}
+The class TwitterAcc is used for every instance of a twitter account. It
+contains all necessary information about a specific twitter account, such as its
+token, Twitter name and token secret. What these are, can be seen on 
+\fix{}{Insert reference to section about twitter account.}. 
+
+\subsection{Server task}
+An instance of the class ServerTask is created every time a task is created. It
+is used to parse the twitter api key and twitter name of the twitter account
+being processed to the worker.
+
 
 \section{Requests}
 The \ac{API} only has one post request, which is: \nl

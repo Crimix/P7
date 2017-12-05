@@ -1,4 +1,4 @@
-\section{Sentiment Analysis}
+\section{Sentiment Analysis}\label{SentiAnal}
 Sentiment analysis is used to determine the opinions of people regarding
 specific topics, such as movies or products. This has become especially useful
 with the increasing usage of social media, as people increasingly discuss and
@@ -122,16 +122,15 @@ training data, as well as the model that is used.
 
 \subsubsection{Training}
 The training data is an important part of every model. There are three different
-training methods, each suitable for a different task. 
+training methods, each suitable for a different task.
 
 \begin{itemize}
   \item \textbf{Supervised learning} is when the training data is paired as an
-  input-output pair, for instance: ``This is a great movie''
-  can be paired with ``positive''. This allows the model to verify its prediction
-  whether it guesses correct or not \citep[Ch. 7.0]{MIBook}\KT. This is useful
-  as it provides an easy way to validate the accuracy of the model. The main problem
-  is that most data is not labeled, which means that it has to be labeled to be
-  useful.
+  input-output pair, for instance: ``This is a great movie'' can be paired with
+  ``positive''. This allows the model to verify its prediction whether it
+  guesses correct or not \citep[Ch. 7.0]{MIBook}. This is useful as it provides
+  an easy way to validate the accuracy of the model. The main problem is that
+  most data is not labeled, which means that it has to be labeled to be useful.
   \item \textbf{Reinforcement learning} is similar to supervised learning with
   the key difference being that the model is only given a ``reward'' when it
   performs the best action. This type of learning method is useful when
@@ -139,7 +138,7 @@ training methods, each suitable for a different task.
   \item \textbf{Unsupervised learning} is different as the training data no
   longer includes a result, and as such, it can no longer evaluate the accuracy
   of the prediction. Instead, it is allows for clustering data and aims to
-  minimize prediction errors \citep[Ch. 11.1]{MIBook}\KT.
+  minimize prediction errors \citep[Ch. 11.1]{MIBook}.
 \end{itemize}
 
 The model, which is most used for sentiment analysis, is the supervised learning

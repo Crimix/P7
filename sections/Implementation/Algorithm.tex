@@ -1,1 +1,190 @@
 \chapter{Algorithm}
+In order to classify the political leanings of a twitter user, we have developed
+two different solutions. One makes use of a naive baysian network, and the
+other uses an algorithmic approach using keywords and sentiment analysis. This
+chapter will be used to describe the algorithmic approach, and the machine
+intelligence model will be described in \autoref{MiModel}.
+
+\section{Basic Idea}
+The basic idea behind this algorithm is a three-pronged approach, where we
+analyze the general sentiment of a tweet, what keywords are present, and what
+news media the user is sharing. Using this approach, we can first determine the
+sentiment of the tweet, that is, if the user is happy, angry, or neutral. Based
+on this, we can apply this sentiment to certain keywords which are present in
+the tweet e.g. if the sentiment is positive, and the keyword is the name of a
+politician, we have a good indicator as to the users political affiliation.
+Additionally, we can analyze what news media the user shares. This can be
+useful, as news media often have some inherent political bias, which can be
+reflected in the people sharing their material. The general structure of the
+algorithm can be seen in \autoref{AlgorithmStructure}.\\
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Main method for handling the algorithm, label = AlgorithmStructure]
+public AnalysisResultObj AnalyzeAndDecorateTweets(List<Tweet> tweetList){
+	AnalysisResultObj output = new AnalysisResultObj();
+   	
+   	foreach (Tweet tweet in tweetList){
+       	tweet.hasQuotes = CheckForQuotationMarks(tweet);
+        
+        if (!tweet.hasQuotes){
+           	var puncturation = tweet.Text.Where(Char.IsPunctuation).Distinct().ToArray(); 
+           	List<String> wordList = 
+           		tweet.Text.Split(' ').Select(x => x.Trim(puncturation)).ToList<String>();
+                       
+            SentimentAnalysis(word, tweet);
+            KeywordAnalysis(word, tweet);
+            MediaAnalysis(tweet);
+
+            output.KeywordBias += tweet.keywordBias;
+            output.MediaBias += tweet.mediaBias;
+            output.NegativeSentiment += tweet.negativeValue;
+            output.PositiveSentiment += tweet.positiveValue;
+        }
+    }
+    output.Count = tweetList.Count;
+    return output;
+}
+\end{lstlisting}
+\end{minipage}
+
+On \textbf{lines 1-4} we start by creating the output object, and begin
+iterating over the tweets in the input list. On \textbf{lines 5} we
+determine if a tweet containes a quotation. This is necessary as quotes can be
+problematic for the analysis. This is further described in
+\autoref{AlgorithmCases}. Then on \textbf{lines 7-10}, if a tweet does not
+contain quotes, we remove the punction from the tweet's text, and split it into
+individual words. On \textbf{lines 12-14} we call the methods for each
+individual analysis part. These methods decorate the tweet object with the
+information derived from the analysis. Finally on \textbf{lines 16-19} we add
+the derived information to the output object, and on \textbf{lines 22-23} we add
+the tweet count and return the output object.
+
+\section{Sentiment Analysis}
+As described in \autoref{SentiAnal}, the sentiment analysis consists of
+identifying words which are considered emotional, and using them to determine
+either the general emotional value of a text, or the emotional reaction to
+specific words in the text. The algorithm makes use of a simplified sentimental
+analysis model, where we determine the general sentimental value of a tweet by
+counting the occurrences of positive and negative words. This approach to is
+also known as a bag-of-words sentiment analysis\citep{bagSentiment}. The
+compiled list of emotional words used for this analysis have been produced by
+PhD Minqing Hu and Bing Liu in their paper ``Mining and Summarizing Customer
+Reviews"\citep{Hu:2004:MSC:1014052.1014073}. The implementation of the sentiment
+analysis can be seen in \autoref{sentiAnalCode}.\\
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Determining the sentiment of a tweet , label = sentiAnalCode] 
+private void SentimentAnalysis(string word, Tweet tweet){
+	int wordValue;
+
+    if (analysisWords.ContainsKey(word) && analysisWords.TryGetValue(word, out wordValue)){
+    	if (wordValue == 1){
+        	tweet.posList.Add(word);
+            tweet.positiveValue++;
+        }
+
+        else if (wordValue == -1){
+        	tweet.negList.Add(word);
+            tweet.negativeValue++;
+        }
+    }
+}
+\end{lstlisting}
+\end{minipage}
+
+On \textbf{line 4} we start by checking if our dictionary of emotional words
+contain an element with the scanned word as the key. If it does, we output the
+emotional value of that word to the variable \textc{wordValue}. This value is
+either -1 if the word is negative, or 1 if the word is positive. Then on
+\textbf{lines 5-13} we increment the tweet's counter for either positive or
+negative words, and add the word to the tweet's list of emotional words.
+
+\section{Keyword Analysis}
+In order to determine the user's opinion towards a specific keyword, the keyword
+analysis hase been combined with the sentiment analysis, such that we can
+determine the user's sentiment towards that keyword.
+
+The initial list of keywords consists of the most popular hashtags used together
+with the hashtag ``\#Politics''. This approach to compiling a word-list was
+chosen as it gave us a good starting point. These hashtags were found by using
+the site Top-Hashtags.com, which allows users to view what hashtags are
+frequently used in conjunction. This resulted in the 200 hashtags most used
+together with ``\#politics''.\nl
+
+Through testing on a multitude of users, we have manually appended the word-list
+with new keywords whenever we identified one that had a clear meaning in a
+political context. The format of the word list can be seen in
+\autoref{keywordsAnalList}.\\
+
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|}
+\textbf{Keyword} & \textbf{Negative Context} & \textbf{Neutral Context} & \textbf{Positive Context} \\\hline
+Communism & 10 & 0 & -10 \\\hline
+Capitalism & -10 & 0 & 10 \\\hline
+\end{tabular}
+\caption{Format of the keywords list}
+\label{keywordsAnalList}
+\end{table} 
+
+In \autoref{keywordsAnalList}, the context values imply either a left or
+right leaning conclusion based on the negative/neutral/positive, where negative
+values are left leaning and positive values are right leaning. The code used for
+the keyword analysis can be seen in \autoref{keywordAnalysisExample}.\\
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Method for handling the keyword analysis, label = keywordAnalysisExample] 
+private void KeywordAnalysis(List<string> wordList, Tweet tweet){
+	foreach (string word in wordList){
+    	if (keywords.ContainsKey(word) && 
+            !tweet.TagList.Contains(word, StringComparer.InvariantCultureIgnoreCase) && 
+            keywords.TryGetValue(word, out KeywordObj keywordObj)){
+                        
+        	tweet.TagList.Add(word);
+            int sentiment = tweet.GetSentiment();
+
+            if (sentiment > 1)
+            	tweet.KeywordBias += keywordObj.Pos;
+            else if (sentiment < -1)
+            	tweet.KeywordBias += keywordObj.Neg;
+            else
+            	tweet.KeywordBias += keywordObj.Bas;
+		}
+	}
+}
+\end{lstlisting}
+\end{minipage}
+
+On \textbf{line 2} we start by iterating over all of the words in the tweet. On
+\textbf{lines 3-5} we check if our keywords dictionary has a key equal to the
+word, and if we have already found that keyword in the text. Finally we output
+the \textc{KeywordObj} object related to the value in the dictionary. Then on
+\textbf{lines 7-8} we get tweet's sentiment, and  add the current word to the
+tweet's keyword-list. On \textbf{lines 10-15} we determine the political value
+of the word given the sentimental context as shown in
+\autoref{keywordsAnalList}. This value is incremented onto the tweet's existing
+\textc{keywordBias} value.
+
+\section{Media Analysis}
+Here we analyze the media in a tweet.
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Method for handling the media analysis, label = mediaAnalysisExample] 
+private void MediaAnalysis(Tweet tweet){
+	foreach (Url link in tweet.Entities.Urls){
+		string shortenedUrl = UrlHelper.Instance.ShortenUrl(link.ExpandedUrl);
+        if (newsHyperlinks.Keys.Contains(shortenedUrl)){
+        	tweet.mediaBias += newsHyperlinks[shortenedUrl];
+        }
+	}
+}
+\end{lstlisting}
+\end{minipage}
+
+\section{Special Cases}\label{AlgorithmCases}
+Quotes, Sarcasm
+
+\section{Media Analysis}
+
+
+\section{Tests}
+containsKey, 2 hours, 6 minutes, 1 second

@@ -108,13 +108,22 @@
 \newcommand{\names}{\namep '\
 }
 
-\newcommand{\fb}{filter bubble}
-\newcommand{\fbp}{filter bubble.}
+\newcommand{\fb}{filter bubble\ }
+\newcommand{\fbp}{filter bubble}
 
 \newcommand{\namep}{Popping the Informational Bubble}
 
 \newcommand{\titleOf}{Popping the Informational Bubble}
 \newcommand{\subtitleOf}{Developing Web-based Systems for the Information Age}
+
+\newcommand{\DonQuote}[1]{
+\vspace*{\fill} 
+\begin{quote} 
+\centering 
+#1 
+\end{quote}
+\vspace*{\fill}
+}
 
 \newif\iffirst
 \firsttrue
@@ -125,8 +134,8 @@
 \newif\ifret
 \rettrue
 
-\newif\ifkt
-\kttrue
+\newif\ifsourcecheck
+\sourcechecktrue
 
 \newif\iftd
 \tdtrue
@@ -138,7 +147,7 @@
 \newcommand{\BadSource}{
 \ifbs
 	\label{badsourceRefMacro}
-	\bsfalse
+	\global\bsfalse
 \else
 \fi
 \addtocounter{BadSourceCounter}{1}{\textbf{\textcolor{red}{\large{Bad Source}}}}}
@@ -147,32 +156,54 @@
 \newcommand{\ToDo}{
 \iftd
 	\label{todoRefMacro}
-	\tdfalse
+	\global\tdfalse
 \else
 \fi
 \addtocounter{ToDoCounter}{1}{\textbf{\textcolor{red}{\large{To Do}}}}}
-
-\newcommand{\DonQuote}[1]{
-\vspace*{\fill} 
-\begin{quote} 
-\centering 
-#1 
-\end{quote}
-\vspace*{\fill}
-}
-
-\newcommand{\todoCount}{
-\LARGE{There are \arabic{ToDoCounter} thing(s) To Do}
- \autopageref{todoRefMacro}\\}
 
 \newcounter{PSCounter}
 \newcommand{\Source}{
 \ifps
 	\label{psRefMacro}
-	\psfalse
+	\global\psfalse
 \else
 \fi
 \addtocounter{PSCounter}{1}{\textcolor{red}{\large{(Source missing)}}}}
+
+\newcounter{FixCounter}
+\newcommand{\fix}[2]
+{\iffirst
+	\label{fixRefMacro}
+	\global\firstfalse
+\else
+\fi
+\addtocounter{FixCounter}{1}{\textcolor{red}{#1 }\textcolor{blue}{\large{-
+#2}}}}
+
+\newcounter{RetCounter}
+\newcommand{\ret}{
+\ifret
+	\label{retRefMacro}
+	\global\retfalse
+\else
+\fi
+\addtocounter{RetCounter}{1} {\textcolor{red}{\large{Rettelse
+Mangler }}}}
+
+\newcounter{KTCounter}
+\newcommand{\KT}
+{
+\ifsourcecheck
+	\global\sourcecheckfalse
+	\label{ktRefMacro}
+\else
+\fi
+\addtocounter{KTCounter}{1}
+{\textcolor{purple}{\large{Source needs checking}}}}
+
+\newcommand{\todoCount}{
+\LARGE{There are \arabic{ToDoCounter} thing(s) To Do}
+ \autopageref{todoRefMacro}\\}
 
 \newcommand{\psCount}{
 \LARGE{I dette dokument er der \arabic{PSCounter} steder der mangler
@@ -181,33 +212,12 @@ kilder} \autopageref{psRefMacro}\\}
 \newcommand{\psCountEn}{
 \LARGE{There is missing \arabic{PSCounter} sources} \autopageref{psRefMacro}\\}
 
-\newcounter{FixCounter}
-\newcommand{\fix}[2]
-{\iffirst
-	\label{fixRefMacro}
-	\firstfalse
-\else
-\fi
-\addtocounter{FixCounter}{1}{\textcolor{red}{#1 }\textcolor{blue}{\large{-
-#2}}}}
-
 \newcommand{\fixCount}{
 \LARGE{I dette dokument er der \arabic{FixCounter} steder der skal
 fixes} \autopageref{fixRefMacro}\\}
 
 \newcommand{\fixCountEn}{
 \LARGE{There are \arabic{FixCounter} places that needs fixing} \autopageref{fixRefMacro}\\}
-
-
-\newcounter{RetCounter}
-\newcommand{\ret}{
-\ifret
-	\label{retRefMacro}
-	\retfalse
-\else
-\fi
-\addtocounter{RetCounter}{1} {\textcolor{red}{\large{Rettelse
-Mangler }}}}
 
 \newcommand{\retCount}{
 \LARGE{I dette dokument er der \arabic{RetCounter} steder der skal
@@ -216,20 +226,10 @@ rettes} \autopageref{retRefMacro}\\}
 \newcommand{\retCountEn}{
 \LARGE{There are \arabic{RetCounter} places that needs to be corrected} \autopageref{retRefMacro}\\}
 
-\newcounter{KTCounter}
-\newcommand{\KT}
-{
-\ifkt
-	\label{ktRefMacro}
-	\ktfalse
-\else
-\fi
-\addtocounter{KTCounter}{1}
-{\textcolor{purple}{\large{Source needs checking}}}}
-
 \newcommand{\KTCount}{
 \LARGE{There are \arabic{KTCounter} sources that needs checking}
 \autopageref{ktRefMacro}\\}
+
 \newcommand{\BSCount}{
 \LARGE{There are \arabic{BadSourceCounter} bad sources}
 \autopageref{badsourceRefMacro}\\}
@@ -247,7 +247,7 @@ rettes} \autopageref{retRefMacro}\\}
 \else
 	\retCountEn
 \fi
-\ifkt
+\ifsourcecheck
 \else
 	\KTCount
 \fi

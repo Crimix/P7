@@ -1,0 +1,59 @@
+\section*{Week 46}
+\subsection*{What Happend This Week}
+A feature which retrieves tweets from a set of pre-classified (left/right)
+users, and determine what words they are more likely to use. This requires a
+large amount of users with pre-known alignments. To begin, we have manually
+compiled a list of twitter users, which
+The queue server api now interacts with the queue server instance and are able
+to queue jobs for execution. The queue server instance uses the worker for each
+job. The worker has been adapted for use by different threads, such that the
+limits are not the same for each thread.
+We have classified 120 tweets by hand, into 5 classes: Right, little right,
+neutral, little left, left. 
+
+
+\subsection*{Evaluation}
+We should have started earlier on these weekly summaries and made our notes
+better from the beginning, it have caused some mixup and issues doing the clean
+writing of them in the report. We have tried to get the same kind of result from
+the neural network and algorithm to classify the tweets, this is good since it
+permits us to use both or find the one which works best.
+
+
+\subsection*{Next Week}
+Next week will be slow because of a miniproject in Programming Paradigms. Else
+everyone have something to work on which will likely not be finished doing that
+week.
+
+
+
+% We would like feedback on the two weekly summaries, we would like to know if
+% the format is fitting.
+%   Status:
+% We have added a feature to the program which retrieves tweets from a set of
+% pre-classified (left/right) users, and determine what words they are more
+% likely to use. The idea behind this is, that if we can identify what words are
+% most likely to be used by users of specific political alignments, we can
+% dynamically update our list of keywords, which we already use for classifying
+% users. This, however, requires a large amount of users with pre-known
+% alignments. To begin, we have manually compiled a list of twitter users, which
+% we use to get started with the word gathering. The idea is, that whenever we
+% classify a user with a high degree of certainty, we can add that user to our
+% list of users from which we identify words. We have also begun commenting the
+% code.
+%  The queue server api now interacts with the queue server instance and are
+% able to queue jobs for execution. The queue server instance uses the worker
+% for each job. The worker has been adapted for use by different threads, such
+% that the limits are not the same for each thread.
+% Then work began on the section for the queue server api.
+%  Did more research into dense feature vectors and other solutions. Found an
+% algorithm called word2vec that is interesting.
+% With 120 tweets which we have classified by hand, into 5 classes: Right,
+% little right, neutral, little left, left. With these tweets we trained a Naive
+% Bayesian with bad results, with 5 classes it had a 26% success rate, with 3
+% classes it had 44% success. Used a simple SVM with a 3 classes, it had a
+% success rate of 30%.
+%  Added a TextProcessing Library to the project, which allows us to process
+% tweets.
+%   As for the agenda:
+% We would like feedback on the weekly summaries from the report

@@ -1,0 +1,54 @@
+\chapter{Interaction with the Twitter \ac{API}}
+\fix{}{insert introduction}
+
+\section{OAuth}
+Oauth is an authorization protocol required by Twitter in order to be allowed to
+use their \ac{API}. 
+
+\subsection{Request header}
+In order for an \ac{HTTP} request to be valid, it has to
+contain seven key/pair values in the header:
+\begin{itemize}
+  \item oauth\_consumer\_key
+  \item oauth\_nonce
+  \item oauth\_signature
+  \item oauth\_signature\_method
+  \item oauth\_timestamp
+  \item oauth\_token
+  \item oauth\_version
+\end{itemize}
+
+\subsubsection*{Consumer key}
+The consumer key is a unique token that identifies who makes the request.
+This key is bound to the specific application.
+
+\subsubsection*{Nonce}
+The nonce is a unique token generated for each request. This way, it can be
+determined if a request has been submitted multiple times. 
+
+\subsubsection*{Signature}
+The signature is used by Twitter to assure that the request has not been
+modified after being sent. It is also used to verify the consumer key and the
+token, which is described below.
+This is done by generating a token from the request parameters and secret values.
+\fix{}{maybe go in-depth on how this is done exactly.}
+ 
+\subsubsection*{Signature method}
+The signature method for Twitter is always HMAC-SHA1. 
+, any request
+without this signature method is invalid.
+
+\subsubsection*{Timestamp}
+The timestamp is a string created together with the request. The string is the
+number of seconds since the Unix epoch, which is 1/1/1970. It is used to
+determine when the request was made.
+If a request is marked as created before the Unix epoch, it is invalid.
+
+\subsubsection*{Token}
+The token is used to assure that the application is allowed to
+interact with the user's account. \fix{}{maybe go in-depth on how this is done}
+
+\subsubsection*{Version}
+The version always has to be 1.0 for the API to accept the
+request.\cite{TwitterAPIAuth}
+
