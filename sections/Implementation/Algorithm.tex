@@ -47,8 +47,8 @@ public AnalysisResultObj AnalyzeAndDecorateTweets(List<Tweet> tweetList){
 \end{lstlisting}
 \end{minipage}
 
-On \textbf{lines 1-4} we start by creating the output object, and start
-iterating over the tweets in the input list. Then on \textbf{lines 5} we
+On \textbf{lines 1-4} we start by creating the output object, and begin
+iterating over the tweets in the input list. On \textbf{lines 5} we
 determine if a tweet containes a quotation. This is necessary as quotes can be
 problematic for the analysis. This is further described in
 \autoref{AlgorithmCases}. Then on \textbf{lines 7-10}, if a tweet does not
@@ -63,17 +63,14 @@ the tweet count and return the output object.
 As described in \autoref{SentiAnal}, the sentiment analysis consists of
 identifying words which are considered emotional, and using them to determine
 either the general emotional value of a text, or the emotional reaction to
-specific words in the text.\nl
-
-The algorithm makes use of a simplified sentimental analysis model, where we
-determine the general sentimental value of a tweet by counting the occurrences
-of positive and negative words. \fix{This approach is also known as a \ldots,
-and is generally used for \ldots}{}. These emotional words used for this
-analysis have been compiled by Minqing Hu and Bing Liu who are assosiated with
-the University of Illinois at Chicago \citep{Hu:2004:MSC:1014052.1014073}.\nl
-
-The implementation of the sentiment analysis can be seen in
-\autoref{sentiAnalCode}.\\
+specific words in the text. The algorithm makes use of a simplified sentimental
+analysis model, where we determine the general sentimental value of a tweet by
+counting the occurrences of positive and negative words. This approach to is
+also known as a bag-of-words sentiment analysis\citep{bagSentiment}. The
+compiled list of emotional words used for this analysis have been produced by
+PhD Minqing Hu and Bing Liu in their paper ``Mining and Summarizing Customer
+Reviews"\citep{Hu:2004:MSC:1014052.1014073}. The implementation of the sentiment
+analysis can be seen in \autoref{sentiAnalCode}.\\
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Determining the sentiment of a tweet , label = sentiAnalCode] 
@@ -95,56 +92,77 @@ private void SentimentAnalysis(string word, Tweet tweet){
 \end{lstlisting}
 \end{minipage}
 
-On \textbf{lines 3-4} we start by removing the puncturation in the tweet, and
-continue by splitting the text on spaces, such that we split it into individual words. On
-\textbf{lines 6-8} we iterate over all words in the tweet, and check if our
-dictionary of emotional words contain an element with the scanned word as the key. If it does,
-we output the emotional value of that word to the variable \textc{wordValue}.
-Then on \textbf{lines 10-16} count and add the positive and negative words as
-information on the tweet object.
+On \textbf{line 4} we start by checking if our dictionary of emotional words
+contain an element with the scanned word as the key. If it does, we output the
+emotional value of that word to the variable \textc{wordValue}. This value is
+either -1 if the word is negative, or 1 if the word is positive. Then on
+\textbf{lines 5-13} we increment the tweet's counter for either positive or
+negative words, and add the word to the tweet's list of emotional words.
 
 \section{Keyword Analysis}
-The original idea was to analyze the hashtags contained in a tweet, and use them
-to determine the users political beliefs. As such, we started by compiling a
-list of hashtags which were often used in a political context. These hashtags
-was found by using the site Top-Hashtags, which allows users to view what
-hashtags are frequently used in conjunction. By searching for the hashtag
-``\#politics'' we were able to find the top 200 hashtags most used together with
-``\#politics''. Based on this initial list, we determined that the words used as
-hashtags were often general enough to also be present in the tweet text itself.
-As an example, people would often create hashtags from politicians' names or the
-name of a piece of legislature. As such, the analysis was expanded into a
-``keyword analysis" which also searched the text body for ``hashtags''. In order
-to determine the user's opinion towards a specific keyword, the keyword analysis
-hase been combined with the sentiment analysis, such that we can determine the
-user's sentiment towards that keyword. The code used for the keyword analysis
-can be seen in \autoref{keywordAnalysisExample}.\\
+In order to determine the user's opinion towards a specific keyword, the keyword
+analysis hase been combined with the sentiment analysis, such that we can
+determine the user's sentiment towards that keyword.
+
+The initial list of keywords consists of the most popular hashtags used together
+with the hashtag ``\#Politics''. This approach to compiling a word-list was
+chosen as it gave us a good starting point. These hashtags were found by using
+the site Top-Hashtags.com, which allows users to view what hashtags are
+frequently used in conjunction. This resulted in the 200 hashtags most used
+together with ``\#politics''.\nl
+
+Through testing on a multitude of users, we have manually appended the word-list
+with new keywords whenever we identified one that had a clear meaning in a
+political context. The format of the word list can be seen in
+\autoref{keywordsAnalList}.\\
+
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|}
+\textbf{Keyword} & \textbf{Negative Context} & \textbf{Neutral Context} & \textbf{Positive Context} \\\hline
+Communism & 10 & 0 & -10 \\\hline
+Capitalism & -10 & 0 & 10 \\\hline
+\end{tabular}
+\caption{Format of the keywords list}
+\label{keywordsAnalList}
+\end{table} 
+
+In \autoref{keywordsAnalList}, the context values imply either a left or
+right leaning conclusion based on the negative/neutral/positive, where negative
+values are left leaning and positive values are right leaning. The code used for
+the keyword analysis can be seen in \autoref{keywordAnalysisExample}.\\
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Method for handling the keyword analysis, label = keywordAnalysisExample] 
-private void KeywordAnalysis(string word, Tweet tweet){
-	if (keywords.ContainsKey(word) && 
-		!tweet.tagList.Contains(word, StringComparer.InvariantCultureIgnoreCase)) {
-    	KeywordObj keywordObj;
-    	
-        if (keywords.TryGetValue(word, out keywordObj)){
-        	tweet.tagList.Add(word);
-            int sentiment = tweet.getSentiment();
+private void KeywordAnalysis(List<string> wordList, Tweet tweet){
+	foreach (string word in wordList){
+    	if (keywords.ContainsKey(word) && 
+            !tweet.TagList.Contains(word, StringComparer.InvariantCultureIgnoreCase) && 
+            keywords.TryGetValue(word, out KeywordObj keywordObj)){
+                        
+        	tweet.TagList.Add(word);
+            int sentiment = tweet.GetSentiment();
 
             if (sentiment > 1)
-            	tweet.keywordBias += keywordObj.Pos;
+            	tweet.KeywordBias += keywordObj.Pos;
             else if (sentiment < -1)
-            	tweet.keywordBias += keywordObj.Neg;
+            	tweet.KeywordBias += keywordObj.Neg;
             else
-            	tweet.keywordBias += keywordObj.Bas;
-        }
+            	tweet.KeywordBias += keywordObj.Bas;
+		}
 	}
 }
 \end{lstlisting}
 \end{minipage}
 
-On lines 2-3 we start by comparing the currently analyzed word with the keys
-in our ``hashtags'' dictionary, which contains all
+On \textbf{line 2} we start by iterating over all of the words in the tweet. On
+\textbf{lines 3-5} we check if our keywords dictionary has a key equal to the
+word, and if we have already found that keyword in the text. Finally we output
+the \textc{KeywordObj} object related to the value in the dictionary. Then on
+\textbf{lines 7-8} we get tweet's sentiment, and  add the current word to the
+tweet's keyword-list. On \textbf{lines 10-15} we determine the political value
+of the word given the sentimental context as shown in
+\autoref{keywordsAnalList}. This value is incremented onto the tweet's existing
+\textc{keywordBias} value.
 
 \section{Media Analysis}
 Here we analyze the media in a tweet.
