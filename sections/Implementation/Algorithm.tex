@@ -228,3 +228,42 @@ On \textbf{line 2} we start by iterating over the URL's present in the
 base URL. On \textbf{4-5} we check if our dictionary has an element
 corresponding to the URL, and if it does, we increment the tweet's
 \textc{mediaBias} value with the determined political bias. 
+
+\section{Word Updater}
+A problem with the algorithmic approach to determining the user's political
+leaning is that the model is unable to adjust itself or to react to a shifting
+political landscape. This is problematic, as some indicators of political
+affiliation, like names of current politicians, will likely change over time. In
+order to alleviate this problem, we have begun implementation of a system that
+will be able to identify patterns in keywords used by users.\\ 
+The general idea is that whenever the algorithm determines a clear political
+affiliation for a user, we can analyze that user to find more keywords which we
+can add to our keywords list. This would be done by finding uncommon words in
+the user's tweets' text. These words would then be added to a list of currently
+monitored words, and whenever a person with a clear political affiliation uses
+these words, we increment a counter for either left-wing or right-wing use of
+that word. 
+
+% The unfinished implementation of this system can be seen in
+% \autoref{} and \autoref{}.\\
+% 
+% \begin{minipage}[H]{\linewidth}
+% \begin{lstlisting}[caption = , label = ] 
+% 
+% \end{lstlisting}
+% \end{minipage}
+% 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
