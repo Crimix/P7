@@ -59,6 +59,18 @@ information derived from the analysis. Finally on \textbf{lines 16-19} we add
 the derived information to the output object, and on \textbf{lines 22-23} we add
 the tweet count and return the output object.
 
+\section{Special Cases}\label{AlgorithmCases}
+When analyzing a tweet, we have a number of special cases which we have so far
+been unable to adequately handle. The first special case is ``quotes'', which refers
+to whenever a user places a piece of text within a set of quotes. The problem
+whith handling this case is that we have found that users often don't agree
+with whatever statement they quote, but instead use it to present a view point
+which they wish to mock or discuss. This is problematic, as the quote would
+originally be attributed to the creator of the tweet, which could skew our
+analysis. As such, we have chosen to entirely ignore tweets containing quotes.
+In order to determine if a tweet contains quotes, we use a simple regular
+expression.
+
 \section{Sentiment Analysis}
 As described in \autoref{SentiAnal}, the sentiment analysis consists of
 identifying words which are considered emotional, and using them to determine
@@ -165,14 +177,44 @@ of the word given the sentimental context as shown in
 \textc{keywordBias} value.
 
 \section{Media Analysis}
-Here we analyze the media in a tweet.
+As a final step in classifying a user's political leaning we determine if the
+user is sharing any news media. This is useful as we find that actively sharing
+news media often implies an endorsement of that media. And as news media often
+has some inherent political leaning and bias, we can assume that users are going
+to share those attributes. In order to perform this analysis, we use an index of
+american news media with their determined political bias. In order to create
+this index, we have made use of the site AllSides.com, which is a website that
+attempts to determine news media bias based on a combination of statistical
+research and community feedback\citep{allSidesMedia}. When rating a news
+media, AllSides applies a rating among 5 values, going from very left
+leaning, to neutral, to very right leaning. Internally, we have chosen to
+represent this rating as values between -10 and 10, as shown in
+\autoref{AllsidesRepres}.\\
+
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|l|l|}
+\textbf{AllSides Rating:} & Very Left & Left & Neutral & Right & Very Right \\\hline
+\textbf{Internal Representation:} & -10 & -3 & 0 & 3 & 10 \\\hline
+\end{tabular}
+\caption{Our internal representation of a news media's bias}
+\label{AllsidesRepres}
+\end{table}
+
+Whenever a user links to an external site in a tweet, the link will be presented
+in the tweet's json-object. As such, we have created our index dictionary as a
+combination of the site's base URL and our representation of their political
+bias value. In order to determine if a user is referencing a news media, we make a
+string comparison between the base URL and the URL found in the tweet. The
+implementation of the media analysis can be seen in
+\autoref{mediaAnalysisExample}.\\
+
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Method for handling the media analysis, label = mediaAnalysisExample] 
 private void MediaAnalysis(Tweet tweet){
 	foreach (Url link in tweet.Entities.Urls){
 		string shortenedUrl = UrlHelper.Instance.ShortenUrl(link.ExpandedUrl);
-        if (newsHyperlinks.Keys.Contains(shortenedUrl)){
+        if (newsHyperlinks.ContainsKey(shortenedUrl)){
         	tweet.mediaBias += newsHyperlinks[shortenedUrl];
         }
 	}
@@ -180,11 +222,9 @@ private void MediaAnalysis(Tweet tweet){
 \end{lstlisting}
 \end{minipage}
 
-\section{Special Cases}\label{AlgorithmCases}
-Quotes, Sarcasm
-
-\section{Media Analysis}
-
-
-\section{Tests}
-containsKey, 2 hours, 6 minutes, 1 second
+On \textbf{line 2} we start by iterating over the URL's present in the
+\textc{Tweet} objects URL list. Then on \textbf{line 3} we call the
+\textc{ShortenUrl} method in order to trim the Tweet's URL of everything but the
+base URL. On \textbf{4-5} we check if our dictionary has an element
+corresponding to the URL, and if it does, we increment the tweet's
+\textc{mediaBias} value with the determined political bias. 
