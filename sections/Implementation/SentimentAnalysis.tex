@@ -194,3 +194,21 @@ classification:
 - Support Vector Machines
 - Neural Networks
 
+%needs something about how they work, and how stopwords affect them
+ is dependent upon which classification model is used. Some models
+such as a Naive Bayes classifier will benefit from having the stopwords removed
+as they are useless information. Neural Networks work very differently from
+Naive Bayes classifiers, and are able to look past the noise given enough
+training data \Source.\nl
+
+%I did the thing?
+The model which we use for sentiment analysis is a simple unigram language
+model called a ``bag-of-words'' model. This approach determines the sentiment
+of a text by counting the occurrences of words with either a negative of
+positive sentiment. These words can have a different sentiment score, that is,
+one word may be percieved as conveying a more intense sentiment than others.
+In our model we have chosen to use a simplified approach, where each word has a
+value of either -1 or 1 for negative and positive sentiment respectively. The
+reson for choosing this approach is, that we have chosen to use existing
+freely available list of sentimental words to use in our analysis, and these
+list are not using variable values for words.
