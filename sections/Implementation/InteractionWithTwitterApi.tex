@@ -1,11 +1,15 @@
 \chapter{Interaction with the Twitter \ac{API}}
-\fix{}{insert introduction}
 \fix{}{This whole chapter should maybe be moved into something else. And it
 shouldn't be in the development part as it is  not about how we used it but
 just what it is.}
+As described in \autoref{sub:twitterapi}, to interact with the Twitter
+\ac{REST} \ac{API}, we have to use \ac{HTTP} GET requests. In order for
+Twitter to be able to verify the authentity of the requests, it has to conform
+to the OAuth 1.0 authorization protocol.
+\fix{}{The introductions in this chapter are bad. sorry. please help fix}
 \section{OAuth}
-Oauth is an authorization protocol required by Twitter in order to be allowed to
-use their \ac{API}. 
+OAuth is an authorization protocol required by Twitter in order to be allowed to
+use their \ac{API}.
 
 \subsection{Request header}
 In order for an \ac{HTTP} request to be valid, it has to
@@ -57,7 +61,8 @@ apps.twitter.com and clicking on the application
 
 \subsubsection*{Version}
 The version always has to be 1.0 for the API to accept the
-request.
+request. This is because the Twitter \ac{API} only uses OAuth 1.0, as opposed to
+OAuth 2.0.
 
 \subsubsection{Creating the string}
 When all the necessary tokens have been generated, the header string itself can
@@ -71,4 +76,4 @@ oauth\_signature\_method="HMAC-SHA1", \\
 oauth\_timestamp="oauth\_timestamp\_val", \\
 oauth\_token="oauth\_token\_val", \\
 oauth\_version="1.0" \\
-\cite{TwitterAPIAuth}
+\citep{TwitterAPIAuth}
