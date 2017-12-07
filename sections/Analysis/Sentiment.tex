@@ -11,7 +11,7 @@ used with a classification model to predict the sentiment.
 
 \fix{}{We need a changed introduction to this chapter}
 
-\section{Feature extraction} 
+\section{Feature Extraction} 
 Feature extraction is used after the tokenization, in order to choose which
 words best determine the sentiment. A lot of the sentiment can be lost in the
 feature extractor, as the opinions are much more apparent in text than as a
@@ -29,8 +29,7 @@ text, such as\citep[Overview.3-4]{Sentiment}:
 For instance, there is a big difference between person 1 saying ``I love this
 movie'' and person 2 saying ``I LOVE this movie!!!!''. In this example both the
 capitalization of ``love'' and the exclamation mark help empathize that person
-2 seems to have a stronger positive sentiment towards the movie.\\
-
+2 seems to have a stronger positive sentiment towards the movie.\nl
 
 An example of lengthening is the difference in sentiment between ``huuuungry'',
 ``huuungry'' and ``hungry". The differences in sentiment between the first two
@@ -244,6 +243,16 @@ score(W, C_{Neg}) = \cfrac{245}{500} \cdot \cfrac{55}{100} \cdot \cfrac{85}{200}
 
 Then by taking the highest score we the can predict the class the text belongs
 to, in this case it would be positive.
+
+\section{Conclusion}
+After considering how sentiment analysis is used to analyse data, we can
+conclude that it has distinct uses for classifying large amounts of user data.
+It is especially useful for analysing the sentiment around american politics as
+there are only two main parties with opposing views, which means that not only
+is there few classes, they should also be very distinct. By determining the
+sentiment it becomes possible to see if a user is inside a political bubble,
+where the user only encounters the same sentiment.
+
 
 
 %https://www.cs.cornell.edu/home/llee/papers/sentiment.pdf
