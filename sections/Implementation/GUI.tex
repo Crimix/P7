@@ -2,19 +2,67 @@
 don't know.}
 \fix{}{Insert introduction}
 \section{Front page}
-The front page features the logo with the functionalities below. For this
+The front page features the logo with the functionality below. For this
 project, only searching for twitter users and getting their filter bubble is
-possible. More functionality can be added for future work. A visual presentation
-of the front page can be seen on \autoref{frontPage}
+possible. More functionality can be added for future work. A visual
+presentation of the front page can be seen on \autoref{frontPage}.
 
-%\usepackage{graphics} is needed for \includegraphics
-\figx[0.4]{frontPage}{The front page of the application}
+% \usepackage{graphics} is needed for \includegraphics
+\figx[0.6]{frontPage}{The front page of the application.}
 
-The reason for the design is the power of simplicity. By having a simplistic
-design with a lot of whitespace, all focus goes to what is important. In this
-context, it is the big logo and the functionality underneath.
-\citep[p. 26 \& 32]{WebUI}
+The colorscheme on the front page is a white background with a dark gray text.
+The white background promotes a feeling of cleanliness and simplicity, while the
+gray text promotes neutrality and formality\citep[p. 63 \& 64]{WebUI}. 
 
 \section{Request page}
-After clicking on the ''CHECK TWITTER USER´´, it opens the interface for checki
-ng a Twitter user. It features a 
+After clicking on the ``CHECK TWITTER USER'' button, it opens the interface for
+the request page. It features an input text box for the Twitter username and a
+search button. A visual presentation of the request page can be seen on \autoref{twitterRequest}.
+
+\figx[0.6]{twitterRequest}{The ``Check twitter user'' page.}
+
+The request page uses a gray background for the neutrality and formality that we
+want to promote due to the fact that the whole purpose of the project is to
+make Twitter users have a more politically neutral in their Twitter feed.
+The button is a middleground between light and dark blue, which results in
+a promotion of calm, safety and reliability \citep[p. 61 \& 64]{WebUI}.
+
+\section{Authorization popup}
+
+When searching for a user, a popup requiring a login pops up. The reason why
+logging in is required is due to the fact that a limited amount of requests to
+Twitter is allowed. By logging in as another user, we use their requests rather
+than our own. A visual representation of the popup can be seen on
+\autoref{twitterAuth}.
+
+\figx[0.6]{twitterAuth}{The authorization popup.}
+
+The Popup window has a simple black text on a white background. The background
+is white rather than gray, such that it stands out from the request page. The
+button is still blue, such that it provides the user a feeling of calm, safety
+and reliability, which is the perfect feeling to provide when asking them to
+trust us with their authorization PIN\citep[p. 61]{WebUI}.
+
+\section{The E-mail}
+When the application is done processing the request, an E-mail is sent to the
+provided E-mail address. This email consists of a short text telling the user
+that the results are in and a link to the results. A visual presentation of the
+E-mail can be seen on \autoref{email}.
+
+\figx[0.6]{email}{The email received after the application is done processing.}
+
+The E-mail is Gray with a white box with the information and the blue button.
+This is done to stay true to the color scheme.
+
+\section{The result screen}
+\fix{}{Make this when the screen is done.}
+
+\section{Overall design choice}
+The reason for the overall design choice is the power of simplicity. By having a
+simplistic design with a lot of whitespace, all focus goes to what is
+important; The text boxes and buttons. There are no distracting
+pictures or unnecessary information.\citep[p. 26 \& 32]{WebUI}.\\
+
+
+
+
