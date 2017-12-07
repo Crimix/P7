@@ -1,6 +1,7 @@
-\chapter{Database \ac{API}}\label{DatabaseAPI}
-As a part of the overall application, we need a database to store information
-used by the different workers. This is important, as we make use of the
+\chapter{Database \ac{API}}\label{DatabaseAPI} \fix{}{Det her skal lige
+omskrives når database apien er helt færdig} 
+As a part of the overall
+application, we need a database to store information used by the different workers. This is important, as we make use of the
 user's Twitter account to retrieve data from the Twitter \ac{API}. As such, this
 section is used to describe how we access and store this data, and how we
 make sure that it is only accessible to authorized users.
@@ -9,7 +10,8 @@ make sure that it is only accessible to authorized users.
 We have opted to use MySQL as our \ac{DBS}, structuring our data in a
 standardized relational database. In order to store the general data, we have
 two tables; \textc{Users} and \textc{Twitters}, as seen in
-\autoref{TwitterDBTable} and \autoref{UserDBTable}.
+\autoref{TwitterDBTable} and \autoref{UserDBTable}. \fix{}{Tables skal lige
+opdateres til hver de er nu}
 
 \begin{table}[H]
 \begin{tabular}{l | l | l | l | l | l | l | l	}

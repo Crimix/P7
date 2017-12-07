@@ -53,14 +53,11 @@ public async void TaskQueue()
 \end{lstlisting}
 \end{minipage}
 
-On \textbf{line 4}, it runs ensures that it runs once for every request. \\
+On \textbf{line 4}, it ensures that it runs once for every request. \\
 On \textbf{lines 6}, it recieves the next request in line.\\
 On \textbf{lines 8-12}, it adds a servertask corresponding to the request.\\
 On \textbf{line 13 and 14}, it adds the task to the task queue and removes the
 request from the queue of requests.\\
-
-\fix{}{Need more implementation details about how it was done in the code, what
-was needed and used}
 
 \subsection{Twitter account}
 The class TwitterAcc is used for every instance of a twitter account. It
@@ -70,17 +67,17 @@ token, Twitter name and token secret. What these are, can be seen on
 
 \subsection{Server task}
 An instance of the class ServerTask is created every time a task is created. It
-is used to parse the twitter api key and twitter name of the twitter account
-being processed to the worker.
+is used to parse the Twitter authorization values and the screen name of the
+Twitter account being processed to the worker.
 
 
 \section{Requests}
 The \ac{API} only has one post request, which is: \nl
 
-\say{http://localhost:62020/api/TwitterAcc}\nl
+\say{http://localhost:62020/api/AnalyzeTwitterAccount}\nl
 
 Here, the Content-Type header must be ``application/x-www-form-urlencoded'',
-where the body contains a value for TwitterApiKey and TwitterName
+where the body contains a value for Name, Token and Secret
 respectively.
 The request returns a response of whether the job was successfully added to the
 queue or not.
