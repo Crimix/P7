@@ -1,17 +1,21 @@
+The large amount of data which can be gathered from social media will need to
+analysed to be of actual use. One of these way that seems useful is sentiment
+analysis. Sentiment analysis is used to determine the opinions of people
+regarding specific topics, such as movies or products. This has become
+especially useful with the increasing usage of social media, as people
+increasingly discuss and post their opinions online \citep[Overview
+2]{Sentiment}. Sentiment analysis is done by gathering opinions and extracting
+tokens which provide clues to the opinion. The tokens can then be used with a
+classification model to predict the sentiment.\nl
 
+In \autoref{sec:FeatEx} we will look at how text is transformed into useful
+features, and what options are available to increase the quality of the
+features. In \autoref{sec:Class} we will look at how the features can be used in
+models to make predictions. We will also describe ideas behind the 2 models
+which are used in the program. Finally in \autoref{sec:DAConc} we will conclude
+on the analysis.
 
-
-
-Sentiment analysis is used to determine the opinions of people regarding
-specific topics, such as movies or products. This has become especially useful
-with the increasing usage of social media, as people increasingly discuss and
-post their opinions online. Sentiment analysis is done by
-gathering opinions and extracting tokens which provide clues to the opinion. The tokens can then be
-used with a classification model to predict the sentiment. 
-
-\fix{}{We need a changed introduction to this chapter}
-
-\section{Feature Extraction} 
+\section{Feature Extraction}\label{sec:FeatEx}
 Feature extraction is used after the tokenization, in order to choose which
 words best determine the sentiment. A lot of the sentiment can be lost in the
 feature extractor, as the opinions are much more apparent in text than as a
@@ -131,7 +135,7 @@ is. For example if ``\textit{love}'' is mapped to \textbf{3} and
 
 
 
-\section{Classification}
+\section{Classification}\label{sec:Class}
 The final part of sentiment analysis is the classification task. This task
 consists of predicting the sentiment based on the features extracted earlier.
 The accuracy of the predictions are based on labeled data that was provided as
@@ -175,11 +179,8 @@ found in the citation \citep{Classification}.
 IMDB dataset \citep{Classification}}
 
 Our main focus will be on the Bag-Of-Words and Naive Bayes models, as both
-straight forwards methods of determining sentiment.
-
-% \fix{The models that are of interest to use are the Bag-of-Words model, the
-% Naive Bayes Classifier, the Support Vector Machine and the Neural Network.}{add
-% something about SVM and NN?}
+straight forwards methods of determining sentiment, which should help with
+providing proof of concept.
 
 \subsubsection{Bag-Of-Words}
 The Bag-Of-Words model determines the sentiment of a text by
@@ -244,7 +245,7 @@ score(W, C_{Neg}) = \cfrac{245}{500} \cdot \cfrac{55}{100} \cdot \cfrac{85}{200}
 Then by taking the highest score we the can predict the class the text belongs
 to, in this case it would be positive.
 
-\section{Conclusion}
+\section{Conclusion}\label{sec:DAConc}
 After considering how sentiment analysis is used to analyse data, we can
 conclude that it has distinct uses for classifying large amounts of user data.
 It is especially useful for analysing the sentiment around american politics as
