@@ -1,6 +1,7 @@
 
 
-\section{Sentiment Analysis}\label{SentiAnal}
+
+
 Sentiment analysis is used to determine the opinions of people regarding
 specific topics, such as movies or products. This has become especially useful
 with the increasing usage of social media, as people increasingly discuss and
@@ -8,7 +9,9 @@ post their opinions online. Sentiment analysis is done by
 gathering opinions and extracting tokens which provide clues to the opinion. The tokens can then be
 used with a classification model to predict the sentiment. 
 
-\subsection{Feature extraction} 
+\fix{}{We need a changed introduction to this chapter}
+
+\section{Feature extraction} 
 Feature extraction is used after the tokenization, in order to choose which
 words best determine the sentiment. A lot of the sentiment can be lost in the
 feature extractor, as the opinions are much more apparent in text than as a
@@ -70,7 +73,7 @@ I don't like this song, why do they keep playing it? &
 There are a couple of other methods that can affect how much sentiment is
 retained in the text, such as stemming and using n-grams.
 
-\subsubsection{Stemming}
+\subsection{Stemming}
 Stemming can be used when performing feature extraction. It is used to collapse
 a word into its base, for instance ``finding'' can be stemmed to ``find''.
 Stemming is both useful and destructive. It allows for reduction in the number
@@ -85,7 +88,7 @@ remember ``captiv''. This can be useful for small datasets where each token is
 important, as it can reduce the vocabulary size and sharpen the result
 \citep[Ch 3.b]{Sentiment}.
 
-\subsubsection{N-Grams}
+\subsection{N-Grams}
 N-grams are sequence of 'n' items and determines how much context is stored
 from a piece of text. An example of the 3 first n-grams can be seen on table
 \autoref{tab:ngram}. 
@@ -115,7 +118,7 @@ improve accuracy if there is a large training sample. With smaller training
 samples it becomes necessary to use unigrams as there are not enough
 token occurances to justify using bigger n-grams.
 
-\subsubsection{Feature Vectors}
+\subsection{Feature Vectors}
 A feature vector is used to denote which features are present in a piece of
 text. The vector gets created by mapping each feature to a unique integer, this
 is done while training the model and is called a Bag-Of-Words (not to be
@@ -129,13 +132,13 @@ is. For example if ``\textit{love}'' is mapped to \textbf{3} and
 
 
 
-\subsection{Classification}
+\section{Classification}
 The final part of sentiment analysis is the classification task. This task
 consists of predicting the sentiment based on the features extracted earlier.
 The accuracy of the predictions are based on labeled data that was provided as
 training data, as well as the model that is used. 
 
-\subsubsection{Training}
+\subsection{Training}
 The training data is an important part of every model. There are three
 different training methods, each suitable for a different task.
 
@@ -159,7 +162,7 @@ different training methods, each suitable for a different task.
 The model, which is most used for sentiment analysis, is the supervised learning
 approach, as it is the most useful for classification tasks.
 
-\subsubsection{Models}\label{subsub:Models}
+\subsection{Models}\label{subsub:Models}
 
 There are a several different models which can be used for sentiment analysis. 
 Different models provide different levels of accuracy, as seen in
@@ -179,15 +182,17 @@ straight forwards methods of determining sentiment.
 % Naive Bayes Classifier, the Support Vector Machine and the Neural Network.}{add
 % something about SVM and NN?}
 
-\paragraph{The Bag-Of-Words} model determines the sentiment of a text by
+\subsubsection{Bag-Of-Words}
+The Bag-Of-Words model determines the sentiment of a text by
 counting the occurrences of words with either a negative of positive sentiment.
 Words can have different sentiment scores, that is, one word may be percieved
 as conveying a more intense sentiment than others. Each word and its
 corresponding sentiment score is stored in a sentiment lexicon, these lexicons
 cna be created by or found freely online\citep{BagOfWords}.
 
-\paragraph{The Naive Bayes} classifier determines the sentiment of text using
-probability. It trains using supervised learning, where each text object
+\subsubsection{Naive Bayes} 
+The Naive Bayes classifier determines the sentiment of text
+using probability. It trains using supervised learning, where each text object
 is labeled with a class. The text features are extracted as tokens.
 The probability of each token belonging to each of the labels is then
 calculated by counting how often it occurs with that class. This leads to a
