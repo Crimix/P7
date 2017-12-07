@@ -181,7 +181,7 @@ straight forwards methods of determining sentiment.
 counting the occurrences of words with either a negative of positive sentiment.
 Words can have different sentiment scores, that is, one word may be percieved
 as conveying a more intense sentiment than others. Each word and its
-correspondig sentiment score is stored in a sentiment lexicon, these lexicons
+corresponding sentiment score is stored in a sentiment lexicon, these lexicons
 cna be created by or found freely online\citep{BagOfWords}.
 
 \paragraph{The Naive Bayes} classifier determines the sentiment of text using
@@ -206,62 +206,37 @@ Total & 255 & 245 & 500				\\ \hline
 \label{tab:NB}
 \end{table}
 
-%, \textit{w_{i}},
-%, \textit{C}
-
-
-
-A class, \textit{C}, 
-
-
-
 In order to predict which class, \textit{C}, a given piece of text belongs to it
-needs to be transformed to a feature vector. A feature 
+needs to be transformed to a feature vector, \textit{W}, where each feature is
+denoted as, $w_{i}$. By using \autoref{e:Score} we can predict the class \citep[Ch.2.1]{Bayes}.
+\begin{equation}\label{e:Score}
+score(W,C) = P(C) \cdot \displaystyle\prod_{i=1}^{n}P(w_{i}|C)
+\end{equation}
 
- we transform it , we use
-
-With the
-Bayes Theorem which
-
-$P(C|X) = \cfrac{P(X|C)*P(C)}{P(X)}$
-
-\citep[p.229]{MIBook}
-\citep[Ch.2.1]{Bayes}
-The probabilities are\ldots
-
-The class probabilities, positive and negative, are then determined by:
+The idea is calculate the probability of the feature vector belonging to each of
+the classes. The class probabilities $P(C)$ are determined how frequently the classes have
+been observed to occur, therefor:
 \begin{center}
 $P(C_{Pos}) = \cfrac{255}{500} = 0.51 $ and $P(C_{neg}) = \cfrac{245}{500} =
 0.49 $
 \end{center}
+The probabilities of each of the features are likewise found by how often the
+features occur. For instance, if we want to determine the class of ``this
+movie rule'', with the probabilities from \autoref{tab:NB}, we have get the
+following feature vector [1,1,1,0]. We can then calculate the score of
+the feature vector belonging to each of the classes:
 
-We then determine the sentiment by using:
+\begin{equation}\label{e:Pos}
+score(W, C_{Pos}) = \cfrac{255}{500} \cdot \cfrac{45}{100} \cdot
+\cfrac{115}{200} \cdot \cfrac{90}{100} = 0.238
+\end{equation}
+\begin{equation}\label{e:Neg}
+score(W, C_{Neg}) = \cfrac{245}{500} \cdot \cfrac{55}{100} \cdot \cfrac{85}{200}
+\cdot \cfrac{10}{100} = 0.019
+\end{equation}
 
-
-
-If we want to determine the sentiment of ``this movie rule''  
-$ P(C_{Pos}) = \cfrac{255}{500} \cdot \cfrac{45}{100} \cdot \cfrac{115}{200}
-\cdot \cfrac{90}{100} = 0.238$
-$ P(C_{Neg}) = \cfrac{245}{500} \cdot \cfrac{55}{100} \cdot \cfrac{85}{200}
-\cdot \cfrac{10}{100} = 0.019$
-
- 
-
-
-
-
-
-Conditional independence does not hold.
-
-
-
-
-
-
-
-
-
-
+Then by taking the highest score we the can predict the class the text belongs
+to, in this case it would be positive.
 
 
 %https://www.cs.cornell.edu/home/llee/papers/sentiment.pdf
