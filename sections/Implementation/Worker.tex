@@ -9,7 +9,60 @@ worker is to retrieve the list of users that the user is following, retrieve
 their tweets and analyse the tweets. The retrievement of tweets and the
 analysis are done in parallel by splitting them into tasks.
 
-\subsection{Splitting into task}
+\subsection{Tweet retriever}
+There are two versions of the whole tweet retrievement process. The first and
+oldest version uses the wrapper function \textc{GetTweetsFromUser}, which wraps
+around the helper function \textc{GetTweetsFromUserHelper}. The reason for using
+a helper function is that the helper function is used by both versions, with the
+only difference being the supplied parameters, namely the
+\textc{retrieveMethod}. The way the parameter changes is because the type is
+\textc{Func<List<Tweet>>} which means it can take any function as parameter as
+long as it returns a list of tweets. This can be seen in the two code examples
+\autoref{legacyUserTweet} and \autoref{NewUserTweet} where the calls on
+\textbf{line 3} gives the last parameter as a lambda expression / anonymous
+function, which takes no input as seen by \textc{() =>}.\\
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Legacy method call , label = legacyUserTweet ] 
+public List<Tweet> GetTweetsFromUser(User user, AuthObj auth)
+{	
+    return GetTweetsFromUserHelper(user, auth, (() => TweetThreadMethod(user, auth)));
+}
+\end{lstlisting}
+\end{minipage}
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Current method call to speed up execution , label =
+NewUserTweet ] 
+public void GetTweetsFromUserAndAnalyse(User user, AuthObj auth, Func<User, bool> get, Func<List<Tweet>, AnalysisResultObj> classifyMethod, Func<AnalysisResultObj, User, bool> post)
+{
+    GetTweetsFromUserHelper(user, auth, (() => TweetThreadMethod(user, auth, get, classifyMethod, post)));
+}
+\end{lstlisting}
+\end{minipage}
+
+The \textc{GetTweetsFromUserHelper} method can be seen in
+\autoref{UserTweetHelper}, this used to be the \textc{GetTweetsFromUser} method
+before the new change, to analyse the tweets while retrieving. The helper
+was made to reuse code, because the only change would be the function to be
+called in the task on \textbf{line 3}.\\
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = The GetTweetsFromUserHelper, label =
+UserTweetHelper]
+private List<Tweet> GetTweetsFromUserHelper(User user, AuthObj auth, Func<List<Tweet>> retrieveMethod)
+{
+    List<Tweet> tweetList = new List<Tweet>();
+    Task<List<Tweet>> task = new Task<List<Tweet>>(() => retrieveMethod());
+    task.Start();
+    task.Wait();
+    tweetList.AddRange(task.Result);
+
+    return tweetList;
+}
+\end{lstlisting}
+\end{minipage}
+
 To speed up the retrievement of tweets, it is split up in tasks that are run in
 parallel. It is split such that each user, the user is following, corresponds
 to a task. This way, the tasks are somewhat equally split. 
@@ -26,4 +79,5 @@ running at the same time. The predefined number of the latter may be 1 higher if
 it can not split the tasks equally. In this case, the excess tasks are
 put in their own small task.
 
+\subsection{}
 \fix{}{Needs more}
