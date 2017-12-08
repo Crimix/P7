@@ -1,15 +1,130 @@
 \section{Naive Bayes Implementation}\label{sec:NBImp}
 
+The Naive Bayes classifier is implemented by using the Accord.Net framework for
+C\#. The famework is used for machine learning and comes with a lot of different
+models which can be used in classification, regression, clustering and more
+\citep{Accord}.
+
+
+\fix{}{add something introductory?}
 
 \subsection{Feature Extraction}
+As mentioned in \autoref{sec:FeatEx} there are a lot of different components
+that need to be considered when extracting useful features. Given the small
+training set of 90 tweets, it is necessary to minimize number of features with
+minute differences between features. Before the features are extracted, the
+tokens are processed n the \textc{TextProcessor} class in the
+\textc{TextProcessingLib} Library. The feature extraction happens in the
+\textc{Tokenizer} method, specifically in \autoref{c:Tokenizer}.\nl
 
-\subsection{Training}
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Split and process each token in a tweet with
+regexes and stemming, label = c:Tokenizer] 
+public string[][] Tokenizer(List<string> tweets)
+{
+    ...
+    foreach (string token in tweet.ToLower().Split(' '))
+    {
+        feature = ProcessToken(token, isNeg);
+        if (!KeyWords.StopWordsList.Contains(token))
+        {
+        	feature = stem.StemWord(feature);
+	        tokens.Add(feature);
+    	}
+	}
+	...
+}
+\end{lstlisting}
+\end{minipage}
 
-\subsection{Prediction}
+At \textbf{line 4} each tweet is split at whitespace and lowercased, although we
+lose sentiment clues by doing this, we reduce the number of features with
+minute differences that do not help us. On \textbf{line 6} we process each
+token through a series of \textc{regexes} which remove undesired symbols,
+numbers, turn user references such as ``@RealUser'' into ``AT\_USER'' and links
+into ``LINK''. This is done to reduce the number of features, as each user has
+his own unique username. It can be argued that links should be transformed into
+their base url so they can contribute to the prediction. This has not been
+done, as the training set is limited. On \textbf{lines 7-11} verify that the
+feature is not considered a stopword, in which case we try to stem it using the
+freely available Porter Stemmer from Brad Patton \citep{PorterStem}. 
+
+\subsection{Trained}
+
+The Naive Bayes classifier is created and trained and trained as seen on
+\autoref{c:Training}.\nl
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Creating and training the classifier, label =
+c:Training] 
+public void TrainNaiveBayes(string inputFile, string outputFile)
+{
+    double[][] inputs;
+    int[] outputs;
+
+    bagOfWords = new BagOfWords()
+    {
+        MaximumOccurance = 1
+    };
+
+    inputs = ReadInput(inputFile);
+    outputs = ReadOutput(outputFile);
+
+    var teacher = new NaiveBayesLearning<NormalDistribution>();
+
+    teacher.Options.InnerOption = new NormalOptions
+    {
+        Regularization = 1e-6 // to avoid zero variances
+    };
+    var nb = teacher.Learn(inputs, outputs);
+
+    FileHelper.WriteModelToFile("NaiveBayes90.accord", nb);
+}
+\end{lstlisting}
+\end{minipage}
 
 
-Another approach to determining the political leanings of twitter users is to
-make use of a machine intelligence model, which can classify tweets based on a
-knowledge base of previously classified examples. This approach makes use of a
-naive bayes model, which searches a tweet for occurrences of keywords which are
-predetermined to either imply a left- or right-wing leaning.
+At \textbf{lines 6-9} a \textc{BagOfWords} is created, as described in
+\autoref{sub:FeatureVector}. On \textbf{line 8} we set the maximum occurance of
+each word to 1, which means that we want binary feature vectors.
+
+
+
+
+
+
+
+\subsection{Predicting}
+
+The model is run 
+
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Load the Naive Bayes model and find
+bias, label = c:Run] 
+public double RunNaiveBayes(List<Tweet> tweets)
+{
+    if (tweets.Count == 0)
+        return 0;
+
+    var model = FileHelper.GetModel();
+    double[][] inputs = FormatTweets(tweets);
+
+    //Predicts each tweets class
+    int[] answers = model.Decide(inputs);
+
+    List<int> result = new List<int>() { 0, 0, 0 };
+    foreach (var item in answers)
+    {
+        result[item] += 1;
+    }
+
+    return CalcBias(result);
+}
+\end{lstlisting}
+\end{minipage}
+
+
+
+
+\fix{}{Its accuracy can be seen on \autoref{}}

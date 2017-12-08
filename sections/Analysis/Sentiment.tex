@@ -121,17 +121,17 @@ improve accuracy if there is a large training sample. With smaller training
 samples it becomes necessary to use unigrams as there are not enough
 token occurances to justify using bigger n-grams.
 
-\subsection{Feature Vectors}
+\subsection{Feature Vectors}\label{sub:FeatureVector}
 A feature vector is used to denote which features are present in a piece of
 text. The vector gets created by mapping each feature to a unique integer, this
 is done while training the model and is called a Bag-Of-Words (not to be
-confused with the Bag-Of-Words model, described in \autoref{subsub:Models}).
-With this Tokens-To-Integers the feature vector can now be created as a series,
-often array, of 1's or 0's, which denotes whether the given feature is present
-in the vector. The bigger the Bag-Of-Words is, the larger every feature vector
-is. For example if ``\textit{love}'' is mapped to \textbf{3} and
-``\textit{movie}'' is mapped to \textbf{205}, then a feature vector for
-``\textit{I love this movie}'' could be: [0,0,0,1,0,\ldots,0,1,0].
+confused with the Bag-Of-Words classification model, described in
+\autoref{subsub:Models}). With this Tokens-To-Integers the feature vector can
+now be created as a series, often array, of 1's or 0's, which denotes whether
+the given feature is present in the vector. The bigger the Bag-Of-Words is, the
+larger every feature vector is. For example if ``\textit{love}'' is mapped to
+\textbf{3} and ``\textit{movie}'' is mapped to \textbf{205}, then a feature
+vector for ``\textit{I love this movie}'' could be: [0,0,0,1,0,\ldots,0,1,0].
 
 
 
