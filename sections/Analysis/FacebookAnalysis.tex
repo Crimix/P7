@@ -1,55 +1,41 @@
 \subsection{Facebook Analysis}\label{sec:facebook-analysis}
-Facebooks is a social media site with more than one billion users, each
-sharing posts and personal details, all of which are useful in the analysis and
+Facebooks is a social media site with more than one billion users, each sharing
+posts and personal details, all of which are useful in the analysis and
 detection of a person's \fbp. Facebook is used by both private citizens and
-businesses in order to organize events, communicate and share ideas. 
+businesses to organise events, communicate and share ideas.
 
 \subsubsection{Using Facebook}
 Facebook has two different entities that can interact with one another in
-different ways \Source.
+various ways \Source.
 
 \begin{itemize}
-  \item \textbf{User:} A user is a private citizen to share information. A core
-  part of the user is ``feed'' which continuously shows new posts from users
-  and pages. Users are able to connect with other users via ``friendships'',
-  which allows the user to see some of the posts on their feed.
-  \item \textbf{Page:} A page can be used to either organize an event, a
+  \item \textbf{User:} A user is a private citizen on Facebook. A user's
+  ``feed'' is a core part used to continuously shows new posts from users and
+  pages. Users can connect with other users via ``friendships'', which allows
+  the user to see some of the posts on their feed.
+  \item \textbf{Page:} A page can be used to either organise an event, a
   discussion forum or as a profile for a company. Users can mark these pages as
-  ``liked'' which can be used both to get updates from the page, as well as to
-  show others, what they like
+  ``liked'' which can be used both to get updates from the page and show others,
+  what they like.
 \end{itemize}
 
-% \subsubsection{User}
-% A user is a private citizen to share information. A core part of the user is
-% ``feed'' which continuously shows new posts from users and pages. Users are able
-% to connect with other users via ``friendships'', which allows the user to see
-% some of the posts on their feed.
-% 
-% \subsubsection{Page}
-% A page can be used to either organize an event, a discussion forum or as a
-% profile for a company. Users can mark these pages as ``liked'' which can be
-% used both to get updates from the page, as well as to show others, what they
-% like
 
 \subsubsection{Facebook API}
-Facebook prohibits crawling/scraping of their site with a few exceptions such as
-crawlers made by Google and Apple respectively
-\citep{FacebookRobotsTxt}\fix{}{How can a normal non-crawler making reader see
-this}.
-To access data on their site, they have created the Facebook Graph \ac{API} as
-part of their developer platform, which requires a registration of one's
-application, along with an accompanying \ac{API} key used when performing
-queries.
-In addition to this requirement, there is also a strict requirement of consent
-from the user of an application, which needs to specify all the different types
-of data that the application wants to access
-\citep{FacebookGraphApiAccessTokens} \fix{}{Cant seem to find where this strict
-thing is defined in the text so\ldots.}\Source .\nl
+Facebook prohibits crawling/scraping of their website with a few exceptions such
+as crawlers made by Google and Apple, whom still have a few restrictions to
+follow \citep{FacebookRobotsTxt}. To access data on their site, they have
+created the Facebook Graph \ac{API} as part of their developer platform, which
+requires a registration of one's application, along with an accompanying
+\ac{API} key used to perform queries. In addition to this requirement, there is
+also a strict requirement of consent from the user of an application, which
+needs to specify all the different types of data that the application wants to
+access \citep{FacebookGraphApiAccessTokens} \fix{}{Cant seem to find where this
+strict thing is defined in the text so\ldots.}\Source .\nl
 
 An analysis of Facebook's Graph \ac{API} \citep{FacebookGraphApiDocumentation}
 reveals that the platform previously allowed for more freedom when gathering
-information about a user and their social circles. However, this is no longer
-the case as of version 2.0 of the \ac{API}
+information about a user and their social activity on Facebook. However, this is
+no longer the case as of version 2.0 of the \ac{API}
 \citep{FacebookChangesInGraphTwoPointOh}.
 
 The current \ac{API} is limited to only listing those of the user's friends
@@ -57,20 +43,19 @@ that are using the same app and have given consent to let the app use their
 details \citep{FacebookChangesInGraphTwoPointOh}. Access to the user's ``likes''
 is limited to the interests listed on their profile, such as their favourite
 movies and pages on Facebook, that they have marked as ``liked''
-\citep{FacebookGraphApiUserEdges} \citep{FacebookGraphApiUserLikes}
+\citep{FacebookGraphApiUserEdges, FacebookGraphApiUserLikes}.
 \fix{}{Might be a bit hard for a reader to understand where you got that
 from these two sources}.\nl
 
-It is possible to access the user's posts and details regarding them,
-including whether they were originally posted by the user or shared from
-another poster. These shared posts can then be traced back one or more steps
-depending on the privacy settings of each link in the ``share--chain'', but
-only limited information can be gathered about the users on the chain
-\citep{FacebookGraphApiUserFeed}\fix{}{Please explain to me, where you can
-see that about the share--chain}.\nl
+It is possible to access the user's posts and details regarding them, including
+whether it originated from them or if another user shared it. These posts can
+then be traced back one or more steps depending on the privacy settings of each
+link in the ``share--chain'', \fix{but only limited information can be gathered
+about the users on the chain \citep{FacebookGraphApiUserFeed}}{what limited
+information?}\fix{}{Please explain to me, where you can see that about the
+share--chain}.\nl
 
-Based on this information, it is possible to use Facebook's \ac{API} to find
-further connections between existing users of the system.
-Knowledge of these users, based on what the system has found out via other
-sources, can then be used to either confirm or update the system's knowledge of
-these individuals.
+To summarise, it is possible to use Facebook's \ac{API} to find connections
+between existing users of the system. Knowledge of these users, based on what
+the system has found out via other sources, can then be used to either confirm
+or update the system's information on these individuals.
