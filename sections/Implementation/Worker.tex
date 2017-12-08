@@ -9,7 +9,14 @@ worker is to retrieve the list of users that the user is following, retrieve
 their tweets and analyse the tweets. The retrievement of tweets and the
 analysis are done in parallel by splitting them into tasks.
 
-\subsection{Splitting into task}
+\subsection{Tweet retriever}
+There are two versions of the whole tweet retrievement process. The first and
+oldest version uses the wrapper function \textc{GetTweetsFromUser}, which wraps
+around the helper function \textc{GetTweetsFromUserHelper}. The reason for using
+a helper function is that the helper function is used by both versions, with the
+only difference being the supplied parameters.
+
+
 To speed up the retrievement of tweets, it is split up in tasks that are run in
 parallel. It is split such that each user, the user is following, corresponds
 to a task. This way, the tasks are somewhat equally split. 
@@ -26,4 +33,5 @@ running at the same time. The predefined number of the latter may be 1 higher if
 it can not split the tasks equally. In this case, the excess tasks are
 put in their own small task.
 
+\subsection{}
 \fix{}{Needs more}
