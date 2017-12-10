@@ -1,0 +1,94 @@
+\chapter{Speed Test Results}\label{app:speedTest}
+The data set from the speed test can be seen below in \autoref{speedTestRes}.
+Each test shows the time required to process 3200 tweets.
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Try Nr.:	&	BoW (ms)	&	BoW Tweets/Sek	&	Bayes (ms)	&	Bayes Tweets/Sek	\\\hline
+1	&	55	&	58181	&	493	&	6490 \\\hline
+2	&	22	&	145454	&	353	&	9065 \\\hline
+3	&	30	&	106666	&	334	&	9580 \\\hline
+4	&	23	&	139130	&	328	&	9756 \\\hline
+5	&	33	&	96969	&	335	&	9552 \\\hline
+6	&	25	&	128000	&	331	&	9667 \\\hline
+7	&	23	&	139130	&	347	&	9221 \\\hline
+8	&	25	&	128000	&	331	&	9667 \\\hline
+9	&	25	&	128000	&	325	&	9846 \\\hline
+10	&	24	&	133333	&	353	&	9065 \\\hline
+11	&	25	&	128000	&	347	&	9221 \\\hline
+12	&	25	&	128000	&	327	&	9785 \\\hline
+13	&	27	&	118518	&	330	&	9696 \\\hline
+14	&	33	&	96969	&	328	&	9756 \\\hline
+15	&	23	&	139130	&	329	&	9726 \\\hline
+16	&	24	&	133333	&	332	&	9638 \\\hline
+17	&	24	&	133333	&	328	&	9756 \\\hline
+18	&	24	&	133333	&	349	&	9169 \\\hline
+19	&	24	&	133333	&	322	&	9937 \\\hline
+20	&	24	&	133333	&	333	&	9609 \\\hline
+\end{tabular}
+\caption{Results from the speed test}
+\label{speedTestRes}
+\end{table}
+
+\chapter{Accuracy Test Results}\label{app:speedTest}
+The data set from the accuracy test can be seen below in \autoref{speedTestRes}.
+Each test shows one pre-classified user, and the results determined from the
+bag-of-words model and the Naive Bayes model. The result consist of a value
+between -10 and 10, where a low value implies left-leaing views, and a high
+value implies right-leaning views. The bag-of-words (BoW) model also has a
+conclusion, which is dependent on the percentage of tweets considered political,
+and the size of the determined value. The columns represent the following, from
+left to right:\nl
+
+\begin{itemize}
+  \item The percentage of tweets the BoW model
+consider political in nature.
+\item Numeric result from BoW model.
+\item Conclusion from BoW model.
+\item Numeric result from the Bayes model.
+\item Conclusion from the Bayes model.
+\item Actual political leaning of the analyzed user.
+\end{itemize}
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{Pol\%:}	&	\textbf{Alg:}	&	\textbf{Alg Conc:}							&	\textbf{Bayes:}	&
+\textbf{Bayes Conc:}
+& \textbf{Actual:}
+\\\hline 0.64	&	-2.42	&	Left/Neutral (Pol\% too low)		&	5.82	&	Right		&	Left	\\\hline
+1.82	&	-0.865	&	Right								&	3.16	&	Right		&	Right	\\\hline
+8.25	&	-3.219	&	Left								&	2.55	&	Right		&	Left	\\\hline
+1.39	&	0.5		&	Right/Neutral (Result is 0 +/- 1)	&	3.51	&	Right		&	Right	\\\hline
+4.95	&	1.04	&	Right								&	4.31	&	Right		&	Right	\\\hline
+11.67	&	-3.02	&	Left								&	3.90	&	Right		&	Left	\\\hline
+2.8		&	2.03	&	Right								&	3.46	&	Right		&	Right	\\\hline
+10.71	&	-4.38	&	Left								&	2.90	&	Right		&	Left	\\\hline
+4.54	&	4.6		&	Right								&	3.24	&	Right		&	Right	\\\hline
+9.2		&	3.94	&	Right								&	3.88	&	Right		&	Right	\\\hline
+3.41	&	-0.7	&	Left/Neutral (Result is 0 +/- 1)	&	3.88	&	Right		&	Right	\\\hline
+23.92	&	-2.66	&	Left								&	4.28	&	Right		&	Left	\\\hline
+10.94	&	8.61	&	Right								&	5.75	&	Right		&	Right	\\\hline
+6.4		&	-2.79	&	Left								&	4.61	&	Right		&	Right	\\\hline
+15.48	&	8.46	&	Right								&	3.13	&	Right		&	Right	\\\hline
+7.41	&	-2.17	&	Left								&	3.40	&	Right		&	Left	\\\hline
+3.71	&	-6.5	&	Left								&	2.34	&	Right		&	Left	\\\hline
+15.31	&	7.19	&	Right								&	2.80	&	Right		&	Right	\\\hline
+0.34	&	3.18	&	Right/Neutral (Pol\% too low)		&	4.27	&	Right		&	Right	\\\hline
+0.81	&	-1.58	&	Left/Neutral (Pol\% too low)		&	6.21	&	Right		&	Left	\\\hline
+3.72	&	-5		&	Left								&	1.12	&	Right		&	Left	\\\hline
+11.37	&	8.09	&	Right								&	3.56	&	Right		&	Right	\\\hline
+0.48	&	-3.25	&	Left/Neutral (Pol\% too low)		&	4.26	&	Right		&	Left	\\\hline
+22.88	&	-2.49	&	Left								&	2.29	&	Right		&	Left	\\\hline
+0.31	&	2		&	Right/Neutral (Pol\% too low)		&	4.28	&	Right		&	Neutral	\\\hline
+0.22	&	4.14	&	Right/Neutral (Pol\% too low)		&	3.51	&	Right		&	Neutral	\\\hline
+0		&	0		&	Neutral								&	3.88	&	Right		&	Neutral	\\\hline
+0.09	&	3.5		&	Right/Neutral (Pol\% too low)		&	7.48	&	Right		&	Neutral	\\\hline
+0.24	&	-3.28	&	Left/Neutral (Pol\% too low)		&	4.31	&	Right		&	Neutral	\\\hline
+0.25	&	-0.28	&	Left/Neutral (Pol\%/Val too low)	&	2.86	&	Right		&	Neutral	\\\hline
+
+\end{tabular}
+\caption{Results from the speed test}
+\label{speedTestRes}
+\end{table}
