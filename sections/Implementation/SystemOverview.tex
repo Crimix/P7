@@ -1,25 +1,30 @@
 \chapter{System Overview}\label{ch:sysview} \fix{}{the chapter (Development in
-general) should also explain your design decisions} The developed solution consists of multiple different parts, including a Queue
-Server, a webpage front end, a database, and a set of classification algorithms.
-As such, this chapter will be used to give an overview of these different parts,
-and how they interact with each other.
+general) should also explain your design decisions} The developed solution
+consists of multiple different parts, including a Queue Server, a webpage front
+end, a database, and a set of classification models. As such, this chapter
+will be used to give an overview of these different parts, and how they
+interact with each other.
 
 \section{Overview}
 The developed system consists of four individual parts, the front end web
 service, the database, the classification system, and a task queue which handles
 users requests. These elements are developed using three different tools or
-frameworks: Laravel, C\# and MySQL. The overall architecture of the system can
-be seen in \autoref{P7_SystemOverview} where the arrows imply that different parts
-are communicating directly with each other.
+frameworks: Laravel, C\# and MySQL. The overall architecture of the
+system can be seen in \autoref{P7_SystemOverview} where the arrows imply that
+different parts are communicating directly with each other.
  
 \figx[0.62]{P7_SystemOverview}{System architecture of the BubbleBuster system}
 
+
+
+
 \subsection{GUI} %API, Interfaces, Data Transfer, System Logic The
 The part of the system developed in Laravel makes up the front end of the
-system, and is used as the user's entry-point to the system. From here, the user can
-make requests to analyze their filter bubble, and view the data derived from
-the analysis. As the solution is centered around a web application, it is
-scaleable such that it can support input from multiple users at a time.\nl
+system, and is used as the user's entry-point to the system. From here, the
+user can make requests to analyze a filter bubble using a twitter username, and
+view the data derived from the analysis. As the solution is centered around a web
+application, it is scaleable as it can support input from multiple users
+at a time, it is also possible to acquire more servers if needed. 
 
 \subsection{Database and API}
 The database API is developed using the Laravel framework, is used to execute
