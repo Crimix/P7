@@ -1,15 +1,192 @@
 \section{Naive Bayes Implementation}\label{sec:NBImp}
 
+The Naive Bayes classifier is implemented by using the Accord.Net framework for
+C\#. The famework is used for machine learning and comes with a lot of different
+models which can be used in classification, regression, clustering and more
+\citep{Accord}. The current implementation has three import parts, the feature
+extracting, the training and the predicting.
 
 \subsection{Feature Extraction}
+As mentioned in \autoref{sec:FeatEx} there are a lot of different components
+that need to be considered when extracting useful features, this is handled by
+the \textc{TextProcessingLib} Library.
+Given the small training set of 90 tweets, it is necessary to minimize number of features with
+minute differences between features. The features are extracted in the in the
+\textc{TextProcessor} class. The feature extraction happens in the
+\textc{Tokenizer} method, see \autoref{c:Tokenizer}.\nl
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Split and process each token in a tweet with
+regexes and stemming, label = c:Tokenizer] 
+public string[][] Tokenizer(List<string> tweets)
+{
+    ...
+    foreach (string token in tweet.ToLower().Split(' '))
+    {
+        feature = ProcessToken(token, isNeg);
+        if (!KeyWords.StopWordsList.Contains(token))
+        {
+        	feature = stem.StemWord(feature);
+	        tokens.Add(feature);
+    	}
+	}
+	...
+}
+\end{lstlisting}
+\end{minipage}
+
+At \textbf{line 4} each tweet is split at whitespace and lowercased, although we
+lose sentiment clues by doing this, we reduce the number of features with
+minute differences that do not help us. On \textbf{line 6} we process each
+token through a series of \textc{regexes} which remove undesired symbols,
+numbers, turn user references such as ``@RealUser'' into ``AT\_USER'' and links
+into ``LINK''. This is done to reduce the number of features, as each user has
+his own unique username. It can be argued that links should be transformed into
+their base url so they can contribute to the prediction. This has not been
+done, as the training set is limited. On \textbf{lines 7-11} we verify that the
+feature is not considered a stopword, in which case we try to stem it using the
+freely available Porter Stemmer from Brad Patton \citep{PorterStem}. As
+mentioned in \autoref{subsec:Stem} we lose a lot of differences between the
+tokens but we consider it important to minimize the amount of features with
+minute differences. After the stemming we can add it to the list of processed
+tokens for that tweet.
 
 \subsection{Training}
+A Naive Bayes Classifier needs supervised training in order to perform any
+predictions. As described in \autoref{subsec:Train} this happens by pairing an
+input with an output. In our case that input is tweet which has been transformed
+into a feature vector, while our output is a number describing the political
+leaning of the tweet based on our judgement. The Naive Bayes classifier is
+created and trained as seen on \autoref{c:Training}.\nl
 
-\subsection{Prediction}
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Creating and training the classifier, label =
+c:Training] 
+public void TrainNaiveBayes(string inputFile, string outputFile)
+{
+    double[][] inputs;
+    int[] outputs;
+
+    bagOfWords = new BagOfWords()
+    {
+        MaximumOccurance = 1
+    };
+
+    inputs = ReadInput(inputFile);
+    outputs = ReadOutput(outputFile);
+
+    var teacher = new NaiveBayesLearning<NormalDistribution>();
+    teacher.Options.InnerOption = new NormalOptions
+    {
+        Regularization = 1e-6 // to avoid zero variances
+    };
+    var nb = teacher.Learn(inputs, outputs);
+
+    FileHelper.WriteModelToFile("NaiveBayes90.accord", nb);
+}
+\end{lstlisting}
+\end{minipage}
+
+At \textbf{lines 6-9} a \textc{BagOfWords} is created, as described in
+\autoref{sub:FeatureVector}. On \textbf{line 8} we set the maximum occurance of
+each word to 1, which means that we use binary feature vectors, either 1 if
+the feature is present or 0 if it is not.
+
+We then get the feature vectors on \textbf{line 11}, by reading the file
+containing the training tweets, this is also where the \textc{BagOfWords} is
+trained, see \autoref{c:TrInput}. The output is read on \textbf{line 12} to get
+the classes.
+
+Now that we have the feature vectors and the classes, we can begin to train the
+Naive Bayes classifier. We do this on \textbf{lines 14-19}, by using the
+Accord.net frameworks \textc{NaiveBayesLearning} class with the normal
+distribution, we add regularization on \textbf{line 17} \fix{\ldots}{Make small
+tests to see differences}
+
+We then train Naive Bayes classifier on \textbf{line 19}, where it is taught
+using the input and output from the training files. We then save the model on
+\textbf{line 21}, so that we do not have to retrain it every time we need to use
+it.\nl
+
+Due to how Accord.Net does not allow for saving and loading of
+\textc{BagOfWords} objects, it is necessary to retrain it every time we need to
+use it. The process of tokenizing tweets and and training the \textc{BagOfWords}
+can be seen in \autoref{c:TrInput}.\nl
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Create and train the bag of words, label =
+c:TrInput] 
+double[][] ReadInput(string inputDoc)
+{
+    ...
+    string[][] tokens = tp.Tokenizer(tweets);
+    FileHelper.WriteObjectToFile("BagOfWords90.txt", tokens);
+    bagOfWords.Learn(tokens);
+    double[][] input = bagOfWords.Transform(tokens);
+    ...
+	return input
+}
+\end{lstlisting}
+\end{minipage}
+
+On \textc{line 4} we tokenize the tweets, this gives us a jagged string array,
+which we then on \textc{line 5} use the
+\textc{FileHelper}'s \textc{WriteObjectToFile} method on.
+This gives us something we can use as shortcut when retraining the
+\textc{BagOfWords} in the future. On \textc{line 5-9} we then train the
+\textc{BagOfWords} and transforms the tokenized tweets into feature vectors
+which we return.
 
 
-Another approach to determining the political leanings of twitter users is to
-make use of a machine intelligence model, which can classify tweets based on a
-knowledge base of previously classified examples. This approach makes use of a
-naive bayes model, which searches a tweet for occurrences of keywords which are
-predetermined to either imply a left- or right-wing leaning.
+\subsection{Predicting}
+
+Using the Naive Bayes classifier to predict is easy, see \autoref{c:Run}. On
+\textbf{lines 4-5} we use the \textc{FileHelper} to get both the model and
+the \textc{BagOfWords}, which has been trained using the using the shortcut as
+mentioned before. We then process and format the tweets into feature vectors on
+\textbf{line 6} using the \textc{FormatTweets} method, which simply extracts the
+text from the tweet and uses the \textc{Tokenizer} method from
+\autoref{c:Tokenizer}. On \textc{line 9} we then use Accord.Nets \textc{Decide}
+method to predict which of the class each the tweets belong to.
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Load the Naive Bayes model and find
+bias, label = c:Run] 
+public double RunNaiveBayes(List<Tweet> tweets)
+{
+    ...
+    var model = FileHelper.GetModel();
+    bagOfWords = FileHelper.GetBagOfWords();
+    double[][] inputs = FormatTweets(tweets);
+
+    //Predicts each tweets class
+    int[] answers = model.Decide(inputs);
+    ...
+}
+\end{lstlisting}
+\end{minipage}
+
+Using these predictions we can then calculate the bias as a score from -10
+(left) to 10 (right), using the aggregated classes, see \autoref{c:NBBias}. 
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Determines the users bias based on the predictions,
+label = c:NBBias]
+double CalcBias(List<int> results)
+{
+    double left = results[0];
+    double neutral = results[1];
+    double right = results[2];
+
+    double bias = (right - left) / (left + neutral + right) * 10;
+    return bias;
+}
+\end{lstlisting}
+\end{minipage}
+
+We calculate the bias on \textbf{line 7}, \fix{\ldots}{hvorfor udregnes bias
+sådan her?}.
+
+
+\fix{}{Make reference to accuracy tests}
+

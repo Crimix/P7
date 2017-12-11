@@ -11,12 +11,13 @@ analysis are done in parallel by splitting them into tasks.
 
 \subsection{Tweet retriever}
 There are two versions of the whole tweet retrievement process. The first
-version is a legacy version that retrieves tweets and saves them in files
-locally to be analyzed at a later point. The new implementation retrieves and
-analyzes each twitter account on their own thread to save time. The code from
-back when the legacy version was written, is moved to the helper function
-\textc{GetTweetsFromUser}, which both the versions wraps around. To make this
-work, the helper function, among others, receives the \textc{retrieveMethod} as
+version is a legacy version that retrieves tweets and returns them as one list
+such that they can be saved in files locally or to be analyzed at a later
+point.
+The new implementation retrieves and analyzes each Twitter account on their own
+thread to save time. The code from back when the legacy version was written, is moved to the helper function
+\textc{GetTweetsFromUserHelper}, which both the versions wraps around. To make
+this work, the helper function, among others, receives the \textc{retrieveMethod} as
 a parameter. Since this parameter is of the type \textc{Func<List<Tweet>>}, the
 helper function can take any function as parameter as long as it returns a list
 of tweets.
@@ -62,16 +63,15 @@ private List<Tweet> GetTweetsFromUserHelper(User user, AuthObj auth, Func<List<T
 \end{minipage}
 
 The helper was made to reuse code, because the only change would be the function to be
-called in the task on \textbf{line 3}.\\
+called in the task on \textbf{line 4}.\\
 
 \subsection{Splitting up in tasks}
-
-To speed up the retrievement of tweets, it is split up in tasks that are run in
-parallel. It is split such that each user, the user is following, corresponds
+To speed up the retrievement of tweets, the retrievement is split up in tasks
+that are run in parallel. It is split such that each user, the user is following, corresponds
 to a task. This way, the tasks are somewhat equally split. 
-When the worker analyzes the tweets, be it while retrieving or from a file, it
-also needs to split the list of tweets into tasks, such that it is possible to work on a smaller subset of the
-problem. Here, the splitting is done such that each task gets an equal amount of
+When the worker analyzes the tweets, be it while retrieving, from a file or
+just a list of tweets, it also needs to split the list of tweets into tasks,
+such that it is possible to work on a smaller subset of the problem. Here, the splitting is done such that each task gets an equal amount of
 tweets.
 
 The main difference between how the task splits are done in the retrievement
@@ -81,5 +81,7 @@ higher, whereas the analysis part always has all its predefined number of tasks
 running at the same time. The predefined number of the latter may be 1 higher if
 it can not split the tasks equally. In this case, the excess tasks are
 put in their own small task. 
+
+\subsection(Anonymous functions)
 
 \fix{}{Needs more maybe.}

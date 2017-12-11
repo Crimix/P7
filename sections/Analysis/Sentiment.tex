@@ -76,7 +76,7 @@ I don't like this song, why do they keep playing it? &
 There are a couple of other methods that can affect how much sentiment is
 retained in the text, such as stemming and using n-grams.
 
-\subsection{Stemming}
+\subsection{Stemming}\label{subsec:Stem}
 Stemming can be used when performing feature extraction. It is used to collapse
 a word into its base, for instance ``finding'' can be stemmed to ``find''.
 Stemming is both useful and destructive. It allows for reduction in the number
@@ -121,17 +121,17 @@ improve accuracy if there is a large training sample. With smaller training
 samples it becomes necessary to use unigrams as there are not enough
 token occurances to justify using bigger n-grams.
 
-\subsection{Feature Vectors}
+\subsection{Feature Vectors}\label{sub:FeatureVector}
 A feature vector is used to denote which features are present in a piece of
 text. The vector gets created by mapping each feature to a unique integer, this
 is done while training the model and is called a Bag-Of-Words (not to be
-confused with the Bag-Of-Words model, described in \autoref{subsub:Models}).
-With this Tokens-To-Integers the feature vector can now be created as a series,
-often array, of 1's or 0's, which denotes whether the given feature is present
-in the vector. The bigger the Bag-Of-Words is, the larger every feature vector
-is. For example if ``\textit{love}'' is mapped to \textbf{3} and
-``\textit{movie}'' is mapped to \textbf{205}, then a feature vector for
-``\textit{I love this movie}'' could be: [0,0,0,1,0,\ldots,0,1,0].
+confused with the Bag-Of-Words classification model, described in
+\autoref{subsub:Models}). With this Tokens-To-Integers the feature vector can
+now be created as a series, often array, of 1's or 0's, which denotes whether
+the given feature is present in the vector. The bigger the Bag-Of-Words is, the
+larger every feature vector is. For example if ``\textit{love}'' is mapped to
+\textbf{3} and ``\textit{movie}'' is mapped to \textbf{205}, then a feature
+vector for ``\textit{I love this movie}'' could be: [0,0,0,1,0,\ldots,0,1,0].
 
 
 
@@ -141,7 +141,7 @@ consists of predicting the sentiment based on the features extracted earlier.
 The accuracy of the predictions are based on labeled data that was provided as
 training data, as well as the model that is used. 
 
-\subsection{Training}
+\subsection{Training}\label{subsec:Train}
 The training data is an important part of every model. There are three
 different training methods, each suitable for a different task.
 
@@ -190,9 +190,22 @@ as conveying a more intense sentiment than others. Each word and its
 corresponding sentiment score is stored in a sentiment lexicon, these lexicons
 can be created by or found freely online \citep{BagOfWords}.
 
+\fix{add a small table to illustrate}{}
+
+
 \subsubsection{Naive Bayes} 
-The Naive Bayes classifier determines the sentiment of text
-using probability. It trains using supervised learning, where each text object
+The Naive Bayes classifier uses Bayes' rule and the assumption of independence,
+which simply assumes that the features are independent of each other
+\citep[Proposition 6.5]{MIBook}, to determine the sentiment. Bayes' rule, see
+\autoref{e:Bayes}, describes how prior knowledge can relate to and affect an
+event \citep[P.229]{MIBook}. 
+
+\begin{equation}\label{e:Bayes}
+P(X|Y) = \cfrac{P(Y|X) \cdot P(X)}{P(Y)}
+\end{equation}
+
+
+It trains using supervised learning, where each text object
 is labeled with a class. The text features are extracted as tokens.
 The probability of each token belonging to each of the labels is then
 calculated by counting how often it occurs with that class. This leads to a
@@ -215,7 +228,8 @@ Total & 255 & 245 & 500				\\ \hline
 
 In order to predict which class, \textit{C}, a given piece of text belongs to it
 needs to be transformed to a feature vector, \textit{W}, where each feature is
-denoted as, $w_{i}$. By using \autoref{e:Score} we can predict the class \citep[Ch.2.1]{Bayes}.
+denoted as, $w_{i}$. By using \autoref{e:Score} we can predict the class
+\citep[Ch.2.1]{Bayes}.
 \begin{equation}\label{e:Score}
 score(W,C) = P(C) \cdot \displaystyle\prod_{i=1}^{n}P(w_{i}|C)
 \end{equation}

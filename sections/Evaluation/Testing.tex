@@ -1,7 +1,129 @@
 \chapter{Testing}
+In order to determine the quality of the developed software solution, we have
+performed a number of tests. These tests aim to assure the quality of the
+determined results, and to ensure that the software is operating as expected.\nl
+
+The tests were performed on a PC running Windows 10, and having a 3.1GHz
+processor, 256GB SSD harddisk, and 8GB DDR4 RAM.
 
 \section{Speed Test}
+The purpose of this test is to document to effeciency of the two different
+approaches to classification discussed in \autoref{sec:BoW} and
+\autoref{sec:NBImp}. The effeciency will be evaluated based on the time
+necessary to process a given number of tweets. As such, each approach will
+process 819.200 tweets in batches of 3200. These numbers have been chosen as we
+need a high enough amount to accurately determine the average time necessary,
+and because each tweet analysis will process a maximum of 3200 tweets, as this
+is the maximum amount of tweets retrievable from a person.
+
+\subsection*{Results}
+A subset of the results from the speed test can be seen in \autoref{table:stest}
+together with the average tweets per second in \autoref{AvgTweetsPs}. The
+full dataset can be found in \autoref{app:speedTest}.
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Try Nr.:	&	BoW (ms)	&	BoW Tweets/Sek	&	Bayes (ms)	&	Bayes Tweets/Sek	\\\hline
+1	&	55	&	58181	&	493	&	6490 \\\hline
+2	&	22	&	145454	&	353	&	9065 \\\hline
+3	&	30	&	106666	&	334	&	9580 \\\hline
+4	&	23	&	139130	&	328	&	9756 \\\hline		
+\end{tabular}
+\caption{Subset of the results from the speed test}
+\label{table:stest}
+\end{table}
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|l|}\hline
+					&	\textbf{BoW Tw/sek}	&	\textbf{Bayes Tw/sek}	\\\hline
+\textbf{Average:}	&	124007				&	9410 					\\\hline	
+\end{tabular}
+\caption{Average number of tweets processed per second}
+\label{AvgTweetsPs}
+\end{table}
+
+The results from this test show that the bag-of-words model is the fastest
+approach, being capable of processing around 120.000 tweets per second, and the
+naive bayes approach processing around 9500 tweets per second. To put this into
+perspective, if a user were to follow 500 accounts, it would result in a maximum
+of 16.000.000 tweets, which would take around 2 minutes to process for the
+bag-of-words model, and 26 minutes for the naive network. Considering that this
+amount of followed users is above average, we consider this processing time as
+being acceptable.
+
+
+
+
+
+
+
 
 \section{Accuracy Test}
+The purpose of this test is to document to accuracy of the results determined
+by the two different approaches to classification discussed in \autoref{sec:BoW}
+and \autoref{sec:NBImp}. The accuracy will be determined by comparing the
+results from the classification with a set of manually pre-classified
+twitter users. The chosen users consists of politicians, activists, and a set of
+average twitter users.
+
+\subsection*{Results}
+A subset of the results from the accuracy test can be seen in
+\autoref{table:acctest} together with the percentage success in
+\autoref{AvgTweetsPs}. The full dataset can be found in
+\autoref{app:accuracyTest}.\nl
+
+A subset of the dataset from the accuracy test can be seen below in
+\autoref{speedTestReslabel}. Each test shows one pre-classified user, and the
+results determined from the bag-of-words model and the Naive Bayes model. The
+result consist of a value between -10 and 10, where a low value implies
+left-leaing views, and a high value implies right-leaning views. The
+bag-of-words (BoW) model also has a conclusion, which is dependent on the
+percentage of tweets considered political, and the size of the determined value.
+For the BoW model, a user with less than 1\% political tweets, or a determined
+value below 1, is automatically considered as neutral. The percentage accuracy
+of each model can be seen in \autoref{AccPercent}.
+The columns represent the following, from left to right:\nl
+
+\begin{itemize}
+  \item The percentage of tweets the BoW model
+consider political in nature.
+\item Numeric result from BoW model.
+\item Conclusion from BoW model.
+\item Numeric result from the Bayes model.
+\item Conclusion from the Bayes model.
+\item Actual political leaning of the analyzed user.
+\end{itemize}
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{Pol\%:}	&	\textbf{Alg:}	&	\textbf{Alg Conc:}							&	\textbf{Bayes:}	&
+\textbf{Bayes Conc:}
+& \textbf{Actual:}
+\\\hline 0.64	&	-2.42	&	Left/Neutral (Pol\% too low)		&	5.82	&	Right		&	Left	\\\hline
+1.82	&	-0.865	&	Right								&	3.16	&	Right		&	Right	\\\hline
+8.25	&	-3.219	&	Left								&	2.55	&	Right		&	Left	\\\hline
+1.39	&	0.5		&	Right/Neutral (Result is 0 +/- 1)	&	3.51	&	Right		&	Right	\\\hline
+\end{tabular}
+\caption{Results from the speed test}
+\label{speedTestReslabel}
+\end{table}
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|l|}\hline
+						&	\textbf{Accuracy BoW}	&	\textbf{Accuracy Bayes}	\\\hline
+\textbf{Accuracy\%:}	&	96.67\%					&	43.33\%						\\\hline	
+\end{tabular}
+\caption{Average number of tweets processed per second}
+\label{AccPercent}
+\end{table}
+
+The results from this test show that the bag-of-words model is the most
+approach, being capable of accurately classifying 96\% of the test users, and
+the naive bayes approach classifying 46\%.
+
+
+
 
 \section{Stress Testing}
