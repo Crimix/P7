@@ -20,14 +20,14 @@ likely to have quality content \citep[Ch.20.1]{manning2008introduction}.\nl
 
 A crawler's architecture is made to be modular, as seen in \autoref{BasicWC}.
 The 'Frontier' is a list of elements, usually URLs, not yet crawled. The 'Fetch'
-module is designed to get the firstelement from the 'Frontier' and request
-access to the corresponding site. The site content is passed to the 'Parse'
-module, which is further described in \autoref{sec:parsing}. The site content
-gets verified to find if the site has been crawled before, it could be that the
-side had minor updates or called itsef recursively causing the crawler to loop.
-URLs get filtered according to the domains ``/robots.txt'', which describes what
-each crawler is allowed to access. Finally, the duplicated URLs get eliminated,
-and the new URLs added to the frontier.\nl
+module is designed to get the first element from the 'Frontier' and request
+access to the corresponding site. The site content gets passed to the 'Parse'
+module, further described in \autoref{sec:parsing}. The content on the site gets
+verified to find if the site has been crawled before, it could be that the side
+had minor updates or called itsef recursively causing the crawler to loop. URLs
+get filtered according to the domains ``/robots.txt'', which describes what each
+crawler is allowed to access. Finally, the duplicated URLs get eliminated, and
+the new URLs added to the frontier.\nl
 
 %Vejleder vil gerne have fikset overfull boxes men det er på den måde i bogen.
 \figx[1.2]{BasicWC}{The basic crawler architecture \citep[p.
@@ -43,32 +43,30 @@ faster and avoid crawling the same sites multiple times; it is also critical for
 them to avoid spamming the same servers with requests.
 
 
-
 \subsection{Parsing} \label{sec:parsing}
 Parsing is a method used to extract information from a document, and index it
-for later use. In this case, a document is the raw-content retrieved from a request,
-including text, HTML code and -tags.
-The first part of parsing a document consists of removing the unnecessary
-information, such as HTML tags, while retaining the important information, like
-links and the body text. Depending on the document, it may be necessary to
-decode the document format and its character encodings.
-The second step is to tokenize the text, which means splitting up the text into
-the smallest meaningful entities, which in this context are words. Depending on
-how advanced the tokenizer is, it should be able to handle abbreviations, such
-as ``aren't'' or ``kg.''. The tokenizer should also remove stopwords, which are
-words that do not contain useful information, and should therefore not
-be indexed. Examples of this are words such as ``the'' and ``a''. As these words
-do not refer to anything in particular, a query should not match indexed pages
-based on them.
+for later use. In this case, a document is the raw-content retrieved from a
+request, including text, HTML code and -tags.
+The first part of parsing a document consists of removing unnecessary
+information, such as HTML tags, while retaining the desired information, like
+links and body text. Depending on the document, it may be necessary to decode
+the document's format and character encodings.
+The second step is to tokenize the text, which means splitting it into the
+smallest meaningful entities, which in this context are words. Depending on how
+advanced the tokenizer is, it should be able to handle abbreviations, such as
+``aren't'' or ``kg.''. The tokenizer should also remove stopwords, which are
+words that do not contain useful information, and should therefore not be
+indexed; such as ``the'' and ``a''. As these words do not refer to anything in
+particular, a query should not match indexed pages based on them.
 
 \subsection{Indexing}
 Indexing is used to speed up the information retrieval process, as it is faster
-to search an index than to scan through every single page every time a query is
-performed.
+to search an index than scanning through every single page every time a query
+gets called.
 
-There are different types of indexes, the best fit depends on the way
-that the tokens and documents refer to each other. The two main types are the
-forward index and inverted index, examples of such can be seen below.
+There are different types of indexes; the best fit depends on the way the tokens
+and documents refer to each other. The two main types are the forward index and
+inverted index; as seen in the table below.
 
 \begin{minipage}{.40\textwidth}
   \centering
