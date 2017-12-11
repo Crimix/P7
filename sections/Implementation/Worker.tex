@@ -69,24 +69,7 @@ private List<Tweet> GetTweetsFromUserHelper(User user, AuthObj auth, Func<List<T
 The helper was made to reuse code, because the only change would be the function to be
 called in the task on \textbf{line 4}.\\
 
-\subsection{Splitting up in tasks}
-To speed up the retrievement of tweets, the retrievement is split up in tasks
-that are run in parallel. It is split such that each user, the user is following, corresponds
-to a task. This way, the tasks are somewhat equally split. 
-When the worker analyzes the tweets, be it while retrieving, from a file or
-just a list of tweets, it also needs to split the list of tweets into tasks,
-such that it is possible to work on a smaller subset of the problem. Here, the splitting is done such that each task gets an equal amount of
-tweets.
-
-The main difference between how the task splits are done in the retrievement
-part and the analysis part is that in the retrievement part, a predefined number
-of tasks can run at the same time, even though the total number of tasks may be
-higher, whereas the analysis part always has all its predefined number of tasks
-running at the same time. The predefined number of the latter may be 1 higher if
-it can not split the tasks equally. In this case, the excess tasks are
-put in their own small task. 
-
-\subsection{Retrieve method}
+\subsubsection{Retrieve method}
 As mentioned in \autoref{sub:tweetretriever}, the \textc{retrieveMethod}
 parameter can be replaced with any function that returns a list of tweets. Both
 versions send the function \textc{TweetThreadMethod}, shown on
@@ -127,5 +110,32 @@ a user and an authorization object, while the new version also parses the
 functions \textc{checkDB}, \textc{classifyMethod} and \textc{postToDB}.
 \textc{checkDB} is used to check if the user is already in the database. If it
 is, it skips the tweet retrievement and analysis of the particular user. If it is not, it retrieves the tweets and analyzes them if it
-is the new version.
+is the new version.\\
+
+\subsection{Anonymous functions}
+The three anonymous functions mentioned in \autoref{sub:tweetretriever} -
+\textc{checkDB}, \textc{classifyMethod} and \textc{postToDB} are defined in the
+worker class under the names of \textc{CheckOfResultExistOnDB},
+\textc{ClassifyTweet} and \textc{PostResultToDB} respectively. These are defined
+in \textc{Worker} rather than \textc{TweetRetriever} because they are different
+for each worker and because we have to save the userRecordId, which is a bad
+thinf to do in \textc{TweetRetriever} since it is a singleton class.
+
+\subsection{Splitting up in tasks}
+To speed up the retrievement of tweets, the retrievement is split up in tasks
+that are run in parallel. It is split such that each user, the user is following, corresponds
+to a task. This way, the tasks are somewhat equally split. 
+When the worker analyzes the tweets, be it while retrieving, from a file or
+just a list of tweets, it also needs to split the list of tweets into tasks,
+such that it is possible to work on a smaller subset of the problem. Here, the splitting is done such that each task gets an equal amount of
+tweets.
+
+The main difference between how the task splits are done in the retrievement
+part and the analysis part is that in the retrievement part, a predefined number
+of tasks can run at the same time, even though the total number of tasks may be
+higher, whereas the analysis part always has all its predefined number of tasks
+running at the same time. The predefined number of the latter may be 1 higher if
+it can not split the tasks equally. In this case, the excess tasks are
+put in their own small task. 
+
 \fix{}{Needs more maybe.}
