@@ -47,15 +47,15 @@ into account the emotional words, the program should be able to identify and
 inform the user of his/her political beliefs. 
 \end{requirement}
 
-\begin{requirement}{Web-Application Frontend}
-The application should make use of a frontend developes as a web application.
+\begin{requirement}{Web-Application Front End}
+The application should make use of a front end developed as a web application.
 This application should be hostable on a server such that it can be presented as
-a webpage.
+a web page.
 \end{requirement}
 
-\begin{requirement}{Server Backend}
-The logic of the developed software should be hosted on a server, which recieves
-requests from the frontend, and returns analyzed data and the determiend
+\begin{requirement}{Server Back End}
+The logic of the developed software should be hosted on a server, which receives
+requests from the front end, and returns analyzed data and the determined
 conclusions.
 \end{requirement}
 
@@ -66,23 +66,24 @@ is reduced.
 \end{requirement}
 
 \begin{requirement}{Scalable Architecture}
-The server backend must be capable of handling an undefined number of concurrent
-user requests, as if it acted as the backend of an actual webpage. As such, the
-server must queue requests, and make sure to handle them all.
+The server back end must be capable of handling an undefined number of
+concurrent user requests, as if it acted as the back end of an actual web page. As such,
+the server must queue requests, and make sure to handle them all.
 \end{requirement}
 
 \begin{requirement}{Twitter API Resource Limits}
 As each individual Twitter user or application has a limited amount of available
-calls to the Twitter API, the frontend should make use of the official
+calls to the Twitter API, the front end should make use of the official
 embedded Twitter authentication implementation. This should allow the system to
 use that user's pool of API calls. This should make the application scalable for
 a larger potential user base.
 \end{requirement}
 
-\begin{requirement}{API Communication}
-The developed software must make use of APIs in order to communicate between
-eachother. These APIs must use verification such that only approved requests are
-processed. These APIs should be used for the database, and the server backend.
+\begin{requirement}{\ac{API} Communication}
+The developed software must make use of \ac{API}s in order to communicate between
+each other. These \ac{API}s must use verification such that only approved
+requests are processed. These \ac{API}s should be used for the database, and the server back
+end.
 \end{requirement}
 
 
