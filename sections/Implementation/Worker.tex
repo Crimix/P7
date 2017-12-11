@@ -116,10 +116,12 @@ is the new version.\\
 The three anonymous functions mentioned in \autoref{sub:tweetretriever} -
 \textc{checkDB}, \textc{classifyMethod} and \textc{postToDB} are defined in the
 worker class under the names of \textc{CheckOfResultExistOnDB},
-\textc{ClassifyTweet} and \textc{PostResultToDB} respectively. These are defined
+\textc{ClassifyTweet} and \textc{PostResultToDB} respectively, where there are two versions of \textc{CheckOfResultExistOnDB} and
+\textc{PostResultToDB}, the only aspect which is different is that the two other versions, links the user being analyses to the overall user. These are defined
 in \textc{Worker} rather than \textc{TweetRetriever} because they are different
-for each worker and because we have to save the userRecordId, which is a bad
-thinf to do in \textc{TweetRetriever} since it is a singleton class.
+for each worker, because of the \textc{userRecordId} which is different for each request, such a thing
+cannot be defined in the singleton class without the need to pass the id to each method.
+This way it is still the workers methods that are used in a context where they have access to what is defined in the worker.
 
 \subsection{Splitting up in tasks}
 To speed up the retrievement of tweets, the retrievement is split up in tasks
