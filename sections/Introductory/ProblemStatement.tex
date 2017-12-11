@@ -1,10 +1,16 @@
 \chapter{Problem Statement}\label{ch:problem}
-Our project for this semester was how to break a filter bubble. Therefore, we
-first approached it by trying to figure out which social media would be most
-suitable and analyzed how to collect a vast amount of user data, from the sites
-to identify a filter bubble.
-This chapter will summarize the conclusions, and define a problem
-statement.\nl
+% Our project for this semester is to break filter bubbles. Therefore, we
+% first approached it by trying to figure out which social media would be most
+% suitable and analyzed how to collect a vast amount of user data, from the sites
+% to identify a filter bubble.
+% This chapter will summarize the conclusions, and define a problem
+% statement.\nl
+%----------------
+
+Our project for this semester is to break filter bubbles. We have therefore
+looked for ways to gather and analyse user data, that could be used to
+determine a filter bubble. This chapter will summarize the conclusions and
+define a problem statement.\nl
 
 In \autoref{sec:social-media-conclusion} we concluded, that Twitter is most suitable
 for gathering user data, as Twitter provide an \ac{API} that permits us to
@@ -12,21 +18,12 @@ easily request all relevant data from a user. This data can be requested from
 any user, who has not set their account to private. The data consists of tweets,
 followers, and friends for any such user.\nl
 
-In \autoref{subsec:crawler} we discovered that there are restrictions to what
-a crawler is allowed to access. We have determined that while it is possible to
-use a regular crawler to gather data, it is preferable to use the official
-Twitter \ac{API} designed for the purpose. We made this decision, as the
-\ac{API} gives access to all relevant data by using a simple set of \ac{HTTP}
-requests, while a crawler has to adhere to a stricter set of limitations.
-However, we are still able to use the crawler architecture as a guideline for
-how to design a solution.\nl
+In \autoref{sec:DAConc} we concluded that sentiment analysis is an interesting
+can be used to determine the filter bubbles for predefined domains. We also
+found two different models that are capable of performing sentiment
+analysis. Based on these conclusions, we establish the following problem
+statement:
 
-% In \autoref{emotions} we determined that we can identify a users filter bubble
-% by how ``emotional'' they were about certain topics. This can be done by
-% pairing key topical words like names of political figures, with emotional
-% words like ``like", ``good", and ``hate".\nl
-
-Based on these conclusions, we establish the following problem statement:
 
 \begin{center}
 \begin{minipage}{0.95\linewidth} 
