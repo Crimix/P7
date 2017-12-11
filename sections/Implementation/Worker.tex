@@ -9,7 +9,7 @@ worker is to retrieve the list of users that the user is following, retrieve
 their tweets and analyse the tweets. The retrievement of tweets and the
 analysis are done in parallel by splitting them into tasks.
 
-\subsection{Tweet retriever}
+\subsection{Tweet retriever} \label{sub:tweetretriever}
 There are two versions of the whole tweet retrievement process. The first
 version is a legacy version that retrieves tweets and returns them as one list
 such that they can be saved in files locally or to be analyzed at a later
@@ -82,6 +82,46 @@ running at the same time. The predefined number of the latter may be 1 higher if
 it can not split the tasks equally. In this case, the excess tasks are
 put in their own small task. 
 
-\subsection(Anonymous functions)
+\subsection{Retrieve method}
+As mentioned in \autoref{sub:tweetretriever}, the \textc{retrieveMethod}
+parameter can be replaced with any function that returns a list of tweets. Both
+versions send the function \textc{TweetThreadMethod}, shown on
+\autoref{tweetthreadmethod}. \\
 
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = The TweetThreadMethod function, label =
+tweetthreadmethod]
+private List<Tweet> TweetThreadMethod(User user, AuthObj auth, Func<User, bool> checkDB = null, Func<List<Tweet>, AnalysisResultObj> classifyMethod = null, Func<AnalysisResultObj, User, bool> postToDB = null)
+{
+    bool alreadyExist = false;
+    AnalysisResultObj tempResult = new AnalysisResultObj();
+    List<Tweet> temp = new List<Tweet>();
+    if (checkDB != null)
+    {
+        alreadyExist = checkDB(user);
+		...
+    }
+
+    if (!alreadyExist)
+    {
+        temp = RetrieveTweets(user, auth);
+		...	
+        if (classifyMethod != null && postToDB != null)
+        {
+            tempResult = classifyMethod(temp); 
+            postToDB(tempResult, user); 
+            temp = new List<Tweet>();
+        }
+    }
+
+    return temp;
+}
+\end{lstlisting}
+\end{minipage}
+The difference is that this function has a bunch of optional parameters. The legacy version only parses
+a user and an authorization object, while the new version also parses the
+functions \textc{checkDB}, \textc{classifyMethod} and \textc{postToDB}.
+\textc{checkDB} is used to check if the user is already in the database. If it
+is, it skips the tweet retrievement and analysis of the particular user. If it is not, it retrieves the tweets and analyzes them if it
+is the new version.
 \fix{}{Needs more maybe.}

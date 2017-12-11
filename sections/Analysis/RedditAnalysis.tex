@@ -4,16 +4,16 @@ users \citep{AdvertiseOnReddit}. The site is split into ``subreddits'' wherein
 users can post entries as plain text, pictures and links to other websites. \nl
 
 Entries get ranked by the users who can either ``upvote'' or ``downvote''. This
-is the case for entries and comments. \citep{AboutReddit}\nl
+is the case for entries and comments \citep{AboutReddit}.\nl
 
-Users can follow other users such that all activity from the followed users is
-shown in a designated tab \fix{}{I mean like, yeah you can, but is it that
-relevant, not even a source}.
+% Users can follow other users such that all activity from the followed users is
+% shown in a designated tab \fix{}{I mean like, yeah you can, but is it that
+% relevant, not even a source}.
 
 \subsubsection{Reddit API}\label{subsec:reddit-api}
-Reddit has a \ac{REST} \ac{API} providing access to a user's information, posts
-and comments in subreddits, as well as moderation tools, that allow for
-manipulation of these \citep{RedditApi}. Software that interacts with the
+Reddit has a \ac{REST} \ac{API} providing access to a user's information,
+subscribed subreddits, posts and comments in subreddits, as well as moderation
+tools, that allow for manipulation of these \citep{RedditApi}. Software that interacts with the
 \ac{API} must follow certain rules. These include using OAuth2 to ensure that a
 user has given consent and that all requests are seen as coming from that
 user, and checking the rate-limiting headers returned with every server response
@@ -40,4 +40,8 @@ Spoofing another client or a browser using the \ttt{User-Agent} \ac{HTTP} header
 field is strictly prohibited and results in a ban if discovered.
 \citep{RedditApiRules}\nl
 
-\fix{}{Short conclusion? can we use this? (final conclusion betlow Twitter)}
+Based on the available information through the Reddit API, we should be able to
+gather data about a users comments and what subreddits they are subscribed to.
+Based on our observations, many subreddits have distinct community cultures,
+which often comes with an inherent political bias. As such, this information
+should be sufficient for our analysis.

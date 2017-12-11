@@ -1,20 +1,20 @@
-\chapter{Requirements Analysis?}\label{cha:req}
+\chapter{Requirements Definition}\label{cha:req}
 Following the problem statemet in \autoref{ch:problem}, this chapter will be
 used to determine the actual requirements of the developed software solution.
 
+% Klaus: The web aspect seems to be missing? From the study regulations: A
+% suitable user interface implies that it is possible to interact with the
+% developed solution using a web based interface.
+% E.G., an end user application has a web based user interface. An agent or a
+% service may not necessarily have a web based user interface, but would usually
+% have a web based A further reuirement is that the implementation needs to have
+% ascalaable acrhitecture
+
 \section{Functional Requirements}
-\fix{}{Klaus: The web aspect seems to be missing? 
-From the study regulations: A suitable user interface implies that it is
-possible to interact with the developed solution using a web based interface.
-E.G., an end user application has a web based user interface. An agent or a
-service may not necessarily have a web based user interface, but would usually
-have a web based
-A further reuirement is that the implementation needs to have ascalaable
-acrhitecture}
-\fix{}{Make sure this fits with the new system}
+
 \begin{requirement}[req:twitter-user-retrieval]{Retrieve user and pertinent information from Twitter}
-Given a Twitter username, the program should be capable of retrieving tweets and
-information about a user, including the accounts they are following.
+Given a Twitter username, the program should be capable of retrieving
+tweets and information about a user, including the accounts they are following.
 \end{requirement}
 
 \begin{requirement}{Follow Twitter \ac{API} guideline}
@@ -22,13 +22,6 @@ The program should follow the Twitter \ac{API} guidelines such as not making
 more requests than the guidelines specifies per. 15 minutes. This means that the
 program should also be capable of keeping track of how many requests it has
 used, how many it is allowed to use and when the limit resets.
-\end{requirement}
-
-\begin{requirement}{Store / Load tweets}
-The program should be able to store the downloaded tweets and store them
-efficiently in such a way that it is possible to store a large amount of tweets
-and also be able to load them into the program again, such that the data can be
-used for further analysis.
 \end{requirement}
 
 \begin{requirement}{Identify hashtags / \acsp{URL}}
@@ -53,6 +46,47 @@ Using the links and comparing them to the list of bias news site and also taking
 into account the emotional words, the program should be able to identify and
 inform the user of his/her political beliefs. 
 \end{requirement}
+
+\begin{requirement}{Web-Application Frontend}
+The application should make use of a frontend developes as a web application.
+This application should be hostable on a server such that it can be presented as
+a webpage.
+\end{requirement}
+
+\begin{requirement}{Server Backend}
+The logic of the developed software should be hosted on a server, which recieves
+requests from the frontend, and returns analyzed data and the determiend
+conclusions.
+\end{requirement}
+
+\begin{requirement}{Store Analysis Data on Database}
+The program should be able to efficiently store the downloaded tweets or
+similar relevant data on a database, such that the need for retrieving new data
+is reduced.
+\end{requirement}
+
+\begin{requirement}{Scalable Architecture}
+The server backend must be capable of handling an undefined number of concurrent
+user requests, as if it acted as the backend of an actual webpage. As such, the
+server must queue requests, and make sure to handle them all.
+\end{requirement}
+
+\begin{requirement}{Twitter API Resource Limits}
+As each individual Twitter user or application has a limited amount of available
+calls to the Twitter API, the frontend should make use of the official
+embedded Twitter authentication implementation. This should allow the system to
+use that user's pool of API calls. This should make the application scalable for
+a larger potential user base.
+\end{requirement}
+
+\begin{requirement}{API Communication}
+The developed software must make use of APIs in order to communicate between
+eachother. These APIs must use verification such that only approved requests are
+processed. These APIs should be used for the database, and the server backend.
+\end{requirement}
+
+
+
 %Klaus: Some sort of recommendation would be nice as you want to break out of
 % the fiflter bubble. (``popping'') (This is where some sort of clustering
 % could come into play, though it could be optional - lets talk live))
@@ -64,7 +98,8 @@ inform the user of his/her political beliefs.
 the literature?}
 \begin{requirement}[req:userfriendly-interface]{Userfriendly interface} 
 \begin{itemize}
-  \item The \ac{GUI} should be simplistic upon launch, with every element immediately recognisable.
+  \item The \ac{GUI} should be simplistic upon launch, with every element
+  immediately recognizable.
   \item There should be no doubts about what information is needed and which button(s) to press.
   \item In case of any options being implemented, they should be self-explanatory when possible.
   \item When this is not possible, there should be a helpful description
