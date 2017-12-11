@@ -1,24 +1,22 @@
 \section{Web Crawler}\label{subsec:crawler}
 A crawler, which is also known as a spider, systematically crawls the internet
-and gathers information by reading and analyzing the content of web-pages.
-Web-pages are usually connected to each other by hyperlinks, which a
-crawler can use to move between pages. This recursive approach to accessing
-web-pages allows the crawler to systematically access large parts of the
-internet, and gather data along its journey
-\citep[Ch20.2, P.444-445]{manning2008introduction}.
+and gather information by reading and analysing web-page's content. Web-pages
+usually connect to each other by hyperlinks, which a crawler can use to move
+between pages. This recursive approach to accessing web-pages allows the crawler
+to access large parts of the internet systematically, and gather data along its
+journey \citep[Ch20.2, P.444-445]{manning2008introduction}.
 
-\subsection{Crawler design}
-There are several things to consider during the crawlers execution. A crawler
-must be able to avoid getting stuck fetching an infinite number of pages from
-the same domain, as this is only acceptable if you want to crawl that specific
-site. The crawler needs to be ''polite'' about how frequent it makes requests to
-a server, as too many requests to the same server can crash it, or cause the
-server to consider the crawler an attacker and block it. The crawler should
-respect what it is, and is not, permitted to access from a given domain.
-Additionally, the crawler should also be able to re-fetch data from older
-sites, in order to see if they have been updated. Additionally, it should
-favour fetching pages that are more likely to have quality content \citep[Ch.
-20.1]{manning2008introduction}.\nl
+\subsection{Crawler design} 
+There are several things to consider during a crawlers execution. A crawler must
+be able to avoid getting stuck fetching an infinite number of pages from the
+same domain, as this is only acceptable if you want to crawl that specific site.
+The crawler needs to be ''polite'' about how frequent it makes requests to a
+server, as too many to the same server can crash it, or cause the server to
+consider the crawler an attacker and block it. The crawler should respect what
+it is, and is not, permitted to access from a given domain. Additionally, the
+crawler should also be able to re-fetch data from older sites, to see if they
+have changed. Furthermore, it should favour fetching pages that are more
+likely to have quality content \citep[Ch.20.1]{manning2008introduction}.\nl
 
 Generally, a crawler's architecture is made to be modular, which can be seen in
 \autoref{BasicWC}. The 'Frontier' is a list of elements, usually URLs, which
