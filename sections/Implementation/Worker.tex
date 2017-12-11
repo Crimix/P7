@@ -3,11 +3,15 @@ The worker is the part of the system which collects the tweets and analyzes
 them. Each task in the queue corresponds to a worker. 
 
 \section{Implementation}
-The worker first retrieves the user which the screen name corresponds to. Then
+The worker first retrieves the user which the screen name corresponds to. Then,
 it retrieves the list of tweets by the user. The next step for the
 worker is to retrieve the list of users that the user is following, retrieve
 their tweets and analyse the tweets. The retrievement of tweets and the
-analysis are done in parallel by splitting them into tasks.
+analysis are done in parallel by splitting them into tasks. To retrieve and
+analyze tweets, it uses the functions \textc{GetTweetsFromUserAndAnalyse} and
+\textc{GetTweetsFromFriendsAndAnalyse} to receive and analyse tweets from the
+user and the users it follows respectively. These functions are found in the
+class called \textc{TweetRetriever}.
 
 \subsection{Tweet retriever} \label{sub:tweetretriever}
 There are two versions of the whole tweet retrievement process. The first

@@ -4,20 +4,20 @@ and gathers information by reading and analyzing the content of web-pages.
 Web-pages are usually connected to each other by hyperlinks, which a
 crawler can use to move between pages. This recursive approach to accessing
 web-pages allows the crawler to systematically access large parts of the
-internet, and gather data along its journey. \Source %'Recursive approach'
+internet, and gather data along its journey
+\citep[Ch20.2, P.444-445]{manning2008introduction}.
 
-\subsection{Crawler design}%Fluffy start på section 
+\subsection{Crawler design}
 There are several things to consider during the crawlers execution. A crawler
 must be able to avoid getting stuck fetching an infinite number of pages from
 the same domain, as this is only acceptable if you want to crawl that specific
-site.
-The crawler needs to be ''polite'' about how frequent it makes requests to a
-server, as too many requests to the same server can crash it, or cause the
-server to consider the crawler an attacker and block it.
-The crawler should respect what it is, and is not, permitted to access from a
-given domain. Additionally, the crawler should also be able to re-fetch data
-from older sites, in order to see if they have been updated. Additionally, it
-should favour fetching pages that are more likely to have quality content \citep[Ch.
+site. The crawler needs to be ''polite'' about how frequent it makes requests to
+a server, as too many requests to the same server can crash it, or cause the
+server to consider the crawler an attacker and block it. The crawler should
+respect what it is, and is not, permitted to access from a given domain.
+Additionally, the crawler should also be able to re-fetch data from older
+sites, in order to see if they have been updated. Additionally, it should
+favour fetching pages that are more likely to have quality content \citep[Ch.
 20.1]{manning2008introduction}.\nl
 
 Generally, a crawler's architecture is made to be modular, which can be seen in
@@ -62,8 +62,7 @@ as ``aren't'' or ``kg.''. The tokenizer should also remove stopwords, which are
 words that do not contain useful information, and should therefore not
 be indexed. Examples of this are words such as ``the'' and ``a''. As these words
 do not refer to anything in particular, a query should not match indexed pages
-based on them \citep[Ch. 2]{manning2008introduction}. \fix{}{Er det den rigtige
-kilde}
+based on them.
 
 \subsection{Indexing}
 Indexing is used to speed up the information retrieval process, as it is faster
@@ -108,10 +107,12 @@ In a forward-index the pages themselves are indexed with a reference to the
 tokens they contain, see \autoref{fIndex}. An inverted-index is made up of
 tokens referencing the documents containing them, this is useful when
 querying for specific tokens \citep{Index3}, see \autoref{iIndex}. More advanced
-indexes can be expanded to include ranking of the tokens to better
-evaluate a documents information value. This ranking is usually determined by
+indexes can be expanded to include ranking of documents and tokens to better
+evaluate a documents information value \citep[P. 109]{manning2008introduction}.
+
+ This ranking is usually determined by
 how often the token appears in the crawled documents, and how many times it
-appears in a specific document \Source.
+appears in a specific document \citep[Ch. 2]{manning2008introduction}.
 
 
 %Skal vi lige have en kort afslutning om hvad vi lærte og hvorfor vi bruge API?
