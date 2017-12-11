@@ -15,17 +15,16 @@ request by the GUI by running the AddTask function from the QueueServerInstance
 described in \autoref{sub:queueserver}.
 
 \subsection{Queue server} \label{sub:queueserver}
-The Queue server is a singleton class in a library that contains various
-queues and functions used to help execute tasks. When the GUI makes a request,
-the function AddTask is executed. This function adds the requested Twitter
-account to a queue called nonAddedRequests. TaskQueue is an asynchronous
-function that is executed on its own thread when the \ac{API} is started and runs for
-the entirety of it. In each iteration, it checks if there are any entries in
+The Queue server is a singleton class in a library that contains various queues
+and functions used to help execute tasks. When the GUI makes a request, the
+function AddTask is executed. This function adds the requested Twitter account
+to a queue called nonAddedRequests. TaskQueue is an asynchronous function that
+is executed on its own thread when the \ac{API} is started and runs for the
+entirety of it. In each iteration, it checks if there are any entries in
 nonAddedRequests. If there are, it makes a task for each of them and adds them
 to a queue of tasks called taskQueue. Afterwards, it starts each task
-asynchronously so that at most \fix{5}{if TASK\_LIMIT is changed, change this}
-are running at the same time. Afterwards, it checks the list of
-running tasks and removes the finished ones. \nl
+asynchronously so that at most 5 are running at the same time. Afterwards, it
+checks the list of running tasks and removes the finished ones. \nl
 
 A code example of how requests are converted to tasks can be seen on
 \autoref{taskqueue}. \\
@@ -62,8 +61,8 @@ request from the queue of requests.\\
 \subsection{Twitter account}
 The class TwitterAcc is used for every instance of a twitter account. It
 contains all necessary information about a specific twitter account, such as its
-token, Twitter name and token secret. What these are, can be seen on 
-\fix{}{Insert reference to section about twitter account.}. 
+token, Twitter name and token secret. These concepts relating to access tokens
+and secrets are covered in \autoref{cha:twitterAPI}.
 
 \subsection{Server task}
 An instance of the class ServerTask is created every time a task is created. It
