@@ -1,0 +1,107 @@
+\section{Reading Guide}\label{sec:readingGuide}
+This section provides an overview of which order the different parts of the
+report should be read and provides a list of the various terms used throughout
+the report.
+
+\subsection{Chapter Guide}
+\autoref{ch:intro} starts by briefly describing the filter bubble and
+the associated problems. It ends by introducing a set of initial problems for
+further analysis.\nl
+
+\autoref{cha:DG} starts by discussing various sources of relevant user
+data, and how this data can be gathered and accessed. It ends by concluding that
+Twitter is best suited for our needs, and that we will use it as a data
+source.\nl
+
+\autoref{cha:DA} starts by discussing how user data, in the form of tweets, can
+be analyzed in order to determine a users filter bubble. In ends by concluding
+that we want to make two models, one using a Bag-of-Words approach, and another
+using a Naive Bayes Network.\nl
+
+\autoref{ch:problem} follows on from the analysis of the problem area, and
+states our intent to break the filter bubble by determining the political bias
+of the accounts a user follows on Twitter.\nl
+
+\autoref{cha:req} presents a number of functional- and usability requirements,
+which are deemed necessary to fulfill in order to successfully develop the
+software solution.\nl
+
+\autoref{ch:sysview} presents an overview of all parts of the developed system,
+and describes how they interact with eachother. The system consists of a
+web-application front-end, a database, and a backend server.\nl
+
+\autoref{DatabaseAPI} describes the development of the API which is used to
+interacting with the database. This API is developed using the Laravel web
+application framework.\nl
+
+\autoref{queueAPI} describes the development of the API which is used to
+interacting with the backend server. This API is developed using the Microsoft
+.NET framework in the language C\#.\nl
+
+\autoref{workerLabel} describes the development of the Worker, which is the part
+of the backend server responsible for determining a users filter bubble. This is
+done using both the Bag-of-Words model, and the Naive Bayes Network.\nl
+
+\autoref{Classification} describes the development of the two different
+classification algorithms. Namely the Bag-of-Words model, and the Naive Bayes
+Network.\nl 
+
+\autoref{cha:twitterAPI} describes how we interact with the Twitter API in order
+to gather the required data for analysis.\nl
+
+\autoref{GUI} presents the graphical user interface (GUI) of the web-application
+front end. It also describes the design choices involved in developing the
+visual presentation.\nl
+
+\autoref{cha:testing} presents a number of tests which aim to ensure the quality
+of the developed software solution. In ends by concluding the possible
+bottlenecks in the execution process, namely the limited amounts of Tweets
+retrievalble per second.\nl
+
+\autoref{fwork} discusses what elements of the system could be subject for
+future developement.\nl
+
+\autoref{cha:disc} discusses the development process, and other topics which
+requires reflection.\nl
+
+\autoref{cha:conclusion} ends the report by concluding on the projects succes in
+relation to the system requirements determined in \autoref{cha:req}.
+
+
+
+
+
+
+
+
+
+\subsection{Style List}
+The following font styles are used throughout the report, and has the following meaning:
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{|l|p{6cm}|}
+\hline
+\textbf{Style} & \textbf{Meaning} \\ \hline
+\textc{Code} &  Code related elements e.g. libraries, methods, and classes.\\ \hline
+\textbf{line x-y} & Line reference in code \\\hline
+\end{tabular}
+\caption{Notable font styles}
+\end{table}
+
+
+\subsection{Word List}
+The following words are used throughout the report and has the following
+meaning:
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{|l|p{6cm}|}
+\hline
+\textbf{Word} & \textbf{Meaning} \\ \hline
+
+\end{tabular}
+\caption{Notable words}
+\end{table}

@@ -15,9 +15,9 @@ Reddit has a \ac{REST} \ac{API} providing access to a user's information, posts
 and comments in subreddits, as well as moderation tools, that allow for
 manipulation of these \citep{RedditApi}. Software that interacts with the
 \ac{API} must follow certain rules. These include using OAuth2 to ensure that a
-user has given consent and that all requests \fix{are seen as coming from that
-user, and checking the rate-limiting headers returned}{I'm feeling confused
-about this} with every server response and making sure to uphold them.
+user has given consent and that all requests are seen as coming from that
+user, and checking the rate-limiting headers returned with every server response
+and making sure to uphold them.
 Additionally, every client should provide a specially tailored \ttt{User-Agent}
 \ac{HTTP} header field, following the template: \citep{RedditApiRules}\nl
 

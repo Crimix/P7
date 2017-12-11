@@ -1,24 +1,26 @@
 %Klaus: it would be nice to provide an overview to this chapter either here or
 % on analisis part (Har smidt den efter initerende problem)
-
-To identify a user's filter bubble, we need access and analyse a user's online
-activity, and determine what people and informational sources they engage. This
+\chapter{Data Gathering}\label{cha:DG}
+To identify a user's filter bubble, we need to access and analyse a user's
+online activity, and determine what people and information sources they engage. This
 web-activity consists of an immense amount of information, including data on how
 many times and how often, a user visits a page, and which people they follow or
 in other ways engage with on social media. This activity data get stored on the
 pages the user frequents, in the case of social sites, or locally on the user's
 device, in the form of search and browsing history. While the user data contains
 a lot of both useful and irrelevant information, the vast amount of user data
-makes it require extensive analysing to filter and combine it to deduce
+makes it require extensive analyzing to filter and combine it to deduce
 something about a user.\nl
 
-This chapter analyses different social media sites, suited to gather user
-activity to break the filter bubble. Some social media sites inspected and the
-best fit will the one used for the project, at which point we examine how to
-gather the user data from the web page, and conclude upon the chapter.
+This chapter analyses different methods of gathering user data to break a filter
+bubble. In \autoref{sec:Social} we look at social media sites and further
+investigate the three most prominent websites, and the data can gather from
+them. In \autoref{subsec:crawler} we examine what a Web Crawler is including,
+how: to create one, it works, what it can gather and its limits. Finally, we
+conclude which of the found methods is the most suitable for information
+gathering.
 
-
-\section{Social Media}
+\section{Social Media}\label{sec:Social}
 This section will focus on Facebook with 2061 million, Twitter with 328 million
 and Reddit with 1575 million active users \citep{SocialMediaStats,
 AdvertiseOnReddit}. It will examine how each of the site's users interacts, and
@@ -33,10 +35,3 @@ on direct messages between users are omitted. Thus the most suitable
 opinion-based social media sites to gather text from is websites with many users
 openly interacting with each other, where opinions and information get exchanged
 through posts and comments.\nl
-
-If given reasonably active users on social media sites, then much can be learned
-by sifting the enormous amount of data. Through an analysis of tweets and
-combining hashtags such as ”\#ImWithHer” or ”\#TrumpTrain” with
-”\#election2016”, finding multiple of these gives an idea about the user's
-political view. Thus with enough user data being analysed a qualified guess
-about a users opinion on a subject can be derived.\nl
