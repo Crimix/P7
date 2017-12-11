@@ -18,18 +18,16 @@ crawler should also be able to re-fetch data from older sites, to see if they
 have changed. Furthermore, it should favour fetching pages that are more
 likely to have quality content \citep[Ch.20.1]{manning2008introduction}.\nl
 
-Generally, a crawler's architecture is made to be modular, which can be seen in
-\autoref{BasicWC}. The 'Frontier' is a list of elements, usually URLs, which
-have not been crawled yet. The 'Fetch' module is designed to get the first
-element from the 'Frontier' and request access to the corresponding site. The
-site content is passed to the 'Parse' module, which is further described in
-\autoref{sec:parsing}. The site content gets verified to find if the site has
-been crawled before, it could be that the side had minor updates or called
-itsef recursively causing the crawler to loop.
-The URLs are filtered according to the domains ``/robots.txt'', which describes
-what each crawler is allowed to access. Finally, the duplicate URLs are
-eliminated, and the new URLs are added to the frontier.\nl%Sjov formullering?
-
+A crawler's architecture is made to be modular, as seen in \autoref{BasicWC}.
+The 'Frontier' is a list of elements, usually URLs, not yet crawled. The 'Fetch'
+module is designed to get the firstelement from the 'Frontier' and request
+access to the corresponding site. The site content is passed to the 'Parse'
+module, which is further described in \autoref{sec:parsing}. The site content
+gets verified to find if the site has been crawled before, it could be that the
+side had minor updates or called itsef recursively causing the crawler to loop.
+URLs get filtered according to the domains ``/robots.txt'', which describes what
+each crawler is allowed to access. Finally, the duplicated URLs get eliminated,
+and the new URLs added to the frontier.\nl
 
 %Vejleder vil gerne have fikset overfull boxes men det er på den måde i bogen.
 \figx[1.2]{BasicWC}{The basic crawler architecture \citep[p.
@@ -39,10 +37,11 @@ eliminated, and the new URLs are added to the frontier.\nl%Sjov formullering?
 % doubles a bit with normal text
 
 % Flesh out more
-A more advanced version of a crawler involves managing multiple, distributed
-crawlers. These crawlers need to work together to cover websites faster and
-avoid crawling the same sites multiple times, they should also avoid spamming
-the same servers with requests.
+A more advanced version of a crawler involves managing multiple
+distributed-crawlers. These crawlers need to work together to cover websites
+faster and avoid crawling the same sites multiple times; it is also critical for
+them to avoid spamming the same servers with requests.
+
 
 
 \subsection{Parsing} \label{sec:parsing}
