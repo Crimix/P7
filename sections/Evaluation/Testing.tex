@@ -6,7 +6,7 @@ determined results, and to ensure that the software is operating as expected.\nl
 The tests were performed on a PC running Windows 10, and having a 3.1GHz
 processor, 256GB SSD harddisk, and 8GB DDR4 RAM.
 
-\section{Speed Test}
+\section{Speed Test}\label{speedtestlavel}
 The purpose of this test is to document to effeciency of the two different
 approaches to classification discussed in \autoref{sec:BoW} and
 \autoref{sec:NBImp}. The effeciency will be evaluated based on the time
@@ -126,4 +126,84 @@ the naive bayes approach classifying 46\%.
 
 
 
+
+
+
+
+
+
+
+
+
+\section{Tweet Retrieval Test}
+The purpose of this test is to document the limitations of retrieving tweets
+through the Twitter API. This is important as the speed at which we can retrieve
+tweets sets an upper limit to how fast we can present an output to the user.
+The speed will be determined by calling the twitter API from the worker class,
+and documenting the amount of tweets we can recieve over a set amount of time.
+The Worker class and tweet retrieval is discussed in \autoref{workerLabel}.
+
+\subsection*{Results}
+A subset of the dataset from the tweet retrieval test can be seen below in
+\autoref{tweetRetReslabel}, and the full dataset can be found in
+\autoref{app:tweetRet}.
+Each test shows the retrieval of tweets from 5 different users, and the result is the total tweets retrieval per second in
+total from all five concurrent threads. The average tweets per second can be
+seen in \autoref{RetNumberAvg}. 
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Nr.:}	&	\textbf{Time (ms):}	&	\textbf{Tweets/Sek:} \\\hline
+1	&	8603	&	332.6\\\hline
+2	&	9385	&	304.8\\\hline
+3	&	8229	&	347.7\\\hline
+4	&	9454	&	302.6\\\hline
+\end{tabular}
+\caption{Subset of the results from the tweet retrieval test}
+\label{tweetRetReslabel}
+\end{table}
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|}\hline
+\textbf{Average Tweets/sek}	\\\hline
+310.0 Tweets \\\hline
+\end{tabular}
+\caption{Average number of tweets retrieved per second}
+\label{RetNumberAvg}
+\end{table}
+
+The results from this test show that we can retrieve a maximum of 310 tweets per
+second. Considering the speed of processing these tweets, as shown in
+\autoref{speedtestlavel}, this represents the greatest bottleneck for the
+system.
+ 
+
+
+
+
 \section{Stress Testing}
+The purpose of this test is to ensure the system's ability to queue requests
+from multiple users. This is important, as the system should be scalable such
+that it can handle an undefined amount of users at a time. The test consists of
+calling the code in \autoref{stressTestCode} 25 times. This code sends a request
+to our Queue API at the address \textc{localhost:62020}.\nl
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Code initiating the stress test, label = stressTestCode] 
+bool DatabaseSendDataRequest(params string[] parameters){
+...
+	HttpWebRequest request = (HttpWebRequest)WebRequest.Create("localhost:62020/API/AnalyzeTwitterAccount");
+...
+}
+\end{lstlisting}
+\end{minipage}
+
+The results of this test was that the system was indeed capable of handling the
+requests. This shows that the system is scalable in that it can handle an
+undefined amount of requests from different people at a time.
+
+\section{Black Box Testing}
+
+
+
