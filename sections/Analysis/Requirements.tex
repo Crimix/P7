@@ -1,17 +1,41 @@
-\chapter{Requirements Analysis?}\label{cha:req}
+\chapter{Requirements Definition}\label{cha:req}
 Following the problem statemet in \autoref{ch:problem}, this chapter will be
 used to determine the actual requirements of the developed software solution.
 
+% Klaus: The web aspect seems to be missing? From the study regulations: A
+% suitable user interface implies that it is possible to interact with the
+% developed solution using a web based interface.
+% E.G., an end user application has a web based user interface. An agent or a
+% service may not necessarily have a web based user interface, but would usually
+% have a web based A further reuirement is that the implementation needs to have
+% ascalaable acrhitecture
+
 \section{Functional Requirements}
-\fix{}{Klaus: The web aspect seems to be missing? 
-From the study regulations: A suitable user interface implies that it is
-possible to interact with the developed solution using a web based interface.
-E.G., an end user application has a web based user interface. An agent or a
-service may not necessarily have a web based user interface, but would usually
-have a web based
-A further reuirement is that the implementation needs to have ascalaable
-acrhitecture}
-\fix{}{Make sure this fits with the new system}
+
+\begin{requirement}{Web-Application Frontend}
+The application should make use of a frontend developes as a web application.
+This application should be hostable on a server such that it can be presented as
+a webpage.
+\end{requirement}
+
+\begin{requirement}{Server Backend}
+The logic of the developed software should be hosted on a server, which recieves
+requests from the frontend, and returns analyzed data and the determiend
+conclusions.
+\end{requirement}
+
+\begin{requirement}{Scalable Architecture}
+The server backend must be capable of handling an undefined number of concurrent
+user requests, as if it acted as the backend of an actual webpage. As such, the
+server must queue requests, and make sure to handle them all.
+\end{requirement}
+
+\begin{requirement}{API Communication}
+The developed software must make use of APIs in order to communicate between
+eachother. These APIs must use verification such that only approved requests are
+processed. These APIs should be used for the database, and the server backend.
+\end{requirement}
+
 \begin{requirement}[req:twitter-user-retrieval]{Retrieve user and pertinent information from Twitter}
 Given a Twitter username, the program should be capable of retrieving tweets and
 information about a user, including the accounts they are following.
@@ -24,11 +48,10 @@ program should also be capable of keeping track of how many requests it has
 used, how many it is allowed to use and when the limit resets.
 \end{requirement}
 
-\begin{requirement}{Store / Load tweets}
-The program should be able to store the downloaded tweets and store them
-efficiently in such a way that it is possible to store a large amount of tweets
-and also be able to load them into the program again, such that the data can be
-used for further analysis.
+\begin{requirement}{Store Analysis Data on Database}
+The program should be able to efficiently store the downloaded tweets or
+similar relevant data on a database, such that the need for retrieving new data
+is reduced.
 \end{requirement}
 
 \begin{requirement}{Identify hashtags / \acsp{URL}}
