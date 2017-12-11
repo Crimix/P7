@@ -171,14 +171,37 @@
 \addtocounter{PSCounter}{1}{\textcolor{red}{\large{(Source missing)}}}}
 
 \newcounter{FixCounter}
-\newcommand{\fix}[2]
-{\iffirst
+\newcounter{fix}
+\newcommand\fix[2]{
+\refstepcounter{fix}
+\iffirst
 	\label{fixRefMacro}
 	\global\firstfalse
 \else
 \fi
-\addtocounter{FixCounter}{1}{\textcolor{red}{#1 }\textcolor{blue}{\large{-
-#2}}}}
+\addtocounter{FixCounter}{1}{\textcolor{red}{#1 }\textcolor{blue}{\large{-#2}}}
+\addcontentsline{tod}{subsection}{\thefix~#2}
+}%
+
+
+\makeatletter
+\newcommand\fixname{fix}
+\newcommand\listfixname{List of fixes}
+\newcommand\listoffixes{%
+\setcounter{tocdepth}{2}
+  \section*{\listfixname}\@starttoc{tod}}
+\setcounter{tocdepth}{1}
+\makeatother
+
+
+%\newcommand{\fix}[2]
+%{\iffirst
+%	\label{fixRefMacro}
+%	\global\firstfalse
+%\else
+%\fi
+%\addtocounter{FixCounter}{1}{\textcolor{red}{#1 }\textcolor{blue}{\large{-
+%#2}}}}
 
 \newcounter{RetCounter}
 \newcommand{\ret}{
@@ -258,6 +281,11 @@ rettes} \autopageref{retRefMacro}\\}
 \iftd
 \else
 	\todoCount
+\fi
+
+\iffirst
+\else
+	\listoffixes
 \fi
 }
 
