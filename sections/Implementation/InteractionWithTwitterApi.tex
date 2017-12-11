@@ -1,4 +1,4 @@
-\chapter{Interaction with the Twitter \ac{API}}\label{cha:twitterAPI}
+\chapter{Twitter API Interaction}\label{cha:twitterAPI}
 Following the decision to use Twitter as a source of data in
 \autoref{sec:social-media-conclusion}, this chapter will be used to document how we interact
 with the Twitter API, and how we handle the authorization required to access the
@@ -74,8 +74,8 @@ OAuth 2.0.
 
 \subsubsection{Creating the string}
 When all the necessary tokens have been generated, the header string itself can
-be created. The finished header looks like this, where \ldots\_val is replaced
-with the corresponding token:\nl
+be created \citep{TwitterAPIAuth}. The finished header looks like this, where
+\ldots\_val is replaced with the corresponding token:\nl
 
 OAuth oauth\_consumer\_key="oauth\_consumer\_key\_val",\\
 oauth\_nonce="oauth\_nonce\_val", \\
@@ -84,4 +84,3 @@ oauth\_signature\_method="HMAC-SHA1", \\
 oauth\_timestamp="oauth\_timestamp\_val", \\
 oauth\_token="oauth\_token\_val", \\
 oauth\_version="1.0" \\
-\citep{TwitterAPIAuth}
