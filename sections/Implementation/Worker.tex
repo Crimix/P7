@@ -98,29 +98,18 @@ private List<Tweet> TweetThreadMethod(User user, AuthObj auth, Func<User, bool> 
     List<Tweet> temp = new List<Tweet>();
     if (checkDB != null)
     {
-        alreadyExist = checkDB(user); //Uses the supplied method to find out if the result already exist on the database
-        if (alreadyExist)
-        {
-            Log.Debug(String.Format("{0,-30} {1,-20} {2,-11}", user.Name, user.Id, "Already exist in db"));
-        }
+        alreadyExist = checkDB(user);
+		...
     }
 
     if (!alreadyExist)
     {
         temp = RetrieveTweets(user, auth);
-        if (user.IsProtected)
-        {
-            Log.Debug(String.Format("{0,-30} {1,-20} {2,-11}", user.Name, user.Id, "Protected"));
-        }
-        else
-        {
-            Log.Debug(String.Format("{0,-30} {1,-20} {2,-11}", user.Name, user.Id, temp.Count));
-        }
-
+		...	
         if (classifyMethod != null && postToDB != null)
         {
-            tempResult = classifyMethod(temp); //Use the supplied method to classify the list of tweets
-            postToDB(tempResult, user); //Use the supplied method to post the result to the database
+            tempResult = classifyMethod(temp); 
+            postToDB(tempResult, user); 
             temp = new List<Tweet>();
         }
     }
@@ -131,9 +120,8 @@ private List<Tweet> TweetThreadMethod(User user, AuthObj auth, Func<User, bool> 
 \end{minipage}
 The difference is that this function has a bunch of optional parameters. The legacy version only parses
 a user and an authorization object, while the new version also parses the
-function \textc{checkDB}, an analysis result object and the function
-\textc{postToDB}. checkDB is used to check if the user is already in the
-database. If it is, it skips the tweet retrievement and analysis of the
-particular user. If it is not, it retrieves the tweets and analyzes them if it
+functions \textc{checkDB}, \textc{classifyMethod} and \textc{postToDB}.
+\textc{checkDB} is used to check if the user is already in the database. If it
+is, it skips the tweet retrievement and analysis of the particular user. If it is not, it retrieves the tweets and analyzes them if it
 is the new version.
 \fix{}{Needs more maybe.}
