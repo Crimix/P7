@@ -14,6 +14,10 @@ defines itself as being used for the following purposes \citep{StartingTwitter}:
   \item Utility.
 \end{enumerate} 
 
+An example of this can be seen in \autoref{fig:DrumpF}. In this example we see
+a tweet that is used for several of the purposes mentioned above, namely ``News
+and Politics'' and ``Influencers''.
+
 \begin{figure}[H] 
 	\centering 
 	\includegraphics[width = 0.8\textwidth]{figures/DonDrumpf.png}
@@ -37,14 +41,13 @@ in order to make tweets and communicate with other users:
   \item \textbf{Retweet:} Instead of making a tweet, a user can forward a tweet
   made by another account. A user can choose to either retweet a tweet as it is,
   or embed the tweet into a tweet of their own. A user can make comments or
-  remarks concerning the original tweet \fix{}{The last part,
-  does the source not say}.
+  remarks concerning the original tweet.
   \item \textbf{Hashtag:} When a user tweets or retweets, they can add a
   ``hashtag'', which can be used to group the tweet, with other tweets
   containing the same hashtag. Examples of hashtags usage on Twitter could be
   \#Politics or \#Sports, or to specify the user's opinion on a subject, e.g.
   \#war \#Idiotic. On Twitter hashtags are used for grouping, searching and
-  filtering \fix{}{Much more than the source say}.
+  filtering.
 \end{itemize}
 
 % \subsubsection{Tweet}
@@ -86,7 +89,7 @@ access to Twitter's data \citep{TwitterREST}. Also, by using the OAuth protocol
 access Twitter's data. All requests must be made using the \ac{HTTP} protocol.
 These requests are structured differently based on the requested data.
 \autoref{httpReq} shows an example of a \ac{HTTP} request with each part denoted
-with a number and further explained in \autoref{httpReq}.
+with a number and further explained in \autoref{httpElaboration}.
 
 \figx{httpReq}{Structure of Twitter HTTP Request.}
 
@@ -109,4 +112,5 @@ retrieved in a single page.													\\\hline
 \end{centering}
 \end{table}
 
-\fix{}{Some kind of connection logical followup to Web Crawler}
+The next section will discuss an alternative way to gather information about
+users, namely using  web crawling.
