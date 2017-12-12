@@ -1,27 +1,27 @@
 \chapter{Data Analysis}\label{cha:DA}
-The large amount of data which can be gathered from social media will need to
-analysed to be of actual use. One of these way that seems useful is sentiment
-analysis. Sentiment analysis is used to determine the opinions of people
-regarding specific topics, such as movies or products. This has become
-especially useful with the increasing usage of social media, as people
-increasingly discuss and post their opinions online \citep[Overview
-2]{Sentiment}. Sentiment analysis is done by gathering opinions and extracting
-tokens which provide clues to the opinion. The tokens can then be used with a
-classification model to predict the sentiment.\nl
+The vast amount of data available from social media needs to analysed to be of
+use. One of these methods is a sentiment analysis; it is used to determine the
+opinions of people regarding specific topics, such as movies or products. This
+technique has become especially useful for social media, as people increasingly
+discuss and post their opinions online \citep[Overview 2]{Sentiment}. Sentiment
+analysis is done by gathering post and comments and extracting tokens providing
+clues to the opinion. The tokens can then be used with a classification model to
+predict the sentiment.\nl
 
-In \autoref{sec:FeatEx} we will look at how text is transformed into useful
-features, and what options are available to increase the quality of the
-features. In \autoref{sec:Class} we will look at how the features can be used in
-models to make predictions. We will also describe ideas behind the 2 models
-which are used in the program. Finally in \autoref{sec:DAConc} we will conclude
-on the analysis.
+\autoref{sec:FeatEx} examine how to transform text into useful
+\textit{features}, and which options are available to increase the quality of
+those \textit{features}. In \autoref{sec:Class} we will look at how the
+\textit{features} can be used in models to make predictions. We will also
+describe ideas behind the two models used in the program. Finally in
+\autoref{sec:DAConc} we will conclude on the analysis.
 
 \section{Feature Extraction}\label{sec:FeatEx}
-Feature extraction is used after the tokenization, in order to choose which
-words best determine the sentiment. A lot of the sentiment can be lost in the
-feature extractor, as the opinions are much more apparent in text than as a
-series of tokens. There are several ways which sentiment can be expressed in
-text, such as\citep[Overview.3-4]{Sentiment}:
+Feature extraction is a method used after the tokenization, to choose which
+words best determine the sentiment. much can be lost in the feature extractor,
+as the opinions are more apparent in text than as a series of tokens. There are
+several ways to express sentiment in text, such
+as\citep[Overview.3-4]{Sentiment}:
+
 
 \begin{itemize}
   \item Capitalization 
