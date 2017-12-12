@@ -3,8 +3,11 @@ In order to determine the quality of the developed software solution, we have
 performed a number of tests. These tests aim to assure the quality of the
 determined results, and to ensure that the software is operating as expected.\nl
 
-The tests were performed on a PC running Windows 10, and having a 3.1GHz
-processor, 256GB SSD harddisk, and 8GB DDR4 RAM.
+The tests were performed on a PC running Windows 10, and having a i5-7200U
+3.1GHz processor, 256GB SSD harddisk, and 8GB DDR4 RAM.
+
+
+
 
 \section{Speed Test}\label{speedtestlavel}
 The purpose of this test is to document to effeciency of the two different
@@ -52,13 +55,6 @@ bag-of-words model, and 26 minutes for the naive network. Considering that this
 amount of followed users is above average, we consider this processing time as
 being acceptable.
 
-
-
-
-
-
-
-
 \section{Accuracy Test}
 The purpose of this test is to document to accuracy of the results determined
 by the two different approaches to classification discussed in \autoref{sec:BoW}
@@ -69,9 +65,9 @@ average twitter users.
 
 \subsection*{Results}
 A subset of the results from the accuracy test can be seen in
-\autoref{table:acctest} together with the percentage success in
-\autoref{AvgTweetsPs}. The full dataset can be found in
-\autoref{app:accuracyTest}.\nl
+\autoref{speedTestReslabel} together with the percentage success in
+\autoref{AccPercent}. The full dataset can be found in
+\autoref{app:AccuracyTest}.\nl
 
 A subset of the dataset from the accuracy test can be seen below in
 \autoref{speedTestReslabel}. Each test shows one pre-classified user, and the
@@ -203,7 +199,83 @@ The results of this test was that the system was indeed capable of handling the
 requests. This shows that the system is scalable in that it can handle an
 undefined amount of requests from different people at a time.
 
-\section{Black Box Testing}
-\fix{}{Make the black box test}
+
+\section{Functional Testing}
+In order to assure that the system is working as indended, we have performed a
+number of functional tests, in which we supply an input to the system, and
+monitor that each individual part of the system performs as expected. In the
+first step, we enter the input into the frontend. This can be seen in
+\autoref{testRequest}.\nl 
+
+\figx[0.5]{testRequest}{Initial screen where the user inputs their Twitter name}
+
+After inputting the twitter name, we make a request to the database for any data
+relating to that name. If the data is present, we go directly to the result in
+\autoref{}. If the data is not present, we prepare to perform the tweet
+retrieval and analysis. As such, we request that the user authenticate using
+Twitter's site. This can be seen in \autoref{twitterAuthTab}.\nl
+
+\figx{twitterAuthTab}{Twitter's website for authorizing access for an
+application}
+
+After clicking the ``Godkend Applikation'' button, the user is given a unique
+password. This can be seen in \autoref{twitterPin}.\nl
+
+\figx{twitterPin}{Unique password supplied by Twitter}
+
+Back in our application, we request that the user enter this password
+together with an email address of their choosing. This can be seen in
+\autoref{twitterAuth}.\nl
+
+\figx{twitterAuth}{Requesting a password and email address from the user}
+
+After the user inputs the password, we show the screen in \autoref{testDialog}.
+Then the application makes a request to Twitter's API, and recieves the user's
+\textc{access\_token} and \textc{access\_token\_secret}. This information is
+then used to request tweets from all the accounts that the specified user is
+following. These tweets are then analyzed in relation to their sentiment
+(positivity/negativity), and their political leaning (left/right). The output
+log from the program can be seen in \autoref{tweetlogAnal}. \nl
+
+\figx[0.75]{testDialog}{Dialog presented when a user has submitted a request}
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Log from tweet retrieval and analysis, label = tweetlogAnal] 
+12-12-2017 10:37:37 | Debug~ Task entered queue with ID ODotTWJtc3dBQUFBQUE...
+12-12-2017 10:37:37 | Debug~ Task started ODotTWJtc3dBQUFBQUE...
+12-12-2017 10:38:10 | Debug~ Donald J. Trump                25073877             2874       
+12-12-2017 10:38:10 | Debug~ Spliting 2874 tweets
+12-12-2017 10:38:10 | Debug~ Combining tweets
+12-12-2017 10:38:10 | Debug~ Result 5,21428571428571
+12-12-2017 10:38:13 | Debug~ Following 45 users
+...
+12-12-2017 10:52:09 | Debug~ Done task with id ODotTWJtc3dBQUFBQUE...!!!
+\end{lstlisting}
+\end{minipage}
+
+From the log in \autoref{tweetlogAnal} we can see that the entire tweet
+retrieval and analysis process took 15 minutes. The reason for the delay is that
+each user has a limited amount of tweets per 15 minute period. As such, the
+threads responsible for retrieving tweets were put to sleep while waiting for
+more requests.\nl
+
+When the system backend finishes processing the tweets, it returns the request
+from the frontend to tell it that a result is ready. The frontend then sends a
+mail to the user's specified email account. This email can be seen in
+\autoref{email}, where the user must click the ``See Result" button.\nl
+
+\figx{email}{Email sent to the user when processing is finished}
+
+After clicking the button, the user will be redirected to a custom page on our
+website, which will present the results in various graphs. This can be seen in
+\autoref{result2}.\nl
+
+\figx{result2}{Column diagram showing the distribution of political leaning}
+
+Based on the results of this test, we can confirm that every part of the system
+is capable of interacting correctly with eachother.
+
+
+
 
 
