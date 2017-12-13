@@ -117,13 +117,14 @@ The three anonymous functions mentioned in \autoref{sub:tweetretriever} -
 worker class under the names of \textc{CheckIfResultExistOnDB},
 \textc{ClassifyTweet} and \textc{PostResultToDB} respectively, where
 \textc{CheckIfResultExistOnDB} and \textc{PostResultToDB} also have a version
-that links the user being analysed to the overall user. The functions are
+that links the user being analysed to the overall user. The methods are
 defined in \textc{Worker}, rather than \textc{TweetRetriever}, because they are
 different for each worker, since the \textc{userRecordId} is different for each
 request. Such a thing cannot be defined in the singleton class without the need
 to pass the id to each method.
 This way, it is still the worker's methods that are used in a context where they
 have access to what is defined in the worker.
+
 
 \subsection{Splitting up in tasks} \fix{}{I feel like this section should be
 moved up but I don't know.} To speed up the retrievement of tweets, the

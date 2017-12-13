@@ -35,9 +35,9 @@ public string[][] Tokenizer(List<string> tweets)
 \end{lstlisting}
 \end{minipage}
 
-At \textbf{line 4} each tweet is split at whitespace and lowercased, although we
-lose sentiment clues by doing this, we reduce the number of features with
-minute differences that do not help us. On \textbf{line 6} we process each
+At \textbf{line 4} each tweet is split at whitespace and converted to
+lowercase, although we lose sentiment clues by doing this, we reduce the number
+of features with minute differences that do not help us. On \textbf{line 6} we process each
 token through a series of \textc{regexes} which remove undesired symbols,
 numbers, turn user references such as ``@RealUser'' into ``AT\_USER'' and links
 into ``LINK''. This is done to reduce the number of features, as each user has
@@ -54,8 +54,8 @@ tokens for that tweet.
 \subsection{Training}
 A Naive Bayes Classifier needs supervised training in order to perform any
 predictions. As described in \autoref{subsec:Train} this happens by pairing an
-input with an output. In our case that input is tweet which has been transformed
-into a feature vector, while our output is a number describing the political
+input with an output. In our case that input is a tweet which has been
+transformed into a feature vector, while our output is a number describing the political
 leaning of the tweet based on our judgement. The Naive Bayes classifier is
 created and trained as seen on \autoref{c:Training}.\nl
 
