@@ -4,7 +4,7 @@ performed a number of tests. These tests aim to assure the quality of the
 determined results, and to ensure that the software is operating as expected.\nl
 
 The tests were performed on a PC running Windows 10, and having a i5-7200U
-3.1GHz processor, 256GB SSD harddisk, and 8GB DDR4 RAM.
+3.1GHz processor, 256GB SSD, and 8GB DDR4 RAM.
 
 
 
@@ -54,6 +54,44 @@ of 16.000.000 tweets, which would take around 2 minutes to process for the
 bag-of-words model, and 26 minutes for the naive network. Considering that this
 amount of followed users is above average, we consider this processing time as
 being acceptable.
+
+\section{Bag of Words algorithm speedtest}
+The purpose of this test is to document the reason behind implementing a
+multithreaded version of the classify method, which was described in \autoref{}
+\fix{}{Indsæt ref til de afsnit hvor vi beskrive at vi har en mutil tråded
+version}. 
+The result of the running both the multi threaded bag of words algorithm and the
+single threaded version on the same input on a PC running Windows 10, and having
+a i5-7200U 3.1GHz processor, 256GB SSD, and 8GB DDR4 RAM.
+The result can be seen in \autoref{speedTestResSingleThread} and
+\autoref{speedTestResMultiThread}.
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|}
+\hline
+3060	&	Tweets pr batch 	\\\hline
+500		&	Batches				\\\hline
+17394	&	milliseconds		\\\hline
+34.7	&	ms/batch 			\\\hline
+\end{tabular}
+\caption{Results from the single threaded speed test}
+\label{speedTestResSingleThread}
+\end{table}
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|}
+\hline
+3060	&	Tweets pr batch 	\\\hline
+500		&	Batches				\\\hline
+9928 	&	milliseconds		\\\hline
+19.8	&	ms/batch 			\\\hline
+\end{tabular}
+\caption{Results from the multi threaded speed test}
+\label{speedTestResMultiThread}
+\end{table}
+
+The results of the test shows that the time it takes to analyse tweets has been
+cut by 43\% by using the multi threaded version of algorithm 
 
 \section{Accuracy Test}
 The purpose of this test is to document to accuracy of the results determined
