@@ -7,62 +7,20 @@ The tests were performed on a PC running Windows 10, and having a i5-7200U
 3.1GHz processor, 256GB SSD, 8GB DDR4 RAM, and a 100/100mbps internet
 connection.
 
+\section{Speed Tests}\label{speedtestlavel}
+The purposes of these tests are to document the speed of both the
+classification models, discussed in \autoref{sec:BoW} and
+\autoref{sec:NBImp}. The first test is to test the effiency of multi threading
+the Bag-Of-Words model, while the second test is used to compare speed of the
+two models.
 
-\section{Speed Test}\label{speedtestlavel}
-The purpose of this test is to document to effeciency of the two different
-approaches to classification discussed in \autoref{sec:BoW} and
-\autoref{sec:NBImp}. The effeciency will be evaluated based on the time
-necessary to process a given number of tweets. As such, each approach will
-process 819.200 tweets in batches of 3200. These numbers have been chosen as we
-need a high enough amount to accurately determine the average time necessary,
-and because each tweet analysis will process a maximum of 3200 tweets, as this
-is the maximum amount of tweets retrievable from a person.
-
-\subsection*{Results}
-A subset of the results from the speed test can be seen in \autoref{table:stest}
-together with the average tweets per second in \autoref{AvgTweetsPs}. The
-full dataset can be found in \autoref{app:speedTest}.
-
-\begin{table}[H]\centering
-\begin{tabular}{|l|l|l|l|l|}
-\hline
-Try Nr.:	&	BoW (ms)	&	BoW Tweets/Sek	&	Bayes (ms)	&	Bayes Tweets/Sek	\\\hline
-1	&	55	&	58181	&	493	&	6490 \\\hline
-2	&	22	&	145454	&	353	&	9065 \\\hline
-3	&	30	&	106666	&	334	&	9580 \\\hline
-4	&	23	&	139130	&	328	&	9756 \\\hline		
-\end{tabular}
-\caption{Subset of the results from the speed test}
-\label{table:stest}
-\end{table}
-
-\begin{table}[H]\centering
-\begin{tabular}{|l|l|l|}\hline
-					&	\textbf{BoW Tw/sek}	&	\textbf{Bayes Tw/sek}	\\\hline
-\textbf{Average:}	&	124007				&	9410 					\\\hline	
-\end{tabular}
-\caption{Average number of tweets processed per second}
-\label{AvgTweetsPs}
-\end{table}
-
-The results from this test show that the bag-of-words model is the fastest
-approach, being capable of processing around 120.000 tweets per second, and the
-naive bayes approach processing around 9500 tweets per second. To put this into
-perspective, if a user were to follow 500 accounts, it would result in a maximum
-of 16.000.000 tweets, which would take around 2 minutes to process for the
-bag-of-words model, and 26 minutes for the naive network. Considering that this
-amount of followed users is above average, we consider this processing time as
-being acceptable.
-
-\section{Bag of Words algorithm speedtest}
+\subsection{Bag-Of-Words Speed Test}
 The purpose of this test is to document the reason behind implementing a
-multithreaded version of the classify method, which was described in \autoref{}
-\fix{}{Indsæt ref til de afsnit hvor vi beskrive at vi har en mutil tråded
-version}. 
+multithreaded version of the classification method, which was described in
+\autoref{subs:multithread}. 
 The result of the running both the multi threaded bag of words algorithm and the
-single threaded version on the same input.
-The result can be seen in \autoref{speedTestResSingleThread} and
-\autoref{speedTestResMultiThread}.
+single threaded version on the same input. The result can be seen in
+\autoref{speedTestResSingleThread} and \autoref{speedTestResMultiThread}.
 
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|}
@@ -91,16 +49,69 @@ The result can be seen in \autoref{speedTestResSingleThread} and
 The results of the test shows that the time it takes to analyse tweets has been
 cut by 43\% by using the multi threaded version of algorithm 
 
-\section{Accuracy Test}
-The purpose of this test is to document to accuracy of the results determined
-by the two different approaches to classification discussed in \autoref{sec:BoW}
-and \autoref{sec:NBImp}. The accuracy will be determined by comparing the
-results from the classification with a set of manually pre-classified
-twitter users. The chosen users consists of politicians, activists, and a set of
-average twitter users.
+\subsection{Speed Test Comparison}
+In this test the classification speed of both the models will be compared. The
+effeciency will be evaluated based on the time necessary to process a given
+number of tweets. As such, each approach will process 819.200 tweets in batches
+of 3200. These numbers have been chosen as we need a high enough amount to
+accurately determine the average time necessary, and because each tweet
+analysis will process a maximum of 3200 tweets, as this is the maximum amount
+of tweets retrievable from a person.\nl
 
-\subsection*{Results}
-A subset of the results from the accuracy test can be seen in
+A subset of the results from the speed test can be seen in \autoref{table:stest}
+together with the average tweets per second in \autoref{AvgTweetsPs}. The
+full dataset can be found in \autoref{app:speedTest}.
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Try Nr.:	&	BoW (ms)	&	BoW Tweets/Sek	&	Bayes (ms)	&	Bayes Tweets/Sek	\\\hline
+1	&	55	&	58181	&	493	&	6490 \\\hline
+2	&	22	&	145454	&	353	&	9065 \\\hline
+3	&	30	&	106666	&	334	&	9580 \\\hline
+4	&	23	&	139130	&	328	&	9756 \\\hline		
+\end{tabular}
+\caption{Subset of the results from the speed test}
+\label{table:stest}
+\end{table}
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|l|}\hline
+					&	\textbf{BoW Tw/sek}	&	\textbf{Bayes Tw/sek}	\\\hline
+\textbf{Average:}	&	124007				&	9410 					\\\hline	
+\end{tabular}
+\caption{Average number of tweets processed per second}
+\label{AvgTweetsPs}
+\end{table}
+
+The results from this test show that the Bag-Of-Words model is the fastest
+approach, being capable of processing around 120.000 tweets per second, while
+the Naive Bayes model is capable of processing around 9500 tweets per second.
+To put this into perspective, if a user were to follow 500 accounts, it would
+result in a maximum of 16.000.000 tweets, which would take around 2 minutes to
+process for the Bag-Of-Words model, and 26 minutes for the Naive Bayes model.
+Considering that this amount of followed users is above average, we consider
+this processing time as being acceptable for both of them.
+
+\section{Accuracy Tests}
+The purposes of these tests are to document the accuracy of both the
+classification models. The first test is an accuracy of the Naive Bayes model,
+while the second test is a comparison of the two models predictions.
+
+\subsection{Naive Bayes Accuracy Test}
+
+20/30, 18/30 21/30 21/30
+
+average 20/30
+\fix{}{write the naive bayes accuracy}
+
+\subsection{Accuracy Test Comparison}
+The purpose of this test is to compare the accuracy of the two different
+approaches to classification discussed in \autoref{sec:BoW} and
+\autoref{sec:NBImp}. The accuracy will be determined by comparing the results
+from the classification with a set of manually pre-classified twitter users.
+The chosen users consists of politicians, activists, and a set of average
+twitter users. A subset of the results from the accuracy test can be seen in
 \autoref{speedTestReslabel} together with the percentage success in
 \autoref{AccPercent}. The full dataset can be found in
 \autoref{app:AccuracyTest}.\nl
@@ -154,17 +165,6 @@ consider political in nature.
 The results from this test show that the bag-of-words model is the most
 approach, being capable of accurately classifying 96\% of the test users, and
 the naive bayes approach classifying 46\%.
-
-
-
-
-
-
-
-
-
-
-
 
 
 \section{Tweet Retrieval Test}
