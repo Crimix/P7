@@ -8,8 +8,15 @@ the tweet e.g. if the sentiment is positive, and the keyword is the name of a
 politician, we have a good indicator as to the users political affiliation.
 Additionally, we can analyze what news media the user shares. This can be
 useful, as news media often have some inherent political bias, which can be
-reflected in the people sharing their material. The general structure of the
-algorithm can be seen in \autoref{AlgorithmStructure}.\\
+reflected in the people sharing their material. 
+
+The general idea behind this approach comes from opinion mining and sentiment
+analysis, where the sentiment of a text (Tweet) can be used to indicate an
+opinion on a specific keyword. This approach is \citep{sarlan2014twitter}
+
+
+The general structure of the algorithm can be seen in
+\autoref{AlgorithmStructure}.\\
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Main method for handling the algorithm, label = AlgorithmStructure]

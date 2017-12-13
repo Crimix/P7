@@ -15,9 +15,6 @@ different parts are communicating directly with each other.
  
 \figx[0.62]{P7_SystemOverview}{System architecture of the BubbleBuster system}
 
-\fix{}{Add something about why we did it like this}
-
-
 \subsection{GUI} %API, Interfaces, Data Transfer, System Logic The
 The part of the system developed in Laravel makes up the front end of the
 system, and is used as the user's entry-point to the system. From here, the
@@ -42,3 +39,41 @@ The core functionality of the system is to determine users political filter
 bubble. This functionality is contained in the Worker. Whenever the queue server
 receives a request to classify a user, it calls the methods contained in the
 worker. This is further described in \autoref{workerLabel}.
+
+\subsection{Singleton}
+
+
+\subsection{Classification Models}
+In order to determine a Twitter user's political leaning, we have developed two
+different models, which are explained in \autoref{cha:classification}. The first
+model uses a Bag-of
+
+
+
+
+
+\subsection{Web Communication}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
