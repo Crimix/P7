@@ -1,7 +1,16 @@
 \chapter{Classification}\label{cha:classification}
 
-In order to classify the political leanings of a twitter user, we have
-developed two different solutions, which we described in
-\autoref{subsub:Models}. In \autoref{sec:BoW} we implement a modified version of
-the Bag-Of-Words classifier. In \autoref{sec:NBImp} we implement a simple Naive
-Bayes classifier.
+In order to classify the political leanings of a twitter user, we have developed
+two different solutions, which we described in \autoref{subsub:Models}. In
+\autoref{sec:BoW} we implement a modified version of the Bag-Of-Words
+classifier. In \autoref{sec:NBImp} we implement a simple Naive Bayes
+classifier.\nl
+
+Both of these models take as an input a list of Tweets relating to a single
+user, and outputs a decimal value between -10 and 10. This value indicates
+what we determine to be the user's political leaning, where a lower value
+indicates a left-wing and a higher value indicates right-wing. This modelling
+was chosen, as it allows for easy visual representation, and has clear
+middle-point of 0, which indicates neutrality. Additionally, as both
+models gives a vaiable positive or negative value to tweets, it allows for easy
+summation when representing the final result.
