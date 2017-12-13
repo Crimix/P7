@@ -201,11 +201,10 @@ P(X|Y) = \cfrac{P(Y|X) \cdot P(X)}{P(Y)}
 \end{equation}
 
 
-It trains using supervised learning, where each text object
-is labeled with a class. The text features are extracted as tokens.
-The probability of each token belonging to each of the labels is then
-calculated by counting how often it occurs with that class. This leads to a
-table such as \autoref{tab:NB}.
+It trains using supervised learning, where each text object gets labelled with a
+class. The text features get extracted as tokens and, the probability of each
+token belonging to each of the labels is then calculated, by counting how often
+it occurs with each class; leading to a table such as \autoref{tab:NB}.
 
 \begin{table}[H]
 \centering
@@ -218,28 +217,28 @@ rule & 90 & 10 & 100				\\ \hline
 suck & 5 & 95 & 100					\\ \hline
 Total & 255 & 245 & 500				\\ \hline
 \end{tabular}
-\caption{A table where each token is classified with a label}
+\caption{A table where each token is classified with a label.}
 \label{tab:NB}
 \end{table}
 
-In order to predict which class, \textit{C}, a given piece of text belongs to it
-needs to be transformed to a feature vector, \textit{W}, where each feature is
+To predict which class, \textit{C}, a given piece of text belongs to it needs to
+be transformed into a feature vector, \textit{W}, where each feature gets
 denoted as, $w_{i}$. By using \autoref{e:Score} we can predict the class
 \citep[Ch.2.1]{Bayes}.
-\begin{equation}\label{e:Score}
-score(W,C) = P(C) \cdot \displaystyle\prod_{i=1}^{n}P(w_{i}|C)
+\begin{equation}\label{e:Score} score(W,C) = P(C) \cdot
+\displaystyle\prod_{i=1}^{n}P(w_{i}|C)
 \end{equation}
 
-The idea is calculate the probability of the feature vector belonging to each of
-the classes. The class probabilities $P(C)$ are determined how frequently the classes have
-been observed to occur, therefor:
+The idea is to calculate the probability of the feature vector belonging to each
+of the classes. The class probabilities $P(C)$ are determined how frequently the
+classes have been observed to occur, therefor:
 \begin{center}
 $P(C_{Pos}) = \cfrac{255}{500} = 0.51 $ and $P(C_{neg}) = \cfrac{245}{500} =
 0.49 $
 \end{center}
 The probabilities of each of the features are likewise found by how often the
 features occur. For instance, if we want to determine the class of ``this
-movie rule'', with the probabilities from \autoref{tab:NB}, we have get the
+movie rule'', with the probabilities from \autoref{tab:NB}, we get the
 following feature vector [1,1,1,0]. We can then calculate the score of
 the feature vector belonging to each of the classes:
 
@@ -253,15 +252,15 @@ score(W, C_{Neg}) = \cfrac{245}{500} \cdot \cfrac{55}{100} \cdot \cfrac{85}{200}
 \end{equation}
 
 Then by taking the highest score we the can predict the class the text belongs
-to, in this case it would be positive.
+to, in this case, it would be positive.
 
 \section{Conclusion}\label{sec:DAConc}
 After considering how sentiment analysis is used to analyse data, we can
-conclude that it has distinct uses for classifying large amounts of user data.
-It is especially useful for analysing the sentiment around american politics as
+conclude that it has distinct uses for classifying vast amounts of user data. It
+is especially useful for analysing the sentiment around American politics as
 there are only two main parties with opposing views, which means that not only
 is there few classes, they should also be very distinct. By determining the
-sentiment it becomes possible to see if a user is inside a political bubble,
+sentiment, it becomes possible to see if a user is inside a political bubble,
 where the user only encounters the same sentiment.
 
 
