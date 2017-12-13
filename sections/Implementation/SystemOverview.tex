@@ -24,15 +24,24 @@ application, it is scaleable as it can support input from multiple users
 at a time, it is also possible to acquire more servers if needed. 
 
 \subsection{Database and API}
-The database API is developed using the Laravel framework, is used to execute
-commands on the tables on the MySQL database. This is further described in
-\autoref{DatabaseAPI}.
+The database API is developed using the Laravel framework described in
+\autoref{sec:laravel}, and is used to execute commands on the tables on the
+MySQL database. As a safeguard, we have implemented authorization using Laravel
+Passports, which requires the request to include a \textc{bearer\_token}. We
+have chosen this approach, as we want to ensure that only authorized sources are
+able to edit the stored data. The implementation of the database API is
+described in \autoref{DatabaseAPI}.
 
-\subsection{Queue Server}
+\subsection{Queue Server and API}
 The queue server is used to handle and schedule requests from all the users
 using the web application. In order to handle these requests we have developed
-an api in C\# which is used as the entry point. This is further described in
-\autoref{queueAPI}. 
+an API using C\# which is used as the server entry point. As this API is used to
+start tasks unconditionally, it requires a safeguard in the form of an
+authorization system, as hostile users would otherwise be able to overload our
+system with fake requests. While we deem this to be neceassary, the
+authorization system is not yet implemented, as is discussed in
+\autoref{disc:auth}. The implementation of the queue server and its API is
+further described in \autoref{queueAPI}.
 
 \subsection{Worker}
 The core functionality of the system is to determine users political filter
@@ -84,6 +93,7 @@ The second approach uses a Naive Bayesian Network to determine a user's
 political affiliation based on a set of training data built from the Twitter
 data from American politicians.
 
+\subsection{}
 
 
 
