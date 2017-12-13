@@ -40,19 +40,50 @@ bubble. This functionality is contained in the Worker. Whenever the queue server
 receives a request to classify a user, it calls the methods contained in the
 worker. This is further described in \autoref{workerLabel}.
 
-\subsection{Singleton}
+\subsection{Multithreading}\label{subs:multithread}
+In order to optimize the system performance, we have chosen to use multiple
+threads for actions which can easily be split into parts. These actions are the
+retrieval of tweets, and the following classification of tweets. For tweet
+retrieval we make use of 3 threads, where each thread is working on retrieving
+the tweets of a single user. As such, we can process 3 users concurrently. Based
+on our general testing, this was chosen to be the optimal amount, as Twitter
+occasionally terminated our requests if we had too many running concurrently.\\
+For tweet classification, we make use of 5 threads, working together to analyze
+the tweets of a single person at a time. This means that a single persons tweets
+are split into 5 parts, analyzed, and the results are then combined into a
+single classification. Splitting the classification into 5 threads have greatly
+improved performance, which is documented in \autoref{test:multithread}.
 
+\subsection{Singleton Class Structure}
+Many of the classes in the developed system are defined as singletons, which
+means that only a single instance is ever created. We have chosen this approach,
+as it offers slight improvements over static classes, as we ensure that classes
+are only stored on the stack if they are ever used. A potential problem with
+this approach is that we use a multithreaded method for analyzing tweets, which
+causes problems with accidentally trying to create multiple instances of the
+classes. This however has been solved by using double checked locking to ensure
+that there does only exists one instance of a singleton.
+
+\subsection{Web Communication}
+When retrieving data from the Twitter API, we have chosen to make use of
+\textc{HttpWebRequets} instead of \textc{webclients} as it allows us to have
+more control over the requests. As an example the HttpWebRequest have a
+\textc{Timeout} property which we can modify to make the request able to wait
+more before failing the request. This would otherwise only be possible if we
+extended the webclient and made our own webclient class, but we have decided
+that this would be unnecessary, as it would imply extending a class only to
+change a single property.
 
 \subsection{Classification Models}
 In order to determine a Twitter user's political leaning, we have developed two
 different models, which are explained in \autoref{cha:classification}. The first
-model uses a Bag-of
+model uses a Bag-of-Words approach where a text is analyzed for
+emotional, political, and news-related keywords. This approach is based partly
+on the methodology described by \citep{sarlan2014twitter}.\\
+The second approach uses a Naive Bayesian Network to determine a user's
+political affiliation based on a set of training data built from the Twitter
+data from American politicians.
 
-
-
-
-
-\subsection{Web Communication}
 
 
 
