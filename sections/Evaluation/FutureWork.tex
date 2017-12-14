@@ -1,35 +1,44 @@
 \chapter{Future Work}\label{fwork}
-This chapter will be used to highlight different parts of the system which could
-be improved for a future version of our application.
+This chapter highlights different parts of the system which could
+be improved for a future version of the application.
 
 \section{Limit System}
-The limit rate system that exist in the program works on a small scale, when
-only our application is used. Because we do not update the rate limits by
-using a specific request or using the response from a
-request.
-The headers of a response contains the remaining request in the pool for that
-category of requests. \nl
+The limit on the amount of requests to Twitter we are allowed to make works fine
+on a small scale, as long as the user of the application does not use other
+programs that uses requests from the same request pool as our application. This
+is due to the fact that our application does not check how many request there
+are remaining, which would risk exceeding the request limit. \nl
+%The limit rate system that exist in the program works on a small scale, when
+%only our application is used because we do not update the rate limits by
+%using a specific request or using the response from a
+%request.
+%The headers of a response contains the remaining request in the pool for that
+%category of requests. \nl 
+%Dette er erstattet af det over. Er du ikke er enig i ændringen siger du bare til :)
 
-For future use of the Twitter \ac{API} a better implementation for the limits
-system would be to make a request first to get the amount of requests the user
-has for each category, then each time a response is received from Twitter the
-header with the remaining amount of requests available. \nl
+Before a potential release, a better implementation of requests would have to be
+made. This could be done by first sending a request to get the remaining amount
+of requests available and then for each time a request is made, the response
+header which contains the remaining amount of request and then update the limits
+in the system.\nl
 
-The problem with the current system is that the user can not use any other
-application that uses the same category of requests as our application without
-the risk of going over the limit that Twitter has specified.
+
+%For future use of the Twitter \ac{API} a better implementation for the limits
+%system would be to make a request first to get the amount of requests the user
+%has for each category, then each time a response is received from Twitter the
+%header with the remaining amount of requests available. \nl
+\fix{}{check if anything of value is lost from the outcommented sections}
 
 \section{Queue API Authorization}
-Right now the Queue API does not use any from for authorization for the
-requests, this means that is possible for any one to send requests to the
-Queue server, the problem is that without authorization we cannot guaranty that
-it is only our application that tries to analyse Twitter accounts, this also
-means that our Queue server needs to be robust enough to not crash when it
+In the final version, the Queue API does not use any kind of authorization for
+the requests. This means that it is possible for anyone to send requests to the
+queue server. The problem is that without authorization, we cannot guarantee
+that it is only our application that tries to analyse Twitter accounts. This
+also means that our queue server needs to be robust enough to not crash when it
 receives something that is not a proper request. \nl
 
-This is not a big problem for the state that the application is in, because it
-is not on any server which can be reached from the internet, but only on
-localhost on our computers. 
+While this is not a big problem for the current version of the application,
+since it uses a local server, it would be a huge problem on a large scale. 
 
 \section{Word updater for Bag-Of-Words Implementation}
 \fix{}{write}
@@ -42,3 +51,7 @@ localhost on our computers.
 
 \section{Less rushed / more usability tests for better feedback}
 \fix{}{write}
+
+\section{Result Person Identification}
+Currently we cannot indetify who each person is in on the resulting graphs.
+\fix{\ldots}{Moooorreee}

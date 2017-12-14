@@ -300,7 +300,8 @@ monitor that each individual part of the system performs as expected. In the
 first step, we enter the input into the frontend. This can be seen in
 \autoref{testRequest}.\nl 
 
-\figx[0.5]{testRequest}{Initial screen where the user inputs their Twitter name}
+%\figx[0.5]{testRequest}{Initial screen where the user inputs their Twitter
+% name}
 
 After inputting the twitter name, we make a request to the database for any data
 relating to that name. If the data is present, we go directly to the result in
@@ -308,19 +309,19 @@ relating to that name. If the data is present, we go directly to the result in
 retrieval and analysis. As such, we request that the user authenticate using
 Twitter's site. This can be seen in \autoref{twitterAuthTab}.\nl
 
-\figx{twitterAuthTab}{Twitter's website for authorizing access for an
-application}
+%\figx{twitterAuthTab}{Twitter's website for authorizing access for an
+%application}
 
 After clicking the ``Godkend Applikation'' button, the user is given a unique
 password. This can be seen in \autoref{twitterPin}.\nl
 
-\figx{twitterPin}{Unique password supplied by Twitter}
+\figx{GUItwitterPin}{Unique password supplied by Twitter}
 
 Back in our application, we request that the user enter this password
 together with an email address of their choosing. This can be seen in
 \autoref{twitterAuth}.\nl
 
-\figx{twitterAuth}{Requesting a password and email address from the user}
+%\figx{twitterAuth}{Requesting a password and email address from the user}
 
 After the user inputs the password, we show the screen in \autoref{testDialog}.
 Then the application makes a request to Twitter's API, and recieves the user's
@@ -330,7 +331,7 @@ following. These tweets are then analyzed in relation to their sentiment
 (positivity/negativity), and their political leaning (left/right). The output
 log from the program can be seen in \autoref{tweetlogAnal}. \nl
 
-\figx[0.75]{testDialog}{Dialog presented when a user has submitted a request}
+%\figx[0.75]{testDialog}{Dialog presented when a user has submitted a request}
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Log from tweet retrieval and analysis, label = tweetlogAnal] 
@@ -357,16 +358,16 @@ from the frontend to tell it that a result is ready. The frontend then sends a
 mail to the user's specified email account. This email can be seen in
 \autoref{email}, where the user must click the ``See Result" button.\nl
 
-\figx{email}{Email sent to the user when processing is finished}
+%\figx{email}{Email sent to the user when processing is finished}
 
 After clicking the button, the user will be redirected to a custom page on our
 website, which will present the results in various graphs. This can be seen in
 \autoref{result2}.\nl
 
-\figx{result2}{Column diagram showing the distribution of political leaning}
+\figx{GUIresult2}{Column diagram showing the distribution of political leaning}
 
 Based on the results of this test, we can confirm that every part of the system
-is capable of interacting correctly with eachother.
+is capable of interacting correctly with each other.
 
 
 
