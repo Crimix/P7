@@ -121,7 +121,7 @@ hit rate of the the prediction compared to the labeled result
 \multicolumn{1}{|l|}{Labeled Neutral} & 7 & \textbf{15} & 8  \\ \hline
 \multicolumn{1}{|l|}{Labeled Right} & 6 & 7 & \textbf{40} \\ \hline
 \end{tabular}
-\caption{Confusion Matrix for}
+\caption{Confusion Matrix for the combined results of the validation tests}
 \label{tab:ConfMat}
 \end{table}
 
@@ -133,7 +133,7 @@ the average accuracy.
 \centering
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
-Cross Validation & 1 & 2 & 3 & 4 & Average \\ \hline
+Cross Validation & Test 1 & Test 2 & Test 3 & Test 4 & Average \\ \hline
 Accuracy &  20/30 = 0.67 & 18/30 = 0.60 & 21/30 = 0.70 & 21/30 = 0.70 & 80/120 =
 0.67 
 \\ \hline
@@ -177,13 +177,14 @@ twitter users. A subset of the results from the accuracy test can be seen in
 
 A subset of the dataset from the accuracy test can be seen below in
 \autoref{speedTestReslabel}. Each test shows one pre-classified user, and the
-results determined from the bag-of-words model and the Naive Bayes model. The
-result consist of a value between -10 and 10, where a low value implies
+results determined from the bag-of-words model and the Naive Bayes model.\fix{
+The result consist of a value between -10 and 10, where a low value implies
 left-leaing views, and a high value implies right-leaning views. The
 bag-of-words (BoW) model also has a conclusion, which is dependent on the
 percentage of tweets considered political, and the size of the determined value.
 For the BoW model, a user with less than 1\% political tweets, or a determined
-value below 1, is automatically considered as neutral. The percentage accuracy
+value between 1 and -1, is automatically considered as neutral.}{Should
+probably be described in implementation and referenced} The percentage accuracy
 of each model can be seen in \autoref{AccPercent}.
 The columns represent the following, from left to right:\nl
 
@@ -212,6 +213,8 @@ consider political in nature.
 \label{speedTestReslabel}
 \end{table}
 
+
+
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|}\hline
 \textbf{Accuracy BoW}	&	\textbf{Accuracy Bayes}	\\\hline
@@ -221,9 +224,15 @@ consider political in nature.
 \label{AccPercent}
 \end{table}
 
-The results from this test show that the bag-of-words model is the most
-approach, being capable of accurately classifying 96\% of the test users, and
-the naive bayes approach classifying 46\%.
+The results from this test show that the Bag-Of-Words model is capable of
+accurately classifying 96\% of the test users. The Naive Bayes models has
+problems with classifying real users, as it has classified every user as being
+biased towards the right, this has provided it with an accuracy of 43.33\%. As
+such we consider the Bag-Of-Words model to be the most succesful until the Naive
+Bayes model has received more training.
+
+
+and the naive bayes approach classifying 46\%. Though the
 
 
 \section{Tweet Retrieval Test}
