@@ -1,37 +1,52 @@
 %Klaus: it would be nice to provide an overview to this chapter either here or
 % on analisis part (Har smidt den efter initerende problem)
 \chapter{Data Gathering}\label{cha:DG}
-To identify a user's filter bubble, we need to access and analyse a user's
-online activity, and determine what people and information sources they engage. This
-web-activity consists of an immense amount of information, including data on how
-many times and how often, a user visits a page, and which people they follow or
-in other ways engage with on social media. This activity data get stored on the
-pages the user frequents, in the case of social sites, or locally on the user's
-device, in the form of search and browsing history. While the user data contains
-a lot of both useful and irrelevant information, the vast amount of user data
-makes it require extensive analyzing to filter and combine it to deduce
-something about a user.\nl
+In order to identify a user's filter bubble, we need to analyse that user's
+online activity, such that we can determine what people and information they
+engage with. A user's online activity consists of large amounts of information,
+including data on what websites they frequent, or which people they engage with
+on social media. In the case of social media, this activity data get stored on
+that site's servers, and in the case of browsing history, the data can be stored
+locally on the user's device. While the user's data contain a lot of both useful
+and irrelevant information, the vast amount of user data requires extensive
+analysis to deduce something about a user.\nl
 
-This chapter analyses different methods of gathering user data to break a filter
-bubble. In \autoref{sec:Social} we look at social media sites and further
-investigate the three most prominent websites, and the data can gather from
-them. In \autoref{subsec:crawler} we examine what a Web Crawler is including,
-how: to create one, it works, what it can gather and its limits. Finally, we
-conclude which of the found methods is the most suitable for information
+As we will need a reliable way to gather large amounts of data about a user,
+this chapter will be used to analyse different sources of data, and methods of
+gathering said data. In \autoref{sec:Social} we present a number of different
+social media, and discuss what data we can gather from them, and what tools they
+have available for accessing the data. In \autoref{subsec:crawler} we discuss an
+alternative approach to gathering data, namely by using a web-crawler.
+Finally, we conclude what approach is the most suitable for information
 gathering.
 
 \section{Social Media}\label{sec:Social}
-This section will focus on Facebook with 2061 million, Twitter with 328 million
-and Reddit with 1575 million active users \citep{SocialMediaStats,
-AdvertiseOnReddit}. It will examine how each of the site's users interacts, and
-the options they provide regarding data-gathering on their website. In the end,
-a conclusion on the chosen media sites derived from the inspected sources.
+In order to find a source of user data, this section will be used to analyze a
+number of prominent social media sites. These sites can be seen in
+\autoref{tab:priminentMedia} with their number of active
+users \citep{SocialMediaStats, AdvertiseOnReddit}.
 
-Currently, the most prominent social media sites with the highest number of
-activities are Facebook and YouTube \citep{SocialMediaStats}. However, YouTube
-is used to share videos which are a different medium than text to manage;
-therefore YouTube will not be inspected further. Services with a primary focus
-on direct messages between users are omitted. Thus the most suitable
-opinion-based social media sites to gather text from is websites with many users
-openly interacting with each other, where opinions and information get exchanged
-through posts and comments.\nl
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|}\hline
+\textbf{Social Media} & \textbf{Active Users (Millions)}\\\hline
+Facebook & 2061 \\\hline
+YouTube & 1500 \\\hline
+WhatsApp & 1300 \\\hline
+Messenger & 1300 \\\hline
+Twitter & 328\\\hline
+Reddit &  250\\\hline
+\end{tabular}
+\caption{Social media sites and their number of active users}
+\label{tab:priminentMedia}
+\end{table}
+
+Based on the number of active users, the most prominent social media sites are
+Facebook followed by YouTube. However, while YouTube is a large social media
+site, it is mainly used to upload and share videos. As this data is difficult to
+analyze, we have chosen not to not inspect YouTube any further. In
+addition, services focusing on direct messages between users, like Messenger and
+WhatsApp are omitted, as this data is not publicly available. As such, the most
+suitable social media sites to gather data from, are websites where many users
+are openly interacting with each other, and where opinions and information get
+exchanged through text posts and comments. Such sites include Facebook,
+Twitter, and Reddit.\nl
