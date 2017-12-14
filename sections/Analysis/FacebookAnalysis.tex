@@ -1,8 +1,8 @@
 \subsection{Facebook Analysis}\label{sec:facebook-analysis}
-Facebooks is a social media site with more than one billion users, each sharing
-posts and personal details, all of which are useful in the analysis and
+Facebook is a social media site with more than one billion users, each sharing
+posts and personal details, and all of which are useful in the analysis and
 detection of a person's \fbp. Facebook is used by both private citizens and
-businesses to organise events, communicate and share ideas.
+businesses to organise events, communicate, and share ideas.
 
 \subsubsection{Using Facebook}
 When using Facebook, most of the interaction with other users happens through
@@ -29,7 +29,7 @@ requires a registration of one's application, along with an accompanying
 \ac{API} key used to perform queries. In addition to this requirement, there is
 also a strict requirement of consent from the user of an application, which
 needs to specify all the different types of data that the application wants to
-access \citep{FacebookGraphApiAccessTokens,facebookPolicy}.\nl
+access \citep{FacebookGraphApiAccessTokens, facebookPolicy}.\nl
 
 An analysis of Facebook's Graph \ac{API} \citep{FacebookGraphApiDocumentation}
 reveals that the platform previously allowed for more freedom when gathering
@@ -43,16 +43,13 @@ details \citep{FacebookChangesInGraphTwoPointOh}. Access to the user's ``likes''
 is limited to the interests listed on their profile, such as their favourite
 movies and pages on Facebook, that they have marked as ``liked''
 \citep{FacebookGraphApiUserEdges, FacebookGraphApiUserLikes}.
-\fix{}{Might be a bit hard for a reader to understand where you got that
-from these two sources}.\nl
 
 It is possible to access the user's posts and details regarding them, including
 whether it originated from them or if another user shared it. These posts can
 then be traced back one or more steps depending on the privacy settings of each
-link in the ``share--chain'', \fix{but only limited information can be gathered
-about the users on the chain \citep{FacebookGraphApiUserFeed}}{what limited
-information?}\fix{}{Please explain to me, where you can see that about the
-share--chain}.\nl
+link in the ``share--chain'', but only limited information -- such as their
+name and app-specific ID -- can be gathered about the users on the chain
+\citep{FacebookGraphApiUserFeed}.\nl
 
 To summarise, it is possible to use Facebook's \ac{API} to find connections
 between existing users of the system. Knowledge of these users, based on what
