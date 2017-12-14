@@ -6,8 +6,6 @@ models which can be used in classification, regression, clustering and more
 \citep{Accord}. The current implementation has three import parts, the feature
 extracting, the training and the predicting.
 
-\fix{}{Add something about what we trained on.}
-
 \subsection{Feature Extraction}
 As mentioned in \autoref{sec:FeatEx} there are a lot of different components
 that need to be considered when extracting useful features, this is handled by
@@ -137,11 +135,13 @@ which we then on \textc{line 5} use the
 This gives us something we can use as shortcut when retraining the
 \textc{BagOfWords} in the future. On \textc{line 5-9} we then train the
 \textc{BagOfWords} and transforms the tokenized tweets into feature vectors
-which we return.
+which we return.\nl
 
+The currently used model is trained on 90 hand labeled tweets, which have been
+balanced to include 30 tweets of each class, the accuracy tests can be seen in
+\autoref{subsec:NBCV}.
 
 \subsection{Predicting}
-
 Using the Naive Bayes classifier to predict is easy, see \autoref{c:Run}. On
 \textbf{lines 4-5} we use the \textc{FileHelper} to get both the model and
 the \textc{BagOfWords}, which has been trained using the using the shortcut as
@@ -169,7 +169,7 @@ public double RunNaiveBayes(List<Tweet> tweets)
 \end{minipage}
 
 Using these predictions we can then calculate the bias as a score from -10
-(left) to 10 (right), using the aggregated classes, see \autoref{c:NBBias}. 
+(left) to 10 (right), using the aggregated predictions, see \autoref{c:NBBias}. 
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Determines the users bias based on the predictions,
@@ -185,10 +185,3 @@ double CalcBias(List<int> results)
 }
 \end{lstlisting}
 \end{minipage}
-
-We calculate the bias on \textbf{line 7}, \fix{\ldots}{hvorfor udregnes bias
-sådan her?}.
-
-
-\fix{}{Make reference to accuracy tests}
-
