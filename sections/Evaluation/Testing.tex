@@ -1,7 +1,10 @@
 \chapter{Testing}\label{cha:testing}
+\fix{}{Note from Claus: Can we add a real world example, where we describe some
+of the variables that would involve, could be in evaluation section.}
 In order to determine the quality of the developed software solution, we have
 performed a number of tests. These tests aim to assure the quality of the
-determined results, and to ensure that the software is operating as expected.\nl
+determined results, and to ensure that the software is operating as
+expected.\nl
 
 The tests were performed on a PC running Windows 10, and having a i5-7200U
 3.1GHz processor, 256GB SSD, 8GB DDR4 RAM, and a 100/100mbps internet
@@ -10,9 +13,9 @@ connection.
 \section{Speed Tests}\label{speedtestlavel}
 The purposes of these tests are to document the speed of both the
 classification models, discussed in \autoref{sec:BoW} and
-\autoref{sec:NBImp}. The first test is to test the effiency of multi threading
-the Bag-Of-Words model, while the second test is used to compare speed of the
-two models.
+\autoref{sec:NBImp}, using prefetched tweets. The first test is to test the
+effiency of multi threading the Bag-Of-Words model, while the second test is
+used to compare speed of the two models.
 
 \subsection{Bag-Of-Words Speed Test}\label{test:multithread}
 The purpose of this test is to document the reason behind implementing a
@@ -99,7 +102,7 @@ classification models. The first test is an accuracy of the Naive Bayes model,
 while the second test is a comparison of the two models predictions.
 
 
-\subsection{Naive Bayes Cross Validation}
+\subsection{Naive Bayes Cross Validation}\label{subsec:NBCV}
 The purpose of this test is to test the accuracy of the model by performing
 cross validation on the training data. The idea is to split the training sets into two
 parts, a training segment and a testing segment \citep[Ch. 7.5.2]{MIBook}. Due
@@ -231,46 +234,31 @@ biased towards the right, this has provided it with an accuracy of 43.33\%. As
 such we consider the Bag-Of-Words model to be the most succesful until the Naive
 Bayes model has received more training.
 
-
-and the naive bayes approach classifying 46\%. Though the
-
-
 \section{Tweet Retrieval Test}
 The purpose of this test is to document the limitations of retrieving tweets
 through the Twitter API. This is important as the speed at which we can retrieve
 tweets sets an upper limit to how fast we can present an output to the user.
 The speed will be determined by calling the twitter API from the worker class,
-and documenting the amount of tweets we can recieve over a set amount of time.
-The Worker class and tweet retrieval is discussed in \autoref{workerLabel}.
+and documenting the amount of tweets we can receive over a set amount of time.
+The \textc{Worker} class and tweet retrieval is discussed in
+\autoref{workerLabel}.\nl
 
-\subsection*{Results}
-A subset of the dataset from the tweet retrieval test can be seen below in
-\autoref{tweetRetReslabel}, and the full dataset can be found in
+Each test shows the retrieval of tweets from 5 different users, and the result
+is the total tweets retrieval per second in total from all five concurrent
+threads. The fastest, slowest and the average tweets per second can be seen in
+\autoref{tweetRetReslabel} while the full dataset can be found in
 \autoref{app:tweetRet}.
-Each test shows the retrieval of tweets from 5 different users, and the result is the total tweets retrieval per second in
-total from all five concurrent threads. The average tweets per second can be
-seen in \autoref{RetNumberAvg}. 
 
 \begin{table}[H]\centering
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|l|l|l|l|}
 \hline
-\textbf{Nr.:}	&	\textbf{Time (ms):}	&	\textbf{Tweets/s:} \\\hline
-1	&	8603	&	332.6\\\hline
-2	&	9385	&	304.8\\\hline
-3	&	8229	&	347.7\\\hline
-4	&	9454	&	302.6\\\hline
+\textbf{} & \textbf{Nr.:}	&	\textbf{Time (ms):}	&	\textbf{Tweets/s:} \\\hline
+Fastest & 13	&	7705	&	371.3\\\hline
+Slowest & 9	&	13203	&	216.7\\\hline
+Average & 	&	8905	&	310.0 \\\hline
 \end{tabular}
 \caption{Subset of the results from the tweet retrieval test}
 \label{tweetRetReslabel}
-\end{table}
-
-\begin{table}[H]\centering
-\begin{tabular}{|l|}\hline
-\textbf{Average Tweets/s}	\\\hline
-310.0 Tweets \\\hline
-\end{tabular}
-\caption{Average number of tweets retrieved per second}
-\label{RetNumberAvg}
 \end{table}
 
 The results from this test show that we can retrieve a maximum of 310 tweets per
@@ -278,10 +266,6 @@ second. Considering the speed of processing these tweets, as shown in
 \autoref{speedtestlavel}, this represents the greatest bottleneck for the
 system.
  
-
-
-
-
 \section{Stress Testing}
 The purpose of this test is to ensure the system's ability to queue requests
 from multiple users. This is important, as the system should be scalable such
@@ -305,8 +289,13 @@ undefined amount of requests from different people at a time.
 
 
 \section{Functional Testing}
-In order to assure that the system is working as indended, we have performed a
-number of functional tests, in which we supply an input to the system, and
+\fix{}{Jonathan - Consider removing this section, as it seems more like a user
+guide, and does nothing test worthy}
+
+\fix{}{Remove pictures and add references to specific part in GUI chapter if
+needed} 
+In order to assure that the system is working as indended, we have
+performed a number of functional tests, in which we supply an input to the system, and
 monitor that each individual part of the system performs as expected. In the
 first step, we enter the input into the frontend. This can be seen in
 \autoref{testRequest}.\nl 
@@ -315,7 +304,7 @@ first step, we enter the input into the frontend. This can be seen in
 
 After inputting the twitter name, we make a request to the database for any data
 relating to that name. If the data is present, we go directly to the result in
-\autoref{}. If the data is not present, we prepare to perform the tweet
+\autoref{result2}. If the data is not present, we prepare to perform the tweet
 retrieval and analysis. As such, we request that the user authenticate using
 Twitter's site. This can be seen in \autoref{twitterAuthTab}.\nl
 
