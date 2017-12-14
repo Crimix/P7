@@ -1,17 +1,16 @@
 \section{Reading Guide}\label{sec:readingGuide}
-This section provides an overview of which order the different parts of the
-report should be read and provides a list of the various terms used throughout
-the report.
+This section is used to provide an overview of the report's content, and
+provides a list of the various terms used throughout the report. 
 
 \subsection{Chapter Guide}
-\autoref{ch:intro} starts by briefly describing the filter bubble and
-the associated problems. It ends by introducing a set of initial problems for
-further analysis.\nl
+\autoref{ch:intro} starts by briefly describing the project subject, namely  the
+filter bubble. It ends by introducing a set of initial problems for further
+analysis.\nl
 
-\autoref{cha:DG} starts by discussing various sources of relevant user
-data, and how this data can be gathered and accessed. It ends by concluding that
-Twitter is best suited for our needs, and that we will use it as a data
-source.\nl
+\autoref{cha:DG} starts by discussing various social media sites which can act
+as a source of useful user data, and how this data can be gathered and accessed.
+It ends by concluding that Twitter is best suited for our needs, and that we
+will use it as a data source.\nl
 
 \autoref{cha:DA} starts by discussing how user data, in the form of tweets, can
 be analyzed in order to determine a users filter bubble. In ends by concluding
@@ -20,38 +19,44 @@ using a Naive Bayes Network.\nl
 
 \autoref{ch:problem} follows on from the analysis of the problem area, and
 states our intent to break the filter bubble by determining the political bias
-of the accounts a user follows on Twitter.\nl
+of the people a user follows on Twitter.\nl
 
 \autoref{cha:req} presents a number of functional- and usability requirements,
 which are deemed necessary to fulfill in order to successfully develop the
-software solution.\nl
+software solution. We conclude that we want to build a web-application with a
+webpage frontend.\nl
 
 \autoref{ch:sysview} presents an overview of all parts of the developed system,
 and describes how they interact with eachother. The system consists of a
 web-application front-end, a database, and a backend server.\nl
+
+\autoref{cha:twitterAPI} describes how we interact with the Twitter API in order
+to gather the required data for analysis.\nl
 
 \autoref{DatabaseAPI} describes the development of the API which is used to
 interacting with the database. This API is developed using the Laravel web
 application framework.\nl
 
 \autoref{queueAPI} describes the development of the API which is used to
-interacting with the backend server. This API is developed using the Microsoft
-.NET framework in the language C\#.\nl
+interact with the backend server. This API is developed using the Microsoft
+.NET framework in the C\# programming language.\nl
 
 \autoref{workerLabel} describes the development of the Worker, which is the part
 of the backend server responsible for determining a users filter bubble. This is
 done using both the Bag-of-Words model, and the Naive Bayes Network.\nl
 
-\autoref{Classification} describes the development of the two different
-classification algorithms. Namely the Bag-of-Words model, and the Naive Bayes
+\autoref{cha:classification} describes the development of the two different
+classification algorithms, namely the Bag-of-Words model, and the Naive Bayes
 Network.\nl 
-
-\autoref{cha:twitterAPI} describes how we interact with the Twitter API in order
-to gather the required data for analysis.\nl
 
 \autoref{GUI} presents the graphical user interface (GUI) of the web-application
 front end. It also describes the design choices involved in developing the
 visual presentation.\nl
+
+\autoref{cha:usability} starts by presenting the usability testing of the
+system. It then concludes on the quality of the system's frontend, and
+determines a number of improvements to be implemented. Finally it presents the
+improvements added based on the usability test.
 
 \autoref{cha:testing} presents a number of tests which aim to ensure the quality
 of the developed software solution. In ends by concluding the possible
@@ -96,7 +101,7 @@ meaning:
 
 \begin{table}[H]
 \centering
-
+API
 \begin{tabular}{|l|p{6cm}|}
 \hline
 \textbf{Word} & \textbf{Meaning} \\ \hline
@@ -106,7 +111,8 @@ meaning:
 \end{table}
 
 \subsection{Code repositories}
-The code to the developed solutions can be found in these repositories:
+The code base of the developed software solutions can be found in the following
+repositories:
 
 \begin{table}[H]
 \centering
@@ -115,7 +121,8 @@ The code to the developed solutions can be found in these repositories:
 \textbf{Project part} & \textbf{Url} \\ \hline
 Worker \& Queue Server / \acs{API}  & \url{https://github.com/Crimix/BubbleBuster}.\\\hline 
 Database server & \url{https://github.com/Crimix/EnragedWindigo-DB}. \\\hline 
-Front end & \url{https://github.com/Crimix/EnragedWindigo}. \\\hline
+Front end / Database API & \url{https://github.com/Crimix/EnragedWindigo}.
+\\\hline
 \end{tabular}
 \caption{Solution repositories}
 \end{table}
