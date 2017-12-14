@@ -105,30 +105,12 @@ validation on the training data. The idea is to split the training sets into two
 parts, a training segment and a testing segment \citep[Ch. 7.5.2]{MIBook}. Due
 to time constraints, the cross validation is done 4 times with 90 labeled
 training tweets and 30 labeled testing tweets. These tweets have been shuffled
-to not be in any particular order.\nl
-
-The accuracy of each of the validation can be seen in \autoref{tab:CrossVal}.
-The table shows the how many of the tweets were correctly predicted, as well as
-the average accuracy.
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|l|l|l|l|}
-\hline
-Cross Validation & 1 & 2 & 3 & 4 & Average \\ \hline
-Accuracy &  20/30 = 0.67 & 18/30 = 0.60 & 21/30 = 0.70 & 21/30 = 0.70 & 80/120 =
-0.67 
-\\ \hline
-\end{tabular}
-\caption{Accuracy for each of the cross validations}
-\label{tab:CrossVal}
-\end{table}
-
-
+to not be in any particular order, and the sets are not balanced.\nl
 
 Combining the results of the cross validation, the following confusion
-matrix is constructed, see \autoref{tab:ConfMat}. The matrix shows shows the how
-the prediction in correlation to the labeled result \citep{ConfusionMatrix}.
+matrix is constructed, see \autoref{tab:ConfMat}. The matrix shows shows the
+hit rate of the the prediction compared to the labeled result
+\citep{ConfusionMatrix}.
 
 \begin{table}[H]
 \centering
@@ -143,15 +125,44 @@ the prediction in correlation to the labeled result \citep{ConfusionMatrix}.
 \label{tab:ConfMat}
 \end{table}
 
+The accuracy of each of the validation can be seen in \autoref{tab:CrossVal}.
+The table shows the how many of the tweets were correctly predicted, as well as
+the average accuracy. 
 
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+Cross Validation & 1 & 2 & 3 & 4 & Average \\ \hline
+Accuracy &  20/30 = 0.67 & 18/30 = 0.60 & 21/30 = 0.70 & 21/30 = 0.70 & 80/120 =
+0.67 
+\\ \hline
+\end{tabular}
+\caption{Accuracy for each of the cross validations}
+\label{tab:CrossVal}
+\end{table}
 
+In addition it is also of interest to look at the precision, which is how often
+the prediction class is the correct class. Calculating the precision helps
+measure if the accuracy is scewered towards a specific class. Using
+\autoref{tab:ConfMat} the average precision is calculated in \autoref{e:PL},
+\autoref{e:PN} and \autoref{e:PR}.
 
+\begin{equation}\label{e:PL}
+Precision(Left) = \cfrac{25}{25+7+6} = 0.66
+\end{equation}
+\begin{equation}\label{e:PN}
+Precision(Neutral) = \cfrac{15}{9+15+7} = 0.48
+\end{equation}
+\begin{equation}\label{e:PR}
+Precision(Right) = \cfrac{40}{3+8+40} = 0.78
+\end{equation}
 
-
-
-
-
-
+Based on these tests it is possible to see that the model is very bad at
+predicting tweets belonging to the \textit{neutral} class, while it is far
+better at predicting tweets belonging to the \textit{right} class. The accuracy
+and precision could be improved by training on a larger set, and insuring the
+the the validation sets are balanced.
 
 \subsection{Accuracy Test Comparison}
 The purpose of this test is to compare the accuracy of the two different
