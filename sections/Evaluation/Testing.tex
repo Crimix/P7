@@ -100,15 +100,15 @@ while the second test is a comparison of the two models predictions.
 
 
 \subsection{Naive Bayes Cross Validation}
-The purpose of this test is to test the accuracy the model by performing cross
-validation on the training data. The idea is to split the training sets into two
+The purpose of this test is to test the accuracy of the model by performing
+cross validation on the training data. The idea is to split the training sets into two
 parts, a training segment and a testing segment \citep[Ch. 7.5.2]{MIBook}. Due
 to time constraints, the cross validation is done 4 times with 90 labeled
 training tweets and 30 labeled testing tweets. These tweets have been shuffled
 to not be in any particular order, and the sets are not balanced.\nl
 
 Combining the results of the cross validation, the following confusion
-matrix is constructed, see \autoref{tab:ConfMat}. The matrix shows shows the
+matrix is constructed, see \autoref{tab:ConfMat}. The matrix shows the
 hit rate of the the prediction compared to the labeled result
 \citep{ConfusionMatrix}.
 
@@ -126,7 +126,7 @@ hit rate of the the prediction compared to the labeled result
 \end{table}
 
 The accuracy of each of the validation can be seen in \autoref{tab:CrossVal}.
-The table shows the how many of the tweets were correctly predicted, as well as
+The table shows how many of the tweets were correctly predicted, as well as
 the average accuracy. 
 
 \begin{table}[H]
