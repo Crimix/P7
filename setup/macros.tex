@@ -320,6 +320,28 @@ rettes} \autopageref{retRefMacro}\\}
 \end{figure}
 }
 
+\newcommand{\figxb}[3][0.5]{
+\begin{figure}[H]
+\begin{center}
+  \frame{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
+  \caption{#3}
+  \label{#2}
+\end{center}
+\end{figure}
+}
+% FigX with boaders
+
+\newcommand{\figxsb}[4][0.5]{
+\begin{figure}[H]
+\begin{center}
+  \frame{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
+  \caption{#3}
+  \label{#2}
+  \caption*{\textbf{Source:} #4}
+\end{center}
+\end{figure}
+}
+
 \newcounter{Graph}
 \renewcommand{\theGraph}{Graph \arabic{Graph}}
 \newenvironment{graphEnv}{%
