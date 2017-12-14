@@ -280,7 +280,26 @@ When retrieving tweets from Twitter we can also recieve some additional
 information such as location, timestamps, and shared links. Among these, shared
 links specifically can be used to determine a user's political leanings. This is
 useful as news media sites often have an inherent political bias
-\citep{allSidesMedia}.  
+\citep{allSidesMedia}. As such, if we can identify a link as coming from one of
+these sites, we can conclude that the user sharing the link is more likely to be
+of the same political leaning. In order to identify the bias of different news
+media sites, one can make use of online resources such as \textc{AllSides.com},
+which has community- and expert-driven classifications of different news
+media\citep{allSidesMedia}. Examples of news media and their rating can be seen
+in \autoref{tab:newsmedia}.
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|}\hline
+\textbf{News Media:} & \textbf{Rating:}	\\\hline
+CNN				&	Left		\\\hline
+ABC News		&	Center-Left	\\\hline
+Forbes			&	Neutral		\\\hline
+Fox News		&	Center-Right\\\hline
+Breitbart News	&	Right		\\\hline
+\end{tabular}
+\caption{News media and their political bias}
+\label{tab:newsmedia}
+\end{table}
 
 \section{Data Analysis Conclusion}\label{sec:DAConc}
 After considering how sentiment analysis is used to analyse data, we can
