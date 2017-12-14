@@ -14,7 +14,7 @@ classification models, discussed in \autoref{sec:BoW} and
 the Bag-Of-Words model, while the second test is used to compare speed of the
 two models.
 
-\subsection{Bag-Of-Words Speed Test}
+\subsection{Bag-Of-Words Speed Test}\label{test:multithread}
 The purpose of this test is to document the reason behind implementing a
 multithreaded version of the classification method, which was described in
 \autoref{subs:multithread}. 
@@ -65,7 +65,7 @@ full dataset can be found in \autoref{app:speedTest}.
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|l|l|l|}
 \hline
-Try Nr.:	&	BoW (ms)	&	BoW Tweets/Sek	&	Bayes (ms)	&	Bayes Tweets/Sek	\\\hline
+Try Nr.:	&	BoW (ms)	&	BoW Tweet/s	&	Bayes (ms)	&	Bayes Tweet/s	\\\hline
 1	&	55	&	58181	&	493	&	6490 \\\hline
 2	&	22	&	145454	&	353	&	9065 \\\hline
 3	&	30	&	106666	&	334	&	9580 \\\hline
@@ -77,7 +77,7 @@ Try Nr.:	&	BoW (ms)	&	BoW Tweets/Sek	&	Bayes (ms)	&	Bayes Tweets/Sek	\\\hline
 
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|l|}\hline
-					&	\textbf{BoW Tw/sek}	&	\textbf{Bayes Tw/sek}	\\\hline
+					&	\textbf{BoW Tweet/s}	&	\textbf{Bayes Tweet/s}	\\\hline
 \textbf{Average:}	&	124007				&	9410 					\\\hline	
 \end{tabular}
 \caption{Average number of tweets processed per second}
@@ -93,29 +93,65 @@ process for the Bag-Of-Words model, and 26 minutes for the Naive Bayes model.
 Considering that this amount of followed users is above average, we consider
 this processing time as being acceptable for both of them.
 
-<<<<<<< HEAD
 \section{Accuracy Tests}
 The purposes of these tests are to document the accuracy of both the
 classification models. The first test is an accuracy of the Naive Bayes model,
 while the second test is a comparison of the two models predictions.
-=======
-\section{Bag of Words Multithreading Test}\label{test:multithread}
-The purpose of this test is to document the reason behind implementing a
-multithreaded version of the classify method, which was described in \autoref{}
-\fix{}{Indsæt ref til de afsnit hvor vi beskrive at vi har en mutil tråded
-version}. 
-The result of the running both the multi threaded bag of words algorithm and the
-single threaded version on the same input.
-The result can be seen in \autoref{speedTestResSingleThread} and
-\autoref{speedTestResMultiThread}.
->>>>>>> origin/master
 
-\subsection{Naive Bayes Accuracy Test}
 
-20/30, 18/30 21/30 21/30
+\subsection{Naive Bayes Cross Validation}
+The purpose of this test is to test the accuracy the model by performing cross
+validation on the training data. The idea is to split the training sets into two
+parts, a training segment and a testing segment \citep[Ch. 7.5.2]{MIBook}. Due
+to time constraints, the cross validation is done 4 times with 90 labeled
+training tweets and 30 labeled testing tweets. These tweets have been shuffled
+to not be in any particular order.\nl
 
-average 20/30
-\fix{}{write the naive bayes accuracy}
+The accuracy of each of the validation can be seen in \autoref{tab:CrossVal}.
+The table shows the how many of the tweets were correctly predicted, as well as
+the average accuracy.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+Cross Validation & 1 & 2 & 3 & 4 & Average \\ \hline
+Accuracy &  20/30 = 0.67 & 18/30 = 0.60 & 21/30 = 0.70 & 21/30 = 0.70 & 80/120 =
+0.67 
+\\ \hline
+\end{tabular}
+\caption{Accuracy for each of the cross validations}
+\label{tab:CrossVal}
+\end{table}
+
+
+
+Combining the results of the cross validation, the following confusion
+matrix is constructed, see \autoref{tab:ConfMat}. The matrix shows shows the how
+the prediction in correlation to the labeled result \citep{ConfusionMatrix}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l|l|l|}
+\cline{2-4}
+& Predicted Left & Predicted Neutral & Predicted Right \\ \hline 
+\multicolumn{1}{|l|}{Labeled Left} & \textbf{25} & 9 & 3 \\ \hline
+\multicolumn{1}{|l|}{Labeled Neutral} & 7 & \textbf{15} & 8  \\ \hline
+\multicolumn{1}{|l|}{Labeled Right} & 6 & 7 & \textbf{40} \\ \hline
+\end{tabular}
+\caption{Confusion Matrix for}
+\label{tab:ConfMat}
+\end{table}
+
+
+
+
+
+
+
+
+
+
 
 \subsection{Accuracy Test Comparison}
 The purpose of this test is to compare the accuracy of the two different
@@ -198,7 +234,7 @@ seen in \autoref{RetNumberAvg}.
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|l|}
 \hline
-\textbf{Nr.:}	&	\textbf{Time (ms):}	&	\textbf{Tweets/Sek:} \\\hline
+\textbf{Nr.:}	&	\textbf{Time (ms):}	&	\textbf{Tweets/s:} \\\hline
 1	&	8603	&	332.6\\\hline
 2	&	9385	&	304.8\\\hline
 3	&	8229	&	347.7\\\hline
@@ -210,7 +246,7 @@ seen in \autoref{RetNumberAvg}.
 
 \begin{table}[H]\centering
 \begin{tabular}{|l|}\hline
-\textbf{Average Tweets/sek}	\\\hline
+\textbf{Average Tweets/s}	\\\hline
 310.0 Tweets \\\hline
 \end{tabular}
 \caption{Average number of tweets retrieved per second}
