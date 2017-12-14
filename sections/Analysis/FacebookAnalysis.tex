@@ -43,16 +43,13 @@ details \citep{FacebookChangesInGraphTwoPointOh}. Access to the user's ``likes''
 is limited to the interests listed on their profile, such as their favourite
 movies and pages on Facebook, that they have marked as ``liked''
 \citep{FacebookGraphApiUserEdges, FacebookGraphApiUserLikes}.
-\fix{}{Might be a bit hard for a reader to understand where you got that
-from these two sources}.\nl
 
 It is possible to access the user's posts and details regarding them, including
 whether it originated from them or if another user shared it. These posts can
 then be traced back one or more steps depending on the privacy settings of each
-link in the ``share--chain'', \fix{but only limited information can be gathered
-about the users on the chain \citep{FacebookGraphApiUserFeed}}{what limited
-information?}\fix{}{Please explain to me, where you can see that about the
-share--chain}.\nl
+link in the ``share--chain'', but only limited information -- such as their
+name and app-specific ID -- can be gathered about the users on the chain
+\citep{FacebookGraphApiUserFeed}.\nl
 
 To summarise, it is possible to use Facebook's \ac{API} to find connections
 between existing users of the system. Knowledge of these users, based on what
