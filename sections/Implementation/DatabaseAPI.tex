@@ -1,54 +1,98 @@
 \chapter{Database \acs{API}}\label{DatabaseAPI} \fix{}{Det her skal lige
 omskrives når database apien er helt færdig} 
-As a part of the overall
-application, we need a database to store information used by the different workers. This is important, as we make use of the
-user's Twitter account to retrieve data from the Twitter \ac{API}. As such, this
-section is used to describe how we access and store this data, and how we
-make sure that it is only accessible to authorized users.
+As a part of the overall application, we need a database to store information
+used by the different workers. This is important, as we make use of the user's
+Twitter account to retrieve data from the Twitter \ac{API}. As such, this
+section is used to describe how we access and store this data, and how we make
+sure that it is only accessible to authorized users.
+
+\section{Laravel Framework}\label{sec:laravel}
+Laravel is a framework written in PHP that enables the creation of websites and
+\ac{REST} web services, abstracting many underlying implementation details
+including database access, user authentication and routing.\nl
+
+Laravel's structure resembles that of the \ac{MVC} design pattern, with models
+representing and managing database entities, views handling the presentation
+layer without implementation logic, and controllers handling the main parts of
+the logic. When needed, however, other types of layers can be added. This
+includes helper classes and packages that extend the functionality of
+Laravel.\nl
+
+The main reason for choosing Laravel was previous knowledge with various
+frameworks and a preference for how Laravel does things.
 
 \section{Database Design}\label{DBDesign}
-We have opted to use MySQL as our \ac{DBS}, structuring our data in a
-standardized relational database. In order to store the general data, we have
-two tables; \textc{Users} and \textc{Twitters}, as seen in
-\autoref{TwitterDBTable} and \autoref{UserDBTable}. \fix{}{Tables skal lige
-opdateres til hvad de er nu}
+While Laravel supports multiple \acp{DBS}\citep{LaravelDBS} we have opted to use
+MySQL while developing and testing. Due to the use of Laravel's abstraction our
+system should be able to run on any of the supported database systems without
+any changes on our part.\nl
+
+The system uses 10 tables of which 7 are used for authentication purposes and
+one tracks database migrations. The remaining two tables are \textc{twitters}
+and \textc{twitter\_twitter}, shown in part with example data in
+\autoref{TwittersDBTable} and \autoref{TwitterTwitterDBTable} respectively.\nl
+
+The columns \textc{created\_at} and \textc{updated\_at} have been left out here
+due to size constraints on the pages.
 
 \begin{table}[H]
-\begin{tabular}{| l | l | l | l | l | l | l | l	|}
+\centering
+\resizebox{1.1\textwidth}{!}{%
+\begin{tabular}{| l | l | l | l | l | l | l | l	| l | l |}
 \hline
-\textbf{id} & \textbf{name} & \textbf{twitterID} & \textbf{pol\_var} &
-\textbf{lib\_var} & \textbf{protect} & \textbf{created\_at} & \textbf{updated\_at}
-\\\hline 1 & John123 & 4893758 & 4.1 & 3.5 & 1 & 03-11-2017 & 03-11-2017 
-\\\hline 2 & MMan & 9302847 & 2.9 & 1.7 & 0 & 03-11-2017 & 03-11-2017 
-\\\hline
-\end{tabular}
+\textbf{\underline{id}} & \textbf{twitter\_name} & \textbf{twitter\_id} &
+\textbf{analysis\_val} & \textbf{mi\_val} & \textbf{sentiment\_val} &
+\textbf{media\_val} & \textbf{tweet\_count} & \textbf{protect} &
+\textbf{processed} \\
+\hline
+\underline{224} & theDonaldDrumpf & 1234567 & 9.7323990 & 8.9295123 & -9.1618950
+& -3.1275883 & 472 & 0 & 1 \\
+\hline
+\underline{225} & TayaDickinson & 914292 & 6.3012218 & 2.3406686 & -7.4462646 &
+-6.2828786 & 414 & 0 & 0 \\
+\hline
+\underline{226} & BrodyHahn & 200519 & 1.9456733 & -7.2432034 & 4.1452475 &
+-8.1468677 & 325 & 0 & 0 \\
+\hline
+\end{tabular}}
 \caption{Table containing twitter users and their determined values.}
-\label{TwitterDBTable}
+\label{TwittersDBTable}
 \end{table}
 
-\textc{Twitters} is used for storing data about analyzed
+The table \textc{twitters} is used for storing data about analysed
 twitter users, such that we can reference this data if we should receive
-a request. This allows to reduce overhead, as we can reuse data. One important
-aspect is that we need to respect a user's privacy. As such, we have introduced
-the ``protect'' boolean to indicate if only the Twitter user, which the result
-belong to, is allowed to retrieve it.
+a request. This allows to reduce overhead, as we can reuse data. \fix{One
+important aspect is that we need to respect a user's privacy. As such, we have
+introduced the ``protect'' boolean to indicate if only the Twitter user, which the result
+belong to, is allowed to retrieve it.}{We need to make sure we've reflected on
+this elsewhere since it wasn't actually implemented.}\nl
+
+The \textc{processed} column is used to distinguish between users who have been
+fully analysed along with all the users they follow, versus those who have been
+processed as followed accounts. In the example data in \autoref{TwittersDBTable}
+this distinction can be seen as ``theDonaldDrumpf'' is the only processed entry,
+while ``TayaDickinson'' and ``BrodyHahn'' are analysed because they are followed
+by ``theDonaldDrumpf''.
 
 \begin{table}[H]
-\begin{tabular}{| l | l | l | l | l |}
+\centering
+\begin{tabular}{| l | l |}
 \hline
-\textbf{id} & \textbf{name} & \textbf{password} &
-\textbf{created\_at} & \textbf{updated\_at}\\\hline
-1 & Worker\_1 & xyaAngeaG93AFk & 03-11-2017 & 03-11-2017
-\\\hline
-2 & Worker\_2 & oLj7Ft89AFSA & 03-11-2017 & 03-11-2017 \\\hline
+\textbf{\underline{twitter\_id}} & \textbf{\underline{follows\_id}} \\
+\hline
+\underline{224} & \underline{225} \\
+\hline
+\underline{224} & \underline{226} \\
+\hline
 \end{tabular}
-\caption{Table containing twitter users and their determined values.}
-\label{UserDBTable}
+\caption{Table that keeps track of followers.}
+\label{TwitterTwitterDBTable}
 \end{table}
 
-\textc{Users} is used for authenticating workers. This means that each time a
-user uses our application, that instance is saved as a worker. This worker has
-an automatically generated name and password.
+The table \textc{twitter\_twitter} is used as a link table, named as it is due
+to convention more so than any requirements from the framework. It keeps track
+of the followers and in the example data it is shown how we keep track of the
+users followed by ``theDonaldDrumpf''.
 
 \section{\acs{API} Design}
 In order to access the database described in \autoref{DBDesign}, we have
@@ -116,21 +160,3 @@ If the supplied credentials are found on the database, the request responds with
 a token, which uniquely identifies the worker which made the request. When
 making requests for data on the database, the worker must supply this token,
 which is used to authenticate it.\nl
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
