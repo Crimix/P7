@@ -1,19 +1,26 @@
 \chapter{Data Analysis}\label{cha:DA}
-The vast amount of data available from social media needs to analysed to be of
-use. One of these methods is a sentiment analysis; it is used to determine the
-opinions of people regarding specific topics, such as movies or products. This
-technique has become especially useful for social media, as people increasingly
-discuss and post their opinions online \citep[Overview 2]{Sentiment}. Sentiment
-analysis is done by gathering post and comments and extracting tokens providing
-clues to the opinion. The tokens can then be used with a classification model to
-predict the sentiment.\nl
+In order to make use of the tweet data from Twitter, it needs to be analyzed in
+order to extract the useful elements. One of these methods is known as a sentiment
+analysis, which attempts to determine the opinions of people regarding specific
+topics, such as movies or products. This technique has become especially useful
+for social media, as people increasingly discuss and post their opinions online
+\citep[Overview 2]{Sentiment}. Additionally, since sentiment analysis can be
+used to determine users opinions on products, it should be possible to apply
+this analysis on politicians, legislature, political events, and other political
+keywords.\nl
 
-\autoref{sec:FeatEx} examine how to transform text into useful
+Sentiment analysis is done by gathering text post
+and comments, and extracting features providing clues to the opinion. The
+features can then be used with a classification model to predict the
+sentiment.\nl
+
+In \autoref{sec:FeatEx} we examine how to transform text into useful
 \textit{features}, and which options are available to increase the quality of
 those \textit{features}. In \autoref{sec:Class} we will look at how the
-\textit{features} can be used in models to make predictions. We will also
-describe ideas behind the two models used in the program. Finally in
-\autoref{sec:DAConc} we will conclude on the analysis.
+\textit{features} can be used in models to make predictions. In
+\autoref{sec:mediaAnalysis} we discuss how user's preference in news media can
+help in indicating their political leanings. Finally in \autoref{sec:DAConc} we
+will conclude on the analysis.
 
 \section{Feature Extraction}\label{sec:FeatEx}
 Feature extraction is a method used after the tokenization, to choose which
@@ -181,13 +188,27 @@ providing proof of concept.
 
 \subsubsection{Bag-Of-Words}
 The Bag-Of-Words model determines the sentiment of a text by counting the
-occurrences of words with either a negative or positive attitude. Words can have
-different sentiment scores; one word may be perceived as conveying a more
-intense sentiment than others. Each word and its corresponding sentiment score
-gets stored in a sentiment lexicon, these lexicons can be created by or found
-freely online \citep{BagOfWords}.
-\fix{}{add a small table to illustrate}
+occurrences of words with either a negative or positive attitude. Some models
+simply count the occurrences of positive or negative words, but int other models
+words can have different sentiment scores where one word may be perceived as
+conveying a more intense sentiment than others. Each word and its corresponding
+sentiment score gets stored in a sentiment lexicon, these lexicons can be
+created by or found freely online \citep{BagOfWords}. An example of words and
+their sentimental value can be seen in \autoref{tab:bowwords}.
 
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|}\hline
+\textbf{Word:} & \textbf{Sentiment:} \\\hline
+LOVE	&	15	\\\hline
+Love	&	10	\\\hline
+Like	&	5	\\\hline
+HATE	&	-15	\\\hline
+Hate	&	-10	\\\hline
+Dislike	&	-5	\\\hline
+\end{tabular}
+\caption{Sentimental words and their corresponding values}
+\label{tab:bowwords}
+\end{table}
 
 \subsubsection{Naive Bayes} 
 The Naive Bayes classifier uses Bayes' rule and the assumption of independence,
@@ -253,6 +274,13 @@ score(W, C_{Neg}) = \cfrac{245}{500} \cdot \cfrac{55}{100} \cdot \cfrac{85}{200}
 
 Then by taking the highest score we the can predict the class the text belongs
 to, in this case, it would be positive.
+
+\section{Media Analysis}\label{sec:mediaAnalysis}
+When retrieving tweets from Twitter we can also recieve some additional
+information such as location, timestamps, and shared links. Among these, shared
+links specifically can be used to determine a user's political leanings. This is
+useful as news media sites often have an inherent political bias
+\citep{allSidesMedia}.  
 
 \section{Data Analysis Conclusion}\label{sec:DAConc}
 After considering how sentiment analysis is used to analyse data, we can
