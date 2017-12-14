@@ -1,7 +1,44 @@
 \chapter{Future Work}\label{fwork}
+This chapter will be used to highlight different parts of the system which could
+be improved for a future version of our application.
 
-\section{Limit system}
+\section{Limit System}
 The limit rate system that exist in the program works on a small scale, when
 only our application is used. Because we do not update the rate limits by
-requests. The headers of a request contains the remeaning request in the pool.
-This could have been used\ldots
+using a specific request or using the response from a
+request.
+The headers of a response contains the remaining request in the pool for that
+category of requests. \nl
+
+For future use of the Twitter \ac{API} a better implementation for the limits
+system would be to make a request first to get the amount of requests the user
+has for each category, then each time a response is received from Twitter the
+header with the remaining amount of requests available. \nl
+
+The problem with the current system is that the user can not use any other
+application that uses the same category of requests as our application without
+the risk of going over the limit that Twitter has specified.
+
+\section{Queue API Authorization}
+Right now the Queue API does not use any from for authorization for the
+requests, this means that is possible for any one to send requests to the
+Queue server, the problem is that without authorization we cannot guaranty that
+it is only our application that tries to analyse Twitter accounts, this also
+means that our Queue server needs to be robust enough to not crash when it
+receives something that is not a proper request. \nl
+
+This is not a big problem for the state that the application is in, because it
+is not on any server which can be reached from the internet, but only on
+localhost on our computers. 
+
+\section{Word updater for Bag-Of-Words Implementation}
+\fix{}{write}
+
+\section{More MI  Models}
+\fix{}{write}
+
+\section{Larger training samples}
+\fix{}{write}
+
+\section{Less rushed / more usability tests for better feedback}
+\fix{}{write}
