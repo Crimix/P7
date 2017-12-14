@@ -18,7 +18,10 @@ are remaining, which would risk exceeding the request limit. \nl
 
 Before a potential release, a better implementation of requests would have to be
 made. This could be done by first sending a request to get the remaining amount
-of requests available and then work from that.\nl
+of requests available and then for each time a request is made, the response
+header which contains the remaining amount of request and then update the limits
+in the system.\nl
+
 
 %For future use of the Twitter \ac{API} a better implementation for the limits
 %system would be to make a request first to get the amount of requests the user
@@ -48,3 +51,7 @@ since it uses a local server, it would be a huge problem on a large scale.
 
 \section{Less rushed / more usability tests for better feedback}
 \fix{}{write}
+
+\section{Result Person Identification}
+Currently we cannot indetify who each person is in on the resulting graphs.
+\fix{\ldots}{Moooorreee}
