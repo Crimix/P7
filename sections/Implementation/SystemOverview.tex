@@ -1,48 +1,45 @@
 \chapter{System Overview}\label{ch:sysview}
-The developed solution
-consists of multiple different parts, including a Queue Server, a webpage front
-end, a database, and a set of classification models. As such, this chapter
-will be used to give an overview of these different parts, and how they
-interact with each other.
+The developed solution consists of multiple different parts, including a Queue
+Server, a webpage front-end, a database, and a set of classification models. As
+such, this chapter will be used to give an overview of these different parts,
+and how they interact with each other.
 
 \section{Overview}
 The developed system consists of four individual parts, the front end web
 service, the database, the classification system, and a task queue which handles
 users requests. These elements are developed using three different tools or
-frameworks: Laravel, C\# and MySQL. The overall architecture of the
-system can be seen in \autoref{P7_SystemOverview} where the arrows imply that
-different parts are communicating directly with each other.
+frameworks: Laravel, C\# and MySQL. The overall architecture of the system can
+be seen in \autoref{P7_SystemOverview} where the arrows imply that different
+parts are communicating directly with each other.
  
-\figx[0.62]{P7_SystemOverview}{System architecture of the BubbleBuster system}
+\figx[0.62]{P7_SystemOverview}{System architecture of the BubbleBuster system.}
 
 \subsection{GUI} %API, Interfaces, Data Transfer, System Logic The
-The part of the system developed in Laravel makes up the front end of the
-system, and is used as the user's entry-point to the system. From here, the
-user can make requests to analyze a filter bubble using a Twitter username, and
-view the data derived from the analysis. As the solution is centered around a web
-application, it is scalable as it can support input from multiple users
-at a time, it is also possible to acquire more servers if needed. 
+The part of the system developed in Laravel makes up the front-end and is the
+user's entry-point to the system. From here, the user can make requests to
+analyse a filter bubble using a Twitter username, and view the data derived from
+the analysis. The solution is centred around a web application; thus it is
+scalable as it can support input from multiple users at a time, it is also
+possible to acquire more servers if needed.
 
 \subsection{Database and API}
-The database API is developed using the Laravel framework described in
-\autoref{sec:laravel}, and is used to execute commands on the tables on the
-MySQL database. As a safeguard, we have implemented authorization using Laravel
-Passports, which requires the request to include a Authorization header with a
-\textc{bearer} token.
-We have chosen this approach, as we want to ensure that only authorized sources are
-able to edit the stored data. The implementation of the database API is
-described in \autoref{DatabaseAPI}.
+The database \ac{API} is developed using the Laravel framework described in
+\autoref{sec:laravel} and is used to execute commands in the tables on the MySQL
+database. As a safeguard, we have implemented authorisation using Laravel
+Passports, which requires the request to include an authorisation header with a
+\textc{bearer} token. We have chosen this approach, as we want to ensure that
+only authorised sources can edit the stored data. The implementation of the
+database \ac{API} is described in \autoref{DatabaseAPI}.
 
 \subsection{Queue Server and API}
 The queue server is used to handle and schedule requests from all the users
-using the web application. In order to handle these requests we have developed
-an API using C\# which is used as the server entry point. As this API is used to
-start tasks unconditionally, it requires a safeguard in the form of an
-authorization system, as hostile users would otherwise be able to overload our
-system with fake requests. While we deem this to be necessary, the
-authorization system is not yet implemented, as is discussed in
-\autoref{disc:auth}. The implementation of the queue server and its API is
-further described in \autoref{queueAPI}.
+using the web application. To handle these requests we have developed an API
+using C\# it serves as the server entry point. As this API is used to start
+tasks unconditionally, it requires a safeguard in the form of an authorization
+system, as hostile users would otherwise be able to overload the system with
+fake requests. While we deem this to be necessary, the authorization system is
+not yet implemented, as is discussed in \autoref{disc:auth}. The implementation
+of the queue server and its API is further described in \autoref{queueAPI}.
 
 \subsection{Worker}
 The core functionality of the system is to determine users political filter
