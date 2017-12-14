@@ -86,9 +86,35 @@ get processed. The database and the server back-end should use these \ac{API}s.
 
 
 
-\section{Usability Requirements}
-\fix{}{some cite here would be nice - do you follow some recommendations from
-the literature?}
+\section{User Interaction Requirements}
+In order to improce the user's interaction with our system, the design of the
+Graphical User Interface has based on the 3 fundamentals of human-computer
+interaction specified by \citeauthor{benyon2013designing} in
+\citep[ch.4]{benyon2013designing}, namely accessibility, usability and
+acceptability. 
+
+Here, accessibility refers to the ability of all users of all backgrounds, or
+with possible disabilities, to be able to interact with the
+system \citep[p.77-80]{benyon2013designing}.
+Usability refers to the effort people have to spend when using the system, the ease of
+learning the system, and the appropriate organization of buttons, illustrations,
+and text \citep[p.81-84]{benyon2013designing}. Acceptability refers to the
+political, social, and cultural contexts of the system. Namely if the system is
+trustworthy, convenient, non-intrusive, or politically correct \citep[p.84-85]{benyon2013designing}. Based on these
+elements, the GUI requirements are presented in \autoref{tab:userReq}.
+
+\begin{table}[H]\centering
+\begin{tabular}{|l|l|}\hline
+\textbf{Category:}	&	\textbf{Requirement:} \\\hline
+Accessibility		&	The system should use a color scheme which is usable by people
+with color blindness.\\\hline
+Accessibility		&	The system should use multiple methods of distinguishing
+between elements (such as color and background patterns).\\\hline
+\end{tabular}
+\caption{Requirements for user interaction}
+\label{tab:userReq}
+\end{table}
+
 \begin{requirement}[req:userfriendly-interface]{Userfriendly interface} 
 \begin{itemize}
   \item The \ac{GUI} should be simplistic upon launch, with every element

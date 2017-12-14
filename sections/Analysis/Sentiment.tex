@@ -280,12 +280,12 @@ When retrieving tweets from Twitter we can also recieve some additional
 information such as location, timestamps, and shared links. Among these, shared
 links specifically can be used to determine a user's political leanings. This is
 useful as news media sites often have an inherent political bias
-\citep{allSidesMedia}. As such, if we can identify a link as coming from one of
+\citep{allSides}. As such, if we can identify a link as coming from one of
 these sites, we can conclude that the user sharing the link is more likely to be
 of the same political leaning. In order to identify the bias of different news
 media sites, one can make use of online resources such as \textc{AllSides.com},
 which has community- and expert-driven classifications of different news
-media\citep{allSidesMedia}. Examples of news media and their rating can be seen
+media \citep{allSidesBias}. Examples of news media and their rating can be seen
 in \autoref{tab:newsmedia}.
 
 \begin{table}[H]\centering
@@ -308,8 +308,10 @@ is especially useful for analysing the sentiment around American politics as
 there are only two main parties with opposing views, which means that not only
 are there few classes, they should also be very distinct. By determining the
 sentiment, it becomes possible to see if a user is inside a political bubble,
-where the user only encounters the same sentiment.
+where the user only encounters the same sentiment.\nl
 
-
+Using this information about the problem area and the possible ways to identify
+a filter bubble, \autoref{ch:problem} will construct a final problem statement,
+which will be used to guide development of the software solution.
 
 %https://www.cs.cornell.edu/home/llee/papers/sentiment.pdf
