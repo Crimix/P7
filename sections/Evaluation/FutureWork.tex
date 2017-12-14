@@ -3,24 +3,26 @@ This chapter will be used to highlight different parts of the system which could
 be improved for a future version of our application.
 
 \section{Limit System}
-The limit rate system that exist in the program works on a small scale, when
-only our application is used. Because we do not update the rate limits by
-using a specific request or using the response from a
-request.
+The limit rate system that exist in the program works on a small scale, when the
+user only uses our application. Because we do not update the rate limits
+by using a specific request or using the response from a
+request, during analysis.
 The headers of a response contains the remaining request in the pool for that
 category of requests. \nl
 
 For future use of the Twitter \ac{API} a better implementation for the limits
 system would be to make a request first to get the amount of requests the user
 has for each category, then each time a response is received from Twitter the
-header with the remaining amount of requests available. \nl
+header with the remaining amount of requests available should be used to update
+the counters for the different category pools.
+\nl
 
 The problem with the current system is that the user can not use any other
 application that uses the same category of requests as our application without
 the risk of going over the limit that Twitter has specified.
 
 \section{Queue API Authorization}
-Right now the Queue API does not use any from for authorization for the
+Right now the Queue API does not use any form for authorization for the
 requests, this means that is possible for any one to send requests to the
 Queue server, the problem is that without authorization we cannot guaranty that
 it is only our application that tries to analyse Twitter accounts, this also
