@@ -1,16 +1,15 @@
-\section{Meetings with an expert} \label{expMeeting}
+\section{Meetings with an Expert} \label{expMeeting}
 During the span of the project, we conducted two presentations for Dr. Stefan
 Schmid who has made several publications in machine intelligence. After
-each presentation, he came with feedback with suggestions on how to improve the
-application. 
-\subsection{Presentation 1}
-This presentation was conducted on 23/10/17 on Cassiopeia. \fix{}{maybe better
-intro or something. glhf Joans ;)}
-\subsubsection{State of the application}
-At this point, the backend was in an early state and the \ac{GUI} was not yet
-started on. Our idea for the application had a simple frontpage with a search
-bar, which lead straight to the result screen. The idea for this screen is seen
-on \autoref{initguisketch2}.
+each presentation, he provided feedback with suggestions on how to improve
+the application.
+ 
+\subsection{First Presentation}
+This presentation was conducted on 23/10/17 on Cassiopeia. At this point, the
+backend was in an early state and the \ac{GUI} was not yet started on. Our idea
+for the application had a simple frontpage with a search bar, which lead
+straight to the result screen. The idea for this screen is seen on
+\autoref{initguisketch2}.\nl
 
 %\figx[0.2]{initguisketch2}{Initial idea for the GUI design.}
 
@@ -28,30 +27,27 @@ filter bubble would get left wing accounts recommended. The recommendation
 system was later moved to future work, as it was not possible to implement it within
 the timeframe. 
 
-\subsubsection{Feedback from the expert}
+\subsubsection{Feedback}
 After the presentation, Stefan Schmid had a number of suggestions. He suggested
 being able to know where each member of the filter bubble is placed on the
-scale.
-For the recommendation part, he suggested implementing a filter. For example,
-only suggest people with at least a university degree or politicians. 
+scale. For the recommendation part, he suggested implementing a filter. For
+example, only suggest people with at least a university degree or politicians. 
 He also suggested to make feedback about the suggestions possible.
 To speed up the tweet retrieving, he suggested storing information from lookups
 for a limited amount of time, since people's bias does not change drastically
 every week. 
 
-\subsection{Presentation 2}
-The presentation was conducted on 29/11/17 on Cassiopeia.
+\subsection{Second Presentation}\label{subsec:Exp2}
+The presentation was conducted on 29/11/17 on Cassiopeia. When the second
+presentation was conducted, the application was nearing its final stages. The
+classifier that deems people apolitical if less than 1\% of their tweets are
+political, thus excluding them from the filter bubble, was implemented shortly
+after the meeting. Furthermore, some time before the meeting, the analyzation
+part was optimised from 2 hours down to 6 minutes. Some time after the meeting,
+this was further optimized down to a few seconds. The GUI was, around the time
+of the meeting, in its very early stages.
 
-\subsubsection{State of the application}
-When the second presentation was conducted, the application was nearing its
-final stages. The classifier that deems people apolitical if less than 1\% of
-their tweets are political, thus excluding them from the filter bubble, was
-implemented shortly after the meeting. Furthermore, some time before the
-meeting, the analyzation part was optimised from 2 hours down to 6 minutes. Some
-time after the meeting, this was further optimized down to a few seconds. The
-GUI was, around the time of the meeting, in its very early stages.
-
-\subsubsection{Feedback from the expert}
+\subsubsection{Feedback}
 As an additional way of analyzing data, Stefan Schmid suggested using Principal
 Component Analysis. Regarding the analysis of the data, while an optimisation
 from 2 hours to 6 minutes was good, 6 minutes is still a lot. Therefore, he

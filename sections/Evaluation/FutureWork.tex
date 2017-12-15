@@ -2,7 +2,7 @@
 This chapter highlights different parts of the system which could
 be improved for a future version of the application.
 
-\section{Limit System}
+\section*{Limit System}
 The limit on the amount of requests to Twitter we are allowed to make works fine
 on a small scale, as long as the user of the application does not use other
 programs that uses requests from the same request pool as our application. This
@@ -29,7 +29,7 @@ limits in the system.\nl
 %header with the remaining amount of requests available. \nl
 \fix{}{check if anything of value is lost from the outcommented sections}
 
-\section{Queue API Authorization}
+\section*{Queue API Authorization}
 In the final version, the Queue API does not use any kind of authorization for
 the requests. This means that it is possible for anyone to send requests to the
 queue server. The problem is that without authorization, we cannot guarantee
@@ -40,35 +40,67 @@ receives something that is not a proper request. \nl
 While this is not a big problem for the current version of the application,
 since it uses a local server, it would be a huge problem on a large scale. 
 
-\section{Word updater for Bag-Of-Words Implementation}
+\section*{Word updater for Bag-Of-Words Implementation}
 Right now the Bag-Of-Words classifier, can only classify using already known
 words which has been premade and stored in a list. This results in the
 classifier being able to classify tweets with a high accuracy right now, but it
-could in a few months lose some of that accuracy because of how the key words 
+could in a few months lose some of that accuracy because of how the key words
 change. This is why we started to implement a system that should identify new
 keywords and put them on a watch list using the Naive Bayes algorithm. This
-system has some functionality implemented, but it was not possible to complete it within the time span.
+system has some functionality implemented, but it was not possible to complete
+it within the time span.
 
 For a system that should be able to be used without the maintenance required by
 the Bag-Of-Words classifier, the system using Naive Bayes should be developed in
-full.
+full. While this approach is not perfect, it would allow us to dynamically
+update our model with a shifting political climate.
+% 
+% A problem with the Bag-of-Words approach to determining the user's political
+% leaning is that the model is unable to adjust itself or to react to a shifting
+% political landscape. This is problematic, as some indicators of political
+% affiliation, like names of current politicians, will likely change over time. In
+% order to alleviate this problem, we have begun implementation of a system that
+% will be able to identify patterns in keywords used by users.\\ 
+% The general idea is that whenever the algorithm determines a clear political
+% affiliation for a user, we can analyze that user to find more keywords which we
+% can add to our keywords list. This would be done by finding uncommon words in
+% the user's tweets' text. These words would then be added to a list of currently
+% monitored words, and whenever a person with a clear political affiliation uses
+% these words, we increment a counter for either left-wing or right-wing use of
+% that word. Whenever we determine that we have enough data, we can add this word
+% to our list of political keywords.\nl
 
-\section{More MI  Models}
+\section*{More MI  Models}
 \fix{}{write}
 
-\section{Larger training samples}
+\section*{Larger training samples}
+One of the problems with the Naive Bayes model is that the amount of training
+samples are limited to 120, with actual training only using 90. In more ideal
+circumstances, the training set should increase by 10 or 100 times. If using a
+sizable, varied and balanced training set, it should be possible to achieve a
+better prediction rate at the cost of slower predictions. This can also be
+extended to other models.\nl
+
+By using larger training samples, there will be more features to consider, which
+should increase accuracy a lot. But there will also be a larger requirement on
+the memory usage. From what we experienced while working on Naive
+Bayes, this can be quite a problem for other models. To work around
+this, we will need to consider reducing the amount of features we use. A
+suggestion from \autoref{subsec:Exp2} was to use Principal Component Analysis.
+This idea, along with other methods of reducing the dimensionality of the
+features, would need to be explored further.
+
+\section*{Less rushed / more usability tests for better feedback}
 \fix{}{write}
 
-\section{Less rushed / more usability tests for better feedback}
-\fix{}{write}
-
-\section{Result Person Identification}
+\section*{Result Person Identification}
 Currently, we cannot identify who each person is in the filter bubble on the
 result screen. This would be a nice feature to have, as the user could be
 curious about where specific people they follow are placed on the scale without
 having to look each of them up individually. In addition to this feature, a
 shortcut to looking up the filter bubble of another user could be added by
 allowing the user to click on a specific user in their filter bubble.
+
 
 
 \section{Recommendation System}
@@ -89,7 +121,8 @@ be recommended could be implemented. For example, some people could prefer to
 only get well educated people recommended rather than celebrities who happen to
 tweet politically a lot.
 
-\section{HTTP not HTTPS}
+
+\section*{HTTP not HTTPS}
 \fix{}{write}
 
 \section{Database Twitter Protect Boolean}\label{sec:twitterProtect}
