@@ -134,6 +134,7 @@ the average accuracy.
 
 \begin{table}[H]
 \centering
+\makebox[\textwidth][c]{
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
 Cross Validation & Test 1 & Test 2 & Test 3 & Test 4 & Average \\ \hline
@@ -141,6 +142,7 @@ Accuracy &  20/30 = 0.67 & 18/30 = 0.60 & 21/30 = 0.70 & 21/30 = 0.70 & 80/120 =
 0.67 
 \\ \hline
 \end{tabular}
+}
 \caption{Accuracy for each of the cross validations}
 \label{tab:CrossVal}
 \end{table}
@@ -292,46 +294,35 @@ undefined amount of requests from different people at a time.
 \fix{}{Jonathan - Consider removing this section, as it seems more like a user
 guide, and does nothing test worthy}
 
-\fix{}{Remove pictures and add references to specific part in GUI chapter if
-needed} 
 In order to assure that the system is working as indended, we have
 performed a number of functional tests, in which we supply an input to the system, and
 monitor that each individual part of the system performs as expected. In the
 first step, we enter the input into the frontend. This can be seen in
-\autoref{testRequest}.\nl 
-
-%\figx[0.5]{testRequest}{Initial screen where the user inputs their Twitter
-% name}
+\autoref{GUIfrontPage}.\nl 
 
 After inputting the twitter name, we make a request to the database for any data
 relating to that name. If the data is present, we go directly to the result in
-\autoref{result2}. If the data is not present, we prepare to perform the tweet
-retrieval and analysis. As such, we request that the user authenticate using
-Twitter's site. This can be seen in \autoref{twitterAuthTab}.\nl
-
-%\figx{twitterAuthTab}{Twitter's website for authorizing access for an
-%application}
+\autoref{GUIresult1}. If the data is not present, we prepare to perform the
+tweet retrieval and analysis. As such, we request that the user authenticate using
+Twitter's site. This can be seen in \autoref{GUItwitterAuthTab}.\nl
 
 After clicking the ``Godkend Applikation'' button, the user is given a unique
-password. This can be seen in \autoref{twitterPin}.\nl
+password. This can be seen in \autoref{GUItwitterPin}.\nl
 
 \figx{GUItwitterPin}{Unique password supplied by Twitter}
 
 Back in our application, we request that the user enter this password
 together with an email address of their choosing. This can be seen in
-\autoref{twitterAuth}.\nl
+\autoref{GUIauthPopup}.\nl
 
-%\figx{twitterAuth}{Requesting a password and email address from the user}
 
-After the user inputs the password, we show the screen in \autoref{testDialog}.
+After the user inputs the password, we show the screen in \autoref{GUIdonePage}.
 Then the application makes a request to Twitter's API, and recieves the user's
 \textc{access\_token} and \textc{access\_token\_secret}. This information is
 then used to request tweets from all the accounts that the specified user is
 following. These tweets are then analyzed in relation to their sentiment
 (positivity/negativity), and their political leaning (left/right). The output
 log from the program can be seen in \autoref{tweetlogAnal}. \nl
-
-%\figx[0.75]{testDialog}{Dialog presented when a user has submitted a request}
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Log from tweet retrieval and analysis, label = tweetlogAnal] 
@@ -356,15 +347,11 @@ more requests.\nl
 When the system backend finishes processing the tweets, it returns the request
 from the frontend to tell it that a result is ready. The frontend then sends a
 mail to the user's specified email account. This email can be seen in
-\autoref{email}, where the user must click the ``See Result" button.\nl
-
-%\figx{email}{Email sent to the user when processing is finished}
+\autoref{GUImail}, where the user must click the ``See Result" button.\nl
 
 After clicking the button, the user will be redirected to a custom page on our
 website, which will present the results in various graphs. This can be seen in
-\autoref{result2}.\nl
-
-\figx{GUIresult2}{Column diagram showing the distribution of political leaning}
+\autoref{GUIresult2}.\nl
 
 Based on the results of this test, we can confirm that every part of the system
 is capable of interacting correctly with each other.
