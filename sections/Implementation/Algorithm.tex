@@ -8,43 +8,52 @@ the tweet e.g. if the sentiment is positive, and the keyword is the name of a
 politician, we have a good indicator as to the users political affiliation.
 Additionally, we can analyze what news media the user shares. This can be
 useful, as news media often have some inherent political bias, which can be
-reflected in the people sharing their material.\nl 
+reflected in the people sharing their material \citep{allSidesBias}.\nl 
 
 The general idea behind this approach comes from opinion mining and sentiment
 analysis, where the sentiment of a text (Tweet) can be used to indicate an
 opinion on a specific keyword. This approach is used in
-\citep{sarlan2014twitter} where sentimental words a counted and used to
-determine a general sentiment of a text. Where \citep{sarlan2014twitter} applies
+\cited{sarlan2014twitter} where sentimental words a counted and used to
+determine a general sentiment of a text. Where \cited{sarlan2014twitter} applies
 this approach to customer reviews, we have chosen to apply the approach to
 political keywords.
 
-
 The general structure of the algorithm can be seen in
 \autoref{AlgorithmStructure}.\\
+
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Main method for handling the algorithm, label = AlgorithmStructure]
 public AnalysisResultObj AnalyzeAndDecorateTweets(List<Tweet> tweetList){
 	AnalysisResultObj output = new AnalysisResultObj();
-   	
-   	foreach (Tweet tweet in tweetList){
-       	tweet.hasQuotes = CheckForQuotationMarks(tweet);
-        
-        if (!tweet.hasQuotes){
-           	var puncturation = tweet.Text.Where(Char.IsPunctuation).Distinct().ToArray(); 
-           	List<String> wordList = 
-           		tweet.Text.Split(' ').Select(x => x.Trim(puncturation)).ToList<String>();
-                       
-            SentimentAnalysis(word, tweet);
-            KeywordAnalysis(word, tweet);
+
+	foreach (Tweet tweet in tweetList){
+    	tweet.HasQuotes = CheckForQuotationMarks(tweet);
+
+		if (!tweet.HasQuotes){
+        	var puncturation = tweet.Text.Where(Char.IsPunctuation).Distinct().ToArray(); 
+        	List<String> wordList = tweet.Text.Split(' ')
+        	.Select(x => x.Trim(puncturation)).ToList<String>();
+
+            SentimentAnalysis(wordList, tweet);
+            KeywordAnalysis(wordList, tweet);
             MediaAnalysis(tweet);
 
-            output.KeywordBias += tweet.keywordBias;
-            output.MediaBias += tweet.mediaBias;
-            output.NegativeSentiment += tweet.negativeValue;
-            output.PositiveSentiment += tweet.positiveValue;
-        }
-    }
+            if (tweet.GetSentiment() > 0)
+            	output.PositiveTweetsCount++;
+            else if (tweet.GetSentiment() < 0)
+            	output.NegativeTweetsCount++;
+
+            output.NegativeSentiment += tweet.NegativeValue;
+            output.PositiveSentiment += tweet.PositiveValue;
+
+            if (tweet.KeywordBias != 0 || tweet.MediaBias != 0){
+            	output.PolCount++;
+                output.KeywordBias += tweet.KeywordBias;
+                output.MediaBias += tweet.MediaBias;    
+            }
+		}
+	}
     output.Count = tweetList.Count;
     return output;
 }
@@ -52,15 +61,20 @@ public AnalysisResultObj AnalyzeAndDecorateTweets(List<Tweet> tweetList){
 \end{minipage}
 
 On \textbf{lines 1-4} we start by creating the output object, and begin
-iterating over the tweets in the input list. On \textbf{lines 5} we
+iterating over the tweets in the input list. On \textbf{line 5} we
 determine if a tweet containes a quotation. This is necessary as quotes can be
 problematic for the analysis. This is further described in
 \autoref{AlgorithmCases}. Then on \textbf{lines 7-10}, if a tweet does not
 contain quotes, we remove the punction from the tweet's text, and split it into
 individual words. On \textbf{lines 12-14} we call the methods for each
 individual analysis part. These methods decorate the tweet object with the
-information derived from the analysis. Finally on \textbf{lines 16-19} we add
-the derived information to the output object, and on \textbf{lines 22-23} we add
+information derived from the analysis. On \textbf{16-19} we check if the tweet's
+sentiment is positive or negative, and increment one of two counters. On
+\textbf{lines 21-22} we increment the count of the user's sentiment in the
+output object. Then on \textbf{lines 24-27} we start by checking if the tweet is
+political, that is, if the tweet's keywords or links imply a political leaning.
+If the tweet is indeed political, we update the output object with this
+information. Finally on \textbf{lines 31-32} we add
 the tweet count and return the output object.
 
 \subsection{Special Cases}\label{AlgorithmCases}
@@ -76,17 +90,17 @@ In order to determine if a tweet contains quotes, we use a simple regular
 expression.
 
 \subsection{Sentiment Analysis}
-As described in \autoref{SentiAnal}, the sentiment analysis consists of
+As described in \autoref{cha:DA}, the sentiment analysis consists of
 identifying words which are considered emotional, and using them to determine
 either the general emotional value of a text, or the emotional reaction to
 specific words in the text. The algorithm makes use of a simplified sentimental
 analysis model, where we determine the general sentimental value of a tweet by
 counting the occurrences of positive and negative words. This approach to is
-also known as a bag-of-words sentiment analysis\citep{BagOfWords}. The
+also known as a bag-of-words sentiment analysis \citep{BagOfWords}. The
 compiled list of emotional words used for this analysis have been produced by
 PhD Minqing Hu and Bing Liu in their paper ``Mining and Summarizing Customer
-Reviews"\citep{Hu:2004:MSC:1014052.1014073}. The implementation of the sentiment
-analysis can be seen in \autoref{sentiAnalCode}.\\
+Reviews" \citep{Hu:2004:MSC:1014052.1014073}. The implementation of the
+sentiment analysis can be seen in \autoref{sentiAnalCode}.\\
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Determining the sentiment of a tweet , label = sentiAnalCode] 
@@ -123,9 +137,9 @@ determine the user's sentiment towards that keyword.
 The initial list of keywords consists of the most popular hashtags used together
 with the hashtag ``\#Politics''. This approach to compiling a word-list was
 chosen as it gave us a good starting point. These hashtags were found by using
-the site \fix{Top-Hashtags.com,}{Skal det være en kilde?} which allows users to
-view what hashtags are frequently used in conjunction. This resulted in the 200 hashtags most used
-together with ``\#politics''.\nl
+the site Top-Hashtags \citep{topHashtags} which allows users to view what
+hashtags are frequently used in conjunction. This resulted in the 200 hashtags
+most used together with ``\#politics''.\nl
 
 Through testing on a multitude of users, we have manually appended the word-list
 with new keywords whenever we identified one that had a clear meaning in a
@@ -189,7 +203,7 @@ to share those attributes. In order to perform this analysis, we use an index of
 american news media with their determined political bias. In order to create
 this index, we have made use of the site AllSides.com, which is a website that
 attempts to determine news media bias based on a combination of statistical
-research and community feedback\citep{allSidesMedia}. When rating a news
+research and community feedback \citep{allSidesMedia}. When rating a news
 media, AllSides applies a rating among 5 values, going from very left
 leaning, to neutral, to very right leaning. Internally, we have chosen to
 represent this rating as values between -10 and 10, as shown in
@@ -234,21 +248,6 @@ base URL. On \textbf{4-5} we check if our dictionary has an element
 corresponding to the URL, and if it does, we increment the tweet's
 \textc{mediaBias} value with the determined political bias. 
 
-\subsection{Word Updater}
-A problem with the algorithmic approach to determining the user's political
-leaning is that the model is unable to adjust itself or to react to a shifting
-political landscape. This is problematic, as some indicators of political
-affiliation, like names of current politicians, will likely change over time. In
-order to alleviate this problem, we have begun implementation of a system that
-will be able to identify patterns in keywords used by users.\\ 
-The general idea is that whenever the algorithm determines a clear political
-affiliation for a user, we can analyze that user to find more keywords which we
-can add to our keywords list. This would be done by finding uncommon words in
-the user's tweets' text. These words would then be added to a list of currently
-monitored words, and whenever a person with a clear political affiliation uses
-these words, we increment a counter for either left-wing or right-wing use of
-that word. \fix{}{Then what?}
-
 % The unfinished implementation of this system can be seen in
 % \autoref{} and \autoref{}.\\
 % 
@@ -260,20 +259,55 @@ that word. \fix{}{Then what?}
 % 
 
 \subsection{Multithreading}
-\fix{}{Write the subsections}
-\subsection{Percentage Politics}
+Due to the large amounts of tweets retrieved, we have chosen to multithread the
+analysis of tweets. In the current implementation, we use 5 concurrent threads
+for each batch of tweets. These threads analyzed their portion of the tweets,
+and the results from the analyses are then added together to a final result. The
+code for multithreading can be seen in \autoref{tweetmulti}.\nl
 
-\subsection{Thresholds}
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Multithreading of the tweet analysis, label = tweetmulti] 
+public AnalysisResultObj AnalyzeAndDecorateTweetsThreaded(List<Tweet> tweetList){ 
+...
+	foreach (var item in splittedList){
+    	Task<AnalysisResultObj> t = new Task<AnalysisResultObj>(() => AnalyzeAndDecorateTweets(item)); 
+    	t.Start();
+        tasks.Add(t);
+    }
 
+	Task.WaitAll(tasks.ToArray());
+    AnalysisResultObj res = new AnalysisResultObj();
+ 
+    foreach (var task in tasks){
+    	res.Count += task.Result.Count;
+        res.PolCount += task.Result.PolCount;
+        res.KeywordBias += task.Result.KeywordBias;
+		...
+    }
+    ...
+    return res;
+}
+\end{lstlisting}
+\end{minipage}
 
+On \textc{lines 3-6} we start by iterating over a list containing subsets of the
+total list of tweets, namely the  object \textc{``items''}. When doing this, we
+create a new Task based on the \textc{AnalyzeAndDecorateTweets} method, and
+initialize it using a subset of the tweets. Then on \textbf{line 9} we wait for
+all of the tasks to finish, and on \textbf{line 10} we create the resulting
+output object. Finally on \textbf{lines 12-15} we add the results of each task
+together in the resulting object, and on line \textbf{line 19} we return the
+object.\nl
 
+Splitting the tweets into multiple threads have led
+to a 43\% reduction in processing time. At this time, we have not tested using more
+than 5 threads, as a speedup in processing is currently unnecessary, as the
+system is bottle-necked by the time it takes to retrieve tweets. This test can
+be seen in \autoref{test:multithread}.\nl
 
-
-
-
-
-
-
-
-
-
+\subsection{Percentage Threshold}
+Since the resulting output is a numerical value between -10 and 10, we want a
+way to show that we consider a person to be neutral, or that we do not have
+enough information to be certain in our classification. As such, we have chosen
+to implement a safeguard, which requires that among all of the tweets recieved
+from a user, at least 1\% of them have to be political in nature. 
