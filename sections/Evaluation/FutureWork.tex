@@ -2,7 +2,7 @@
 This chapter highlights different parts of the system which could
 be improved for a future version of the application.
 
-\section{Limit System}
+\section*{Limit System}
 The limit on the amount of requests to Twitter we are allowed to make works fine
 on a small scale, as long as the user of the application does not use other
 programs that uses requests from the same request pool as our application. This
@@ -29,7 +29,7 @@ limits in the system.\nl
 %header with the remaining amount of requests available. \nl
 \fix{}{check if anything of value is lost from the outcommented sections}
 
-\section{Queue API Authorization}
+\section*{Queue API Authorization}
 In the final version, the Queue API does not use any kind of authorization for
 the requests. This means that it is possible for anyone to send requests to the
 queue server. The problem is that without authorization, we cannot guarantee
@@ -40,7 +40,7 @@ receives something that is not a proper request. \nl
 While this is not a big problem for the current version of the application,
 since it uses a local server, it would be a huge problem on a large scale. 
 
-\section{Word updater for Bag-Of-Words Implementation}
+\section*{Word updater for Bag-Of-Words Implementation}
 Right now the Bag-Of-Words classifier, can only classify using already known
 words which has been premade and stored in a list. This results in the
 classifier being able to classify tweets with a high accuracy right now, but it
@@ -53,16 +53,35 @@ For a system that should be able to be used without the maintenance required by
 the Bag-Of-Words classifier, the system using Naive Bayes should be developed in
 full.
 
-\section{More MI  Models}
+\section*{More MI models}
 \fix{}{write}
 
-\section{Larger training samples}
+\section*{Larger training samples}
+One of the problems with the Naive Bayes model is that the amount of training
+samples are limited to 120, with actual training only using 90. In more ideal
+circumstances the training set should increase by 10 or 100 times. If using a
+sizable, varied and balanced training set it should be possible to achieve a
+better prediction rate, at the cost of slower predictions. This can also be
+extended to other models.\nl
+
+By using larger training samples there will be more features to consider, which
+should increase accuracy a lot. But there will also be a larger requirement on
+the memory usage. From what we experienced while working on Naive
+Bayes, we will this can be quite the problems for other models. To work around
+this, we will need to consider reducing the amount of features we use. A
+suggestion from \autoref{}
+
+ as some
+require a lot more memory. 
+
+
+
+
+
+\section*{Less rushed / more usability tests for better feedback}
 \fix{}{write}
 
-\section{Less rushed / more usability tests for better feedback}
-\fix{}{write}
-
-\section{Result Person Identification}
+\section*{Result Person Identification}
 Currently, we cannot identify who each person is in the filter bubble on the
 result screen. This would be a nice feature to have, as the user could be
 curious about where specific people they follow are placed on the scale without
@@ -71,7 +90,7 @@ shortcut to looking up the filter bubble of another user could be added by
 allowing the user to click on a specific user in their filter bubble.
 
 
-\section{Recommendation System}
+\section*{Recommendation System}
 In our original design of the web application, after displaying the result of
 the analysis of the filter bubble, the application should list some different
 twitter accounts that you could follow such that you will get more different
@@ -87,10 +106,10 @@ information about a user in our database.\nl
 
 To call our web application finished this would need to be implemented.
 
-\section{HTTP not HTTPS}
+\section*{HTTP not HTTPS}
 \fix{}{write}
 
-\section{Database Twitter Protect Boolean}\label{sec:twitterProtect}
+\section*{Database Twitter Protect Boolean}\label{sec:twitterProtect}
 Although in the database there is a boolean used to represent if you need to
 follow the user on Twitter to view their tweets. We do not actually use this
 boolean in our implementation, and as such it is possible to view results about
