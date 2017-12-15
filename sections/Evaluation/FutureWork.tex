@@ -69,8 +69,14 @@ update our model with a shifting political climate.
 % that word. Whenever we determine that we have enough data, we can add this word
 % to our list of political keywords.\nl
 
-\section*{More MI  Models}
-\fix{}{write}
+%Outperform is single word :O http://www.thesaurus.com/browse/outperform
+\section*{Using additional models}
+The Naive Bayes and Bag-Of-Words models are simplistic models, and on other
+data sets are outperformed by more advanced models, such as the Support Vector
+Machine and Neural Network. In the future it would be interesting to see how
+these models measure up to the ones we currently use.
+
+
 
 \section*{Larger training samples}
 One of the problems with the Naive Bayes model is that the amount of training
@@ -89,12 +95,19 @@ suggestion from \autoref{subsec:Exp2} was to use Principal Component Analysis.
 This idea, along with other methods of reducing the dimensionality of the
 features, would need to be explored further.
 
-\section*{More Usability Tests}
-A problem during the project was that we did not have time for multiple
-usability tests. As such, we only performed a single test on a single iteration
-of the system. While we got a lot of useful feedback from the original test, it
-would be a good idea to perform more tests on the newer versions of the system,
-as we are currently unable to document the usability of the final version.
+\section*{More Usability Evaluations}
+It would be beneficial to perform more usability evaluations. The current
+evaluation was performed with a single user, which is far from enough. In the
+future we should perform more evaluations with between 4-8 users, using the
+updated product, this should uncover the majority of the issues. The same set of
+exercises can be used in the following tests as the purpose of the test has not
+changed. It would also be beneficial to perform the tests with native english
+speakers, as they are more familiar with terms such as sentiment and bias.\nl
+ 
+In the future it would be interesting to release a version and ask people on
+social media sites to use it and provide feedback on how accurate they judge
+the models to be. This would be especially helpful in judging how accurate our
+current models are.
 
 \section*{Result Person Identification}
 Currently, we cannot identify who each person is in the filter bubble on the
@@ -106,7 +119,7 @@ allowing the user to click on a specific user in their filter bubble.
 
 
 
-\section{Recommendation System}
+\section*{Recommendation System}
 In the initial design idea of the web application, the application listed
 different Twitter accounts that would help the user's Twitter feed get closer to
 the middle of the political spectrum, thus breaking their filter bubble. \nl
