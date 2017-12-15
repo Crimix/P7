@@ -1,12 +1,12 @@
 \chapter{Database \acs{API}}\label{DatabaseAPI}
 After analysing a user, we want to store that data, such that we do not have to
-retrieve or analyze the tweets again. As such, the sytem makes use of a
+retrieve or analyze the tweets again. As such, the system makes use of a
 database, which the Workers can use to store and access the saved data. This
 design choice is especially important, as we make use of the user's Twitter
 account to retrieve data from the Twitter \ac{API}, which have a limited amount
-of API requests, as described in \autoref{cha:twitterAPI}.
-As such, this section is used to describe how we access and store this data, and
-how we make sure that it is only accessible to authorized users.
+of API requests, as described in \autoref{cha:twitterAPI}. As such, this section
+is used to describe how we access and store this data, and how we make sure that
+it is only accessible to authorized users.
 
 \section{Laravel Framework}\label{sec:laravel}
 Laravel is a framework written in PHP that enables the creation of websites and
@@ -20,18 +20,18 @@ the logic. When needed, however, other types of layers can be added. This
 includes helper classes and packages that extend the functionality of
 Laravel.\nl
 
-The main reason for choosing Laravel was previous knowledge with various
+The main reason for choosing Laravel was group experience with various
 frameworks and a preference for how Laravel does things.
 
 \section{Database Design}\label{DBDesign}
-While Laravel supports multiple \acp{DBS}\citep{LaravelDBS} we have opted to use
-MySQL while developing and testing. Due to the use of Laravel's abstraction our
+While Laravel supports multiple \acp{DBS} \citep{LaravelDBS} we have opted to
+use MySQL while developing and testing. Due to the use of Laravel's abstraction our
 system should be able to run on any of the supported database systems without
 any changes on our part.\nl
 
-The system uses 10 tables of which 7 are used for authentication purposes and
-one tracks database migrations. The remaining two tables are \textc{twitters}
-and \textc{twitter\_twitter}, shown in part with example data in
+The system uses ten tables of which seven are used for authentication purposes
+and one tracks database migrations. The remaining two tables are \textc{twitters}
+and \\\textc{twitter\_twitter}, shown in part with example data in
 \autoref{TwittersDBTable} and \autoref{TwitterTwitterDBTable} respectively.\nl
 
 The columns \textc{created\_at} and \textc{updated\_at} have been left out here
@@ -39,7 +39,8 @@ due to size constraints on the pages.
 
 \begin{table}[H]
 \centering
-\resizebox{1.1\textwidth}{!}{%
+\cc{
+\resizebox{1.2\textwidth}{!}{%
 \begin{tabular}{| l | l | l | l | l | l | l | l	| l | l |}
 \hline
 \textbf{\underline{id}} & \textbf{twitter\_name} & \textbf{twitter\_id} &
@@ -57,24 +58,27 @@ due to size constraints on the pages.
 -8.1468677 & 325 & 0 & 0 \\
 \hline
 \end{tabular}}
-\caption{Table containing twitter users and their determined values.}
+}
+\caption{Table containing Twitter users and their determined values.}
 \label{TwittersDBTable}
 \end{table}
 
-The table \textc{twitters} is used for storing data about analysed
-twitter users, such that we can reference this data if we should receive
-a request. This allows to reduce overhead, as we can reuse data. \fix{One
-important aspect is that we need to respect a user's privacy. As such, we have
-introduced the ``protect'' boolean to indicate if only the Twitter user, which the result
-belong to, is allowed to retrieve it.}{We need to make sure we've reflected on
-this elsewhere since it wasn't actually implemented.}\nl
+The table \textc{twitters} is used for storing data about analysed Twitter
+users, such that we can reference this data if we should receive a request. This
+allows reducing overhead, as we can reuse data. One important aspect is that we
+need to respect a user's privacy. As such, we have introduced the ``protect''
+boolean to indicate if only the Twitter user, which the result belong to, is
+allowed to retrieve it. Although this is data in the database, this form of
+protection is not implemented, details about this can be found in
+\autoref{sec:twitterProtect}.\nl
 
 The \textc{processed} column is used to distinguish between users who have been
-fully analysed along with all the users they follow, versus those who have been
+fully analysed, along with all the users they follow, versus those who have been
 processed as followed accounts. In the example data in \autoref{TwittersDBTable}
 this distinction can be seen as ``theDonaldDrumpf'' is the only processed entry,
 while ``TayaDickinson'' and ``BrodyHahn'' are analysed because they are followed
 by ``theDonaldDrumpf''.
+
 
 \begin{table}[H]
 \centering
@@ -91,13 +95,13 @@ by ``theDonaldDrumpf''.
 \label{TwitterTwitterDBTable}
 \end{table}
 
-The table \textc{twitter\_twitter} is used as a link table, named as it is due
-to convention more so than any requirements from the framework. It keeps track
+The table \textc{twitter\_twitter} is used as a link table, named as
+it is due to convention more so than any requirements from the framework. It keeps track
 of the followers and in the example data it is shown how we keep track of the
 users followed by ``theDonaldDrumpf''.
 
 \section{\acs{API} Design}
-In order to access the database described in \autoref{DBDesign}, we have
+To access the database described in \autoref{DBDesign}, we have
 developed a \ac{REST} \ac{API} using Laravel. This
 \ac{API} functions as a layer on top of the database, to which we can make
 requests and retrieve data through the use of authorised \ac{HTTP} requests.
@@ -179,13 +183,13 @@ GET  & /twitter/\{recordId\}          &  \\
 Returns the full result for the given record ID if it exists.}} \\
 \hline
 \end{tabular}
-\caption{\ac{API} endpoints for the database backend}
+\caption{\ac{API} endpoints for the database back-end.}
 \label{DBAPIEndpointTable}
 \end{table}
  
 
 \subsection{Authorization}
-In order to make sure that data is only available to authorized users, we make
+To make sure that data is only available to authorised users, we make
 use of Laravel Passport, which is a token-based authorisation system based on
 the OAuth2 standard \citep{LaravelPassport}.\nl
 
@@ -194,7 +198,7 @@ encrypted string. This token is then verified by comparing it to a list of
 active tokens on the database. The token verification is handled by Laravel
 Passport.\nl
 
-Of the multiple options that Laravel Passport gives us for auth, we opted for
+Of the multiple options that Laravel Passport provides for auth, we opted for
 the one called ``client credentials'' which is meant for machine--to--machine
 communication, as opposed to user--to--machine auth.
 \citep{LaravelPassportClientCredentials}
@@ -202,16 +206,16 @@ communication, as opposed to user--to--machine auth.
 The base \ac{URL} for auth requests is the same as for the \ac{API} except not
 prefixed with \ttt{/api}.\nl
 
-In order to retrieve a token, a worker must make a request to the
+To retrieve a token, a worker must make a request to the
 ``oauth/token'' endpoint, while supplying a valid client ID and client
 secret, along with the grant type, which will always be
 ``client\_credentials''. The request spec is documented in
-\autoref{DBAPIOAuthEndpointTable}\nl
+\autoref{DBAPIOAuthEndpointTable}.\nl
 
 If the supplied credentials are valid as per the information stored in the
-database, the request responds with a long--lived token that uniquely
-identifies the client, be it a worker or the \ac{GUI}. This token must then be
-sent in the header of every request as a bearer token.\nl
+database, the request responds with a long-lived token that uniquely identifies
+the client, be it a worker or the \ac{GUI}. This token must then be sent in the
+header of every request as a bearer token.\nl
 
 \begin{table}[H]
 \centering
@@ -224,7 +228,7 @@ POST & /oauth/token  & \ttt{string} grant\_type \\
 ~    & ~             & \ttt{string} client\_secret \\
 \hline
 \end{tabular}
-\caption{\ac{API} endpoints for authorisation}
+\caption{\ac{API} endpoints for authorisation.}
 \label{DBAPIOAuthEndpointTable}
 \end{table}
 
