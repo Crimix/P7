@@ -100,8 +100,11 @@ the classes.
 Now that we have the feature vectors and the classes, we can begin to train the
 Naive Bayes classifier. We do this on \textbf{lines 14-19}, by using the
 Accord.net frameworks \textc{NaiveBayesLearning} class with the normal
-distribution, we add regularization on \textbf{line 17} \fix{\ldots}{Make small
-tests to see differences}
+distribution, we add regularization on \textbf{line 17} to prevent zero
+possibilities \citep[P. 312]{MIBook}.
+
+
+
 
 We then train Naive Bayes classifier on \textbf{line 19}, where it is taught
 using the input and output from the training files. We then save the model on
