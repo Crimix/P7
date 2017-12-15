@@ -2,8 +2,8 @@
 Based on the system requirements in \autoref{cha:req} the part will be used to
 document the design and development of the software solution. The developed
 solution consists of multiple different parts, including a Queue Server, a
-webpage front-end, a database, and a set of classification models. As such, this
-chapter will be used to give an overview of these different parts.
+Webpage Front-End, a Database, and a set of Classification Models. As such,
+this chapter will be used to give an overview of these different parts.
 
 \section{Overview}
 The developed system consists of four individual parts, the Front End web
@@ -16,7 +16,7 @@ parts are communicating directly with each other.
 \figx[0.62]{P7_SystemOverview}{System architecture of the BubbleBuster system.}
 
 \subsection{GUI} %API, Interfaces, Data Transfer, System Logic The
-The front-end of system is developed using the Laravel framework, which was
+The Front-End of system is developed using the Laravel framework, which was
 decribed in \autoref{sec:laravel}. This part of the system acts as the user's
 entry-point to the system. From here, the user can make requests to analyse a
 filter bubble using a Twitter username, and view the data derived from the
@@ -45,11 +45,19 @@ of the queue server and its API is further described in \autoref{queueAPI}.
 
 \subsection{Worker}
 As explained, the purpose of the system is to determine the user's political
-filter bubbles using the two approaches described in \autoref{}. The Worker
-contains this functionality.
-Whenever the queue server receives a request to classify a user, it calls the
-methods contained in the worker. This is further described in
-\autoref{workerLabel}.
+filter bubbles using the two approaches described in \autoref{sec:DAConc}. The
+Worker contains this functionality. Whenever the queue server receives a request
+to classify a user, it calls the methods contained in the worker. This is
+further described in \autoref{workerLabel}.
+
+\subsection{Classification Models}
+Two different models are developed to help determine a Twitter user's political
+leaning, as explained in \autoref{cha:classification}. The first model uses
+a Bag-of-Words approach where a text get analysed for emotional, political, and
+news-related keywords. This approach is based partly on the methodology
+described by \cited{sarlan2014twitter}. The second approach uses a Naive
+Bayesian Network to determine a user's political affiliation based on a set of
+training data built from the Twitter data from American politicians.
 
 \subsection{Multithreading}\label{subs:multithread}
 To optimise the system performance, we have chosen to use multiple threads for
@@ -83,17 +91,24 @@ control over the requests. As an example the \textc{HttpWebRequest} have a
 before failing. Otherwise, this would only be possible if we extended
 \textc{WebClient} and made our web client. But it was decided that this would be
 unnecessary, as it would imply extending a class only to change a single
-property.
+property.\nl
 
-\subsection{Classification Models}
-Two different models are developed to help determine a Twitter user's political
-leaning; this is explained in \autoref{cha:classification}. The first model uses
-a Bag-of-Words approach where a text get analysed for emotional, political, and
-news-related keywords. This approach is based partly on the methodology
-described by \cited{sarlan2014twitter}.
-The second approach uses a Naive Bayesian Network to determine a user's
-political affiliation based on a set of training data built from the Twitter
-data from American politicians.
+
+With this overview in mind, the following chapters will be used to describe
+the technical details of the system parts covered in this chapter.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
