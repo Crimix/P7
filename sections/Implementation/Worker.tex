@@ -1,34 +1,57 @@
 \chapter{Worker}\label{workerLabel}
-The worker is the part of the system which collects the tweets and analyzes
-them. Each task in the queue corresponds to a worker.
+When the Queue Server begins executing a queued request, it instantiates a
+\textc{Worker}, which begins to retrieve and classify Tweets. Each task in the
+queue corresponds to a single \textc{Worker}.
 
 \section{Implementation}
-The worker first retrieves the user which the screen name corresponds to. Then,
-it retrieves the list of tweets by the user. The next step for the worker is to
+The \textc{Worker} starts by requesting a \textc{User} object for the user for
+which we want to determine a filter bubble. Then, it retrieves a list of up to
+3200 most recent tweets created by the user. The next step for the worker is to
 retrieve the list of users that the user is following, retrieve their tweets and
-analyse the tweets. The retrievement of tweets and the analysis are done in
-parallel by splitting them into tasks. To retrieve and analyze tweets, it uses
-the functions \textc{GetTweetsFromUserAndAnalyse} and
-\textc{GetTweetsFromFriendsAndAnalyse} to receive and analyse tweets from the
-user and the users it follows respectively. These functions are found in the
-class called \textc{TweetRetriever}.
+analyse the tweets. The retrieval and analysis of tweets are done in parallel by
+splitting them into tasks. To retrieve and analyze tweets, it uses the functions
+\textc{GetTweetsFromUserAndAnalyse} and \textc{GetTweetsFromFriendsAndAnalyse}
+to receive and analyse tweets from the user and the users it follows
+respectively. These functions are found in the class called
+\textc{TweetRetriever}.\nl
+
+After analyzing all tweets for necessary for determining a user's filter bubble,
+the worker sends the result to the Database API, which then stored the resulting
+value on the Database. During this, the Database API also sends a message to the
+front-end, telling it that a result is ready to be presented.
+
+\subsection{Splitting up in tasks}\label{sec:taskSplit}
+To speed up the retrieval of tweets, the retrieval is split up in tasks that are
+run in parallel. It is split such that each user, the user is following,
+corresponds to a task. This way, the tasks are somewhat equally split.
+When the worker analyzes the tweets, be it while retrieving, from a file or just
+a list of tweets, it also needs to split the list of tweets into tasks, such
+that it is possible to work on a smaller subset of the problem. Here, the
+splitting is done such that each task gets an equal amount of tweets.
+
+The main difference between how the task splits are done in the retrieval
+part and the analysis part is that in the retrieval part, a predefined number
+of tasks can run at the same time, even though the total number of tasks may be
+higher, whereas the analysis part always has all its predefined number of tasks
+running at the same time. The predefined number of the latter may be 1 higher if
+it can not split the tasks equally. In this case, the excess tasks are put in
+their own small task.
 
 \subsection{Tweet retriever} \label{sub:tweetretriever}
-There are two versions of the whole tweet retrievement process. The first
-version is a legacy version that retrieves tweets and returns them as one list
-such that they can be saved in files locally or to be analyzed at a later point.
+There are two versions of the whole tweet retrieval process. The first version
+is a legacy version that retrieves tweets and returns them as one list such that
+they can be saved in files locally or to be analyzed at a later point.
 The new implementation retrieves and analyzes each Twitter account on their own
-thread to save time. The code from back when the legacy version was written, is
-moved to the helper function \textc{GetTweetsFromUserHelper}, which both the
-versions wraps around. To make this work, the helper function, among others,
-receives the \textc{retrieveMethod} as a parameter. Since this parameter is of
-the type \textc{Func<List<Tweet>>}, the helper function can take any function as
-parameter as long as it returns a list of tweets.
-This can be seen on the three methods in the three code examples
-\autoref{legacyUserTweet}, \autoref{NewUserTweet} and \autoref{UserTweetHelper}
-where the calls on \textbf{line 3} in the two wrapper methods give the last
-parameter as a lambda expression / anonymous function, which takes no input as
-seen by \textc{() =>}.\\
+thread to save time, as described in \autoref{sec:taskSplit}. The code from the
+legacy version is moved to the helper function \textc{GetTweetsFromUserHelper},
+which both of the versions wrap around. To make this work, the helper function,
+among others, receives the \textc{retrieveMethod} as a parameter. Since this
+parameter is of the type \textc{Func<List<Tweet>>}, the helper function can take
+any function as parameter as long as it returns a list of tweets. This can be
+seen on the three methods in the three code examples \autoref{legacyUserTweet},
+\autoref{NewUserTweet} and \autoref{UserTweetHelper} where the calls on
+\textbf{line 3} in the two wrapper methods give the last parameter as a lambda
+expression / anonymous function, which takes no input as seen by \textc{()=>}.\\
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Legacy method call , label = legacyUserTweet ] 
@@ -103,45 +126,25 @@ private List<Tweet> TweetThreadMethod(User user, AuthObj auth, Func<User, bool> 
     return temp;
 }
 \end{lstlisting}
-\end{minipage}
-The difference is that this function has a bunch of optional parameters. The legacy version only parses
-a user and an authorization object, while the new version also parses the
-functions \textc{checkDB}, \textc{classifyMethod} and \textc{postToDB}.
-\textc{checkDB} is used to check if the user is already in the database. If it
-is, it skips the tweet retrievement and analysis of the particular user. If it is not, it retrieves the tweets and analyzes them if it
-is the new version.\\
 
-\subsection{Anonymous functions}
+\end{minipage}
+The difference is that this function has a bunch of optional parameters. The
+legacy version only parses a user and an authorization object, while the new
+version also parses the functions \textc{checkDB}, \textc{classifyMethod} and
+\textc{postToDB}.
+\textc{checkDB} is used to check if the user is already in the database. If it
+is, it skips the tweet retrievement and analysis of the particular user. If it
+is not, it retrieves the tweets and analyzes them if it is the new version.\\
+
+\subsection{Anonymous Functions}
 The three anonymous functions mentioned in \autoref{sub:tweetretriever} -
 \textc{checkDB}, \textc{classifyMethod} and \textc{postToDB} are defined in the
 worker class under the names of \textc{CheckIfResultExistOnDB},
 \textc{ClassifyTweet} and \textc{PostResultToDB} respectively, where
 \textc{CheckIfResultExistOnDB} and \textc{PostResultToDB} also have a version
-that links the user being analysed to the overall user. The methods are
-defined in \textc{Worker}, rather than \textc{TweetRetriever}, because they are
+that links the user being analysed to the overall user. The methods are defined
+in \textc{Worker}, rather than \textc{TweetRetriever}, because they are
 different for each worker, since the \textc{userRecordId} is different for each
 request. Such a thing cannot be defined in the singleton class without the need
-to pass the id to each method.
-This way, it is still the worker's methods that are used in a context where they
-have access to what is defined in the worker.
-
-
-\subsection{Splitting up in tasks} \fix{}{I feel like this section should be
-moved up but I don't know.} To speed up the retrievement of tweets, the
-retrievement is split up in tasks that are run in parallel. It is split such
-that each user, the user is following, corresponds to a task. This way, the
-tasks are somewhat equally split.
-When the worker analyzes the tweets, be it while retrieving, from a file or just
-a list of tweets, it also needs to split the list of tweets into tasks, such
-that it is possible to work on a smaller subset of the problem. Here, the
-splitting is done such that each task gets an equal amount of tweets.
-
-The main difference between how the task splits are done in the retrievement
-part and the analysis part is that in the retrievement part, a predefined number
-of tasks can run at the same time, even though the total number of tasks may be
-higher, whereas the analysis part always has all its predefined number of tasks
-running at the same time. The predefined number of the latter may be 1 higher if
-it can not split the tasks equally. In this case, the excess tasks are
-put in their own small task. 
-
-\fix{}{Needs more maybe.}
+to pass the id to each method. This way, it is still the worker's methods that
+are used in a context where they have access to what is defined in the worker.
