@@ -101,15 +101,10 @@ Now that we have the feature vectors and the classes, we can begin to train the
 Naive Bayes classifier. We do this on \textbf{lines 14-19}, by using the
 Accord.net frameworks \textc{NaiveBayesLearning} class with the normal
 distribution, we add regularization on \textbf{line 17} to prevent zero
-possibilities \citep[P. 312]{MIBook}.
-
-
-
-
-We then train Naive Bayes classifier on \textbf{line 19}, where it is taught
-using the input and output from the training files. We then save the model on
-\textbf{line 21}, so that we do not have to retrain it every time we need to use
-it.\nl
+possibilities \citep[P. 312]{MIBook}. We then train Naive Bayes classifier on
+\textbf{line 19}, where it is taught using the input and output from the
+training files. We then save the model on \textbf{line 21}, so that we do not
+have to retrain it every time we need to use it.\nl
 
 Due to how Accord.Net does not allow for saving and loading of
 \textc{BagOfWords} objects, it is necessary to retrain it every time we need to
