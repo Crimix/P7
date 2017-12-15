@@ -126,8 +126,12 @@ tweet politically a lot.
 
 
 \section*{HTTP not HTTPS}
-Right now, all our \ac{API}s use HTTP. This is a problem when releasing the
-system because the user should feel secure using our application with their
+Right now, all our \ac{API}s use HTTP. This could be a serious problem, as the
+lack of encryption could allow a 3rd party to intercept the information
+contained in our communications. While most of our data is freely available
+through the Twitter API, it would be problematic when transferring the user's
+authorization information. This would be a major problem when releasing the
+system, because the user should feel secure using our application with their
 Twitter account.
 
 
