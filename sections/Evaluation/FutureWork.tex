@@ -93,6 +93,17 @@ tweet politically a lot.
 \fix{}{write}
 
 \section{Database Twitter Protect Boolean}\label{sec:twitterProtect}
+Some Twitter accounts are privatised, thus requiring the user to follow that
+specific account before being able to access their tweets. Therefore, if a
+privatised account is in the database by a user who follows that account and
+another user, who does not follow the account, searches for the account, they
+will aquire information they would otherwise not be allowed to get. While this
+is not a violation with the Twitter API, it is bad practice. While a boolean
+determining whether a Twitter account is private or not is stored in the
+database, it is not currently used. This would have to be implemented before a
+public release.
+
+\begin{comment}
 Although in the database there is a boolean used to represent if you need to
 follow the user on Twitter to view their tweets. We do not actually use this
 boolean in our implementation, and as such it is possible to view results about
@@ -107,3 +118,4 @@ information extracted from the tweets which you should not be able to see. \nl
 
 This should be implemented before the system could be put in a server and used
 by the public.
+\end{comment}
