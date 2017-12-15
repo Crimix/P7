@@ -148,3 +148,33 @@ different for each worker, since the \\\textc{userRecordId} is different for
 each request. Such a thing cannot be defined in the singleton class without the need
 to pass the id to each method. This way, it is still the worker's methods that
 are used in a context where they have access to what is defined in the worker.
+
+\section{Rate Limits}\label{sec:rateLimit}
+As described in \autoref{cha:req} our system is required to adhere to Twitter's
+rules regarding rate limits. This means that we can only make a limited number of
+requests per 15 minute interval. As such, we need to monitor how many requests
+we use, and how many we have left. And whenever we run out of requests, we must
+be able to put the retrieval of tweets on hold until we can make more requests.
+In order to handle this, we have a number of methods in the \textc{LimitHelper}
+class, which monitors how many requests we have left. This is done by sending a
+request to the Twitter API endpoint: \nl
+
+\say{https://api.twitter.com/1.1/application/rate\_limit\_status.json} \nl
+
+It should be noted that these requests come from a different pool of requests
+than those to recieve tweets. As such, these requests do not limit our tweet
+retrieval. This requests is only made once for each Worker, which then store how
+many requests it have, and when the next batch of requests are available.
+Whenever we run out of requests, we put the threads to sleep, and wait for the
+next batch of requests.
+
+
+
+
+
+
+
+
+
+
+
