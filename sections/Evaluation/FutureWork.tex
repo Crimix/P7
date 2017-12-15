@@ -72,19 +72,22 @@ allowing the user to click on a specific user in their filter bubble.
 
 
 \section{Recommendation System}
-In our original design of the web application, after displaying the result of
-the analysis of the filter bubble, the application should list some different
-twitter accounts that you could follow such that you will get more different
-political views that what you currently get on Twitter. \nl
+In the initial design idea of the web application, the application listed
+different Twitter accounts that would help your Twitter feed get closer to the
+middle of the poltical spectrum, thus breaking your filterbubble. \nl
 
-This feature would need to be developed for the actual busting of the filter
-bubble to exist. One way of implementing this feature would be to use data from
-our database where we have analysed Twitter users and selecting twitter users to
-show which have a different political learning than you. Another way would be to
-do the same with regards to present users with different political learning, but
-also users with many followers, this then requires that we store such
-information about a user in our database.\nl
+This feature would have to be developed before actual bubble busting would take
+place. One way of implementing this feature would be to make a seperate
+database of recommended users with data generated from earlier searches. This
+database would of course have to start out with some hardcoded accounts.
+Otherwise, the first few users of the program would not get any
+recommendations. There would have to be a filter on which users gets added to
+the database. This could be a requirement of at least 10000 followers.
+Otherwise, people would get irrelevant Twitter accounts recommended. If the
+application had a lot of traffic, a filter on what kind of people they want to
+be recommended could be implemented. For example, some people could prefer to
+only get well educated people recommended rather than celebrities who happen to
+tweet poltical a lot.
 
-To call our web application finished this would need to be implemented.
 \section{HTTP not HTTPS}
 \fix{}{write}
