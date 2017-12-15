@@ -1,24 +1,7 @@
-\chapter{Discussion}\label{cha:disc}
-
-\section{Classification Accuracy}
-
-\section{Scalability}
-
-\section{Word Updater}
-A problem with the Bag-of-Words approach to determining the user's political
-leaning is that the model is unable to adjust itself or to react to a shifting
-political landscape. This is problematic, as some indicators of political
-affiliation, like names of current politicians, will likely change over time. In
-order to alleviate this problem, we have begun implementation of a system that
-will be able to identify patterns in keywords used by users.\\ 
-The general idea is that whenever the algorithm determines a clear political
-affiliation for a user, we can analyze that user to find more keywords which we
-can add to our keywords list. This would be done by finding uncommon words in
-the user's tweets' text. These words would then be added to a list of currently
-monitored words, and whenever a person with a clear political affiliation uses
-these words, we increment a counter for either left-wing or right-wing use of
-that word. Whenever we determine that we have enough data, we can add this word
-to our list of political keywords.\nl
-
-While this approach is not perfect, it would allow us to dynamically update our
-model with a shifting political climate.
+% \chapter{Discussion}\label{cha:disc}
+% 
+% \section{Classification Accuracy}
+% 
+% \section{Scalability}
+% 
+% 
