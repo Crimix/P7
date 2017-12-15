@@ -330,7 +330,7 @@ rettes} \autopageref{retRefMacro}\\}
 \newcommand{\figxb}[3][0.5]{
 \begin{figure}[H]
 \begin{center}
-  \frame{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
+  \fbox{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
   \caption{#3}
   \label{#2}
 \end{center}
@@ -341,7 +341,7 @@ rettes} \autopageref{retRefMacro}\\}
 \newcommand{\figxsb}[4][0.5]{
 \begin{figure}[H]
 \begin{center}
-  \frame{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
+  \fbox{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
   \caption{#3}
   \label{#2}
   \caption*{\textbf{Source:} #4}
