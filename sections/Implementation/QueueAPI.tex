@@ -1,32 +1,43 @@
 \chapter{Queue \acs{API}}\label{queueAPI}
-As a part of the overall application, we have to be able to handle requests
-and queue them for execution as tasks, such that the first request gets handled
-first.
+As we use a web-application front-end, which should be accessible to many
+simultanious users, we need a way to queue and schedule the order in which
+requests from the different users are handled. As such, this chapter will be
+used to describe our Queue Server Library and its \ac{API}.
 
 \section{Implementation}
-The \ac{API} is implemented in a C\# program, such that it uses the same
-language as the QueueServer program. This way, the \ac{API} can use already
-written code from the QueueServer library and the Worker class.
+In order to make a request to the Queue Server, the front-end must make a
+request to our Queue Server \ac{API}. This \ac{API} is implemented using the 
+C\# language, such that it uses the same language as the Queue Server Library.
+Using the same language for these system parts allows the \ac{API} to use
+existing code from the Queue Server Library and the Worker class. When the API
+recieves an incoming request, it calls a number of method in the Queue Server
+Library, which handles scheduling and queueing.
 
-\subsection{\ac{REST} \ac{API}}
-The \ac{REST} \ac{API} utilises the ASP.net framework with an added controller
-class called AnalyzeTwitterAccountController. This controller handles the post
-request by the GUI by running the AddTask function from the QueueServerInstance
-described in \autoref{sub:queueserver}.
+\subsection{Queue Server \ac{API}}
+The Queue Server \ac{API} is based on the \ac{REST} principles
+\citep{principlesREST}, and utilizes the ASP.net framework
+\citep{aspNEToverview}. Most of the API has been automatically generated as a
+\textc{APS.NET Web Application} template from Visual Studio 2017
+\citep{vsMainPage}. As such, we have simply added a single controller class
+called \textc{AnalyzeTwitterAccountController}. This controller handles the post
+request by the GUI by running the AddTask function from the
+\textc{QueueServerInstance} described in \autoref{sub:queueserver}.
 
 \subsection{Queue server} \label{sub:queueserver}
-The Queue server is a singleton class in a library that contains various queues
-and functions used to help execute tasks. When the GUI makes a request, the
-function AddTask is executed. This function adds the requested Twitter account
-to a queue called nonAddedRequests. TaskQueue is an asynchronous function that
-is executed on its own thread when the \ac{API} is started and runs for the
-entirety of it. In each iteration, it checks if there are any entries in
-nonAddedRequests. If there are, it makes a task for each of them and adds them
-to a queue of tasks called taskQueue. Afterwards, it starts each task
-asynchronously so that at most 5 are running at the same time. Afterwards, it
-checks the list of running tasks and removes the finished ones. \nl
-
-A code example of how requests are converted to tasks can be seen on
+At the core of the Queue Server Library is the \textc{QueueServerInstance}
+singleton class, which contains the logic needed to queue requests. When the
+front-end makes a request, the \textc{AnalyzeTwitterAccountController} calls the
+\textc{AddTask} method in the \textc{QueueServerInstance}. This method adds the
+requested Twitter account to a \textc{Queue} called \textc{nonAddedRequests}.
+Whenever the \textc{QueueServerInstance} class is first instantiated, it calls
+an asynchronous method named \textc{TaskQueue}, which runs a \textc{while(true)}
+loop, and is executed on its own thread. In each iteration of the loop, it
+checks if there are any entries in \textc{nonAddedRequests}. If there are, it
+makes a task for each of them and adds them to a \textc{Queue} of tasks called
+\textc{taskQueue}. Afterwards, it starts each task asynchronously so that at
+most 5 are running at the same time.
+Afterwards, it checks the list of running tasks and removes the finished ones. A
+code example of how requests are converted to tasks can be seen in
 \autoref{taskqueue}. \\
 
 \begin{minipage}[H]{\linewidth}
@@ -59,16 +70,16 @@ On \textbf{line 13 and 14}, it adds the task to the task queue and removes the
 request from the queue of requests.\\
 
 \subsection{Twitter account}
-The class TwitterAcc is used for every instance of a twitter account. It
-contains all necessary information about a specific twitter account, such as its
-token, Twitter name and token secret. These concepts relating to access tokens
-and secrets are covered in \autoref{cha:twitterAPI}.
+The class \textc{TwitterAcc} is used for every instance of a Twitter account. It
+contains all necessary information about a specific Twitter account, such as its
+\textc{Access Token}, Twitter name and \textc{Access Token secret}. These
+concepts relating to access tokens and secrets are covered in
+\autoref{cha:twitterAPI}.
 
 \subsection{Server task}
-An instance of the class ServerTask is created every time a task is created. It
-is used to parse the Twitter authorization values and the screen name of the
-Twitter account being processed to the worker.
-
+An instance of the class \textc{ServerTask} is created every time a task is
+created. It is used to parse the Twitter authorization values and the screen
+name of the Twitter account being processed to the worker.
 
 \section{Requests}
 The \ac{API} only has one post request, which is: \nl
