@@ -65,9 +65,9 @@ public List<Tweet> GetTweetsFromUser(User user, AuthObj auth)
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Current method call to speed up execution , label =
 NewUserTweet ] 
-public void GetTweetsFromUserAndAnalyse(User user, AuthObj auth, Func<User, bool> get, Func<List<Tweet>, AnalysisResultObj> classifyMethod, Func<AnalysisResultObj, User, bool> post)
+public void GetTweetsFromUserAndAnalyse(User user, AuthObj auth, Func<User, bool> checkDB, Func<List<Tweet>, AnalysisResultObj> classifyMethod, Func<AnalysisResultObj, User, bool> postToDB)
 {
-    GetTweetsFromUserHelper(user, auth, (() => TweetThreadMethod(user, auth, get, classifyMethod, post)));
+    GetTweetsFromUserHelper(user, auth, (() => TweetThreadMethod(user, auth, checkDB, classifyMethod, postToDB)));
 }
 \end{lstlisting}
 \end{minipage}
