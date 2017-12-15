@@ -200,6 +200,9 @@
 \definecolor{redstring}{rgb}{0.6,0,0}
 \definecolor{javaKeywords}{HTML}{7F0055}
 \definecolor{diff}{HTML}{c5c5c5}
+\definecolor{dkgreen}{rgb}{0,.6,0}
+\definecolor{dkblue}{rgb}{0,0,.6}
+\definecolor{dkyellow}{cmyk}{0,0,.8,.3}
 
 \lstdefinestyle{nc}%
 {
@@ -207,6 +210,20 @@
   %morecomment  = [l][\nullfont]{//},
   morecomment  = [is]{/*}{*/}
 }
+
+\lstdefinestyle{php}
+{
+  language        = php,
+  keywordstyle    = \color{dkblue},
+  stringstyle     = \color{red},
+  identifierstyle = \color{dkgreen},
+  commentstyle    = \color{gray},
+  emph            =[1]{php},
+  emphstyle       =[1]\color{black},
+  emph            =[2]{if,and,or,else},
+  emphstyle       =[2]\color{dkyellow}
+}
+
 
 \lstset{ %
   backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}

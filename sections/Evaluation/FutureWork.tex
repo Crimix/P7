@@ -69,8 +69,14 @@ update our model with a shifting political climate.
 % that word. Whenever we determine that we have enough data, we can add this word
 % to our list of political keywords.\nl
 
-\section*{More MI  Models}
-\fix{}{write}
+%Outperform is single word :O http://www.thesaurus.com/browse/outperform
+\section*{Using additional models}
+The Naive Bayes and Bag-Of-Words models are simplistic models, and on other
+data sets are outperformed by more advanced models, such as the Support Vector
+Machine and Neural Network. In the future it would be interesting to see how
+these models measure up to the ones we currently use.
+
+
 
 \section*{Larger training samples}
 One of the problems with the Naive Bayes model is that the amount of training
@@ -89,12 +95,19 @@ suggestion from \autoref{subsec:Exp2} was to use Principal Component Analysis.
 This idea, along with other methods of reducing the dimensionality of the
 features, would need to be explored further.
 
-\section*{More Usability Tests}
-A problem during the project was that we did not have time for multiple
-usability tests. As such, we only performed a single test on a single iteration
-of the system. While we got a lot of useful feedback from the original test, it
-would be a good idea to perform more tests on the newer versions of the system,
-as we are currently unable to document the usability of the final version.
+\section*{More Usability Evaluations}
+It would be beneficial to perform more usability evaluations. The current
+evaluation was performed with a single user, which is far from enough. In the
+future we should perform more evaluations with between 4-8 users, using the
+updated product, this should uncover the majority of the issues. The same set of
+exercises can be used in the following tests as the purpose of the test has not
+changed. It would also be beneficial to perform the tests with native english
+speakers, as they are more familiar with terms such as sentiment and bias.\nl
+ 
+In the future it would be interesting to release a version and ask people on
+social media sites to use it and provide feedback on how accurate they judge
+the models to be. This would be especially helpful in judging how accurate our
+current models are.
 
 \section*{Result Person Identification}
 Currently, we cannot identify who each person is in the filter bubble on the
@@ -106,7 +119,7 @@ allowing the user to click on a specific user in their filter bubble.
 
 
 
-\section{Recommendation System}
+\section*{Recommendation System}
 In the initial design idea of the web application, the application listed
 different Twitter accounts that would help the user's Twitter feed get closer to
 the middle of the political spectrum, thus breaking their filter bubble. \nl
@@ -125,12 +138,17 @@ only get well educated people recommended rather than celebrities who happen to
 tweet politically a lot.
 
 
-\section{HTTP not HTTPS}
-Right now all our \ac{API}'s use HTTP, this is a problem when the system should
-be used, because \ldots \fix{}{Hjølp}
+\section*{HTTP not HTTPS}
+Right now, all our \ac{API}s use HTTP. This could be a serious problem, as the
+lack of encryption could allow a 3rd party to intercept the information
+contained in our communications. While most of our data is freely available
+through the Twitter API, it would be problematic when transferring the user's
+authorization information. This would be a major problem when releasing the
+system, because the user should feel secure using our application with their
+Twitter account.
 
 
-\section{Database Twitter Protect Boolean}\label{sec:twitterProtect}
+\section*{Database Twitter Protect Boolean}\label{sec:twitterProtect}
 Some Twitter accounts are privatised, thus requiring the user to follow that
 specific account before being able to access their tweets. Therefore, if a
 privatised account is in the database by a user who follows that account and
@@ -141,11 +159,11 @@ determining whether a Twitter account is private or not is stored in the
 database, it is not currently used. This would have to be implemented before a
 public release.
 
-\section{Worker Unrecoverable Error}
+\section*{Worker Unrecoverable Error}
 If the worker encounters an error from which it cannot recover, it does not send
 any information to either the Database Server or GUI Server. As such, a user
 does not ever receive the email or any information. A common case where this
-would be the case is if the user tries to get the filterbubble of a private
+would be the case is if the user tries to get the filter bubble of a private
 account they do not follow as this would not return any information. Another
 case is if the user searches for an account that does not exist. This is not
 acceptable in a finished system and needs to be addressed before it can be launched.
