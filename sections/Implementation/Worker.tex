@@ -12,7 +12,7 @@ analyse the tweets. The retrieval and analysis of tweets are done in parallel by
 splitting them into tasks. To retrieve and analyze tweets, it uses the functions
 \textc{GetTweetsFromUserAndAnalyse} and \textc{GetTweetsFromFriendsAndAnalyse}
 to receive and analyse tweets from the user and the users it follows
-respectively. These functions are found in the class called
+respectively. These methods are found in the class called
 \textc{TweetRetriever}.\nl
 
 After analyzing all tweets for necessary for determining a user's filter bubble,
@@ -44,10 +44,10 @@ they can be saved in files locally or to be analyzed at a later point.
 The new implementation retrieves and analyzes each Twitter account on their own
 thread to save time, as described in \autoref{sec:taskSplit}. The code from the
 legacy version is moved to the helper function \textc{GetTweetsFromUserHelper},
-which both of the versions wrap around. To make this work, the helper function,
+which both of the versions wrap around. To make this work, the helper method,
 among others, receives the \textc{retrieveMethod} as a parameter. Since this
-parameter is of the type \textc{Func<List<Tweet>>}, the helper function can take
-any function as parameter as long as it returns a list of tweets. This can be
+parameter is of the type \textc{Func<List<Tweet>>}, the helper method can take
+any method as parameter as long as it returns a list of tweets. This can be
 seen on the three methods in the three code examples \autoref{legacyUserTweet},
 \autoref{NewUserTweet} and \autoref{UserTweetHelper} where the calls on
 \textbf{line 3} in the two wrapper methods give the last parameter as a lambda
@@ -88,13 +88,13 @@ private List<Tweet> GetTweetsFromUserHelper(User user, AuthObj auth, Func<List<T
 \end{lstlisting}
 \end{minipage}
 
-The helper was made to reuse code, because the only change would be the function to be
-called in the task on \textbf{line 4}.\\
+The helper was made to reuse code, because the only change would be the method
+to be called in the task on \textbf{line 4}.\\
 
 \subsubsection{Retrieve method}
 As mentioned in \autoref{sub:tweetretriever}, the \textc{retrieveMethod}
-parameter can be replaced with any function that returns a list of tweets. Both
-versions send the function \textc{TweetThreadMethod}, shown on
+parameter can be replaced with any method that returns a list of tweets. Both
+versions send the method \textc{TweetThreadMethod}, shown on
 \autoref{tweetthreadmethod}. \\
 
 \begin{minipage}[H]{\linewidth}
@@ -128,23 +128,23 @@ private List<Tweet> TweetThreadMethod(User user, AuthObj auth, Func<User, bool> 
 \end{lstlisting}
 
 \end{minipage}
-The difference is that this function has a bunch of optional parameters. The
+The difference is that this method has a bunch of optional parameters. The
 legacy version only parses a user and an authorization object, while the new
-version also parses the functions \textc{checkDB}, \textc{classifyMethod} and
+version also parses the methods \textc{checkDB}, \textc{classifyMethod} and
 \textc{postToDB}.
 \textc{checkDB} is used to check if the user is already in the database. If it
 is, it skips the tweet retrievement and analysis of the particular user. If it
 is not, it retrieves the tweets and analyzes them if it is the new version.\\
 
-\subsection{Anonymous Functions}
-The three anonymous functions mentioned in \autoref{sub:tweetretriever} -
-\textc{checkDB}, \textc{classifyMethod} and \textc{postToDB} are defined in the
-worker class under the names of \textc{CheckIfResultExistOnDB},
+\subsection{Parameter Methods}
+The three methods mentioned in \autoref{sub:tweetretriever} -
+\textc{checkDB}, \textc{classifyMethod} \\and \textc{postToDB} are defined in
+the worker class under the names of \\\textc{CheckIfResultExistOnDB},
 \textc{ClassifyTweet} and \textc{PostResultToDB} respectively, where
 \textc{CheckIfResultExistOnDB} and \textc{PostResultToDB} also have a version
 that links the user being analysed to the overall user. The methods are defined
 in \textc{Worker}, rather than \textc{TweetRetriever}, because they are
-different for each worker, since the \textc{userRecordId} is different for each
-request. Such a thing cannot be defined in the singleton class without the need
+different for each worker, since the \\\textc{userRecordId} is different for
+each request. Such a thing cannot be defined in the singleton class without the need
 to pass the id to each method. This way, it is still the worker's methods that
 are used in a context where they have access to what is defined in the worker.
