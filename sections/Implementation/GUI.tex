@@ -1,15 +1,18 @@
 \chapter{GUI} \label{GUI}
-The GUI is used by the users to interact with the rest of the systems, as such
-it needs to be designed to be user friendly and 
+Whenever a user interacts with our system, it will be done by using our
+web-application front-end. As such, it is important to provide an optimal user
+experience, such that users will be interested in using and recommending our
+system. As such, this chapter will be used to present the design and
+implementation of our front-end, based on the usability requirements found in
+\autoref{cha:req}. In \autoref{sec:GI} we describe how we have implemented the
+GUI using the Laravel framework, specifically which models we use, how we
+designed the presentation layers and queue system, and how we perform database
+migrations. Following this, \autoref{sec:gui-visual-design} will be used to
+present the design process and choices that went into making the graphical user
+interface.
 
 
-In \autoref{sec:GI} we describe how we have implemented the GUI using the
-laravel framework, specifically which models we use, how we designed the
-presentation layers and queue system, and how we perform database migrations. In
-\autoref{sec:gui-visual-design} we present the GUI and discuss the design
-decision.
-
-\section{Implementation}\label{sec:GI}
+\section{Implementation}\label{sec:guiimplement}
 We chose to build the \ac{GUI} on top of the Laravel Framework that we mentioned
 in \autoref{sec:laravel}. Just as with the database \ac{API} this has allowed us
 to work on our own implementation details and the usability aspects.\nl
@@ -95,8 +98,8 @@ implements an interface called \ttt{ShouldQueue}. When a user completes a
 request creation, the \ttt{TwitterRequest} object is instantiated with the
 necessary details and saved in the local database.\nl
 
-Once the request has been stored a \ttt{ForwardTwitterRequest} is created,
-providing the \ttt{TwitterRequest} instance. The request is enqueued and a
+Once the request has been stored a \ttt{ForwardTwitterRequest} is
+created, providing the \ttt{TwitterRequest} instance. The request is enqueued and a
 ``success'' message is sent back to the Vue component, informing the user of the
 creation.\nl
 
