@@ -294,71 +294,71 @@ requests. This shows that the system is scalable in that it can handle an
 undefined amount of requests from different people at a time.
 
 
-\section{Functional Testing}
-\fix{}{Jonathan - Consider removing this section, as it seems more like a user
-guide, and does nothing test worthy}
-
-In order to assure that the system is working as indended, we have
-performed a number of functional tests, in which we supply an input to the system, and
-monitor that each individual part of the system performs as expected. In the
-first step, we enter the input into the frontend. This can be seen in
-\autoref{GUIfrontPage}.\nl 
-
-After inputting the twitter name, we make a request to the database for any data
-relating to that name. If the data is present, we go directly to the result in
-\autoref{GUIresult1}. If the data is not present, we prepare to perform the
-tweet retrieval and analysis. As such, we request that the user authenticate using
-Twitter's site. This can be seen in \autoref{GUItwitterAuthTab}.\nl
-
-After clicking the ``Godkend Applikation'' button, the user is given a unique
-password. This can be seen in \autoref{GUItwitterPin}.\nl
-
-\figx{GUItwitterPin}{Unique password supplied by Twitter}
-
-Back in our application, we request that the user enter this password
-together with an email address of their choosing. This can be seen in
-\autoref{GUIauthPopup}.\nl
-
-
-After the user inputs the password, we show the screen in \autoref{GUIdonePage}.
-Then the application makes a request to Twitter's API, and recieves the user's
-\textc{access\_token} and \textc{access\_token\_secret}. This information is
-then used to request tweets from all the accounts that the specified user is
-following. These tweets are then analyzed in relation to their sentiment
-(positivity/negativity), and their political leaning (left/right). The output
-log from the program can be seen in \autoref{tweetlogAnal}. \nl
-
-\begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = Log from tweet retrieval and analysis, label = tweetlogAnal] 
-12-12-2017 10:37:37 | Debug~ Task entered queue with ID ODotTWJtc3dBQUFBQUE...
-12-12-2017 10:37:37 | Debug~ Task started ODotTWJtc3dBQUFBQUE...
-12-12-2017 10:38:10 | Debug~ Donald J. Trump                25073877             2874       
-12-12-2017 10:38:10 | Debug~ Spliting 2874 tweets
-12-12-2017 10:38:10 | Debug~ Combining tweets
-12-12-2017 10:38:10 | Debug~ Result 5,21428571428571
-12-12-2017 10:38:13 | Debug~ Following 45 users
-...
-12-12-2017 10:52:09 | Debug~ Done task with id ODotTWJtc3dBQUFBQUE...!!!
-\end{lstlisting}
-\end{minipage}
-
-From the log in \autoref{tweetlogAnal} we can see that the entire tweet
-retrieval and analysis process took 15 minutes. The reason for the delay is that
-each user has a limited amount of tweets per 15 minute period. As such, the
-threads responsible for retrieving tweets were put to sleep while waiting for
-more requests.\nl
-
-When the system backend finishes processing the tweets, it returns the request
-from the frontend to tell it that a result is ready. The frontend then sends a
-mail to the user's specified email account. This email can be seen in
-\autoref{GUImail}, where the user must click the ``See Result" button.\nl
-
-After clicking the button, the user will be redirected to a custom page on our
-website, which will present the results in various graphs. This can be seen in
-\autoref{GUIresult2}.\nl
-
-Based on the results of this test, we can confirm that every part of the system
-is capable of interacting correctly with each other.
+% \section{Functional Testing}
+% \fix{}{Jonathan - Consider removing this section, as it seems more like a user
+% guide, and does nothing test worthy}
+% 
+% In order to assure that the system is working as indended, we have
+% performed a number of functional tests, in which we supply an input to the system, and
+% monitor that each individual part of the system performs as expected. In the
+% first step, we enter the input into the frontend. This can be seen in
+% \autoref{GUIfrontPage}.\nl 
+% 
+% After inputting the twitter name, we make a request to the database for any data
+% relating to that name. If the data is present, we go directly to the result in
+% \autoref{GUIresult1}. If the data is not present, we prepare to perform the
+% tweet retrieval and analysis. As such, we request that the user authenticate using
+% Twitter's site. This can be seen in \autoref{GUItwitterAuthTab}.\nl
+% 
+% After clicking the ``Godkend Applikation'' button, the user is given a unique
+% password. This can be seen in \autoref{GUItwitterPin}.\nl
+% 
+% \figx{GUItwitterPin}{Unique password supplied by Twitter}
+% 
+% Back in our application, we request that the user enter this password
+% together with an email address of their choosing. This can be seen in
+% \autoref{GUIauthPopup}.\nl
+% 
+% 
+% After the user inputs the password, we show the screen in \autoref{GUIdonePage}.
+% Then the application makes a request to Twitter's API, and recieves the user's
+% \textc{access\_token} and \textc{access\_token\_secret}. This information is
+% then used to request tweets from all the accounts that the specified user is
+% following. These tweets are then analyzed in relation to their sentiment
+% (positivity/negativity), and their political leaning (left/right). The output
+% log from the program can be seen in \autoref{tweetlogAnal}. \nl
+% 
+% \begin{minipage}[H]{\linewidth}
+% \begin{lstlisting}[caption = Log from tweet retrieval and analysis, label = tweetlogAnal] 
+% 12-12-2017 10:37:37 | Debug~ Task entered queue with ID ODotTWJtc3dBQUFBQUE...
+% 12-12-2017 10:37:37 | Debug~ Task started ODotTWJtc3dBQUFBQUE...
+% 12-12-2017 10:38:10 | Debug~ Donald J. Trump                25073877             2874       
+% 12-12-2017 10:38:10 | Debug~ Spliting 2874 tweets
+% 12-12-2017 10:38:10 | Debug~ Combining tweets
+% 12-12-2017 10:38:10 | Debug~ Result 5,21428571428571
+% 12-12-2017 10:38:13 | Debug~ Following 45 users
+% ...
+% 12-12-2017 10:52:09 | Debug~ Done task with id ODotTWJtc3dBQUFBQUE...!!!
+% \end{lstlisting}
+% \end{minipage}
+% 
+% From the log in \autoref{tweetlogAnal} we can see that the entire tweet
+% retrieval and analysis process took 15 minutes. The reason for the delay is that
+% each user has a limited amount of tweets per 15 minute period. As such, the
+% threads responsible for retrieving tweets were put to sleep while waiting for
+% more requests.\nl
+% 
+% When the system backend finishes processing the tweets, it returns the request
+% from the frontend to tell it that a result is ready. The frontend then sends a
+% mail to the user's specified email account. This email can be seen in
+% \autoref{GUImail}, where the user must click the ``See Result" button.\nl
+% 
+% After clicking the button, the user will be redirected to a custom page on our
+% website, which will present the results in various graphs. This can be seen in
+% \autoref{GUIresult2}.\nl
+% 
+% Based on the results of this test, we can confirm that every part of the system
+% is capable of interacting correctly with each other.
 
 
 
