@@ -4,14 +4,15 @@ Schmid who has made several publications in machine intelligence. After
 each presentation, he came with feedback with suggestions on how to improve the
 application. 
 \subsection{Presentation 1}
-This presentation was conducted on 23/10/17 on Cassiopeia.
+This presentation was conducted on 23/10/17 on Cassiopeia. \fix{}{maybe better
+intro or something. glhf Joans ;)}
 \subsubsection{State of the application}
 At this point, the backend was in an early state and the \ac{GUI} was not yet
 started on. Our idea for the application had a simple frontpage with a search
 bar, which lead straight to the result screen. The idea for this screen is seen
 on \autoref{initguisketch2}.
 
-\figx[0.7]{initguisketch2}{Initial idea for the GUI design.}
+%\figx[0.2]{initguisketch2}{Initial idea for the GUI design.}
 
 This screen is split into general information in the top left, showing the user
 name, the amount of followers and how many they are following. Underneath, is
@@ -21,35 +22,38 @@ the latter as well, as that would correspond to the political compass, where the
 economic left/right is the x-axis and liberatarian/authoritarian is the y-axis.
 This was scraped later in the process, since it is often very hard to classify
 every word on that scale. on the top right side, of the screen, the bias of the
-filterbubble is shown. Below, is a recommendation section based on the bias of
-the filterbubble. For example, a user with a predominantly right wing
-filterbubble would get left wing accounts recommended. The recommendation system
-was later moved to future work, as it was not possible to implement it within
+filter bubble is shown. Below, is a recommendation section based on the bias of
+the filter bubble. For example, a user with a predominantly right wing
+filter bubble would get left wing accounts recommended. The recommendation
+system was later moved to future work, as it was not possible to implement it within
 the timeframe. 
 
 \subsubsection{Feedback from the expert}
-After the presentation, Stefan Schmid had a number of suggestions. %%fortsæt her
-%efter du har hjulpet Chris
-\begin{comment}
-\section{Initial ideas for a GUI} \label{sec:GUI}
-The final product has to have a user-friendly and intuitve design. The initial
-thoughts for this, included a simple search bar, where the target twitter name
-is inserted. This leads to a page that shows various information about the
-account:
-\subsection*{Basic information}
-This part shows basic information about the account, such as name, username,
-amount of followers and the amount of pages it follows.
-\subsection*{Political spectrum}
-This part shows a visual presentation of the user's political stance in the form
-of two sliders. The first slider goes from 0 to 10, where 0 is very left
-oriented and 10 is very right oriented. The first slider also goes from 0 to 10,
-and goes from libertarian to authoritarian.
-\subsection*{Your bubble}
-This part shows the political spectrum of the ones the target twitter user
-follows. As these dictate what is in the target twitter user's twitter feed,
-they determine the filter bubble.
- \subsection*{Suggestions to break the filter bubble}
- From the political spectrum of the filter bubble, a list of suggested twitter
- users is shown. This list includes twitter users from the opposite site of the
- political spectrum.
-\end{comment}
+After the presentation, Stefan Schmid had a number of suggestions. He suggested
+being able to know where each member of the filter bubble is placed on the
+scale.
+For the recommendation part, he suggested implementing a filter. For example,
+only suggest people with at least a university degree or politicians. 
+He also suggested to make feedback about the suggestions possible.
+To speed up the tweet retrieving, he suggested storing information from lookups
+for a limited amount of time, since people's bias does not change drastically
+every week. 
+
+\subsection{Presentation 2}
+The presentation was conducted on 29/11/17 on Cassiopeia.
+
+\subsubsection{State of the application}
+When the second presentation was conducted, the application was nearing its
+final stages. The classifier that deems people apolitical if less than 1\% of
+their tweets are political, thus excluding them from the filter bubble, was
+implemented shortly after the meeting. Furthermore, some time before the
+meeting, the analyzation part was optimised from 2 hours down to 6 minutes. Some
+time after the meeting, this was further optimized down to a few seconds. The
+GUI was, around the time of the meeting, in its very early stages.
+
+\subsubsection{Feedback from the expert}
+As an additional way of analyzing data, Stefan Schmid suggested using Principal
+Component Analysis. Regarding the analysis of the data, while an optimisation
+from 2 hours to 6 minutes was good, 6 minutes is still a lot. Therefore, he
+suggested identifying the bottleneck. 
+
