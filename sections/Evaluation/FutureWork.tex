@@ -125,12 +125,13 @@ only get well educated people recommended rather than celebrities who happen to
 tweet politically a lot.
 
 
-\section{HTTP not HTTPS}
-Right now all our \ac{API}'s use HTTP, this is a problem when the system should
-be used, because \ldots \fix{}{Hjølp}
+\section*{HTTP not HTTPS}
+Right now, all our \ac{API}s use HTTP. This is a problem when releasing the
+system because the user should feel secure using our application with their
+Twitter account.
 
 
-\section{Database Twitter Protect Boolean}\label{sec:twitterProtect}
+\section*{Database Twitter Protect Boolean}\label{sec:twitterProtect}
 Some Twitter accounts are privatised, thus requiring the user to follow that
 specific account before being able to access their tweets. Therefore, if a
 privatised account is in the database by a user who follows that account and
@@ -141,7 +142,7 @@ determining whether a Twitter account is private or not is stored in the
 database, it is not currently used. This would have to be implemented before a
 public release.
 
-\section{Worker Unrecoverable Error}
+\section*{Worker Unrecoverable Error}
 If the worker encounters an error for which it can not recover, it does not send
 any information to either the Database Server or GUI Server, as such a user does
 not ever receive the email or any information. \nl
