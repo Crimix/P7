@@ -126,3 +126,11 @@ information extracted from the tweets which you should not be able to see. \nl
 
 This should be implemented before the system could be put in a server and used
 by the public.
+
+\section{Worker Unrecoverable Error}
+If the worker encounters an error for which it can not recover, it does not send
+any information to either the Database Server or GUI Server, as such a user does
+not ever receive the email or any information. \nl
+
+This is not acceptable in a finished system and need to be addessed before it
+can be launched.
