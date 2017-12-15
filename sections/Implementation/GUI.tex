@@ -8,7 +8,7 @@ to work on our own implementation details and the usability aspects.\nl
 
 Several aspects of our implementation are described below.
 
-\subsection{Model layer}
+\subsection{Models}
 We chose to use Laravel's \ac{ORM} class which meant that we could just define
 the tables we needed and then tell Laravel which models to generate from
 specific tables.\nl
@@ -21,11 +21,11 @@ it if the migration is ever undone (the \ttt{down()} method).\nl
 
 The \ttt{Schema} class represents the database schema and allows for both
 creation and modification of tables, including dropping tables. The methods
-called on the \ttt{Blueprint} instance \ttt{$table} are some of the abstractions
-offered by Laravel, which are then converted to \ac{SQL} queries for the chosen
+called on the \ttt{Blueprint} instance \ttt{\$table} are some of the
+abstractions offered by Laravel, which are then converted to \ac{SQL} queries for the chosen
 \ac{DB}. The convenience method \ttt{timestamps()} creates two columns;
-\ttt{created\_at} and \ttt{updated_at}. When these are present Laravel will
-automatically keep these updated when an entry is created or modified.
+\ttt{created\_at} and \ttt{updated\_at}. When these are present Laravel will
+automatically keep these updated when an entry is created or modified.\nl
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Example of a migration in Laravel, label =
@@ -51,17 +51,100 @@ public function down()
 \end{lstlisting}
 \end{minipage}
 
-\autoref{GUImodels}
+In \autoref{GUImodels} the tables for our GUI project can be seen, of which
+most are infrastructure tables. The table \ttt{migrations} tracks the applied
+migrations, while \ttt{users} and \ttt{password\_resets} are used by Laravel's
+auth system. \ttt{jobs} and \ttt{failed\_jobs} are used by the queue system
+described in \autoref{sub:gui-queue}.\nl
+
+The last table; \ttt{twitter\_requests} is used to keep track of the requests by
+users to have Twitter accounts analysed by our system. The requests are kept in
+the database after having been forwarded to the queue server (described in
+\autoref{queueAPI}). This is done to ensure that notification emails can be
+sent to the user who made the request once processing has completed.\nl
+
+In order to clean up periodically a task is scheduled to run once a week,
+removing \ttt{TwitterRequest} objects that are at least a week old.
 
 \figxb[0.5]{GUImodels}{Tables for the GUI models.}
 
-\subsection{Controller layer}
-
 \subsection{Presentation layer}
+The \ac{GUI} is primarily a multi--page application, with individual,
+dynamic pages existing for the landing page (the first page the users encounter
+when accessing the site), the confirmation page when a \ttt{TwitterRequest} has
+been created successfully, as well as the results display.\nl
 
-\subsection{Additional layers}
+In order to streamline the experience for the user when creating a new request,
+we created a small single--page application running on the front page, in
+the form of a component written for the JavaScript framework called ``Vue''. The
+component sends and retrieves information to and from the server using
+\ac{AJAX} requests.
 
-\section{Visual design}
+\subsection{Queue system} \label{sub:gui-queue}
+In order to ensure a smooth experience for the users we decided to use Laravel's
+queue system. To do this we created a \ttt{ForwardTwitterRequest} class that
+implements an interface called \ttt{ShouldQueue}. When a user completes a
+request creation, the \ttt{TwitterRequest} object is instantiated with the
+necessary details and saved in the local database.\nl
+
+Once the request has been stored a \ttt{ForwardTwitterRequest} is created,
+providing the \ttt{TwitterRequest} instance. The request is enqueued and a
+``success'' message is sent back to the Vue component, informing the user of the
+creation.\nl
+
+When Laravel's queue worker is executed next it will start processing the
+requests, executing the \ttt{handle()} method shown in
+\autoref{phpForwardTwitterRequest}. If it fails it will throw an exception which
+will tell Laravel to retry the processing, and if it fails ten times the request
+is marked as failed.\nl
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Handle method of the ForwardTwitterRequest class,
+label = phpForwardTwitterRequest, language = PHP, style = PHP]
+public function handle() {
+  if (empty($this->twitterRequest)) {
+    return;
+  }
+
+  $requestId   = $this->twitterRequest->requestId;
+  $accessToken = json_decode($this->twitterRequest->access_token, true);
+  $guzzle      = new GuzzleClient([
+    'base_uri'    => config('ew.queue.url'),
+    'http_errors' => false,
+  ]);
+  $response    = $guzzle->request(
+    'POST',
+    '/api/AnalyzeTwitterAccount',
+    [
+      'form_params' => [
+        'Name'          => $this->twitterRequest->twitter_username,
+        'RequesterName' => $accessToken['screen_name'],
+        'Token'         => $accessToken['oauth_token'],
+        'Secret'        => $accessToken['oauth_token_secret'],
+        'RequestID'     => $requestId,
+      ],
+      'headers'     => [
+        'Accept'        => 'application/json',
+      ],
+    ]
+  );
+
+  if ($response->getStatusCode() !== 200) {
+    throw new Exception("Error Processing Request", $response->getStatusCode());
+  }
+}
+\end{lstlisting}
+\end{minipage}
+
+\subsection{Charts generation}
+In order to generate the charts we looked at a few different JavaScript
+frameworks, settling on one called ``Chart JS'' which allowed us to create
+both scatter plots and bar charts. An additional support library, written in
+PHP, allowing for easy integration with Laravel was also chosen, enabling us to
+define the data as PHP arrays and then ask the library to generate the
+JavaScript code for Chart.js.
+
+\section{Visual design} \label{sec:gui-visual-design}
 As described in \autoref{ch:intro}, the target audience of our application is
 Americans who are politically active on Twitter. As such, the goal is to create
 a GUI that reflects the expectations of this group of users. Politics is a serious
