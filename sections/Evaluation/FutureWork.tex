@@ -142,10 +142,11 @@ database, it is not currently used. This would have to be implemented before a
 public release.
 
 \section{Worker Unrecoverable Error}
-If the worker encounters an error for which it can not recover, it does not send
-any information to either the Database Server or GUI Server, as such a user does
-not ever receive the email or any information. \nl
-
-This is not acceptable in a finished system and need to be addressed before it
-can be launched.
+If the worker encounters an error from which it cannot recover, it does not send
+any information to either the Database Server or GUI Server. As such, a user
+does not ever receive the email or any information. A common case where this
+would be the case is if the user tries to get the filterbubble of a private
+account they do not follow as this would not return any information. Another
+case is if the user searches for an account that does not exist. This is not
+acceptable in a finished system and needs to be addressed before it can be launched.
 
