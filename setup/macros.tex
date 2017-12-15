@@ -296,7 +296,7 @@ rettes} \autopageref{retRefMacro}\\}
 \newcommand{\figx}[3][0.5]{
 \begin{figure}[H]
 \begin{center}
-  \includegraphics[keepaspectratio=true,scale=#1]{figures/#2}
+  \makebox[\textwidth][c]{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
   \caption{#3}
   \label{#2}
 \end{center}
@@ -307,7 +307,7 @@ rettes} \autopageref{retRefMacro}\\}
 \newcommand{\figPH}[3][0.5]{
 \begin{figure}[H]
 \begin{center}
-  \includegraphics[keepaspectratio=true,scale=#1]{figures/Placeholder}
+  \makebox[\textwidth][c]{\includegraphics[keepaspectratio=true,scale=#1]{figures/Placeholder}}
   \caption{Placeholder: #3}
   \label{#2}
 \end{center}
@@ -318,7 +318,7 @@ rettes} \autopageref{retRefMacro}\\}
 \newcommand{\figxs}[4][0.5]{
 \begin{figure}[H]
 \begin{center}
-  \includegraphics[keepaspectratio=true,scale=#1]{figures/#2}
+  \makebox[\textwidth][c]{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
   \caption{#3}
   \label{#2}
   \caption*{\textbf{Source:} #4}
@@ -329,11 +329,10 @@ rettes} \autopageref{retRefMacro}\\}
 % FigX with boaders
 \newcommand{\figxb}[3][0.5]{
 \begin{figure}[H]
-\begin{center}
-  \fbox{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
+ \centering 
+  \makebox[\textwidth][c]{\fbox{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}}
   \caption{#3}
   \label{#2}
-\end{center}
 \end{figure}
 }
 
@@ -341,7 +340,7 @@ rettes} \autopageref{retRefMacro}\\}
 \newcommand{\figxsb}[4][0.5]{
 \begin{figure}[H]
 \begin{center}
-  \fbox{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}
+  \makebox[\textwidth][c]{\fbox{\includegraphics[keepaspectratio=true,scale=#1]{figures/#2}}}
   \caption{#3}
   \label{#2}
   \caption*{\textbf{Source:} #4}
