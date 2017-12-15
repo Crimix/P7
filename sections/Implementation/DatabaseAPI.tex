@@ -112,56 +112,120 @@ performed on it. These are based on the following base \ac{URL}:\nl
 In this example, the domain for the \ac{API} is localhost on port 8000, as this is
 the default for locally hosted Laravel applications. If the application was to
 be hosted somewhere, it would have a domain and would likely run on port 443,
-just as the scheme would be \textc{https://}.
+just as the scheme would be \textc{https://}.\nl
 
-We defined the following endpoints:
+The defined endpoints are described in \autoref{DBAPIEndpointTable}. It is worth
+noting that \textc{boolean} is either \ttt{0} or \ttt{1}, so \ttt{true} and
+\ttt{false} are not permitted as input. 
 
 \begin{table}[H]
+\centering
 \begin{tabular}{| l | l | l |}
 \hline
-\textbf{TYPE} & \textbf{Endpoint} & \textbf{Required Data} \\\hline
-POST & api/twitter   & 	\textc{string} name\\
-~    & ~			 &  \textc{int} twitterID\\
-~    & ~			 &  \textc{double} pol\_var\\
-~    & ~			 &  \textc{double} lib\_var\\
-~    & ~			 &  \textc{boolean} protect				      
-\\\hline
-POST & api/user      & \textc{string} name\\
-~    & ~			 &  \textc{string(Encrypted)} password					      
-\\\hline
-POST & oauth/token 	& \textc{grant\_type} password					  \\
-~    & ~			& \textc{client\_id} 2					\\
-~    & ~			& \textc{client\_secret} XIpLV3Jl\ldots					\\
-~    & ~			& \textc{username} Worker					\\
-~    & ~			& \textc{password(Encrypted)} ERExjM0rVvcC7zfJvSbU					\\
-~    & ~			& \textc{scope} *					     
-\\\hline
-GET & api/user/\{id\} &
-\\\hline
-GET & api/twitter/\{twitterID\} &
-\\\hline
-
-
+\textbf{METHOD} & \textbf{Endpoint} & \textbf{Required Data} \\
+\hline
+POST & /twitter                       &  \ttt{string} twitter\_name \\
+~    & ~                              &  \ttt{int} twitter\_id \\
+~    & ~                              &  \ttt{double} analysis\_val \\
+~    & ~                              &  \ttt{double} mi\_val \\
+~    & ~                              &  \ttt{double} media\_val \\
+~    & ~                              &  \ttt{double} sentiment\_val \\
+~    & ~                              &  \ttt{int} tweet\_count \\
+~    & ~                              &  \ttt{boolean} protect \\
+\hline
+\multicolumn{3}{| l |}{\textit{%
+Adds a single user's results to the database and returns the}} \\
+\multicolumn{3}{| l |}{\textit{%
+record ID of the created user, if creation was successful.}} \\
+\multicolumn{3}{| l |}{} \\
+\hline
+PUT  & /twitter/add\_follower         &  \ttt{int} record\_id \\
+~    & ~                              &  \ttt{int} follows\_id \\
+\hline
+\multicolumn{3}{| l |}{\textit{%
+Creates link between two record IDs specifying that \ttt{record\_id}}} \\
+\multicolumn{3}{| l |}{\textit{%
+follows \ttt{follows\_id} on Twitter.}} \\
+\multicolumn{3}{| l |}{} \\
+\hline
+PUT  & /twitter/finalize              &  \ttt{int} record\_id \\
+~    & ~                              &  \ttt{string} request\_id \\
+\hline
+\multicolumn{3}{| l |}{\textit{%
+Marks the user as processed and then forwards the \ttt{request\_id}}} \\
+\multicolumn{3}{| l |}{\textit{%
+to the \acs{GUI} server to notify it of the completion.}} \\
+\multicolumn{3}{| l |}{} \\
+\hline
+GET  & /twitter/has/\{twitterName\}   &  \\
+\hline
+\multicolumn{3}{| l |}{\textit{%
+Looks for a recent result for the given Twitter name.}} \\
+\multicolumn{3}{| l |}{\textit{%
+If found the record ID is returned.}} \\
+\multicolumn{3}{| l |}{} \\
+\hline
+GET  & /twitter/has-id/\{twitterId\}  &  \\
+\hline
+\multicolumn{3}{| l |}{\textit{%
+Looks for a recent result for for the given Twitter ID.}} \\
+\multicolumn{3}{| l |}{\textit{%
+If found the record ID is returned.}} \\
+\multicolumn{3}{| l |}{} \\
+\hline
+GET  & /twitter/\{recordId\}          &  \\
+\hline
+\multicolumn{3}{| l |}{\textit{%
+Returns the full result for the given record ID if it exists.}} \\
+\hline
 \end{tabular}
-\caption{Table containing twitter users and their determined values. Note that
-the variables in the token request are example values}
-\label{APIEndpointTable}
+\caption{\ac{API} endpoints for the database backend}
+\label{DBAPIEndpointTable}
 \end{table}
  
 
 \subsection{Authorization}
 In order to make sure that data is only available to authorized users, we make
-use of Laravel Passports, which is a token-based authorization system. As such,
-in order to make a request to the database, the user has to supply a token,
-which is an encrypted string. This token is then verified by comparing it to a
-list of active tokens on the database.\nl
+use of Laravel Passport, which is a token-based authorisation system based on
+the OAuth2 standard \citep{LaravelPassport}.\nl
+
+To make a request to the database, the user has to supply a token, which is an
+encrypted string. This token is then verified by comparing it to a list of
+active tokens on the database. The token verification is handled by Laravel
+Passport.\nl
+
+Of the multiple options that Laravel Passport gives us for auth, we opted for
+the one called ``client credentials'' which is meant for machine--to--machine
+communication, as opposed to user--to--machine auth.
+\citep{LaravelPassportClientCredentials}
+
+The base \ac{URL} for auth requests is the same as for the \ac{API} except not
+prefixed with \ttt{/api}.\nl
 
 In order to retrieve a token, a worker must make a request to the
-``oauth/token'' endpoint, while supplying a username, password, and client
-secret. The username and password are compared to those stored in the user's
-table on the database, and the client\_secret is a static string.\nl
+``oauth/token'' endpoint, while supplying a valid client ID and client
+secret, along with the grant type, which will always be
+``client\_credentials''. The request spec is documented in
+\autoref{DBAPIOAuthEndpointTable}\nl
 
-If the supplied credentials are found on the database, the request responds with
-a token, which uniquely identifies the worker which made the request. When
-making requests for data on the database, the worker must supply this token,
-which is used to authenticate it.\nl
+If the supplied credentials are valid as per the information stored in the
+database, the request responds with a long--lived token that uniquely
+identifies the client, be it a worker or the \ac{GUI}. This token must then be
+sent in the header of every request as a bearer token.\nl
+
+\begin{table}[H]
+\centering
+\begin{tabular}{| l | l | l |}
+\hline
+\textbf{METHOD} & \textbf{Endpoint} & \textbf{Required Data} \\
+\hline
+POST & /oauth/token  & \ttt{string} grant\_type \\
+~    & ~             & \ttt{int} client\_id \\
+~    & ~             & \ttt{string} client\_secret \\
+\hline
+\end{tabular}
+\caption{\ac{API} endpoints for authorisation}
+\label{DBAPIOAuthEndpointTable}
+\end{table}
+
+
