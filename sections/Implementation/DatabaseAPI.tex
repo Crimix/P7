@@ -1,10 +1,12 @@
-\chapter{Database \acs{API}}\label{DatabaseAPI} \fix{}{Det her skal lige
-omskrives når database apien er helt færdig} 
-As a part of the overall
-application, we need a database to store information used by the different workers. This is important, as we make use of the
-user's Twitter account to retrieve data from the Twitter \ac{API}. As such, this
-section is used to describe how we access and store this data, and how we
-make sure that it is only accessible to authorized users.
+\chapter{Database \acs{API}}\label{DatabaseAPI}
+After analysing a user, we want to store that data, such that we do not have to
+retrieve or analyze the tweets again. As such, the sytem makes use of a
+database, which the Workers can use to store and access the saved data. This
+design choice is especially important, as we make use of the user's Twitter
+account to retrieve data from the Twitter \ac{API}, which have a limited amount
+of API requests, as described in \autoref{cha:twitterAPI}.
+As such, this section is used to describe how we access and store this data, and
+how we make sure that it is only accessible to authorized users.
 
 \section{Database Design}\label{DBDesign}
 We have opted to use MySQL as our \ac{DBS}, structuring our data in a
