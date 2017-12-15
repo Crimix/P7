@@ -18,9 +18,9 @@ are remaining, which would risk exceeding the request limit. \nl
 
 Before a potential release, a better implementation of requests would have to be
 made. This could be done by first sending a request to get the remaining amount
-of requests available and then for each time a request is made, the response
-header which contains the remaining amount of request and then update the limits
-in the system.\nl
+of requests available and then each time a request is made, the response
+header, which contains the remaining amount of request, updates the
+limits in the system.\nl
 
 
 %For future use of the Twitter \ac{API} a better implementation for the limits
@@ -42,15 +42,16 @@ since it uses a local server, it would be a huge problem on a large scale.
 
 \section{Word updater for Bag-Of-Words Implementation}
 Right now the Bag-Of-Words classifier, can only classify using already known
-words which has been premade and stored in a list. This results in that the
-classifier is able to classify tweets with a high accuracy right now, but it
-could in a few months lose some of that accuracy because of hw the keys words 
-change, that is why we started to implement a system that should identify new
-keywords and put them on  a watch list. This system has some functionality
-implemented, but it was never finished.
+words which has been premade and stored in a list. This results in the
+classifier being able to classify tweets with a high accuracy right now, but it
+could in a few months lose some of that accuracy because of how the key words 
+change. This is why we started to implement a system that should identify new
+keywords and put them on a watch list using the Naive Bayes algorithm. This
+system has some functionality implemented, but it was not possible to complete it within the time span.
 
-For a system that should be able to be used without that form of maintenance the
-system should be developed in full.
+For a system that should be able to be used without the maintenance required by
+the Bag-Of-Words classifier, the system using Naive Bayes should be developed in
+full.
 
 \section{More MI  Models}
 \fix{}{write}
@@ -62,8 +63,47 @@ system should be developed in full.
 \fix{}{write}
 
 \section{Result Person Identification}
-Currently we cannot identify who each person is in on the resulting graphs.
-\fix{\ldots}{Moooorreee}
+Currently, we cannot identify who each person is in the filter bubble on the
+result screen. This would be a nice feature to have, as the user could be
+curious about where specific people they follow are placed on the scale without
+having to look each of them up individually. In addition to this feature, a
+shortcut to looking up the filter bubble of another user could be added by
+allowing the user to click on a specific user in their filter bubble.
+
 
 \section{Recommendation System}
+In the initial design idea of the web application, the application listed
+different Twitter accounts that would help the user's Twitter feed get closer to
+the middle of the poltical spectrum, thus breaking their filterbubble. \nl
+
+This feature would have to be developed before actual bubble busting would take
+place. One way of implementing this feature would be to make a seperate
+database of recommended users with data generated from earlier searches. This
+database would of course have to start out with some hardcoded accounts.
+Otherwise, the first few users of the program would not get any
+recommendations. There would have to be a filter on which users gets added to
+the database. This could be a requirement of at least 10000 followers.
+Otherwise, people would get irrelevant Twitter accounts recommended. If the
+application had a lot of traffic, a filter on what kind of people they want to
+be recommended could be implemented. For example, some people could prefer to
+only get well educated people recommended rather than celebrities who happen to
+tweet politically a lot.
+
+\section{HTTP not HTTPS}
 \fix{}{write}
+
+\section{Database Twitter Protect Boolean}\label{sec:twitterProtect}
+Although in the database there is a boolean used to represent if you need to
+follow the user on Twitter to view their tweets. We do not actually use this
+boolean in our implementation, and as such it is possible to view results about
+a Twitter user that you do not follow. This is possible if the protected user
+have been analysed by a user who is allowed to view their tweets and that the
+result is not older then a week. This means that our web application does not
+adhere to the users privacy. \nl
+
+Even though we do not store tweets and show them to users of the web
+application, this is still a concern because it is still possible to view
+information extracted from the tweets which you should not be able to see. \nl
+
+This should be implemented before the system could be put in a server and used
+by the public.
