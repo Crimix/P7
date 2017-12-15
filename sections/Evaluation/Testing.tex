@@ -1,6 +1,4 @@
 \chapter{Testing}\label{cha:testing}
-\fix{}{Note from Claus: Can we add a real world example, where we describe some
-of the variables that would involve, could be in evaluation section.}
 In order to determine the quality of the developed software solution, we have
 performed a number of tests. These tests aim to assure the quality of the
 determined results, and to ensure that the software is operating as
@@ -182,15 +180,14 @@ twitter users. A subset of the results from the accuracy test can be seen in
 
 A subset of the dataset from the accuracy test can be seen below in
 \autoref{speedTestReslabel}. Each test shows one pre-classified user, and the
-results determined from the bag-of-words model and the Naive Bayes model.\fix{
-The result consist of a value between -10 and 10, where a low value implies
-left-leaing views, and a high value implies right-leaning views. The
+results determined from the bag-of-words model and the Naive Bayes model. As
+stated in \autoref{cha:classification}, the result consist of a value between -10 and 10,
+where a low value implies left-leaing views, and a high value implies right-leaning views. The
 bag-of-words (BoW) model also has a conclusion, which is dependent on the
 percentage of tweets considered political, and the size of the determined value.
 For the BoW model, a user with less than 1\% political tweets, or a determined
-value between 1 and -1, is automatically considered as neutral.}{Should
-probably be described in implementation and referenced} The percentage accuracy
-of each model can be seen in \autoref{AccPercent}.
+value between 1 and -1, is automatically considered as neutral. The percentage
+accuracy of each model can be seen in \autoref{AccPercent}.
 The columns represent the following, from left to right:\nl
 
 \begin{itemize}
