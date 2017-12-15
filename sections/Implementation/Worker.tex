@@ -16,15 +16,15 @@ respectively. These methods are found in the class called
 \textc{TweetRetriever}.\nl
 
 After analyzing all tweets for necessary for determining a user's filter bubble,
-the worker sends the result to the Database API, which then stored the resulting
-value on the Database. During this, the Database API also sends a message to the
-front-end, telling it that a result is ready to be presented.
+the worker sends the result to the Database \ac{API}, which then stored the
+resulting value on the Database. During this, the Database \ac{API} also sends a
+message to the front-end, telling it that a result is ready to be presented.
 
 \subsection{Splitting up in tasks}\label{sec:taskSplit}
-To speed up the retrieval of tweets, the retrieval is split up in tasks that are
+To speed up retrieval of tweets it is split up into tasks that are
 run in parallel. It is split such that each user, the user is following,
 corresponds to a task. This way, the tasks are somewhat equally split.
-When the worker analyzes the tweets, be it while retrieving, from a file or just
+When the worker analyses the tweets, be it while retrieving, from a file or just
 a list of tweets, it also needs to split the list of tweets into tasks, such
 that it is possible to work on a smaller subset of the problem. Here, the
 splitting is done such that each task gets an equal amount of tweets.
@@ -33,8 +33,8 @@ The main difference between how the task splits are done in the retrieval
 part and the analysis part is that in the retrieval part, a predefined number
 of tasks can run at the same time, even though the total number of tasks may be
 higher, whereas the analysis part always has all its predefined number of tasks
-running at the same time. The predefined number of the latter may be 1 higher if
-it can not split the tasks equally. In this case, the excess tasks are put in
+running at the same time. The predefined number of the latter may be one higher
+if it can not split the tasks equally. In this case, the excess tasks are put in
 their own small task.
 
 \subsection{Tweet retriever} \label{sub:tweetretriever}
@@ -47,14 +47,14 @@ legacy version is moved to the helper function \textc{GetTweetsFromUserHelper},
 which both of the versions wrap around. To make this work, the helper method,
 among others, receives the \textc{retrieveMethod} as a parameter. Since this
 parameter is of the type \textc{Func<List<Tweet>>}, the helper method can take
-any method as parameter as long as it returns a list of tweets. This can be
+any method as a parameter if it returns a list of tweets. This can be
 seen on the three methods in the three code examples \autoref{legacyUserTweet},
 \autoref{NewUserTweet} and \autoref{UserTweetHelper} where the calls on
 \textbf{line 3} in the two wrapper methods give the last parameter as a lambda
 expression / anonymous function, which takes no input as seen by \textc{()=>}.\\
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = Legacy method call , label = legacyUserTweet ] 
+\begin{lstlisting}[caption = Legacy method call. , label = legacyUserTweet ] 
 public List<Tweet> GetTweetsFromUser(User user, AuthObj auth)
 {	
     return GetTweetsFromUserHelper(user, auth, (() => TweetThreadMethod(user, auth)));
@@ -63,8 +63,8 @@ public List<Tweet> GetTweetsFromUser(User user, AuthObj auth)
 \end{minipage}
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = Current method call to speed up execution , label =
-NewUserTweet ] 
+\begin{lstlisting}[caption = Current method call to speed up execution. , label
+= NewUserTweet ] 
 public void GetTweetsFromUserAndAnalyse(User user, AuthObj auth, Func<User, bool> checkDB, Func<List<Tweet>, AnalysisResultObj> classifyMethod, Func<AnalysisResultObj, User, bool> postToDB)
 {
     GetTweetsFromUserHelper(user, auth, (() => TweetThreadMethod(user, auth, checkDB, classifyMethod, postToDB)));
@@ -73,7 +73,7 @@ public void GetTweetsFromUserAndAnalyse(User user, AuthObj auth, Func<User, bool
 \end{minipage}
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = The GetTweetsFromUserHelper, label =
+\begin{lstlisting}[caption = The GetTweetsFromUserHelper., label =
 UserTweetHelper]
 private List<Tweet> GetTweetsFromUserHelper(User user, AuthObj auth, Func<List<Tweet>> retrieveMethod)
 {
@@ -88,7 +88,7 @@ private List<Tweet> GetTweetsFromUserHelper(User user, AuthObj auth, Func<List<T
 \end{lstlisting}
 \end{minipage}
 
-The helper was made to reuse code, because the only change would be the method
+The helper was made to reuse code because the only change would be the method
 to be called in the task on \textbf{line 4}.\\
 
 \subsubsection{Retrieve method}
@@ -98,7 +98,7 @@ versions send the method \textc{TweetThreadMethod}, shown on
 \autoref{tweetthreadmethod}. \\
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = The TweetThreadMethod function, label =
+\begin{lstlisting}[caption = The TweetThreadMethod function., label =
 tweetthreadmethod]
 private List<Tweet> TweetThreadMethod(User user, AuthObj auth, Func<User, bool> checkDB = null, Func<List<Tweet>, AnalysisResultObj> classifyMethod = null, Func<AnalysisResultObj, User, bool> postToDB = null)
 {
@@ -134,7 +134,7 @@ version also parses the methods \textc{checkDB}, \textc{classifyMethod} and
 \textc{postToDB}.
 \textc{checkDB} is used to check if the user is already in the database. If it
 is, it skips the tweet retrievement and analysis of the particular user. If it
-is not, it retrieves the tweets and analyzes them if it is the new version.\\
+is not, it retrieves the tweets and analyses them if it is the new version.\\
 
 \subsection{Parameter Methods}
 The three methods mentioned in \autoref{sub:tweetretriever} -
@@ -146,18 +146,18 @@ that links the user being analysed to the overall user. The methods are defined
 in \textc{Worker}, rather than \textc{TweetRetriever}, because they are
 different for each worker, since the \\\textc{userRecordId} is different for
 each request. Such a thing cannot be defined in the singleton class without the need
-to pass the id to each method. This way, it is still the worker's methods that
+to pass the ID to each method. This way, it is still the worker's methods that
 are used in a context where they have access to what is defined in the worker.
 
 \section{Rate Limits}\label{sec:rateLimit}
 As described in \autoref{cha:req} our system is required to adhere to Twitter's
 rules regarding rate limits. This means that we can only make a limited number of
-requests per 15 minute interval. As such, we need to monitor how many requests
+requests per 15-minute interval. As such, we need to monitor how many requests
 we use, and how many we have left. And whenever we run out of requests, we must
 be able to put the retrieval of tweets on hold until we can make more requests.
 In order to handle this, we have a number of methods in the \textc{LimitHelper}
 class, which monitors how many requests we have left. This is done by sending a
-request to the Twitter API endpoint: \nl
+request to the Twitter \ac{API} endpoint: \nl
 
 \say{https://api.twitter.com/1.1/application/rate\_limit\_status.json} \nl
 
