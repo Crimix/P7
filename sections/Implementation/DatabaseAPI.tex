@@ -96,20 +96,23 @@ users followed by ``theDonaldDrumpf''.
 
 \section{\acs{API} Design}
 In order to access the database described in \autoref{DBDesign}, we have
-developed an \ac{API} using the Laravel web development framework. This \ac{API} functions
-as a layer on top of the database, to which we can make requests and retrieve
-data through the use of \ac{HTTP} requests.
+developed a \ac{REST} \ac{API} using Laravel. This
+\ac{API} functions as a layer on top of the database, to which we can make
+requests and retrieve data through the use of authorised \ac{HTTP} requests.
 
-\subsection{\ac{API} Endpoints}
-As the \ac{API} uses \ac{HTTP} requests, we have to define a number of
-endpoints which are available to be used by external applications. These are based on the following
-request:\nl
+\subsection{\acs{API} Endpoints}
+To enable external applications to interact with the \ac{API} we must
+define a number of endpoints that covers the data and functions that can be
+performed on it. These are based on the following base \ac{URL}:\nl
 
 \say{http://localhost:8000/api/}\nl
 
 In this example, the domain for the \ac{API} is localhost on port 8000, as this is
-the default for locally hosted Laravel applications. In order to access the
-data, we have the following endpoints:
+the default for locally hosted Laravel applications. If the application was to
+be hosted somewhere, it would have a domain and would likely run on port 443,
+just as the scheme would be \textc{https://}.
+
+We defined the following endpoints:
 
 \begin{table}[H]
 \begin{tabular}{| l | l | l |}
