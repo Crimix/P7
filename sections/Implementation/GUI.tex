@@ -1,4 +1,150 @@
 \chapter{GUI} \label{GUI}
+\fix{}{Insert some BS, err, introductory here about the chapter.}
+
+\section{Implementation}
+We chose to build the \ac{GUI} on top of the Laravel Framework that we mentioned
+in \autoref{sec:laravel}. Just as with the database \ac{API} this has allowed us
+to work on our own implementation details and the usability aspects.\nl
+
+Several aspects of our implementation are described below.
+
+\subsection{Models}
+We chose to use Laravel's \ac{ORM} class which meant that we could just define
+the tables we needed and then tell Laravel which models to generate from
+specific tables.\nl
+
+The tables were created using Laravel's \ac{DB} migration functionality, a
+declarative manner in which tables can be defined without having to consider
+which \ac{DBS} is used. \autoref{PhpMigrationEx} shows the important parts of
+the migration that creates the table for one of our models, as well as removing
+it if the migration is ever undone (the \ttt{down()} method).\nl
+
+The \ttt{Schema} class represents the database schema and allows for both
+creation and modification of tables, including dropping tables. The methods
+called on the \ttt{Blueprint} instance \ttt{\$table} are some of the
+abstractions offered by Laravel, which are then converted to \ac{SQL} queries for the chosen
+\ac{DB}. The convenience method \ttt{timestamps()} creates two columns;
+\ttt{created\_at} and \ttt{updated\_at}. When these are present Laravel will
+automatically keep these updated when an entry is created or modified.\nl
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Example of a migration in Laravel, label =
+PhpMigrationEx, language = PHP, style = PHP]
+public function up()
+{
+  Schema::create('twitter_requests', function (Blueprint $table) {
+    $table->increments('id');
+    $table->string('email');
+    $table->string('request_ident')->unique();
+    $table->string('twitter_username', 50);
+    $table->string('access_token');
+    $table->timestamps();
+
+    $table->index('twitter_username');
+  });
+}
+
+public function down()
+{
+  Schema::dropIfExists('twitter_requests');
+}
+\end{lstlisting}
+\end{minipage}
+
+In \autoref{GUImodels} the tables for our GUI project can be seen, of which
+most are infrastructure tables. The table \ttt{migrations} tracks the applied
+migrations, while \ttt{users} and \ttt{password\_resets} are used by Laravel's
+auth system. \ttt{jobs} and \ttt{failed\_jobs} are used by the queue system
+described in \autoref{sub:gui-queue}.\nl
+
+The last table; \ttt{twitter\_requests} is used to keep track of the requests by
+users to have Twitter accounts analysed by our system. The requests are kept in
+the database after having been forwarded to the queue server (described in
+\autoref{queueAPI}). This is done to ensure that notification emails can be
+sent to the user who made the request once processing has completed.\nl
+
+In order to clean up periodically a task is scheduled to run once a week,
+removing \ttt{TwitterRequest} objects that are at least a week old.
+
+\figxb[0.5]{GUImodels}{Tables for the GUI models.}
+
+\subsection{Presentation layer}
+The \ac{GUI} is primarily a multi--page application, with individual,
+dynamic pages existing for the landing page (the first page the users encounter
+when accessing the site), the confirmation page when a \ttt{TwitterRequest} has
+been created successfully, as well as the results display.\nl
+
+In order to streamline the experience for the user when creating a new request,
+we created a small single--page application running on the front page, in
+the form of a component written for the JavaScript framework called ``Vue''. The
+component sends and retrieves information to and from the server using
+\ac{AJAX} requests.
+
+\subsection{Queue system} \label{sub:gui-queue}
+In order to ensure a smooth experience for the users we decided to use Laravel's
+queue system. To do this we created a \ttt{ForwardTwitterRequest} class that
+implements an interface called \ttt{ShouldQueue}. When a user completes a
+request creation, the \ttt{TwitterRequest} object is instantiated with the
+necessary details and saved in the local database.\nl
+
+Once the request has been stored a \ttt{ForwardTwitterRequest} is created,
+providing the \ttt{TwitterRequest} instance. The request is enqueued and a
+``success'' message is sent back to the Vue component, informing the user of the
+creation.\nl
+
+When Laravel's queue worker is executed next it will start processing the
+requests, executing the \ttt{handle()} method shown in
+\autoref{phpForwardTwitterRequest}. If it fails it will throw an exception which
+will tell Laravel to retry the processing, and if it fails ten times the request
+is marked as failed.\nl
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Handle method of the ForwardTwitterRequest class,
+label = phpForwardTwitterRequest, language = PHP, style = PHP]
+public function handle() {
+  if (empty($this->twitterRequest)) {
+    return;
+  }
+
+  $requestId   = $this->twitterRequest->requestId;
+  $accessToken = json_decode($this->twitterRequest->access_token, true);
+  $guzzle      = new GuzzleClient([
+    'base_uri'    => config('ew.queue.url'),
+    'http_errors' => false,
+  ]);
+  $response    = $guzzle->request(
+    'POST',
+    '/api/AnalyzeTwitterAccount',
+    [
+      'form_params' => [
+        'Name'          => $this->twitterRequest->twitter_username,
+        'RequesterName' => $accessToken['screen_name'],
+        'Token'         => $accessToken['oauth_token'],
+        'Secret'        => $accessToken['oauth_token_secret'],
+        'RequestID'     => $requestId,
+      ],
+      'headers'     => [
+        'Accept'        => 'application/json',
+      ],
+    ]
+  );
+
+  if ($response->getStatusCode() !== 200) {
+    throw new Exception("Error Processing Request", $response->getStatusCode());
+  }
+}
+\end{lstlisting}
+\end{minipage}
+
+\subsection{Charts generation}
+In order to generate the charts we looked at a few different JavaScript
+frameworks, settling on one called ``Chart JS'' which allowed us to create
+both scatter plots and bar charts. An additional support library, written in
+PHP, allowing for easy integration with Laravel was also chosen, enabling us to
+define the data as PHP arrays and then ask the library to generate the
+JavaScript code for Chart.js.
+
+\section{Visual design} \label{sec:gui-visual-design}
 As described in \autoref{ch:intro}, the target audience of our application is
 Americans who are politically active on Twitter. As such, the goal is to create
 a GUI that reflects the expectations of this group of users. As such, this
@@ -9,7 +155,7 @@ Overall, the design of our system is based on the fact that politics is a
 serious topic, and as such, so we aim to create a simplistic and formal
 interface that does not include unnecessary distractions.
 
-\section{Front page}
+\subsection{Front page}
 The front page features the logo with the search bar below. Underneath the
 search bar is the search button and a information button. A visual presentation
 of the front page can be seen on \autoref{GUIfrontPage}.
@@ -23,7 +169,7 @@ gray text promotes neutrality and formality \citep[p. 63 \& 64]{WebUI}.
 The ``Check user'' button is a middle ground between light and dark blue, which
 results in a promotion of calm, safety and reliability \citep[p. 61]{WebUI}.
 
-\section{Authorization popup}
+\subsection{Authorization popup}
 
 When searching for a user, a popup requiring a login pops up. The reason why
 logging in is required is due to the fact that a limited amount of requests to
@@ -42,7 +188,7 @@ application and energizing colors like orange and yellow, so it catches the
 user's eye \citep[p. 60]{WebUI}. Additional pictures of the pages met during the
 authorization PIN retrievement can be seen on \autoref{GUItwitterPin}.
 
-\section{The E-mail}
+\subsection{The E-mail}
 After pressing the blue ``Verify" button, the application starts processing.
 When the application is done processing the request, an E-mail is sent to the provided E-mail address. This E-mail consists of a short text telling the user
 that the results are in for the requested Twitter account and provides a link to
@@ -55,7 +201,7 @@ processing.}
 The E-mail is Gray with a white box with the information and the blue button.
 This is done to stay true to the color scheme. 
 
-\section{The result screen}
+\subsection{The result screen}
 After clicking on the blue button in the E-mail, a web page with the results
 opens. On this page, a header shows some information about the retrievement
 process itself, shown on \autoref{GUIresultHeader}. Beneath
@@ -84,10 +230,10 @@ left side is associated with blue, whereas the right side is associated with red
 in American politics. There is an exception with the bar where the checked user
 is located which is colored yellow. On the graph depicting bias and sentiment as
 a scatter plot, all dots to the right are red, all dots between -1 and 1 bias are
-gray and all dots to the left are blue. The dot representing the checked user is
-green.
+gray and all dots to the left are blue. The dot representing the checked user
+is green.
 
-\section{Overall design choice}
+\subsection{Overall design choice}
 The reason for the overall design choice is the power of simplicity. By having a
 simplistic design with a lot of whitespace, all focus goes to what is
 important; The text boxes and buttons. There are no distracting
