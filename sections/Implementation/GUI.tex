@@ -1,7 +1,15 @@
 \chapter{GUI} \label{GUI}
-\fix{}{Insert some BS, err, introductory here about the chapter.}
+The GUI is used by the users to interact with the rest of the systems, as such
+it needs to be designed to be user friendly and 
 
-\section{Implementation}
+
+In \autoref{sec:GI} we describe how we have implemented the GUI using the
+laravel framework, specifically which models we use, how we designed the
+presentation layers and queue system, and how we perform database migrations. In
+\autoref{sec:gui-visual-design} we present the GUI and discuss the design
+decision.
+
+\section{Implementation}\label{sec:GI}
 We chose to build the \ac{GUI} on top of the Laravel Framework that we mentioned
 in \autoref{sec:laravel}. Just as with the database \ac{API} this has allowed us
 to work on our own implementation details and the usability aspects.\nl
