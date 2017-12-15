@@ -73,8 +73,8 @@ allowing the user to click on a specific user in their filter bubble.
 
 \section{Recommendation System}
 In the initial design idea of the web application, the application listed
-different Twitter accounts that would help your Twitter feed get closer to the
-middle of the poltical spectrum, thus breaking your filterbubble. \nl
+different Twitter accounts that would help the user's Twitter feed get closer to
+the middle of the poltical spectrum, thus breaking their filterbubble. \nl
 
 This feature would have to be developed before actual bubble busting would take
 place. One way of implementing this feature would be to make a seperate
@@ -87,7 +87,23 @@ Otherwise, people would get irrelevant Twitter accounts recommended. If the
 application had a lot of traffic, a filter on what kind of people they want to
 be recommended could be implemented. For example, some people could prefer to
 only get well educated people recommended rather than celebrities who happen to
-tweet poltical a lot.
+tweet politically a lot.
 
 \section{HTTP not HTTPS}
 \fix{}{write}
+
+\section{Database Twitter Protect Boolean}\label{sec:twitterProtect}
+Although in the database there is a boolean used to represent if you need to
+follow the user on Twitter to view their tweets. We do not actually use this
+boolean in our implementation, and as such it is possible to view results about
+a Twitter user that you do not follow. This is possible if the protected user
+have been analysed by a user who is allowed to view their tweets and that the
+result is not older then a week. This means that our web application does not
+adhere to the users privacy. \nl
+
+Even though we do not store tweets and show them to users of the web
+application, this is still a concern because it is still possible to view
+information extracted from the tweets which you should not be able to see. \nl
+
+This should be implemented before the system could be put in a server and used
+by the public.
