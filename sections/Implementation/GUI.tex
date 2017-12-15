@@ -1,13 +1,72 @@
 \chapter{GUI} \label{GUI}
+\fix{}{Insert some BS, err, introductory here about the chapter.}
+
+\section{Implementation}
+We chose to build the \ac{GUI} on top of the Laravel Framework that we mentioned
+in \autoref{sec:laravel}. Just as with the database \ac{API} this has allowed us
+to work on our own implementation details and the usability aspects.\nl
+
+Several aspects of our implementation are described below.
+
+\subsection{Model layer}
+We chose to use Laravel's \ac{ORM} class which meant that we could just define
+the tables we needed and then tell Laravel which models to generate from
+specific tables.\nl
+
+The tables were created using Laravel's \ac{DB} migration functionality, a
+declarative manner in which tables can be defined without having to consider
+which \ac{DBS} is used. \autoref{PhpMigrationEx} shows the important parts of
+the migration that creates the table for one of our models, as well as removing
+it if the migration is ever undone (the \ttt{down()} method).\nl
+
+The \ttt{Schema} class represents the database schema and allows for both
+creation and modification of tables, including dropping tables. The methods
+called on the \ttt{Blueprint} instance \ttt{$table} are some of the abstractions
+offered by Laravel, which are then converted to \ac{SQL} queries for the chosen
+\ac{DB}. The convenience method \ttt{timestamps()} creates two columns;
+\ttt{created\_at} and \ttt{updated_at}. When these are present Laravel will
+automatically keep these updated when an entry is created or modified.
+
+\begin{minipage}[H]{\linewidth}
+\begin{lstlisting}[caption = Example of a migration in Laravel, label =
+PhpMigrationEx, language = PHP, style = PHP]
+public function up()
+{
+  Schema::create('twitter_requests', function (Blueprint $table) {
+    $table->increments('id');
+    $table->string('email');
+    $table->string('request_ident')->unique();
+    $table->string('twitter_username', 50);
+    $table->string('access_token');
+    $table->timestamps();
+
+    $table->index('twitter_username');
+  });
+}
+
+public function down()
+{
+  Schema::dropIfExists('twitter_requests');
+}
+\end{lstlisting}
+\end{minipage}
+
+\autoref{GUImodels}
+
+\figxb[0.5]{GUImodels}{Tables for the GUI models.}
+
+\subsection{Controller layer}
+
+\subsection{Presentation layer}
+
+\subsection{Additional layers}
+
+\section{Visual design}
 As described in \autoref{ch:intro}, the target audience of our application is
 Americans who are politically active on Twitter. As such, the goal is to create
 a GUI that reflects the expectations of this group of users. Politics is a serious
 topic, so we aim to create a simplistic and formal interface that does not
 include unnecessary distractions.
-
-\section{Implementation}
-
-\section{Visual Design}
 
 \subsection{Front page}
 The front page features the logo with the search bar below. Underneath the
