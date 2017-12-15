@@ -1,6 +1,6 @@
 \chapter{GUI} \label{GUI}
 As described in \autoref{ch:intro}, the target audience of our application is
-americans who are politically active on Twitter. As such, the goal is to create
+Americans who are politically active on Twitter. As such, the goal is to create
 a GUI that reflects the expectations of this group of users. Politics is a serious
 topic, so we aim to create a simplistic and formal interface that does not
 include unnecessary distractions.
@@ -12,13 +12,13 @@ upon, what libraries are we using, why have we chosen this framework?
 
 \section{Front page}
 The front page features the logo with the search bar below. Underneath the
-search bar is the search button and a help button. A visual presentation of the
-front page can be seen on \autoref{GUIfrontPage}.
+search bar is the search button and a information button. A visual presentation
+of the front page can be seen on \autoref{GUIfrontPage}.
 
 % \usepackage{graphics} is needed for \includegraphics
 \figxb[0.6]{GUIfrontPage}{The front page of the application.}
 
-The colorscheme on the front page is a white background with a dark gray text.
+The color scheme on the front page is a white background with a dark gray text.
 The white background promotes a feeling of cleanliness and simplicity, while the
 gray text promotes neutrality and formality \citep[p. 63 \& 64]{WebUI}. 
 The ``Check user'' button is a middle ground between light and dark blue, which
@@ -47,10 +47,11 @@ unused GUI pics}.
 \section{The E-mail}
 After pressing the blue ``Verify" button, the application starts processing.
 When the application is done processing the request, an E-mail is sent to the provided E-mail address. This E-mail consists of a short text telling the user
-that the results are in and provides a link to the results. A visual
-presentation of the E-mail can be seen on \autoref{GUImail}.
+that the results are in for the requested Twitter account and provides a link to
+the results.
+A visual presentation of the E-mail can be seen on \autoref{GUImail}.
 
-\figx[0.6]{GUImail}{The email received after the application is done
+\figx[0.7]{GUImail}{The email received after the application is done
 processing.}
 
 The E-mail is Gray with a white box with the information and the blue button.
@@ -65,16 +66,16 @@ Each graph has a long and detailed description of what is on the graph and how
 it was calculated. The graph on \autoref{GUIresult1} depicts political bias and
 the average sentiment of everyone in the filter bubble and the user itself. 
 
-\figx[0.4]{GUIresult1}{Graph showing the relation between media bias}
+\figx[0.5]{GUIresult1}{Graph showing the relation between bias}
 
-Apart from this, there are two bar charts showing the media bias of the
-filterbubble according to the Naive Bayes algorithm and the Bag of words
+Apart from this, there are two bar charts showing the bias of the
+filter bubble according to the Naive Bayes algorithm and the Bag of words
 algorithm respectively. The bar chart for the bag of words algorithm can be seen
 on \autoref{GUIresult2}. The one for Naive Bayes can be seen in \fix{}{same as
 above} together with the charts for sentiment analysis and media bias described
 below which are both calculated by the Bag of Words algorithm.
 
-\figx[0.4]{GUIresult2}{The bar chart depicting media bias according to the Bag
+\figx[0.5]{GUIresult2}{The bar chart depicting bias according to the Bag
 of Words algorithm.}
 
 The design of the result screen follows the gray theme. The bars are colorcoded,
