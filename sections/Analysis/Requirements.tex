@@ -94,42 +94,40 @@ interaction specified by \citeauthor{benyon2013designing} in
 acceptability. 
 
 Here, accessibility refers to the ability of all users of all backgrounds, or
-with possible disabilities, to be able to interact with the
-system \citep[p.77-80]{benyon2013designing}.
-Usability refers to the effort people have to spend when using the system, the ease of
-learning the system, and the appropriate organization of buttons, illustrations,
-and text \citep[p.81-84]{benyon2013designing}. Acceptability refers to the
-political, social, and cultural contexts of the system. Namely if the system is
-trustworthy, convenient, non-intrusive, or politically correct \citep[p.84-85]{benyon2013designing}. Based on these
-elements, the GUI requirements are presented in \autoref{tab:userReq}.
+with possible disabilities, to be able to interact with the system
+\citep[p.77-80]{benyon2013designing}.
+Usability refers to the effort people have to spend when using the system, the
+ease of learning the system, and the appropriate organization of buttons,
+illustrations, and text \citep[p.81-84]{benyon2013designing}. Acceptability
+refers to the political, social, and cultural contexts of the system. Namely if
+the system is trustworthy, convenient, non-intrusive, or politically correct
+\citep[p.84-85]{benyon2013designing}. Based on these elements, the GUI
+requirements are presented in \autoref{tab:userReq}.
 
 \begin{table}[H]\centering
-\begin{tabular}{|l|l|}\hline
-\textbf{Category:}	&	\textbf{Requirement:} \\\hline
-Accessibility		&	The system should use a color scheme which is usable by people
-with color blindness.\\\hline
-Accessibility		&	The system should use multiple methods of distinguishing
-between elements (such as color and background patterns).\\\hline
+\begin{tabular}{|l|p{11cm}|}\hline
+\textbf{Category:} & \textbf{Requirement:} \\\hline 
+Accessibility  & The system should use a color scheme which is suitable for
+people with color blindness.\\\hline 
+Accessibility  & When presenting multiple elements side by side (such as data
+in graphs), the system should use patterns to distinguish between
+elements.\\\hline
+Accessibility & Text and images should be resizable, such that people with
+limited eye-sight can still use the system.\\\hline
+Usability & The system should minimize the amount of user actions necessary in
+order to use the system. \\\hline
+Usability & The \ac{GUI} should be simplistic upon launch, with every element
+immediately recognisable. \\\hline
+Usability & There should be no doubts about what information is needed and which
+button(s) to press. \\\hline
+Usability & The user should have easy access to assisting information on how to
+use the system. \\\hline
+Usability & When presenting data it should be clearly labeled, and explained in
+helping text what the data represents.\\\hline
+Acceptability & It should be clearly stated what user data will be used for.\\\hline
+Acceptability & The system should use neutral language and imply no political
+bias when presenting data in a political context.\\\hline
 \end{tabular}
 \caption{Requirements for user interaction}
 \label{tab:userReq}
 \end{table}
-
-\begin{requirement}[req:userfriendly-interface]{Userfriendly interface} 
-\begin{itemize}
-  \item The \ac{GUI} should be simplistic upon launch, with every element
-  immediately recognisable.
-  \item There should be no doubts about what information is needed and which
-  button(s) to press.
-  \item Options should be self-explanatory.
-  \item If descriptive texts are necessary, they should be easily accessible,
-  and it should be obvious how to reach them.
-  \item Before the user submits their information, there should be no doubts
-  about what the information is used for, how it is used, who will have access
-  to it and what type of data they will get in return.
-  \item The returned data should be processed and presented in a simple manner
-  that is immediately understood by the target user.
-  \item The overall aesthetics of the interface should be visually pleasing and
-  utilise meaningful colours.
-\end{itemize}
-\end{requirement}
