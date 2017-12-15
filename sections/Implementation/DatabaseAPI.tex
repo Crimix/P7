@@ -65,11 +65,12 @@ due to size constraints on the pages.
 
 The table \textc{twitters} is used for storing data about analysed
 twitter users, such that we can reference this data if we should receive
-a request. This allows to reduce overhead, as we can reuse data. \fix{One
+a request. This allows to reduce overhead, as we can reuse data. One
 important aspect is that we need to respect a user's privacy. As such, we have
 introduced the ``protect'' boolean to indicate if only the Twitter user, which the result
-belong to, is allowed to retrieve it.}{We need to make sure we've reflected on
-this elsewhere since it wasn't actually implemented.}\nl
+belong to, is allowed to retrieve it. Although this is data in the database,
+this form of protecting is not implemented, details about this can be found in
+\autoref{sec:twitterProtect}\nl
 
 The \textc{processed} column is used to distinguish between users who have been
 fully analysed along with all the users they follow, versus those who have been
