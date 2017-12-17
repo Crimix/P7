@@ -2,15 +2,16 @@
 Following the problem statement in \autoref{ch:problem}, this chapter will be
 used to determine the actual requirements of the developed software solution.
 
-% Klaus: The web aspect seems to be missing? From the study regulations: A
-% suitable user interface implies that it is possible to interact with the
-% developed solution using a web based interface.
-% E.G., an end user application has a web based user interface. An agent or a
-% service may not necessarily have a web based user interface, but would usually
-% have a web based A further reuirement is that the implementation needs to have
-% ascalaable acrhitecture
+% Based on the analysis of social media and classification algorithms in the
+% previous chapters, this chapter will be used to determine the functional requirements, and
+% usability requirements, which will be used to lead the development of the
+% system. In \autoref{sec:funcReq} we present the functional requirements, which
+% define how the system architecture should be structured, and what features the
+% system should contain. In \autoref{sec:userReq} we present the usability
+% requirements, which define how the front-end should be designed, and how the
+% system should be designed in order to appeal to our target audience.
 
-\section{Functional Requirements}
+\section{Functional Requirements}\label{sec:funcReq}
 
 \begin{requirement}[req:twitter-user-retrieval]{Retrieve user and pertinent information from Twitter}
 Given a Twitter username, the program should be capable of retrieving
@@ -86,7 +87,7 @@ get processed. The database and the server back-end should use these \ac{API}s.
 
 
 
-\section{User Interaction Requirements}
+\section{User Interaction Requirements}\label{sec:userReq}
 In order to improce the user's interaction with our system, the design of the
 Graphical User Interface has based on the 3 fundamentals of human-computer
 interaction specified by \citeauthor{benyon2013designing} in

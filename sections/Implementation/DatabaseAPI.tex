@@ -6,7 +6,14 @@ design choice is especially important, as we make use of the user's Twitter
 account to retrieve data from the Twitter \ac{API}, which have a limited amount
 of API requests, as described in \autoref{cha:twitterAPI}. As such, this section
 is used to describe how we access and store this data, and how we make sure that
-it is only accessible to authorized users.
+it is only accessible to authorized users.\nl
+
+% In \autoref{sec:laravel} we start by describing the Laravel framework, which has
+% been used to develop the front-end and the database \ac{API}. In
+% \autoref{DBDesign} we continue by describing the design of our database and the
+% data it is used to store. Then in \autoref{sec:APIDesign} we end by describing
+% the implementation of the Database \ac{API}, and the different end-points we
+% have defined for accessing data.
 
 \section{Laravel Framework}\label{sec:laravel}
 Laravel is a framework written in PHP that enables the creation of websites and
@@ -100,7 +107,7 @@ it is due to convention more so than any requirements from the framework. It kee
 of the followers and in the example data it is shown how we keep track of the
 users followed by ``theDonaldDrumpf''.
 
-\section{\acs{API} Design}
+\section{\acs{API} Design}\label{sec:APIDesign}
 To access the database described in \autoref{DBDesign}, we have
 developed a \ac{REST} \ac{API} using Laravel. This
 \ac{API} functions as a layer on top of the database, to which we can make

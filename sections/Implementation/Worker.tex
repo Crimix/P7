@@ -1,9 +1,23 @@
 \chapter{Worker}\label{workerLabel}
 When the Queue Server begins executing a queued request, it instantiates a
 \textc{Worker}, which begins to retrieve and classify Tweets. Each task in the
-queue corresponds to a single \textc{Worker}.
+queue corresponds to a single \textc{Worker}. \nl
 
-\section{Implementation}
+
+%Replace with:
+% When the Queue Server recieves a request to analyse a user's filter bubble, it
+% starts by creating a new instance of the \textc{Worker} class. The
+% \textc{Worker} functions as the central class when retrieving and analysing
+% users' Tweets. Whenever a user is to be analysed, a new Worker is created for
+% that task, and as such, each task in the queue corresponds to a single
+% \textc{Worker}.\nl
+% 
+% In \autoref{sec:workerImpl} we start by describe how the worker functions, and
+% present the process in which a \textc{Worker} retrieves and analyses tweets.
+% Then in \autoref{sec:rateLimit} we discuss how the worker handles Twitter's
+% imposed rate limits, which were described in \autoref{cha:twitterAPI}.
+
+\section{Implementation}\label{sec:workerImpl}
 The \textc{Worker} starts by requesting a \textc{User} object for the user for
 which we want to determine a filter bubble. Then, it retrieves a list of up to
 3200 most recent tweets created by the user. The next step for the worker is to
