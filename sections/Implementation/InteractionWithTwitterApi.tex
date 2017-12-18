@@ -106,18 +106,18 @@ request Twitter receives, it is considered invalid \citep[sec
 \subsection*{Signature method}
 The signature method for Twitter is always \ac{HMAC-SHA1}. Any request without
 this signature method is invalid. \ac{HMAC-SHA1} means that the cryptography
-hash function used is \acused{SHA-1} \citep{TwitterHMACSHA}.
+hash function used is \acs{SHA-1} \citep{TwitterHMACSHA}.
 
 \subsection*{Timestamp}
 The timestamp is a string created together with the request. The string is the
-number of seconds since the Unix epoch, which is 1/1/1970. It is used to
-determine when the request was made. If a request is marked as created before
+number of seconds since the Unix epoch, which is January 1st, 1970. It is used
+to determine when the request was made. If a request is marked as created before
 the Unix epoch, it is invalid.
 
-\subsection*{Authorization token}
-The token is used to identify the user who is making the request; each user has
-a unique token kept secret. This token can be received by submitting a users
-login details with Twitter. As such, a user must be authorised before making
+\subsection*{Authorisation token}
+The token is used to identify the user who is making the request. Each user has
+a unique token which is kept secret. This token can be received by submitting a
+users login details with Twitter. A user must be authorised before making
 requests. In combination with the token, a user also has a Token Secret. This
 secret is used when creating the signature.
 
@@ -127,13 +127,13 @@ secret is used when creating the signature.
 % \fix{}{maybe go in-depth on how this is done}
 
 \subsection*{Version}
-The version always has to be 1.0 for the API to accept the request; this is
+The version always has to be 1.0 for the API to accept the request. This is
 because the Twitter \ac{API} only uses OAuth 1.0, as opposed to OAuth 2.0.
 
 \section{Creating the String}\label{label:stringCreate}
-When all the necessary tokens have been generated, the authorization header
-string itself can be created \citep{TwitterAPIAuth}. The finished header looks like this, where
-\ldots\_val gets replaced with the corresponding token:\nl
+When all the necessary tokens have been generated, the \textc{Authorization}
+header string can be created \citep{TwitterAPIAuth}. The finished header
+looks like this, where ``\ldots\_val'' is replaced with the corresponding token:\nl
 
 OAuth oauth\_consumer\_key="oauth\_consumer\_key\_val",\\
 oauth\_nonce="oauth\_nonce\_val", \\
@@ -143,5 +143,5 @@ oauth\_timestamp="oauth\_timestamp\_val", \\
 oauth\_token="oauth\_token\_val", \\
 oauth\_version="1.0" \\
 
-This authorization header must then be supplied in the request to the Twitter
+This authorisation header must then be supplied in the request to the Twitter
 API whenever we make a request on behalf of the user.
