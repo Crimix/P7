@@ -14,9 +14,16 @@ our system, such that we can make requests on bahalf of their user instead.
 However, Twitter enforces a different set of authentication requirements when
 making requests from a users instead of an application \citep{TwitterAPIAuth}.
 As such, this chapter will be used to describe how we make requests on behalf of
-the user. 
+the user.\nl
 
-\section{OAuth}
+% In \autoref{sec:OAuth} we start by shortly describing how Twitter handles 
+% authorization of requests made by users. Following this \autoref{sec:reqHead}
+% is used to describe the structure of the authorization header, which is a
+% variable passed to the Twitter API in order to verify our identity and intent.
+% In \autoref{label:stringCreate} we end by describing how to assemble all of the
+% necessary information into the final authorization header.
+
+\section{OAuth}\label{sec:OAuth}
 Whenever a user wants to request data through the Twitter API, Twitter requires
 that request to conform with the OAuth 1.0 authorisation protocol
 \citep{OAuth1}. This protocol requires the request to contain information about
@@ -33,7 +40,7 @@ user’s behalf
 In order for a request to contain this information, we must create a Request
 Header, which consists of a number of encrypted/unencrypted key-value pairs. 
 
-\section{Request header}
+\section{Request header}\label{sec:reqHead}
 As stated, for an \ac{HTTP} request to be valid in the Twitter API, it has to
 contain seven key/pair values in the header \citep{TwitterAPIAuth}. These can
 be seen below:
@@ -106,7 +113,7 @@ secret is used when creating the signature.
 The version always has to be 1.0 for the API to accept the request; this is
 because the Twitter \ac{API} only uses OAuth 1.0, as opposed to OAuth 2.0.
 
-\section{Creating the string}
+\section{Creating the string}\label{label:stringCreate}
 When all the necessary tokens have been generated, the authorization header
 string itself can be created \citep{TwitterAPIAuth}. The finished header looks like this, where
 \ldots\_val gets replaced with the corresponding token:\nl
