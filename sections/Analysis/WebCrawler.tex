@@ -1,72 +1,75 @@
 \section{Web Crawler}\label{subsec:crawler}
-A crawler, which is also known as a spider, systematically crawls the internet
-and gather information by reading and analysing web-page's content. Web-pages
+A crawler, also known as a spider, systematically crawls the internet
+and gathers information by reading and analysing webpages' content. Webpages
 usually connect to each other by hyperlinks, which a crawler can use to move
 between pages. This recursive approach to accessing web-pages allows the crawler
-to access large parts of the internet systematically, and gather data along its
-journey \citep[Ch20.2, P.444-445]{manning2008introduction}.
+to access large parts of the internet systematically and gather data along its
+journey. \citep[p. 444-445]{manning2008introduction}
 
-\subsection{Crawler design} 
-There are several things to consider during a crawlers execution. A crawler must
-be able to avoid getting stuck fetching an infinite number of pages from the
+\subsection{Crawler Design} 
+There are several things to consider during a crawler's execution. A crawler
+must be able to avoid getting stuck fetching an infinite number of pages from the
 same domain, as this is only acceptable if you want to crawl that specific site.
-The crawler needs to be ''polite'' about how frequent it makes requests to a
-server, as too many to the same server can crash it, or cause the server to
-consider the crawler an attacker and block it. The crawler should respect what
-it is, and is not, permitted to access from a given domain. Additionally, the
-crawler should also be able to re-fetch data from older sites, to see if they
-have changed. Furthermore, it should favour fetching pages that are more
-likely to have quality content \citep[Ch.20.1]{manning2008introduction}.\nl
+The crawler needs to be ''polite'' about how frequently it makes requests to a
+server, as too many requests to the same server can crash it, or cause the
+server to consider the crawler an attacker and block it. The crawler should
+respect what it is not permitted to access from a given domain.
+Additionally, the crawler should also be able to re-fetch data from older sites,
+to determine if they have changed. Furthermore, it should favour fetching pages
+that are more likely to have quality content
+\citep[ch. 20.1]{manning2008introduction}.\nl
 
 A crawler's architecture is made to be modular, as seen in \autoref{BasicWC}.
-The 'Frontier' is a list of elements, usually URLs, not yet crawled. The 'Fetch'
-module is designed to get the first element from the 'Frontier' and request
-access to the corresponding site. The site content gets passed to the 'Parse'
-module, further described in \autoref{sec:parsing}. The content on the site gets
-verified to find if the site has been crawled before, it could be that the side
-had minor updates or called itsef recursively causing the crawler to loop. URLs
-get filtered according to the domains ``/robots.txt'', which describes what each
-crawler is allowed to access. Finally, the duplicated URLs get eliminated, and
-the new URLs added to the frontier.\nl
+The 'Frontier' is a list of elements, usually \acp{URL}, not yet crawled. The
+'Fetch' module is designed to get the first element from the 'Frontier' and request
+access to the corresponding site. The site's content is passed to the 'Parse'
+module, further described in \autoref{sec:parsing}.
+The content on the site is verified to determine if the site has been crawled
+before, as it could be that the site has had minor updates or that the crawler
+has called itself recursively, causing the crawler to loop. \acp{URL} are
+filtered according to the domain's ``/robots.txt'', which describes what each crawler is
+allowed to access. Finally, the duplicated \acp{URL} are eliminated, and the
+new \acp{URL} are added to the frontier.\nl
 
 %Vejleder vil gerne have fikset overfull boxes men det er på den måde i bogen.
-\figx[1.2]{BasicWC}{The basic crawler architecture \citep[p.
+\figx[1.2]{BasicWC}{Basic crawler architecture \citep[p.
 446]{manning2008introduction}.}
 %Klaus: Some more sentances of explanation. It is always good to give the reader
 % some basic understanding of what is going on in the caption, even if it
 % doubles a bit with normal text
 
 % Flesh out more
-A more advanced version of a crawler involves managing multiple
-distributed-crawlers. These crawlers need to work together to cover websites
-faster and avoid crawling the same sites multiple times; it is also critical for
-them to avoid spamming the same servers with requests.
+A more advanced version of a crawler involves managing multiple, distributed
+crawlers. These crawlers work together to cover websites faster and avoid
+crawling the same site multiple times. It is also critical for them to avoid
+spamming the same server with requests.
 
 
 \subsection{Parsing} \label{sec:parsing}
-Parsing is a method used to extract information from a document, and index it
-for later use. In this case, a document is the raw-content retrieved from a
-request, including text, HTML code and -tags.
+Parsing is a method used to extract information from a document and index it for
+later use. In this case, a document is the raw content retrieved from the
+crawled site, including text, \ac{HTML} code and tags.
 The first part of parsing a document consists of removing unnecessary
-information, such as HTML tags, while retaining the desired information, like
+information, such as \ac{HTML} tags, while retaining the desired information like
 links and body text. Depending on the document, it may be necessary to decode
 the document's format and character encodings.
-The second step is to tokenize the text, which means splitting it into the
+The second step is to tokenise the text, which means splitting it into the
 smallest meaningful entities, which in this context are words. Depending on how
-advanced the tokenizer is, it should be able to handle abbreviations, such as
-``aren't'' or ``kg.''. The tokenizer should also remove stopwords, which are
-words that do not contain useful information, and should therefore not be
-indexed; such as ``the'' and ``a''. As these words do not refer to anything in
-particular, a query should not match indexed pages based on them.
+advanced the tokeniser is, it should be able to handle abbreviations, such as
+``aren't'' or ``kg.''. The tokeniser should also remove stopwords, which are
+words that do not contain useful information and should therefore not be
+indexed. These stopwords are words such as ``the'' and ``a''. As these words do
+not refer to anything in particular, a query should not match indexed pages
+based on them.
 
 \subsection{Indexing}
 Indexing is used to speed up the information retrieval process, as it is faster
 to search an index than scanning through every single page every time a query
-gets called.
+is called.
 
-There are different types of indexes; the best fit depends on the way the tokens
+There are different types of indexes, the best fit depends on the way the tokens
 and documents refer to each other. The two main types are the forward index and
-inverted index; as seen in the table below.
+inverted index, as seen in the table below.
 
 \begin{minipage}{.40\textwidth}
   \centering
@@ -97,9 +100,11 @@ sauce & Doc3 \\ \hline
 	\label{iIndex}
   \end{table}
 \end{minipage}\nl
-In a forward-index the pages themselves are indexed with references to the
-tokens they contain, see \autoref{fIndex}. An inverted-index is made up of
-tokens referencing the documents containing them; this is useful when querying
-for specific tokens \citep{Index3}, see \autoref{iIndex}. More advanced indexes
-are expanded to include a ranking of documents and tokens to evaluate a
-documents information value better \citep[P. 109]{manning2008introduction}.
+
+In a forward index the pages are indexed with references to the
+tokens they contain, as seen in \autoref{fIndex}. An inverted index is made up
+of tokens referencing the documents containing them. This is useful when
+querying for specific tokens \citep{Index3}, as seen in \autoref{iIndex}. More
+advanced indexes are expanded to include a ranking of documents and tokens to
+better evaluate a document's informational value
+\citep[p. 109]{manning2008introduction}.

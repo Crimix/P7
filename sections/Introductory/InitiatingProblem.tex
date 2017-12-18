@@ -1,13 +1,10 @@
 \section{Initiating Problem}\label{sec:initproblem}
 The implicit or explicit filtering of information that users are exposed to,
-leads to a situation were users are not interacting with information outside of
-their filter bubble. We believe that this is most problematic when it
-comes to politics, as this is the subject where varied discussion is
-most important. As such, this project will focus on identifying and breaking a
-users political filter bubble.\nl
-
-Based on this problem, the topic of this semester, namely development of web
-applications, services, and agents: we formulate the following initiating
+leads to a situation were users are not interacting with information outside
+their filter bubble. We believe that this is most problematic when it comes to
+politics, as this is the subject where varied discussion is most important. As
+such, this project focuses on identifying and breaking a user's political
+filter bubble. Based on this problem, we formulate the following initiating
 problems:
 
 \begin{center}
@@ -23,8 +20,8 @@ problems:
   \item \textbk{Which technology, method, or approach is suited to gather
   relevant information from social media sites?}
   
-  \item \textbk{How can a user's be analyzed and used to break the user's filter
-  bubble?}
+  \item \textbk{How can a user's data on social media be analysed and used to
+  break their filter bubble?}
   
 %   \item \textbk{How can a web agent be developed to identify the user's filter
 %   bubble from web activity, and how can it be designed to provide results from
@@ -37,37 +34,40 @@ problems:
 Regarding the target audience, our observations seem to indicate that the market
 best suited for this kind of software would be the United States. This choice is
 due to the popularity of social media in the US, where up to 66\% of internet
-users visits social media sites\citep{socialMediaActivity}.
+users visits social media sites \citep{socialMediaActivity}.
 In addition, Americans make up the largest user base for social media such as
 Twitter and Facebook \citep{socialMediaUsersTwitter, socialMediaUsersFacebook}.
 As such, we define our target audience as: \say{Americans who are politically
 active on social media.}
 
-% \section{Project Outcome}
-% Over the course of this project, we work with the problem of filter bubbles on
-% social media, and finding ways to identify and break them. Based on the book
-% ``The Filter Bubble''\citep{pariser2011filter} by author Eli pariser, we start
-% by defining the term ``filter bubble'' as being an invisible enforced bubble,
-% wherein a user only interact with news, opinions, and arguments which they
-% percieve positively. Based on this problem, we start by analyzing different
-% social media sites, in order to determine which are most suitable for data
-% gathering and which offer the most comprehensive and useful data for identifying
-% a filter bubble. Based on this analysis, we choose the social media platform
-% Twitter as being the one most suitable for our project. Following this, we
-% develop two approaches to identifying filter bubbles; one which uses a Naive
-% Bayes Network, and one which uses a keyword search (Bag-of-Words) approach. As a
-% framwork for hosting these filter bubble identifiers, we develop a system
-% consisting of a website front-end, a server back-end, and a database for storing
-% processed data. The project is concluded with two test; A usability test, which
-% is used to determine the quality of the system's front-end. And an accuracy
-% test, which determines that the Bag-of-Words keywords search is the most
-% accurate with above 90\% accuracy, and the Naive Bayes Network being less
-% accurate, with just below 50\% accuracy. The project finishes with a reflection
-% on the two models, where we conclude that the Bag-of-Words model is good at the
-% moment, but it's keywords are based on a static image of the current political
-% climate, while the Naive Bayes Network may be bad right now, but it should
-% become better than the Bag-of-Words model over time, as more data can be used to
-% train and refine the model.
+\section{Project Outcome}
+Over the course of this project, we work with the problem of filter bubbles on
+social media and finding ways to identify and break them. Based on the book
+``The Filter Bubble''\citep{pariser2011filter} by author Eli Pariser, we start
+by defining the term ``filter bubble'' as being an invisible, enforced bubble,
+wherein, a user only interacts with news, opinions and arguments which they
+perceive positively. 
+
+Based on this problem, we start by analysing different social media sites to
+determine which are most suitable for data gathering, and offer the most
+comprehensive and useful data for identifying a filter bubble.
+Based on this analysis, we conclude that the social media platform Twitter is
+best suited for our project. Following this, we develop two approaches to
+identifying filter bubbles. The first model uses a Naive Bayes Classifier and
+the other uses a modified Bag-of-Words approach.
+
+As a framework for hosting these filter bubble identifiers, we develop a system
+consisting of a website front-end, a server back-end and a database for storing
+processed data. The project is concluded with two test: a usability test, which
+is used to determine the quality of the system's front-end, and an accuracy
+test which determines that the Bag-of-Words keywords search is the most
+accurate with 96\% accuracy and the Naive Bayes Classifier failing to accurately
+classify real users.
+The project finishes with a reflection on the two models, where we conclude that
+the Bag-of-Words model is good at the moment, but it's keywords are based on a
+static image of the current political climate, while the Naive Bayes Classifier
+may be bad right now, but it should become better than the Bag-of-Words model over
+time, as more data can be used to train and refine the model.
 
 
 

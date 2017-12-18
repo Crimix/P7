@@ -40,7 +40,7 @@ user’s behalf
 In order for a request to contain this information, we must create a Request
 Header, which consists of a number of encrypted/unencrypted key-value pairs. 
 
-\section{Request header}\label{sec:reqHead}
+\section{Request Header}\label{sec:reqHead}
 As stated, for an \ac{HTTP} request to be valid in the Twitter API, it has to
 contain seven key/pair values in the header \citep{TwitterAPIAuth}. These can
 be seen below:
@@ -113,7 +113,7 @@ secret is used when creating the signature.
 The version always has to be 1.0 for the API to accept the request; this is
 because the Twitter \ac{API} only uses OAuth 1.0, as opposed to OAuth 2.0.
 
-\section{Creating the string}\label{label:stringCreate}
+\section{Creating the String}\label{label:stringCreate}
 When all the necessary tokens have been generated, the authorization header
 string itself can be created \citep{TwitterAPIAuth}. The finished header looks like this, where
 \ldots\_val gets replaced with the corresponding token:\nl

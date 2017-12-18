@@ -1,12 +1,12 @@
 \section*{Acknowledgement}
-We would like to thank Dr. Klaus-Tycho Förster for his great supervision
+We would like to thank Klaus-Tycho Förster for his great supervision
 and constant feedback during the semester.\nl
 
-We would also like to thank Dr. Stefan Schmid for taking the time to meet with
+We would also like to thank Stefan Schmid for taking the time to meet with
 us twice. He has been a great help in identifying the problems and making our
 project more ambitious.\nl
 
-Finally we would like to thank Helle Mouritzen, as she has been
+Finally, we would like to thank Helle Mouritzen, as she has been
 baking and providing us with the best cookies for the entire month of
 December.\newpage
 
@@ -16,70 +16,75 @@ This section is used to provide an overview of the report's content and a list
 of the various terms used throughout the report.
 
 \subsection{Chapter Guide}
-\autoref{ch:intro} starts by briefly describing the project subject, namely  the
-filter bubble. It ends by introducing a set of initial problems for further
-analysis.\nl
+\autoref{ch:intro} starts by briefly describing the subject of the project,
+namely the filter bubble. The chapter concludes by introducing a set of initial
+problems for further analysis.\nl
 
 \autoref{cha:DG} starts by discussing various social media sites which are
 deemed fit as a source of useful user data, and how this data can be
-accessed and gathered. It ends by concluding that Twitter is best suited for our
-needs and that we will use it as a data source.\nl
+accessed and gathered by using Web Crawlers and \acsp{API}. The chapter finishes
+by concluding that Twitter is best suited for our needs and that we will use it as
+a data source.\nl
 
 \autoref{cha:DA} starts by discussing how user data, in the form of tweets, can
-be analysed to determine a user's filter bubble. It ends by concluding
+be analysed to determine a user's filter bubble. The chapter ends by concluding
 that we want to make two models, one using a Bag-of-Words approach, and another
-using a Naive Bayes Network.\nl
+using a Naive Bayes Classifier.\nl
 
 \autoref{ch:problem} continues from the analysis of the problem area and states
-our intent to break a filter bubble, by determining the political bias of the
-people a user follows on Twitter.\nl
+our intent to break political filter bubbles by determining the political bias
+of the people a user follows on Twitter.\nl
 
-\autoref{cha:req} presents a number of functional- and usability requirements,
-deemed necessary to successfully develop the software solution. We conclude that
-we want to build a web-application with a web page front-end.\nl
+\autoref{cha:req} presents a list of functional and usability requirements,
+deemed necessary to successfully develop the software solution. We determine
+that the solution should be built as a web application with a web
+page front-end.\nl
 
-\autoref{ch:sysview} presents an overview of the developed system and describes
-how its parts interact with each other. The system consists of a web-application
+\autoref{ch:sysview} presents an overview of the developed system and how the
+parts interact with each other. The system consists of a web-application
 front-end, a database, and a back-end server.\nl
 
-\autoref{cha:twitterAPI} describes how we interact with the Twitter \ac{API}to
+\autoref{cha:twitterAPI} describes how we interact with the Twitter \acs{API} to
 gather the required data for analysis.\nl
 
-\autoref{DatabaseAPI} describes the development of the \ac{API} which is used
-for interacting with the database. This \ac{API} is developed using the Laravel
+\autoref{DatabaseAPI} describes the development of the \acs{API} which is used
+for interacting with the database. This \acs{API} is developed using the Laravel
 web application framework.\nl
 
-\autoref{queueAPI} describes the development of the \ac{API} which is used to
-interact with the back-end server. This \ac{API} is developed using the
+\autoref{queueAPI} describes the development of the \acs{API} which is used to
+interact with the back-end server. This \acs{API} is developed using the
 Microsoft .NET framework in the C\# programming language.\nl
 
 \autoref{workerLabel} describes the development of the Worker class, which is
 the part of the back-end server responsible for determining a user's filter
-bubble. This is done using both the Bag-of-Words model and the Naive Bayes
-Network.\nl
+bubble. This is done using both the Bag-of-Words and the Naive Bayes
+Classifier.\nl
 
 \autoref{cha:classification} describes the development of the two different
 classification algorithms, namely the Bag-of-Words, and the Naive Bayes
-Network.\nl
+Classifier.\nl
 
 \autoref{GUI} presents the \ac{GUI} of the web-application front-end. It also
 describes the design choices involved in developing the visual presentation.\nl
 
 \autoref{cha:usability} starts by presenting the usability testing of the
 system. It then concludes with the quality of the system's front-end and
-determines the number of improvements to be implemented. Finally, it presents
-the improvements added based on the usability test.
+determines a number of improvements to be implemented. Finally, it presents
+the improvements added based on the usability test.\nl
 
 \autoref{cha:testing} presents a number of tests which aim to ensure the quality
 of the developed software solution. It ends by concluding the possible
 bottlenecks in the execution process, namely the limited amounts of Tweets
-retrievalble per second.\nl
+retrievable per second.\nl
 
 \autoref{fwork} discusses which elements of the system are unfinished, or could
 be a subject for future development.\nl
 
-\autoref{cha:conclusion} ends the report by concluding on the project's success
-in relation to the system requirements determined in \autoref{cha:req}.
+\autoref{cha:conclusion} concludes on the report by determining the project's
+success in relation to the system requirements listed in \autoref{cha:req}.\nl
+
+\autoref{cha:weeklyProg} is used to present and reflect on weekly resumés based
+on the work done during the project.
 
 
 

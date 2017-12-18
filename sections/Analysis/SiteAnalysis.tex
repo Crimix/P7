@@ -1,29 +1,28 @@
 %Klaus: it would be nice to provide an overview to this chapter either here or
 % on analisis part (Har smidt den efter initerende problem)
 \chapter{Data Gathering}\label{cha:DG}
-In order to identify a user's filter bubble, we need to analyse that user's
-online activity, such that we can determine what people and information they
+To identify a user's filter bubble, we need to analyse their
+online activity, so we can determine what people and information they
 engage with. A user's online activity consists of large amounts of information,
-including data on what websites they frequent, or which people they engage with
-on social media. In the case of social media, this activity data get stored on
-that site's servers, and in the case of browsing history, the data can be stored
-locally on the user's device. While the user's data contain a lot of both useful
-and irrelevant information, the vast amount of user data requires extensive
+including data on which websites they frequent, or which people they engage with
+on social media. While the user's data contains a lot of both
+useful and irrelevant information, the vast amount of user data requires extensive
 analysis to deduce something about a user.\nl
 
-As we will need a reliable way to gather large amounts of data about a user,
-this chapter will be used to analyse different sources of data, and methods of
-gathering said data. In \autoref{sec:Social} we present a number of different
-social media, and discuss what data we can gather from them, and what tools they
-have available for accessing the data. In \autoref{subsec:crawler} we discuss an
-alternative approach to gathering data, namely by using a web-crawler.
-Finally, we conclude what approach is the most suitable for information
+As we need a reliable way to gather large amounts of data about a user,
+this chapter is used to analyse different sources of data and methods of
+gathering said data.\nl
+
+In \autoref{sec:Social}, we present a number of different
+social media, discuss which data we can gather from them and what tools they
+have available for accessing the data. In \autoref{subsec:crawler}, we discuss
+an alternative approach to gathering data, namely by using a web-crawler.
+Finally, we conclude which approach is the most suitable for information
 gathering.
 
 \section{Social Media}\label{sec:Social}
-In order to find a source of user data, this section will be used to analyze a
-number of prominent social media sites. These sites can be seen in
-\autoref{tab:priminentMedia} with their number of active
+This section is used to analyse a number of prominent social media sites. These
+sites can be seen in \autoref{tab:priminentMedia} with their number of active
 users \citep{SocialMediaStats, AdvertiseOnReddit}.
 
 \begin{table}[H]\centering
@@ -36,17 +35,17 @@ Messenger & 1300 \\\hline
 Twitter & 328\\\hline
 Reddit &  250\\\hline
 \end{tabular}
-\caption{Social media sites and their number of active users}
+\caption{Social media sites and their number of active users.}
 \label{tab:priminentMedia}
 \end{table}
 
 Based on the number of active users, the most prominent social media sites are
 Facebook followed by YouTube. However, while YouTube is a large social media
 site, it is mainly used to upload and share videos. As this data is difficult to
-analyze, we have chosen not to not inspect YouTube any further. In
-addition, services focusing on direct messages between users, like Messenger and
-WhatsApp are omitted, as this data is not publicly available. As such, the most
-suitable social media sites to gather data from, are websites where many users
-are openly interacting with each other, and where opinions and information get
-exchanged through text posts and comments. Such sites include Facebook,
-Twitter, and Reddit.\nl
+analyse, we have chosen not to inspect YouTube any further. In addition,
+services focusing on direct messages between users, like Messenger and WhatsApp
+are omitted, as this data is not publicly available. The most suitable social
+media sites to gather data from, are websites where many users are openly
+interacting with each other and where opinions and information are exchanged
+through text posts and comments. Such sites include Facebook, Twitter and
+Reddit.\nl

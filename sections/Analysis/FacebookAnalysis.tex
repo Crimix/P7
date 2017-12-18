@@ -1,27 +1,32 @@
 \subsection{Facebook Analysis}\label{sec:facebook-analysis}
-Facebook is a social media site with more than one billion users, each sharing
-posts and personal details, and all of which are useful in the analysis and
+Facebook is a social media site with more than two billion users sharing
+posts and personal details, all of which are useful in the analysis and
 detection of a person's \fbp. Facebook is used by both private citizens and
-businesses to organise events, communicate, and share ideas.
+businesses to organise events, communicate and share ideas.
 
 \subsubsection{Using Facebook}
-When using Facebook, most of the interaction with other users happens through
+Most of the interaction with other users happens through
 direct conversation with another user or through a page:
 
 \begin{itemize}
   \item \textbf{User:} A user is a private citizen on Facebook. A user's
-  ``feed'' is a core part used to continuously shows new posts from users and
+  ``feed'' is a core part used to continuously show new posts from users and
   pages. Users can connect with other users via ``friendships'', which allows
   the user to see some of the posts on their feed.
-  \item \textbf{Page:} A page can be used to either organise an event, a
+  \item \textbf{Page:} A page can be used to either organise events, as a
   discussion forum or as a profile for a company. Users can mark these pages as
   ``liked'' which can be used both to get updates from the page and show
-  others, what they like.
+  others that they like it.
+  \item \textbf{Post:} A user can make a ``Post'' on a page which they have
+  access to. A post can consist of text, media and similar elements.
+  \item \textbf{Like:} A user can ``Like'' posts, comments and pages to show
+  others their opinion of said element. When a user ``like'' a page, they will
+  also be shown future posts by that page.
 \end{itemize}
 
 
 \subsubsection{Facebook API}
-Facebook prohibits crawling/scraping of their website with a few exceptions such
+Facebook prohibits crawling of their website with a few exceptions such
 as crawlers made by Google and Apple, whom still have a few restrictions to
 follow \citep{FacebookRobotsTxt}. To access data on their site, they have
 created the Facebook Graph \ac{API} as part of their developer platform, which
@@ -47,8 +52,8 @@ movies and pages on Facebook, that they have marked as ``liked''
 It is possible to access the user's posts and details regarding them, including
 whether it originated from them or if another user shared it. These posts can
 then be traced back one or more steps depending on the privacy settings of each
-link in the ``share--chain'', but only limited information -- such as their
-name and app-specific ID -- can be gathered about the users on the chain
+link in the ``share--chain'', but only limited information, such as their
+name and app-specific ID, can be gathered about the users on the chain
 \citep{FacebookGraphApiUserFeed}.\nl
 
 To summarise, it is possible to use Facebook's \ac{API} to find connections
