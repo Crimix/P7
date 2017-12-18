@@ -1,48 +1,49 @@
 \chapter{Twitter API Interaction}\label{cha:twitterAPI}
-Following the decision to use Twitter as the source for data in
-\autoref{sec:social-media-conclusion}, this chapter will be used to document how
-we interact with the Twitter API, and how we handle the authorisation required
-to access their data. When accessing data through the Twitter API, each
-requester has a limited amount of request they can make within a 15 minute time
-span \citep{twitterRateLimit}. As an example, retrieving batches of tweets is
-limited to 900 requests if made on behalf of a user, and 1500 requests if made
-on behalf of an application \citep{twitterTimelineRateLimit}. This limit on
+Following the decision to use Twitter as the source of data in
+\autoref{sec:social-media-conclusion}, this chapter documents how we interact
+with the Twitter API and how we handle the authorisation required to access
+their data. When accessing data through the Twitter API, each requester has a
+limited amount of requests, they can make within a 15 minute time span
+\citep{twitterRateLimit}. As an example, retrieving batches of tweets is
+limited to 900 requests if made on behalf of a user and 1500 requests if made on
+behalf of an application \citep{twitterTimelineRateLimit}. This limit on
 requests makes it impossible to upscale the system to service multiple users at
-a time. As such, we have chosen that instead of making requests on behalf of our
-application, we instead ask the user to authenticate their Twitter account with
-our system, such that we can make requests on bahalf of their user instead.
-However, Twitter enforces a different set of authentication requirements when
-making requests from a users instead of an application \citep{TwitterAPIAuth}.
-As such, this chapter will be used to describe how we make requests on behalf of
-the user.\nl
+a time, if we make all requests on behalf of our application. We have chosen
+that instead of making requests on behalf of our application, we instead ask the
+user to authenticate their Twitter account with our system, so that we can make
+requests on behalf of their user instead. However, Twitter enforces a different
+set of authentication requirements when making requests from a user instead of
+an application \citep{TwitterAPIAuth}. This chapter describes how we make
+requests on behalf of a user.\nl
 
-% In \autoref{sec:OAuth} we start by shortly describing how Twitter handles 
-% authorization of requests made by users. Following this \autoref{sec:reqHead}
-% is used to describe the structure of the authorization header, which is a
-% variable passed to the Twitter API in order to verify our identity and intent.
-% In \autoref{label:stringCreate} we end by describing how to assemble all of the
-% necessary information into the final authorization header.
+In \autoref{sec:OAuth}, we start by shortly describing how Twitter handles
+authorisation of requests made by users. Following this, \autoref{sec:reqHead}
+is used to describe the structure of the authorisation header, which is a
+variable used to verify our identity and intent.
+In \autoref{label:stringCreate}, we end by describing how to assemble all of the
+necessary information into the final authorisation header.
 
 \section{OAuth}\label{sec:OAuth}
-Whenever a user wants to request data through the Twitter API, Twitter requires
-that request to conform with the OAuth 1.0 authorisation protocol
-\citep{OAuth1}. This protocol requires the request to contain information about
-the following\citep{TwitterAPIAuth}:
+Whenever a request is made on behalf of a user, Twitter requires that request to
+conform with the OAuth 1.0 authorisation protocol \citep{OAuth1}. This protocol
+requires the request to contain information about the following
+\citep{TwitterAPIAuth}:
 
 \begin{enumerate}
- 	\item Which application is making the request
-	\item Which user the request is posting on behalf of
-	\item Whether the user has granted the application authorization to post on the
-user’s behalf 
-	\item Whether the request has been tampered by a third party while in transit
+ 	\item Which application is making the request.
+	\item Which user the request is made on behalf of.
+	\item Whether the user has granted the application authorisation to post on the
+user’s behalf.
+	\item Whether the request has been tampered with by a third party while in
+	transit.
 \end{enumerate}
 
-In order for a request to contain this information, we must create a Request
-Header, which consists of a number of encrypted/unencrypted key-value pairs. 
+For a request to contain this information, we must create a request
+header, consisting of a number of encrypted key-value pairs. 
 
 \section{Request Header}\label{sec:reqHead}
-As stated, for an \ac{HTTP} request to be valid in the Twitter API, it has to
-contain seven key/pair values in the header \citep{TwitterAPIAuth}. These can
+For an \ac{HTTP} request to be valid in the Twitter API, it has to
+contain seven key-value pairs in the header \citep{TwitterAPIAuth}. These can
 be seen below:
 
 \begin{itemize}
@@ -55,41 +56,57 @@ be seen below:
   \item oauth\_version
 \end{itemize}
 
-The values and how to get them is described in the following subsections:
+The values, and how to get them, is described in the following subsections.
 
 \subsection*{Consumer key}
 The consumer key is a unique token that identifies who makes the request.
-This key is bound to the specific application, as such we can manually retrieve
-it from the twitter website www.apps.twitter.com.
+This key is bound to the specific application. We can manually retrieve
+it from the Twitter website \url{www.apps.twitter.com}.
 
 \subsection*{Nonce}
 The nonce is a unique token generated for each request. This way, it can be
 determined if a request has been submitted multiple times. As there is no
-mandatory approach to generating this request, we have chosen to base it on a
-combination of the request type (POST/GET), a requester's name, and a timestamp.
+mandatory approach to generating this key, we have chosen to base it on a
+combination of the request type (POST/GET), a requester's name and a timestamp.
 
 \subsection*{Signature}
 The signature is used by Twitter to assure that the request has not been
 modified after being sent. It works by encoding all information from the initial
 request into a signature, and if this signature is not representative of the
-request Twitter receives, it is considered as invalid \citep[sec
-3.4]{OAuth1}. \\
-In practice we do the following \citep{TwitterAPISignature}. We start by using
-percent-encoding to encode: all the parameters, the request type, and the
-key-value pairs. Then we concatenate all the encoded strings. \\
-Following this, we concatenate two additional values which identify the
-requesting user and the application, namely the \textc{OAuth token secret} and
-the \textc{Consumer secret}. Here the Token Secret is unique to the user, and is
-given to us by Twitter when the user authenticates with our application. The
-Consumer Secret is a unique identifier for our application.\\
-These two values are then percent-encoded, concatenated, and used as a key for a
-HMAC-SHA1 encoding of the base string \citep{TwitterHMACSHA}. The output from
-this encoding is now our signature.
+request Twitter receives, it is considered invalid \citep[sec
+3.4]{OAuth1}. In practice, we do the following \citep{TwitterAPISignature}:
+
+\begin{enumerate}
+  \item  Use percent-encoding to encode all the parameters, the
+  request type and the key-value pairs.
+  \item Concatenate all the encoded strings.
+  \item Then concatenate the two additional values which identify the
+  requesting user and the application, namely the \textc{OAuth token secret}
+  and the \textc{Consumer secret}. Here the Token Secret is unique to the user
+  and is given to us by Twitter when the user authenticates with our
+  application. The \textc{Consumer Secret} is a unique identifier for our
+  application.
+  \item These two values are then percent-encoded, concatenated and used as the
+  key for an HMAC-SHA1 encoding of the base string \citep{TwitterHMACSHA}. The
+  output from this encoding is now our signature.
+\end{enumerate}
+
+% In practice, we do the following \citep{TwitterAPISignature}. We start by using
+% percent-encoding to encode: all the parameters, the request type, and the
+% key-value pairs. Then we concatenate all the encoded strings. \\
+% Following this, we concatenate two additional values which identify the
+% requesting user and the application, namely the \textc{OAuth token secret} and
+% the \textc{Consumer secret}. Here the Token Secret is unique to the user, and is
+% given to us by Twitter when the user authenticates with our application. The
+% Consumer Secret is a unique identifier for our application.\\
+% These two values are then percent-encoded, concatenated, and used as a key for a
+% HMAC-SHA1 encoding of the base string \citep{TwitterHMACSHA}. The output from
+% this encoding is now our signature.
  
 \subsection*{Signature method}
-The signature method for Twitter is always HMAC-SHA1, any request without this
-signature method is invalid. HMAC-SHA1 means that the cryptography hash function
-used is \ac{SHA-1} \citep{TwitterHMACSHA}.
+The signature method for Twitter is always \ac{HMAC-SHA1}. Any request without
+this signature method is invalid. \ac{HMAC-SHA1} means that the cryptography
+hash function used is \acused{SHA-1} \citep{TwitterHMACSHA}.
 
 \subsection*{Timestamp}
 The timestamp is a string created together with the request. The string is the

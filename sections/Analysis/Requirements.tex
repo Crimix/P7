@@ -1,15 +1,15 @@
 \chapter{Requirements Definition}\label{cha:req}
-Following the problem statement in \autoref{ch:problem}, this chapter will be
-used to determine the actual requirements of the developed software solution.
+% Following the problem statement in \autoref{ch:problem}, this chapter will be
+% used to determine the actual requirements of the developed software solution.
 
-% Based on the analysis of social media and classification algorithms in the
-% previous chapters, this chapter will be used to determine the functional requirements, and
-% usability requirements, which will be used to lead the development of the
-% system. In \autoref{sec:funcReq} we present the functional requirements, which
-% define how the system architecture should be structured, and what features the
-% system should contain. In \autoref{sec:userReq} we present the usability
-% requirements, which define how the front-end should be designed, and how the
-% system should be designed in order to appeal to our target audience.
+Based on the analysis of social media and classification algorithms in the
+previous chapters, this chapter is used to determine the requirements used to
+direct the development of the system. In \autoref{sec:funcReq}, we present the
+functional requirements, which define how the system architecture should be
+structured and which features the system should contain. In
+\autoref{sec:userReq}, we present the usability requirements, which define how
+the front-end should be designed and how the system should be designed in order
+to appeal to our target audience.
 
 \section{Functional Requirements}\label{sec:funcReq}
 
@@ -20,15 +20,15 @@ tweets and information about a user, including the accounts they are following.
 
 \begin{requirement}{Follow Twitter \ac{API} guideline} 
 The program should follow the Twitter \ac{API} guidelines such as not making
-more requests than the guidelines specifies per. 15 minutes. This guideline
+more requests than the guidelines specifies per 15 minutes. This guideline
 means that the program should also be capable of keeping track of how many
 requests it has used, how many it is allowed to use and when the limit resets. 
 \end{requirement}
 
 \begin{requirement}{Identify political beliefs of a user}
-The program should be able to identify and inform the user of his or her
-political belief and of that of those he or she follows. It should do this by
-analysing the words, hashtags and links.
+The program should be able to identify political beliefs of a user and
+the accounts they follow. It should do this by analysing the words, hashtags
+and links.
 
 % Saved for a little while 12-12-17
 % Using the links and comparing them to the list of bias news site and also taking
@@ -44,41 +44,42 @@ analysing the words, hashtags and links.
 % users view on different subjects in the tweets.
 \end{requirement}
 
-\begin{requirement}{Web-Application Front-End}
+\begin{requirement}{Web application front-end}
 The application should make use of a front-end developed as a web application.
 This application should be hostable on a server such that it can be presented as
 a web page.
 \end{requirement}
 
-\begin{requirement}{Server Back-end}
+\begin{requirement}{Server back-end}
 The logic of the developed software should be hosted on a server, which receives
-requests from the front-end, and returns analysed data and the determined
+requests from the front-end and returns analysed data and the determined
 conclusions.
 \end{requirement}
 
-\begin{requirement}{Store Analysis Data on a Database}
+\begin{requirement}{Store analysis data on a database}
 The program should be able to efficiently store the downloaded tweets or similar
-relevant data on a database, to reduce the need for retrieving new.
+relevant data on a database, to reduce the need for retrieving the same data
+again.
 \end{requirement}
 
-\begin{requirement}{Scalable Architecture}
+\begin{requirement}{Scalable architecture}
 The server back-end must be capable of handling an undefined number of
-concurrent user requests as if it acted as the back-end of an actual web page.
-As such, the server must queue requests, and make sure to handle them all.
+concurrent user requests. As such, the server must queue requests and make sure
+to handle them all.
 \end{requirement}
 
-\begin{requirement}{Twitter API Resource Limits}
-As an individual Twitter user or application has a limited amount of available
-calls to the Twitter API, the front-end should make use of the official embedded
-Twitter authentication implementation. Doing this should allow the system to use
-that user's pool of API calls. This should make the application scalable for a
-larger potential user base.
+\begin{requirement}{Twitter API resource limits}
+Since an individual Twitter user or application has a limited amount of
+available requests to the Twitter API, the front-end should make use of the
+official, embedded, Twitter authentication implementation. Doing this should
+allow the system to use that user's pool of API requests. This should make the
+application scalable for a larger user base.
 \end{requirement}
 
-\begin{requirement}{\ac{API} Communication}
-The developed software must make use of \ac{API}s to communicate between each
-other. These \ac{API}s must use verification such that only approved requests
-get processed. The database and the server back-end should use these \ac{API}s.
+\begin{requirement}{\ac{API} communication}
+The developed software must make use of \ac{API}s for intercommunication. These
+\ac{API}s must use verification such that only approved requests get processed.
+The database and the server back-end should use these \ac{API}s.
 \end{requirement}
 
 %Klaus: Some sort of recommendation would be nice as you want to break out of
@@ -88,22 +89,22 @@ get processed. The database and the server back-end should use these \ac{API}s.
 
 
 \section{User Interaction Requirements}\label{sec:userReq}
-In order to improce the user's interaction with our system, the design of the
-Graphical User Interface has based on the 3 fundamentals of human-computer
-interaction specified by \citeauthor{benyon2013designing} in
-\citep[ch.4]{benyon2013designing}, namely accessibility, usability and
-acceptability. 
+In order to improve the user's interaction with our system, the design of the
+\ac{GUI} should be based on the three fundamentals of human-computer
+interaction, namely accessibility, usability and acceptability. These fundamantals have been defined by
+\citeauthor{benyon2013designing} in his book ``Designing Interactive Systems''
+\citep[ch. 4]{benyon2013designing}.\nl
 
-Here, accessibility refers to the ability of all users of all backgrounds, or
+Here, accessibility refers to the ability of all users of all backgrounds or
 with possible disabilities, to be able to interact with the system
-\citep[p.77-80]{benyon2013designing}.
-Usability refers to the effort people have to spend when using the system, the
-ease of learning the system, and the appropriate organization of buttons,
-illustrations, and text \citep[p.81-84]{benyon2013designing}. Acceptability
-refers to the political, social, and cultural contexts of the system. Namely if
-the system is trustworthy, convenient, non-intrusive, or politically correct
-\citep[p.84-85]{benyon2013designing}. Based on these elements, the GUI
-requirements are presented in \autoref{tab:userReq}.
+\citep[p. 77-80]{benyon2013designing}. Usability refers to the effort people
+have to spend when using the system the ease of learning the system and the
+appropriate organisation of buttons, illustrations and text \citep[p.
+81-84]{benyon2013designing}. Acceptability refers to the political, social and
+cultural contexts of the system namely if the system is trustworthy, convenient,
+non-intrusive or politically correct \citep[p. 84-85]{benyon2013designing}.
+Based on these elements, the GUI requirements are presented in
+\autoref{tab:userReq}.
 
 \begin{table}[H]\centering
 \begin{tabular}{|l|p{11cm}|}\hline
@@ -115,20 +116,21 @@ in graphs), the system should use patterns to distinguish between
 elements.\\\hline
 Accessibility & Text and images should be resizable, such that people with
 limited eye-sight can still use the system.\\\hline
-Usability & The system should minimize the amount of user actions necessary in
-order to use the system. \\\hline
-Usability & The \ac{GUI} should be simplistic upon launch, with every element
+Usability & The system should minimise the number of user actions necessary to
+use the system. \\\hline 
+Usability & The \ac{GUI} should be simplistic upon
+launch, with every element
 immediately recognisable. \\\hline
 Usability & There should be no doubts about what information is needed and which
 button(s) to press. \\\hline
 Usability & The user should have easy access to assisting information on how to
 use the system. \\\hline
-Usability & When presenting data it should be clearly labeled, and explained in
-helping text what the data represents.\\\hline
+Usability & When presenting data, it should be clearly labelled and explained
+with helping text what the data represents.\\\hline
 Acceptability & It should be clearly stated what user data will be used for.\\\hline
 Acceptability & The system should use neutral language and imply no political
 bias when presenting data in a political context.\\\hline
 \end{tabular}
-\caption{Requirements for user interaction}
+\caption{Requirements for user interaction.}
 \label{tab:userReq}
 \end{table}

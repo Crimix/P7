@@ -1,100 +1,102 @@
 \chapter{System Overview}\label{ch:sysview}
-Based on the system requirements in \autoref{cha:req} the part will be used to
-document the design and development of the software solution. The developed
-solution consists of multiple different parts, including a Queue Server, a
-Webpage Front-End, a Database, and a set of Classification Models. As such,
-this chapter will be used to give an overview of these different parts.
+Based on the system requirements in \autoref{cha:req}, this part of the report
+is used to document the design and development of the software solution. The
+developed solution consists of multiple different parts, including a queue
+server, a webpage front-end, a database and a set of classification models.
+This chapter is used to give an overview of these different parts.
 
 \section{Overview}
-The developed system consists of four individual parts, the Front End web
-service, the Database, the Classification System, and a Task Queue which handles
-users requests. These elements are developed using three different tools or
-frameworks: Laravel, C\# and MySQL. The overall architecture of the system can
-be seen in \autoref{P7_SystemOverview} where the arrows imply that different
-parts are communicating directly with each other.
+The developed system consists of four individual parts: the front-end web page,
+the database, the classification System and a task queue which handles users
+requests. These elements are developed using the following: Laravel, C\# and
+MySQL. The overall architecture of the system can be seen in
+\autoref{P7_SystemOverview}, where the arrows imply that different parts are
+communicating directly with each other.
  
-\figx[0.62]{P7_SystemOverview}{System architecture of the BubbleBuster system.}
+\figx[0.62]{P7_SystemOverview}{Architecture of the developed system.}
 
 \subsection{GUI} %API, Interfaces, Data Transfer, System Logic The
-The Front-End of system is developed using the Laravel framework, which was
-decribed in \autoref{sec:laravel}. This part of the system acts as the user's
+The front-end of the system is developed using the Laravel framework, which is
+described in \autoref{sec:laravel}. This part of the system acts as the user's
 entry-point to the system. From here, the user can make requests to analyse a
-filter bubble using a Twitter username, and view the data derived from the
+filter bubble using a Twitter username and view the data derived from the
 analysis. The solution is centred around a web application; thus it is scalable
-as it can support input from multiple users at a time, it is also possible to
+as it can support input from multiple users at a time. It is also possible to
 acquire more servers if needed.
 
 \subsection{Database and API}
 The Database \ac{API} is developed using the Laravel framework described in
-\autoref{sec:laravel} and is used to execute commands in the tables on the MySQL
-Database. As a safeguard, we have implemented authorisation using Laravel
-Passports, which requires the request to include an authorisation header with a
-\textc{bearer} token. We have chosen this approach, as we want to ensure that
-only authorised sources can edit the stored data. The implementation of the
+\autoref{sec:laravel} and is used to execute queries on the MySQL database. As a
+safeguard, we have implemented authorisation using Laravel Passport, which
+requires the request to include an authorisation header with a \textc{bearer}
+token. We have chosen this approach, as we want to ensure that only authorised
+sources can edit and retrieve the stored data. The implementation of the
 database \ac{API} is described in \autoref{DatabaseAPI}.
 
 \subsection{Queue Server and API}
-The Queue Server is used to handle and schedule requests from all the users
-using the Web Application. To handle these requests, we have developed an API
-using C\# which serves as the Server entry point. As this API is used to start
-tasks unconditionally, it requires a safeguard in the form of an authorization
-system, as hostile users would otherwise be able to overload the system with
-fake requests. While we deem this to be necessary, the authorization system is
-not yet implemented, as is discussed in \autoref{disc:auth}. The implementation
-of the queue server and its API is further described in \autoref{queueAPI}.
+The queue server is used to handle and schedule requests from all users of 
+the web application. To handle these requests, we have developed an API using
+C\# which serves as the server entry-point. As this API is used to start tasks
+unconditionally, it requires a safeguard in the form of an authorisation system,
+as hostile users would otherwise be able to overload the system with fake
+requests. While we deem this to be necessary, the authorisation system is not
+yet implemented, as discussed in \autoref{disc:auth}. The implementation of the
+queue server and its API is further described in \autoref{queueAPI}.
 
 \subsection{Worker}
-As explained, the purpose of the system is to determine the user's political
+As explained, the purpose of the system is to determining users' political
 filter bubbles using the two approaches described in \autoref{sec:DAConc}. The
-Worker contains this functionality. Whenever the queue server receives a request
-to classify a user, it calls the methods contained in the worker. This is
+worker encaptulates this functionality. Whenever the queue server receives a
+request to classify a user, it calls the methods contained in the worker. This is
 further described in \autoref{workerLabel}.
 
 \subsection{Classification Models}
-Two different models are developed to help determine a Twitter user's political
-leaning, as explained in \autoref{cha:classification}. The first model uses
-a Bag-of-Words approach where a text get analysed for emotional, political, and
-news-related keywords. This approach is based partly on the methodology
+Two different models have been developed to help determine a Twitter user's
+political leaning, as explained in \autoref{cha:classification}. The first model
+uses a Bag-of-Words approach where a text is analysed for emotional, political
+and news-related keywords. This approach is based partly on the methodology
 described by \cited{sarlan2014twitter}. The second approach uses a Naive
-Bayesian Network to determine a user's political affiliation based on a set of
-training data built from the Twitter data from American politicians.
+Bayes Classifier to determine a user's political affiliation based on a set of
+training data extracted from the Twitter data from American politicians.
 
 \subsection{Multithreading}\label{subs:multithread}
 To optimise the system performance, we have chosen to use multiple threads for
-actions which can easily be split into parts. These actions are the retrieval of
-tweets and the following classification of tweets. For tweet retrieval, we make
-use of three threads, where each thread is working on retrieving the tweets of a
-single user. As such, we can process three users concurrently. Based on our
-general testing, this was chosen to be the optimal amount, as Twitter
-occasionally terminated our requests if we had too many running concurrently.\\
-For tweet classification, we make use of five threads, working together to
+actions which can be split into parts. These actions are the retrieval of
+tweets and the classification of tweets. When retrieving tweets, we
+make use of three individual threads, each working on an individual user.
+Therefore, we can process three users concurrently. Based on our general
+testing, this was chosen to be the optimal amount, as Twitter occasionally
+terminated our requests if we had too many running concurrently.\nl
+
+For tweet classification, we make use of five threads working together to
 analyse the tweets from a single person at a time. This method means that a
-single person's tweets get split into five parts, analysed, and the results
+single person's tweets get split into five parts, analysed and the results
 combined into a single classification. Splitting the classification into five
-threads greatly improved performance, documented in \autoref{test:multithread}.
+threads greatly improved performance, as documented in
+\autoref{test:multithread}.
 
 \subsection{Singleton Class Structure}
 Many of the classes in the developed system are defined as singletons, meaning
 that only a single instance is ever created. We have chosen this approach, as it
 offers slight improvements over static classes, as we ensure that classes are
-only stored on the stack if they are ever used. A potential problem with this
+only stored on the heap if they are ever used. A potential problem with this
 approach is that we use a multithreaded method for analysing tweets, which
 causes problems with accidentally trying to create multiple instances of the
 classes. However, this is solved by using double-checked locking to ensure that
-only one instance of a singleton exists.
+only one instance of a singleton exists. 
 
 \subsection{Web Communication}
 When retrieving data from the Twitter API, we have chosen to make use of
-\textc{HttpWebRequest} instead of \textc{WebClient} as it allows us to have more
-control over the requests. As an example the \textc{HttpWebRequest} have a
+\\\textc{HttpWebRequest} instead of \textc{WebClient} as it allows us to have
+more control over the requests. As an example, the \textc{HttpWebRequest} has a
 \textc{Timeout} property which we can modify to make the request wait longer
 before failing. Otherwise, this would only be possible if we extended
-\textc{WebClient} and made our web client. But it was decided that this would be
-unnecessary, as it would imply extending a class only to change a single
-property.\nl
+\textc{WebClient} and made our own web client. But it was decided that this
+would be unnecessary, as it would imply extending a class only to change a
+single property.\nl
 
 
-With this overview in mind, the following chapters will be used to describe
+With this overview in mind, the following chapters describe
 the technical details of the system parts covered in this chapter.
 
 

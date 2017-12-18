@@ -131,12 +131,12 @@ token occurrences to justify using bigger n-grams.
 \subsection{Feature Vectors}\label{sub:FeatureVector}
 A feature vector is used to denote which features are present in a piece of
 text. The vector is created by mapping each feature to a unique integer. This
-is done while training the model, and is called a Bag-Of-Words (not to be
-confused with the Bag-Of-Words classification model, described in
+is done while training the model, and is called a Bag-of-Words (not to be
+confused with the Bag-of-Words classification model, described in
 \autoref{subsub:Models}). 
 By mapping features to integers, the feature vector can now be created as a
 series of 1's and 0's, which denotes whether the given feature is present in
-the vector. The bigger the Bag-Of-Words is, the larger every feature vector is,
+the vector. The bigger the Bag-of-Words is, the larger every feature vector is,
 as the feature vector is the same size as the Bag-of-Words.
 For example, if ``\textit{love}'' is mapped to the number \textbf{3} and
 ``\textit{movie}'' is mapped to the number \textbf{205}, then a feature vector
@@ -183,11 +183,11 @@ different training methods, each suitable for a different task.
 % \figx[1.0]{sentiment}{Accuracy of different sentiment analysis models on the
 % IMDB dataset \citep{Classification}.}
 
-Our main focus is the Bag-Of-Words and Naive Bayes models, as both
+Our main focus is the Bag-of-Words and Naive Bayes models, as both
 are straightforward methods of determining sentiment, which should help with
 providing proof of concept.
 
-\subsubsection{Bag-Of-Words}
+\subsubsection{Bag-of-Words}
 The Bag-Of-Words model determines the sentiment of a text by counting the
 occurrences of words with either a positive or negative attitude. Some models
 simply count the occurrences of positive or negative words, but in other
