@@ -1,19 +1,19 @@
 \chapter{Data Analysis}\label{cha:DA}
-There are many different approaches to analysing data from social media. As an
-example, \cited{pennacchiotti2011machine} make use of machine learning to
-determine users' political orientation. Another one of these methods is known as
-a sentiment analysis, which attempts to determine user's opinions regarding
-specific topics, such as movies or products. This technique has become
-especially useful for social media, as people increasingly discuss and post
-their opinions online \citep[Overview 2]{Sentiment}. Additionally, since
-sentiment analysis can be used to determine users' opinions on products, it
-should be possible to apply this analysis to politicians, legislature, political
-events and other political talking points.\nl
+Using similar ideas as \cited{pennacchiotti2011machine}, we want to analyse
+Twitter data to find a user's political views. Instead of using a general
+machine learning approach as they do, we instead try to determine it like we
+would with sentiment, using similar models to \cited{sarlan2014twitter} and
+\cited{go2009twitter}.\nl
 
-Sentiment analysis is done by gathering text post
-and comments, and extracting features providing clues to the opinion. The
-features can then be used with a classification model to predict the
-sentiment.\nl
+Sentiment analysis attempts to determine user's opinions regarding specific
+topics, such as movies or products. This technique has become especially useful
+for social media, as people increasingly discuss and post their opinions online
+\citep[Overview 2]{Sentiment}. Additionally, since sentiment analysis can be
+used to determine users' opinions on products, it should be possible to apply
+this analysis to politicians, legislature, political events and other political
+talking points. Sentiment analysis is done by gathering text post and comments,
+and extracting features providing clues to the opinion. The features can then
+be used with a classification model to predict the sentiment.\nl
 
 In \autoref{sec:FeatEx} we examine how to transform text into useful
 \textit{features}, and which options are available to increase the quality of
