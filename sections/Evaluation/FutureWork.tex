@@ -2,25 +2,25 @@
 This chapter highlights different parts of the system which could
 be improved for a future version of the application.
 
-\section*{Limit System}
-The limit on the amount of requests to Twitter we are allowed to make works fine
-on a small scale, as long as the user of the application does not use other
-programs that uses requests from the same request pool as our application. This
-is due to the fact that our application does not check how many request there
-are remaining, which would risk exceeding the request limit. \nl
-%The limit rate system that exist in the program works on a small scale, when
-%only our application is used because we do not update the rate limits by
-%using a specific request or using the response from a
-%request.
-%The headers of a response contains the remaining request in the pool for that
-%category of requests. \nl 
-%Dette er erstattet af det over. Er du ikke er enig i ændringen siger du bare til :)
-
-Before a potential release, a better implementation of requests would have to be
-made. This could be done by first sending a request to get the remaining amount
-of requests available and then each time a request is made, the response
-header, which contains the remaining amount of request, updates the
-limits in the system.\nl
+% \section*{Limit System}
+% The limit on the amount of requests to Twitter we are allowed to make works fine
+% on a small scale, as long as the user of the application does not use other
+% programs that use requests from the same request pool as our application. This
+% is due to the fact that our application does not check how many request there
+% are remaining, which would risk exceeding the request limit. \nl
+% %The limit rate system that exist in the program works on a small scale, when
+% %only our application is used because we do not update the rate limits by
+% %using a specific request or using the response from a
+% %request.
+% %The headers of a response contains the remaining request in the pool for that
+% %category of requests. \nl 
+% %Dette er erstattet af det over. Er du ikke er enig i ændringen siger du bare til :)
+% 
+% Before a potential release, a better implementation of limits would have to be
+% made. This could be done by first sending a request to get the remaining amount
+% of requests available and then each time a request is made using the response
+% header, which contains the remaining amount of requests, to update the
+% limits in the system.\nl
 
 
 %For future use of the Twitter \ac{API} a better implementation for the limits
@@ -28,32 +28,32 @@ limits in the system.\nl
 %has for each category, then each time a response is received from Twitter the
 %header with the remaining amount of requests available. \nl
 
-\section*{Queue API Authorization}\label{disc:auth}
-In the final version, the Queue API does not use any kind of authorization for
+\section*{Queue API Authorisation}\label{disc:auth}
+In the final version, the Queue API does not use any kind of authorisation for
 the requests. This means that it is possible for anyone to send requests to the
-queue server. The problem is that without authorization, we cannot guarantee
+queue server. The problem is that without authorisation, we cannot guarantee
 that it is only our application that tries to analyse Twitter accounts. This
 also means that our queue server needs to be robust enough to not crash when it
 receives something that is not a proper request. \nl
 
 While this is not a big problem for the current version of the application,
-since it uses a local server, it would be a huge problem on a large scale. 
+since it uses a local server, it would be a problem if the system were to be
+released.
 
-\section*{Word updater for Bag-Of-Words Implementation}
-Right now the Bag-Of-Words classifier, can only classify using already known
-words which has been premade and stored in a list. This results in the
+\section*{Word Updater for Bag-of-Words Implementation}
+Right now, the Bag-of-Words classifier can only classify using already known
+words which have been premade and stored in a list. This results in the
 classifier being able to classify tweets with a high accuracy right now, but it
-could in a few months lose some of that accuracy because of how the key words
+could, in a few months, lose some of that accuracy because of how the keywords
 change. This is why we started to implement a system that should identify new
-keywords and put them on a watch list using the Naive Bayes algorithm. This
+keywords and put them on a watch list using the Naive Bayes model. This
 system has some functionality implemented, but it was not possible to complete
 it within the time span.
 
 For a system that should be able to be used without the maintenance required by
-the Bag-Of-Words classifier, the system using Naive Bayes should be developed in
-full. While this approach is not perfect, it would allow us to dynamically
-update our model with a shifting political climate.
-% 
+the Bag-of-Words classifier, the word updater should be developed in full. While
+this approach is not perfect, it would allow us to dynamically update our model
+in a shifting, political climate.
 % A problem with the Bag-of-Words approach to determining the user's political
 % leaning is that the model is unable to adjust itself or to react to a shifting
 % political landscape. This is problematic, as some indicators of political
@@ -70,19 +70,17 @@ update our model with a shifting political climate.
 % to our list of political keywords.\nl
 
 %Outperform is single word :O http://www.thesaurus.com/browse/outperform
-\section*{Using additional models}
-The Naive Bayes and Bag-Of-Words models are simplistic models, and on other
-data sets are outperformed by more advanced models, such as the Support Vector
-Machine and Neural Network. In the future it would be interesting to see how
-these models measure up to the ones we currently use.
-
-
+\section*{Using Additional Models}
+The Naive Bayes and Bag-of-Words models are simplistic models. On other
+data sets, they are outperformed by more advanced models, such as the Support
+Vector Machine and Neural Networks. In the future, it would be interesting to
+see how these models measure up to the ones, we currently use.
 
 \section*{Larger training samples}
-One of the problems with the Naive Bayes model is that the amount of training
-samples are limited to 120, with actual training only using 90. In more ideal
-circumstances, the training set should increase by 10 or 100 times. If using a
-sizable, varied and balanced training set, it should be possible to achieve a
+One of the problems with the Naive Bayes model is that the number of training
+samples are limited to 120, with actual training only using 90. Under more ideal
+circumstances, the training set should be increased by a factor of 10 or 100.
+If using a sizable, varied and balanced training set, it should be possible to achieve a
 better prediction rate at the cost of slower predictions. This can also be
 extended to other models.\nl
 
@@ -90,7 +88,7 @@ By using larger training samples, there will be more features to consider, which
 should increase accuracy a lot. But there will also be a larger requirement on
 the memory usage. From what we experienced while working on Naive
 Bayes, this can be quite a problem for other models. To work around
-this, we will need to consider reducing the amount of features we use. A
+this, we will need to consider reducing the number of features we use. A
 suggestion from \autoref{subsec:Exp2} was to use Principal Component Analysis.
 This idea, along with other methods of reducing the dimensionality of the
 features, would need to be explored further.
@@ -98,20 +96,20 @@ features, would need to be explored further.
 \section*{More Usability Evaluations}
 It would be beneficial to perform more usability evaluations. The current
 evaluation was performed with a single user, which is far from enough. In the
-future we should perform more evaluations with between 4-8 users, using the
+future, we should perform more evaluations with between 4-8 users. Using the
 updated product, this should uncover the majority of the issues. The same set of
 exercises can be used in the following tests as the purpose of the test has not
-changed. It would also be beneficial to perform the tests with native english
+changed. It would also be beneficial to perform the tests with native English
 speakers, as they are more familiar with terms such as sentiment and bias.\nl
  
-In the future it would be interesting to release a version and ask people on
+In the future, it would be interesting to release a version and ask people on
 social media sites to use it and provide feedback on how accurate they judge
-the models to be. This would be especially helpful in judging how accurate our
+the models to be. This would especially be helpful in judging how accurate our
 current models are.
 
-\section*{Result Person Identification}
+\section*{Result Page Person Identification}
 Currently, we cannot identify who each person is in the filter bubble on the
-result screen. This would be a nice feature to have, as the user could be
+result page. This would be a nice feature to have, as the user could be
 curious about where specific people they follow are placed on the scale without
 having to look each of them up individually. In addition to this feature, a
 shortcut to looking up the filter bubble of another user could be added by
@@ -127,44 +125,47 @@ the middle of the political spectrum, thus breaking their filter bubble. \nl
 This feature would have to be developed before actual bubble busting would take
 place. One way of implementing this feature would be to make a separate
 database of recommended users with data generated from earlier searches. This
-database would of course have to start out with some hardcoded accounts.
+database would have to start out with some pre-analysed accounts.
 Otherwise, the first few users of the program would not get any
-recommendations. There would have to be a filter on which users gets added to
+recommendations. There would have to be a filter on which users are added to
 the database. This could be a requirement of at least 10000 followers.
 Otherwise, people would get irrelevant Twitter accounts recommended. If the
 application had a lot of traffic, a filter on what kind of people they want to
 be recommended could be implemented. For example, some people could prefer to
-only get well educated people recommended rather than celebrities who happen to
-tweet politically a lot.
+only get well-educated people recommended rather than celebrities who happen to
+tweet politically a lot.\nl
+
+Additionally, as we use \url{www.allsides.com} for determining the
+political bias of news media sites, we could use this data to recommend news
+media on the opposite side of the political spectrum.
 
 
-\section*{HTTP not HTTPS}
+\section*{Use Secure Communication Protocols}
 Right now, all our \ac{API}s use HTTP. This could be a serious problem, as the
 lack of encryption could allow a 3rd party to intercept the information
 contained in our communications. While most of our data is freely available
 through the Twitter API, it would be problematic when transferring the user's
-authorization information. This would be a major problem when releasing the
+authorisation information. This would be a major problem when releasing the
 system, because the user should feel secure using our application with their
 Twitter account.
 
 
-\section*{Database Twitter Protect Boolean}\label{sec:twitterProtect}
-Some Twitter accounts are privatised, thus requiring the user to follow that
+\section*{Protecting Private Users}\label{sec:twitterProtect}
+Some Twitter accounts are private, thus requiring the user to follow that
 specific account before being able to access their tweets. Therefore, if a
-privatised account is in the database by a user who follows that account and
-another user, who does not follow the account, searches for the account, they
-will acquire information they would otherwise not be allowed to get. While this
-is not a violation with the Twitter API, it is bad practice. While a boolean
-determining whether a Twitter account is private or not is stored in the
+private account was seached for and is in the database, it should not be
+possible for a user which does not follow that account to view the results.
+While this is not in violation with the Twitter API rules, it is bad practice.
+While a boolean determining whether a Twitter account is private or not is stored in the
 database, it is not currently used. This would have to be implemented before a
-public release.
+release.
 
 \section*{Worker Unrecoverable Error}
 If the worker encounters an error from which it cannot recover, it does not send
 any information to either the Database Server or GUI Server. As such, a user
-does not ever receive the email or any information. A common case where this
-would be the case is if the user tries to get the filter bubble of a private
-account they do not follow as this would not return any information. Another
-case is if the user searches for an account that does not exist. This is not
-acceptable in a finished system and needs to be addressed before it can be launched.
+never receives the E-mail or any information. A common case would be if the user
+tries to get the filter bubble of a private account they do not follow as this
+would not return any information. Another case is if the user searches for an
+account that does not exist. This is not acceptable in a finished system and
+needs to be addressed before it can be released.
 

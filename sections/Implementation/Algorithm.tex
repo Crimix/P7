@@ -1,24 +1,22 @@
-\section{Bag-Of-Words}\label{sec:BoW}
-The basic idea behind this model is a three-pronged approach, where we
-analyze the general sentiment of a tweet, what keywords are present, and what
+\section{Bag-of-Words Implementation}\label{sec:BoW}
+The premise of this model is a three-pronged approach, where we
+analyse the general sentiment of a tweet, which keywords are present and which
 news media the user is sharing. Using this approach, we can first determine the
-sentiment of the tweet, that is, if the user is happy, angry, or neutral. Based
-on this, we can apply this sentiment to certain keywords which are present in
-the tweet e.g. if the sentiment is positive, and the keyword is the name of a
-politician, we have a good indicator as to the users political affiliation.
-Additionally, we can analyze what news media the user shares. This can be
-useful, as news media often have some inherent political bias, which can be
-reflected in the people sharing their material \citep{allSidesBias}.\nl 
+sentiment of the tweet. Based on this, we can apply this sentiment to certain
+keywords which are present in the tweet e.g. if the sentiment is positive and
+the keyword is the name of a politician, we have a good indicator as to the
+user's political affiliation. Additionally, we can analyse which news media the
+user shares. This can be useful, as news media often have some inherent
+political bias, which can be reflected in the people sharing their material
+\citep{allSidesBias}.\nl
 
 The general idea behind this approach comes from opinion mining and sentiment
-analysis, where the sentiment of a text (Tweet) can be used to indicate an
+analysis where the sentiment of a text (tweet) can be used to indicate an
 opinion on a specific keyword. This approach is used in
-\cited{sarlan2014twitter} where sentimental words a counted and used to
+\cited{sarlan2014twitter} where sentimental words are counted and used to
 determine a general sentiment of a text. Where \cited{sarlan2014twitter} applies
 this approach to customer reviews, we have chosen to apply the approach to
-political keywords.
-
-The general structure of the algorithm can be seen in
+political keywords. The general structure of the algorithm can be seen in
 \autoref{AlgorithmStructure}.\\
 
 
@@ -60,50 +58,51 @@ public AnalysisResultObj AnalyzeAndDecorateTweets(List<Tweet> tweetList){
 \end{lstlisting}
 \end{minipage}
 
-On \textbf{lines 1-4} we start by creating the output object, and begin
-iterating over the tweets in the input list. On \textbf{line 5} we
-determine if a tweet containes a quotation. This is necessary as quotes can be
-problematic for the analysis. This is further described in
-\autoref{AlgorithmCases}. Then on \textbf{lines 7-10}, if a tweet does not
-contain quotes, we remove the punction from the tweet's text, and split it into
-individual words. On \textbf{lines 12-14} we call the methods for each
-individual analysis part. These methods decorate the tweet object with the
-information derived from the analysis. On \textbf{16-19} we check if the tweet's
-sentiment is positive or negative, and increment one of two counters. On
-\textbf{lines 21-22} we increment the count of the user's sentiment in the
-output object. Then on \textbf{lines 24-27} we start by checking if the tweet is
-political, that is, if the tweet's keywords or links imply a political leaning.
+On \textbf{lines 1-4}, we start by creating the output object and begin
+iterating over the tweets in the input list. On \textbf{line 5}, we determine if
+a tweet contains a quotation. This is necessary as quotes can be problematic for
+the analysis. This is further described in \autoref{AlgorithmCases}. Then, on
+\textbf{lines 7-10}, if a tweet does not contain quotes, we remove the
+puncturation from the tweet's text and split it into individual words. On
+\textbf{lines 12-14}, we call the methods for each individual analysis part.
+These methods decorate the tweet object with the information derived from the
+analysis. On \textbf{16-19}, we check if the tweet's sentiment is positive or
+negative and increment one of two counters. On \textbf{lines 21-22}, we
+increment the count of the user's sentiment in the output object. Then, on
+\textbf{lines 24-27}, we start by checking if the tweet is political, that is,
+if the tweet's keywords or links imply a political leaning.
 If the tweet is indeed political, we update the output object with this
-information. Finally on \textbf{lines 31-32} we add
-the tweet count and return the output object.
+information. Finally, on \textbf{lines 31-32}, we add the tweet count and return
+the output object.
 
 \subsection{Special Cases}\label{AlgorithmCases}
-When analyzing a tweet, we have a number of special cases which we have so far
-been unable to adequately handle. The first special case is ``quotes'', which refers
-to whenever a user places a piece of text within a set of quotes. The problem
-whith handling this case is that we have found that users often don't agree
-with whatever statement they quote, but instead use it to present a view point
-which they wish to mock or discuss. This is problematic, as the quote would
-originally be attributed to the creator of the tweet, which could skew our
+When analysing a tweet, we have a number of special cases which we have thus far
+been unable to adequately handle. The first special case is quotations, which
+refers to whenever a user places a piece of text within a set of quotes. The
+problem with handling this case is that we have found that users often do not
+agree with whatever statement they quote, but instead use it to present a
+viewpoint which they wish to mock or discuss. This is problematic, as the quote
+would originally be attributed to the creator of the tweet, which could skew our
 analysis. As such, we have chosen to entirely ignore tweets containing quotes.
-In order to determine if a tweet contains quotes, we use a simple regular
+To determine if a tweet contains quotation marks, we use a simple regular
 expression.
 
 \subsection{Sentiment Analysis}
 As described in \autoref{cha:DA}, the sentiment analysis consists of
-identifying words which are considered emotional, and using them to determine
-either the general emotional value of a text, or the emotional reaction to
+identifying words which are considered emotional and using them to determine
+either the general emotional value of a text or the emotional reaction to
 specific words in the text. The algorithm makes use of a simplified sentimental
 analysis model, where we determine the general sentimental value of a tweet by
-counting the occurrences of positive and negative words. This approach to is
-also known as a bag-of-words sentiment analysis \citep{BagOfWords}. The
-compiled list of emotional words used for this analysis have been produced by
-PhD Minqing Hu and Bing Liu in their paper ``Mining and Summarizing Customer
-Reviews" \citep{Hu:2004:MSC:1014052.1014073}. The implementation of the
-sentiment analysis can be seen in \autoref{sentiAnalCode}.\\
+counting the occurrences of positive and negative words. This approach is known
+as a Bag-of-Words sentiment analysis \citep{BagOfWords}. The compiled list of
+emotional words used for this analysis has been produced by PhD Minqing Hu and
+Bing Liu in their paper ``Mining and Summarising Customer Reviews"
+\citep{Hu:2004:MSC:1014052.1014073}. The implementation of the sentiment
+analysis can be seen in \autoref{sentiAnalCode}.\\
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = Determining the sentiment of a tweet , label = sentiAnalCode] 
+\begin{lstlisting}[caption = Determining the sentiment of a tweet. , label =
+sentiAnalCode] 
 private void SentimentAnalysis(string word, Tweet tweet){
 	int wordValue;
 
@@ -122,47 +121,48 @@ private void SentimentAnalysis(string word, Tweet tweet){
 \end{lstlisting}
 \end{minipage}
 
-On \textbf{line 4} we start by checking if our dictionary of emotional words
-contain an element with the scanned word as the key. If it does, we output the
+On \textbf{line 4}, we start by checking if our dictionary of emotional words
+contains an element with the scanned word as the key. If it does, we output the
 emotional value of that word to the variable \textc{wordValue}. This value is
-either -1 if the word is negative, or 1 if the word is positive. Then on
-\textbf{lines 5-13} we increment the tweet's counter for either positive or
-negative words, and add the word to the tweet's list of emotional words.
+either -1 if the word is negative or 1 if the word is positive. Then on
+\textbf{lines 5-13}, we increment the tweet's counter for positive or
+negative words and add the word to the tweet's list of emotional words.
 
 \subsection{Keyword Analysis}
-In order to determine the user's opinion towards a specific keyword, the keyword
-analysis hase been combined with the sentiment analysis, such that we can
+To determine the user's opinion towards a specific keyword, the keyword
+analysis has been combined with the sentiment analysis, such that we can
 determine the user's sentiment towards that keyword.
 
 The initial list of keywords consists of the most popular hashtags used together
 with the hashtag ``\#Politics''. This approach to compiling a word-list was
-chosen as it gave us a good starting point. These hashtags were found by using
-the site Top-Hashtags \citep{topHashtags} which allows users to view what
-hashtags are frequently used in conjunction. This resulted in the 200 hashtags
-most used together with ``\#politics''.\nl
+chosen as it gave us an initial starting starting platform. These hashtags were
+found by using the site Top-Hashtags \citep{topHashtags} which allows users to see which
+hashtags are frequently used in conjunction with each other. This resulted in
+the 200 hashtags most used together with ``\#Politics''.\nl
 
-Through testing on a multitude of users, we have manually appended the word-list
-with new keywords whenever we identified one that had a clear meaning in a
+Through testing on a multitude of Twitter accounts, we have manually
+extended the word-list with new keywords when we identified one that had a clear meaning in a
 political context. The format of the word list can be seen in
 \autoref{keywordsAnalList}.\\
 
 \begin{table}[H]
 \begin{tabular}{|l|l|l|l|}\hline
 \textbf{Keyword} & \textbf{Negative Context} & \textbf{Neutral Context} & \textbf{Positive Context} \\\hline
-Communism & 10 & 0 & -10 \\\hline
-Capitalism & -10 & 0 & 10 \\\hline
+Democrats & 10 & 0 & -10 \\\hline
+Republicans & -10 & 0 & 10 \\\hline
 \end{tabular}
-\caption{Format of the keywords list}
+\caption{Format of the keywords list.}
 \label{keywordsAnalList}
 \end{table} 
 
-In \autoref{keywordsAnalList}, the context values imply either a left or
-right leaning conclusion based on the negative/neutral/positive, where negative
-values are left leaning and positive values are right leaning. The code used for
+In \autoref{keywordsAnalList}, the context values imply either a left- or
+right-leaning conclusion based on the negative/neutral/positive context, where
+negative values are left leaning and positive values are right leaning. The code used for
 the keyword analysis can be seen in \autoref{keywordAnalysisExample}.\\
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = Method for handling the keyword analysis, label = keywordAnalysisExample] 
+\begin{lstlisting}[caption = Method for handling the keyword analysis., label =
+keywordAnalysisExample] 
 private void KeywordAnalysis(List<string> wordList, Tweet tweet){
 	foreach (string word in wordList){
     	if (keywords.ContainsKey(word) && 
@@ -184,29 +184,29 @@ private void KeywordAnalysis(List<string> wordList, Tweet tweet){
 \end{lstlisting}
 \end{minipage}
 
-On \textbf{line 2} we start by iterating over all of the words in the tweet. On
-\textbf{lines 3-5} we check if our keywords dictionary has a key equal to the
-word, and if we have already found that keyword in the text. Finally we output
-the \textc{KeywordObj} object related to the value in the dictionary. Then on
-\textbf{lines 7-8} we get tweet's sentiment, and  add the current word to the
-tweet's keyword-list. On \textbf{lines 10-15} we determine the political value
+On \textbf{line 2}, we start by iterating over all of the words in the tweet. On
+\textbf{lines 3-5}, we check if our keywords dictionary has a key equal to the
+word and if we have already found that keyword in the text. Finally, we output
+the \textc{KeywordObj} object related to the value in the dictionary. Then, on
+\textbf{lines 7-8}, we get the tweet's sentiment and  add the current word to
+the tweet's keyword-list. On \textbf{lines 10-15}, we determine the political value
 of the word given the sentimental context as shown in
 \autoref{keywordsAnalList}. This value is incremented onto the tweet's existing
 \textc{keywordBias} value.
 
 \subsection{Media Analysis}
-As a final step in classifying a user's political leaning we determine if the
+As a final step in classifying a user's political leaning, we determine if the
 user is sharing any news media. This is useful as we find that actively sharing
-news media often implies an endorsement of that media. And as news media often
-has some inherent political leaning and bias, we can assume that users are going
-to share those attributes. In order to perform this analysis, we use an index of
-american news media with their determined political bias. In order to create
-this index, we have made use of the site AllSides.com, which is a website that
-attempts to determine news media bias based on a combination of statistical
-research and community feedback \citep{allSidesMedia}. When rating a news
-media, AllSides applies a rating among 5 values, going from very left
-leaning, to neutral, to very right leaning. Internally, we have chosen to
-represent this rating as values between -10 and 10, as shown in
+news media often implies an endorsement of that media. As news media often has
+some inherent political leaning and bias, we can assume that users are going to
+share those attributes. To perform this analysis, we use an index of
+American news media with their determined political bias. To create
+this index, we have made use of the site \url{www.allsides.com}, which is a
+website that attempts to determine news media bias based on a combination of
+statistical research and community feedback \citep{allSidesMedia}. When rating a
+news media, AllSides applies a rating among 5 values, going from very
+left-leaning to very right-leaning. We have chosen to represent
+this rating as values between -10 and 10, as shown in
 \autoref{AllsidesRepres}.\\
 
 \begin{table}[H]
@@ -215,21 +215,22 @@ represent this rating as values between -10 and 10, as shown in
 \textbf{AllSides Rating:} & Very Left & Left & Neutral & Right & Very Right \\\hline
 \textbf{Internal Representation:} & -10 & -3 & 0 & 3 & 10 \\\hline
 \end{tabular}
-\caption{Our internal representation of a news media's bias}
+\caption{Our internal representation of a news media's bias.}
 \label{AllsidesRepres}
 \end{table}
 
-Whenever a user links to an external site in a tweet, the link will be presented
-in the tweet's json-object. As such, we have created our index dictionary as a
+Whenever a user links to an external site in a tweet, the link is presented
+in the tweet's \ac{JSON} object. We have created our index dictionary as a
 combination of the site's base URL and our representation of their political
-bias value. In order to determine if a user is referencing a news media, we make a
+bias value. To determine if a user is referencing a news media, we make a
 string comparison between the base URL and the URL found in the tweet. The
 implementation of the media analysis can be seen in
 \autoref{mediaAnalysisExample}.\\
 
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = Method for handling the media analysis, label = mediaAnalysisExample] 
+\begin{lstlisting}[caption = Method for handling the media analysis., label =
+mediaAnalysisExample] 
 private void MediaAnalysis(Tweet tweet){
 	foreach (Url link in tweet.Entities.Urls){
 		string shortenedUrl = UrlHelper.Instance.ShortenUrl(link.ExpandedUrl);
@@ -241,11 +242,11 @@ private void MediaAnalysis(Tweet tweet){
 \end{lstlisting}
 \end{minipage}
 
-On \textbf{line 2} we start by iterating over the URL's present in the
-\textc{Tweet} objects URL list. Then on \textbf{line 3} we call the
-\textc{ShortenUrl} method in order to trim the Tweet's URL of everything but the
-base URL. On \textbf{4-5} we check if our dictionary has an element
-corresponding to the URL, and if it does, we increment the tweet's
+On \textbf{line 2}, we start by iterating over the URL's present in the
+\textc{Tweet} objects URL list. Then on \textbf{line 3}, we call the
+\textc{ShortenUrl} method to trim the tweet's URL of everything but the
+base URL. On \textbf{lines 4-5}, we check if our dictionary has an element
+corresponding to the URL and if it does we increment the tweet's
 \textc{mediaBias} value with the determined political bias. 
 
 % The unfinished implementation of this system can be seen in
@@ -259,14 +260,15 @@ corresponding to the URL, and if it does, we increment the tweet's
 % 
 
 \subsection{Multithreading}
-Due to the large amounts of tweets retrieved, we have chosen to multithread the
-analysis of tweets. In the current implementation, we use 5 concurrent threads
-for each batch of tweets. These threads analyzed their portion of the tweets,
-and the results from the analyses are then added together to a final result. The
-code for multithreading can be seen in \autoref{tweetmulti}.\nl
+Due to the large amounts of retrieved tweets, we have chosen to multithread the
+tweet analysis. In the current implementation, we use five concurrent threads
+for each batch of tweets. These threads analyse their portion of the tweets, and the
+results are added together to a final result. The code for multithreading can be
+seen in \autoref{tweetmulti}.\nl
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = Multithreading of the tweet analysis, label = tweetmulti] 
+\begin{lstlisting}[caption = Multithreading of the tweet analysis., label =
+tweetmulti] 
 public AnalysisResultObj AnalyzeAndDecorateTweetsThreaded(List<Tweet> tweetList){ 
 ...
 	foreach (var item in splittedList){
@@ -290,24 +292,24 @@ public AnalysisResultObj AnalyzeAndDecorateTweetsThreaded(List<Tweet> tweetList)
 \end{lstlisting}
 \end{minipage}
 
-On \textc{lines 3-6} we start by iterating over a list containing subsets of the
-total list of tweets, namely the  object \textc{``items''}. When doing this, we
-create a new Task based on the \textc{AnalyzeAndDecorateTweets} method, and
-initialize it using a subset of the tweets. Then on \textbf{line 9} we wait for
-all of the tasks to finish, and on \textbf{line 10} we create the resulting
-output object. Finally on \textbf{lines 12-15} we add the results of each task
-together in the resulting object, and on line \textbf{line 19} we return the
+On \textbf{lines 3-6}, we start by iterating over a list containing
+subsets of the total list of tweets, namely the object \textc{Items}. When doing this, we
+create a new \textc{Task} based on the \textc{AnalyzeAndDecorateTweets} method
+and initialise it using a subset of the tweets. Then, on \textbf{line 9}, we wait
+for all of the tasks to finish, and on \textbf{line 10}, we create the resulting
+output object. Finally, on \textbf{lines 12-15}, we add the results of each task
+together in the resulting object and on \textbf{line 19}, we return the
 object.\nl
 
-Splitting the tweets into multiple threads have led
-to a 43\% reduction in processing time. At this time, we have not tested using more
-than 5 threads, as a speedup in processing is currently unnecessary, as the
-system is bottle-necked by the time it takes to retrieve tweets. This test can
-be seen in \autoref{test:multithread}.\nl
+Splitting the tweets into multiple threads led to a 43\% reduction in processing
+time. We have not tested using more than five threads, as a speedup in
+processing is currently unnecessary, since the system is bottle-necked by the
+time it takes to retrieve tweets. This test can be seen in
+\autoref{test:multithread}.\nl
 
 \subsection{Percentage Threshold}
 Since the resulting output is a numerical value between -10 and 10, we want a
-way to show that we consider a person to be neutral, or that we do not have
+way to show that we consider a person to be neutral or that we do not have
 enough information to be certain in our classification. As such, we have chosen
-to implement a safeguard, which requires that among all of the tweets recieved
-from a user, at least 1\% of them have to be political in nature. 
+to implement a safeguard, which requires that among all of the tweets received
+from a user, at least 1\% of them have to be political. 

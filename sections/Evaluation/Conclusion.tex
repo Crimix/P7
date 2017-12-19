@@ -1,18 +1,21 @@
 \chapter{Conclusion}\label{cha:conclusion}
-This chapter will be used to conclude on the success of the project based on the
-requirements in \autoref{cha:req}, and the final functional testing done in
-\autoref{cha:testing}. Throughout this project the group has been designing and
-developing a web-application with the purpose of allowing Twitter users to identify their
-political filter bubble. The system was developed with a web-application
-front-end using the Laravel framework, a MySQL database, and a server back-end using the .NET C\# framework. 
-To make an initial conclusion on the success of the project: We have been able
+This chapter is used to conclude on the success of the project based on the
+requirements in \autoref{cha:req} and the testing done in
+\autoref{cha:testing}. Throughout this project, the group has been designing and
+developing a web application with the purpose of allowing Twitter users to
+identify their political filter bubble. The system was developed as a web
+application front-end using the Laravel framework, a MySQL database with an
+accompanying REST style web service and a server back-end using the .NET C\#
+framework.\nl
+
+To make an initial conclusion on the project: We have been able
 to complete all of the requirements, except for a number of those relating to
 the usability of the graphical user interface. While we have been unable to
 complete all requirements, we still deem that the project has been a success, as
 it is capable of performing its main function, namely giving a user the
-information necessary to identifying their political filter bubble. All of
-the functional requirements and their level of completion can be seen below in
-\autoref{sec:concFunc}, and the usability requirements can be seen in
+information necessary to identify their political filter bubble. All of the
+functional requirements and their level of completion can be seen below in
+\autoref{sec:concFunc} and the usability requirements can be seen in
 \autoref{sec:concUsa}.
 
 \section{Functional Requirements}\label{sec:concFunc}
@@ -21,89 +24,92 @@ features and parts which should be implemented.
 
 \begin{longtable}{|p{6cm}|p{8cm}|}\hline 
 \textbf{Requirement:}	&	\textbf{Evaluation:} \\\hline
-The system should be able to retrieve a user's tweets, and a list of who they
+The system should be able to retrieve a user's tweets and a list of who they
 follow.
-&	This requirement has been completed, and has been documented in
+&	This requirement has been completed and documented in
 \autoref{sub:tweetretriever}.\\\hline 
-The system should adhere to the Twitter guidelines regarding limited requests
-&	This requirement has been completed. In \autoref{DatabaseAPI} we
+The system should adhere to the Twitter guidelines regarding limited requests.
+&	This requirement has been completed. In \autoref{DatabaseAPI}, we
 conclude that we need to store data, such that we limit the need for
-Twitter requests. Furthermore in \autoref{sec:rateLimit} we describe how we
+Twitter requests. Furthermore, in \autoref{sec:rateLimit} we describe how we
 monitor our number of available requests. \\\hline
 The program should be able to determine a user's political leaning.
-&	This requirement has been completed. In \autoref{cha:classification} we
-show our approaches to classifying users, and in \autoref{sec:accTest} we show
-that when analyzing a set of politically active and inactive users, we get an
+&	This requirement has been completed. In \autoref{cha:classification}, we
+show our approaches to classifying users and in \autoref{sec:accTest}, we show
+that when analysing a set of politically active and inactive users, we get an
 accuracy of up to 96\%.\\\hline
 The application should have a web page front-end.
-&	This requirement has been completed. The front-end and it's implementation can
-be seen in \autoref{}. \\\hline
-The system logic should be hostable on as a server backend.
+&	This requirement has been completed. The front-end and its implementation can
+be seen in \autoref{GUI}. \\\hline
+The system logic should be hostable on as a server back-end.
 & This requirement has been completed. The implementation of the back-end can be
-seen in \autoref{queueAPI}, \autoref{workerLabel}, and
+seen in \autoref{queueAPI}, \autoref{workerLabel} and
 \autoref{cha:classification}. \\\hline
-The should be able to store analyzed user data on a database.
+The system should be able to store analysed user data in a database.
 &	This requirement has been completed. The description of the database and its
 API can be seen in \autoref{DatabaseAPI}. \\\hline
-The system should be scalable in order to handle many simultanious users.
+The system should be scalable in order to handle many users simultaneously .
 &	This requirement has been completed. \autoref{queueAPI} describes how we queue
-user requests, and \autoref{cha:twitterAPI} describes how we allow the
-application to make more requests by making requests on users behalf.\\\hline
-The front-end should allow a user to authorize our application with their
+user requests and \autoref{cha:twitterAPI} describes how we allow the
+application to make more requests by making requests on user's behalf.\\\hline
+The front-end should allow a user to authorise our application with their
 Twitter account.
-&	This requirement has been completed. In \autoref{GUI} we describe the
-implementation of our front-end, and how we handle User authrization. \\\hline
+&	This requirement has been completed. In \autoref{GUI}, we describe the
+implementation of our front-end and how we handle user authentication. \\\hline
 The system should use APIs to communicate between the different system parts.
 &	This requirement has been completed. The different APIs are described in
-\autoref{DatabaseAPI}, and \autoref{queueAPI}.\\\hline
+\autoref{DatabaseAPI} and \autoref{queueAPI}.\\\hline
 \caption{Functional requirements and their level of completion.}
 \label{table:concFuncReq}
 \end{longtable}
 
 \section{Usability Requirements}\label{sec:concUsa}
-The requirements in \autoref{table:concUsaReq} describe aspects of the Graphical
-User Interface which should be adhered to.
+The requirements in \autoref{table:concUsaReq} describe aspects of the
+\ac{GUI} which should be adhered to.
 
-\begin{longtable}{|p{6cm}|p{8cm}|}\hline
+\begin{longtable}{|p{6cm}|p{8.5cm}|}\hline
 \textbf{Requirement:}	&	\textbf{Evaluation:} \\\hline
-The system use of color should be suited for color blindness.
+The system's use of colour should be suited for colour blindness.
 &	This requirement has been mostly completed. Most of the GUI is black and
-white. Whenever color is used, it is with a white background, except in the
-result graphs. Due to our intent on showing graphs as shades of blue and red
-based on political leaning.\\\hline 
-When presenting colorful elements next to each other, the system should use
-background patterns to allow for easier distinguishing.
+white. Whenever colour is used, it is done with a white background, with the 
+exception of the result graphs where blue, red and yellow are next to each
+other.
+Due to our intent on showing graphs as shades of blue and red based on political leaning.\\\hline 
+When presenting colourful elements next to each other, the system should use
+background patterns to allow for easier recognition.
 & This requirement has not been completed. Currently the resulting graphs only
-use color when presenting data. \\\hline
+use colour when presenting data. \\\hline
 Text and images should be resizable.
 &	This requirement has been partly completed. Currently only text is scalable,
 while it is not possible to enlarge the graphs.\\\hline
-The system should minimize the amount of user actions necessary.
+The system should minimise the amount of user actions necessary.
 &	This requirement has been completed. Currently, all of the system's
-functionality can be reached with less than 5 clicks.\\\hline
-The GUI should be simplistic, and easily recognizable.
+functionality can be reached with less than five clicks.\\\hline
+The GUI should be simplistic, and easily recognisable.
 &	This requirement has been completed. In order to make our system easy to
 understand, the front page consists of a search bar similar to the one used by
 search engines such as Google and Yahoo.\\\hline
 There should be no doubts about what information is
 needed and which button(s) to press. 
 &	This requirement has been partly completed. Based on our usability test, there
-was some confusion as to what elements to interact with, but since then the GUI
-has been entirely reworked in order to fix those elements. \\\hline
-The user should have easy access to assisting information on how to use the
+was some confusion as to what elements to interact with. Since then the GUI
+has been entirely reworked in order to fix those elements the requirement could
+be considered entirely completed, but as no new usability test has been
+performed, we cannot make this conclusion.
+\\\hline The user should have easy access to assisting information on how to use the
 system. 
-&	This requirement has been completed. Currently the system has a large Info
-button on the main page, and all cases of user actions have been described in
-plain text next to the element in question. \\\hline
-When presenting data it should be clearly labeled, and explained in
+&	This requirement has been completed. Currently the system has a large
+\textit{Info} button on the front page and all cases of user actions have been
+described in plain text next to the element in question. \\\hline
+When presenting data, it should be clearly labelled and explained in
 helping text what the data represents.
 & This requirement has been completed. All system elements is supplied with
-helpting text next to it. Additionally, all data graphs has clealy explained and
-labeled data. \\\hline
+helping text next to it. Additionally, all data graphs has clearly explained and
+labelled data. \\\hline
 It should be clearly stated what user data will be used for.
 &	This requirement has been completed. The Info section clealy states what we
 will use the data for, and we have added an explaining text before the user
-presses the button to authorize their account with our application \\\hline
+presses the button to authorise their account with our application \\\hline
 The system should use neutral language and imply no political bias when
 presenting data in a political context.
 &	This requirement has been mostly completed. Currently, the text in the system
@@ -114,18 +120,18 @@ is labeled as a negative value, and right wing as a positive.\\\hline
 \end{longtable}
 
 \section{Final Conclusion}
-Based on the entirely or partly completion of all of the functional
-requirements, we conclude that the system is a succes. While we have failed to
+Based on the level of completion of all of the functional
+requirements, we conclude that the system is a success. While we have failed to
 complete all of the usability requirements, the current state of the system is
-still usable, and capable of performing its indended function. Finally, if we
+still usable and capable of performing its intended function. Finally, if we
 look at our problem statement:\nl
 
-\say{How can a web-application be developed as to assist a user in
-identifying and breaking out of a filter bubble? And how can this be done by
-using information gathered from Twitter in the form of tweets?}\nl
+\say{How can a web application be developed to assist a user in
+identifying and breaking out of a filter bubble on Twitter? How can the
+analysis of sentiments be used to determine a users political leaning?}\nl
 
 We can conclude that we have managed to develop a system which is capable of
-identifying a user's filter bubble based on tweets from Twitter, and visualize
+identifying a user's filter bubble based on tweets from Twitter and visualise
 it such that they should be able to understand the inherent bias inside their
 specific bubble.
 

@@ -1,19 +1,19 @@
 \chapter{Database \acs{API}}\label{DatabaseAPI}
-After analysing a user, we want to store that data, such that we do not have to
-retrieve or analyze the tweets again. As such, the system makes use of a
-database, which the Workers can use to store and access the saved data. This
+After analysing users, we want to store that data such that we do not have to
+retrieve or analyse the tweets again. The system makes use of a
+database, which the workers can use to store and access the saved data. This
 design choice is especially important, as we make use of the user's Twitter
 account to retrieve data from the Twitter \ac{API}, which have a limited amount
-of API requests, as described in \autoref{cha:twitterAPI}. As such, this section
-is used to describe how we access and store this data, and how we make sure that
-it is only accessible to authorized users.\nl
+of API requests, as described in \autoref{cha:twitterAPI}. This section
+is used to describe how we access and store this data and how we make sure that
+it is only accessible to authorised users.\nl
 
-% In \autoref{sec:laravel} we start by describing the Laravel framework, which has
-% been used to develop the front-end and the database \ac{API}. In
-% \autoref{DBDesign} we continue by describing the design of our database and the
-% data it is used to store. Then in \autoref{sec:APIDesign} we end by describing
-% the implementation of the Database \ac{API}, and the different end-points we
-% have defined for accessing data.
+In \autoref{sec:laravel}, we start by describing the Laravel framework, which
+has been used to develop the front-end and the database \ac{API}. In
+\autoref{DBDesign}, we continue by describing the design of our database and the
+data it is used to store. Then in \autoref{sec:APIDesign}, we end by describing
+the implementation of the Database \ac{API} and the different end-points we
+have defined for accessing data.
 
 \section{Laravel Framework}\label{sec:laravel}
 Laravel is a framework written in PHP that enables the creation of websites and
@@ -22,27 +22,33 @@ including database access, user authentication and routing.\nl
 
 Laravel's structure resembles that of the \ac{MVC} design pattern, with models
 representing and managing database entities, views handling the presentation
-layer without implementation logic, and controllers handling the main parts of
-the logic. When needed, however, other types of layers can be added. This
+layer without implementation logic and controllers handling the main parts of
+the logic. When needed, other types of layers can be added. This
 includes helper classes and packages that extend the functionality of
 Laravel.\nl
 
-The main reason for choosing Laravel was group experience with various
-frameworks and a preference for how Laravel does things.
+The main reason for choosing Laravel is that the framework offer all the
+necessary tools in a single framework and that the group has existing
+experience with the framework.
+% 
+% 
+% The main reason for choosing Laravel was group experience with various
+% frameworks and a preference for how Laravel does things.
 
 \section{Database Design}\label{DBDesign}
-While Laravel supports multiple \acp{DBS} \citep{LaravelDBS} we have opted to
-use MySQL while developing and testing. Due to the use of Laravel's abstraction our
-system should be able to run on any of the supported database systems without
-any changes on our part.\nl
+Laravel supports multiple \acp{DBS} \citep{LaravelDBS} and due to the use of
+Laravel's abstraction, our system should be able to run on any of the supported
+database systems without any changes on our part. As such, we have opted to use
+MySQL while developing and testing, as it is the default for Laravel, and
+because the group has existing experience with the system.\nl
 
-The system uses ten tables of which seven are used for authentication purposes
-and one tracks database migrations. The remaining two tables are \textc{twitters}
-and \\\textc{twitter\_twitter}, shown in part with example data in
-\autoref{TwittersDBTable} and \autoref{TwitterTwitterDBTable} respectively.\nl
+The system uses ten tables, of which seven are used for authentication purposes,
+and one tracks database migrations. The remaining two tables are
+\textc{twitters} and \\\textc{twitter\_twitter}. This is shown partially with
+example data in \autoref{TwittersDBTable} and \autoref{TwitterTwitterDBTable}.\nl
 
-The columns \textc{created\_at} and \textc{updated\_at} have been left out here
-due to size constraints on the pages.
+The columns \textc{created\_at} and \textc{updated\_at} have been left out to
+fit within the width of the page, while still remaining readable.
 
 \begin{table}[H]
 \centering
@@ -55,7 +61,7 @@ due to size constraints on the pages.
 \textbf{media\_val} & \textbf{tweet\_count} & \textbf{protect} &
 \textbf{processed} \\
 \hline
-\underline{224} & theDonaldDrumpf & 1234567 & 9.7323990 & 8.9295123 & -9.1618950
+\underline{224} & theTonaldDrump & 1234567 & 9.7323990 & 8.9295123 & -9.1618950
 & -3.1275883 & 472 & 0 & 1 \\
 \hline
 \underline{225} & TayaDickinson & 914292 & 6.3012218 & 2.3406686 & -7.4462646 &
@@ -66,25 +72,26 @@ due to size constraints on the pages.
 \hline
 \end{tabular}}
 }
-\caption{Table containing Twitter users and their determined values.}
+\caption{\textc{twitters} table containing Twitter users and their determined
+values.}
 \label{TwittersDBTable}
 \end{table}
 
 The table \textc{twitters} is used for storing data about analysed Twitter
 users, such that we can reference this data if we should receive a request. This
-allows reducing overhead, as we can reuse data. One important aspect is that we
-need to respect a user's privacy. As such, we have introduced the ``protect''
-boolean to indicate if only the Twitter user, which the result belong to, is
-allowed to retrieve it. Although this is data in the database, this form of
-protection is not implemented, details about this can be found in
+reduces overhead, as we can reuse data. One important aspect is that we need to
+respect a user's privacy. We have introduced the \textc{protect}
+boolean to indicate if only the Twitter user themself, or a follower, is allowed
+to retrieve it. Although this data is present in the database, the actual 
+protection is not implemented. Details about this can be found in
 \autoref{sec:twitterProtect}.\nl
 
 The \textc{processed} column is used to distinguish between users who have been
 fully analysed, along with all the users they follow, versus those who have been
-processed as followed accounts. In the example data in \autoref{TwittersDBTable}
-this distinction can be seen as ``theDonaldDrumpf'' is the only processed entry,
-while ``TayaDickinson'' and ``BrodyHahn'' are analysed because they are followed
-by ``theDonaldDrumpf''.
+processed as followed accounts. In the example data in
+\autoref{TwittersDBTable}, this distinction can be seen where ``theTonaldDrump''
+is the only processed entry, while ``TayaDickinson'' and ``BrodyHahn''
+are only analysed because they are followed by ``theTonaldDrump''.
 
 
 \begin{table}[H]
@@ -98,14 +105,13 @@ by ``theDonaldDrumpf''.
 \underline{224} & \underline{226} \\
 \hline
 \end{tabular}
-\caption{Table that keeps track of followers.}
+\caption{\textc{twitter\_twitters} table which keeps track of followers.}
 \label{TwitterTwitterDBTable}
 \end{table}
 
-The table \textc{twitter\_twitter} is used as a link table, named as
-it is due to convention more so than any requirements from the framework. It keeps track
-of the followers and in the example data it is shown how we keep track of the
-users followed by ``theDonaldDrumpf''.
+The table \textc{twitter\_twitters} is used as a link table and keeps track
+of the followers. In the example data in \autoref{TwitterTwitterDBTable}, it is 
+shown how we keep track of the users followed by ``theTonaldDrump''.
 
 \section{\acs{API} Design}\label{sec:APIDesign}
 To access the database described in \autoref{DBDesign}, we have
@@ -115,15 +121,15 @@ requests and retrieve data through the use of authorised \ac{HTTP} requests.
 
 \subsection{\acs{API} Endpoints}
 To enable external applications to interact with the \ac{API} we must
-define a number of endpoints that covers the data and functions that can be
-performed on it. These are based on the following base \ac{URL}:\nl
+define a number of endpoints that covers the data and the functions that can be
+performed. These are based on the following base \ac{URL}:\nl
 
 \say{http://localhost:8000/api/}\nl
 
-In this example, the domain for the \ac{API} is localhost on port 8000, as this is
-the default for locally hosted Laravel applications. If the application was to
-be hosted somewhere, it would have a domain and would likely run on port 443,
-just as the scheme would be \textc{https://}.\nl
+In this example, the domain for the \ac{API} is \textc{localhost} on port 8000,
+as this is the default for locally hosted Laravel applications. If the application was to
+be hosted on an external server, it would have a domain name and would
+preferably use the \textc{https://} scheme and run on port 443.\nl
 
 The defined endpoints are described in \autoref{DBAPIEndpointTable}. It is worth
 noting that \textc{boolean} is either \ttt{0} or \ttt{1}, so \ttt{true} and
@@ -154,16 +160,16 @@ PUT  & /twitter/add\_follower         &  \ttt{int} record\_id \\
 ~    & ~                              &  \ttt{int} follows\_id \\
 \hline
 \multicolumn{3}{| l |}{\textit{%
-Creates link between two record IDs specifying that \ttt{record\_id}}} \\
+Creates a link between two record IDs specifying that }\ttt{record\_id}} \\
 \multicolumn{3}{| l |}{\textit{%
-follows \ttt{follows\_id} on Twitter.}} \\
+follows }\ttt{follows\_id} \textit{on Twitter.}} \\
 \multicolumn{3}{| l |}{} \\
 \hline
 PUT  & /twitter/finalize              &  \ttt{int} record\_id \\
 ~    & ~                              &  \ttt{string} request\_id \\
 \hline
 \multicolumn{3}{| l |}{\textit{%
-Marks the user as processed and then forwards the \ttt{request\_id}}} \\
+Marks the user as processed and then forwards the} \ttt{request\_id}} \\
 \multicolumn{3}{| l |}{\textit{%
 to the \acs{GUI} server to notify it of the completion.}} \\
 \multicolumn{3}{| l |}{} \\
@@ -171,7 +177,7 @@ to the \acs{GUI} server to notify it of the completion.}} \\
 GET  & /twitter/has/\{twitterName\}   &  \\
 \hline
 \multicolumn{3}{| l |}{\textit{%
-Looks for a recent result for the given Twitter name.}} \\
+Looks for a recently processed result for the given Twitter name.}} \\
 \multicolumn{3}{| l |}{\textit{%
 If found the record ID is returned.}} \\
 \multicolumn{3}{| l |}{} \\
@@ -179,7 +185,7 @@ If found the record ID is returned.}} \\
 GET  & /twitter/has-id/\{twitterId\}  &  \\
 \hline
 \multicolumn{3}{| l |}{\textit{%
-Looks for a recent result for for the given Twitter ID.}} \\
+Looks for a recent result for the given Twitter ID.}} \\
 \multicolumn{3}{| l |}{\textit{%
 If found the record ID is returned.}} \\
 \multicolumn{3}{| l |}{} \\
@@ -188,6 +194,7 @@ GET  & /twitter/\{recordId\}          &  \\
 \hline
 \multicolumn{3}{| l |}{\textit{%
 Returns the full result for the given record ID if it exists.}} \\
+\multicolumn{3}{| l |}{} \\
 \hline
 \end{tabular}
 \caption{\ac{API} endpoints for the database back-end.}
@@ -195,7 +202,7 @@ Returns the full result for the given record ID if it exists.}} \\
 \end{table}
  
 
-\subsection{Authorization}
+\subsection{Authorisation}
 To make sure that data is only available to authorised users, we make
 use of Laravel Passport, which is a token-based authorisation system based on
 the OAuth2 standard \citep{LaravelPassport}.\nl
@@ -205,24 +212,23 @@ encrypted string. This token is then verified by comparing it to a list of
 active tokens on the database. The token verification is handled by Laravel
 Passport.\nl
 
-Of the multiple options that Laravel Passport provides for auth, we opted for
-the one called ``client credentials'' which is meant for machine--to--machine
-communication, as opposed to user--to--machine auth.
-\citep{LaravelPassportClientCredentials}
+Among the options that Laravel Passport provides for authentication, we opted
+for the one called ``client credentials'' which is meant for machine--to--machine
+communication, as opposed to user--to--machine authentication
+\citep{LaravelPassportClientCredentials}.
 
-The base \ac{URL} for auth requests is the same as for the \ac{API} except not
-prefixed with \ttt{/api}.\nl
+The base \ac{URL} for authentication requests is the same as for the \ac{API}
+except not prefixed with \ttt{/api}.\nl
 
 To retrieve a token, a worker must make a request to the
-``oauth/token'' endpoint, while supplying a valid client ID and client
-secret, along with the grant type, which will always be
-``client\_credentials''. The request spec is documented in
-\autoref{DBAPIOAuthEndpointTable}.\nl
+``/oauth/token'' endpoint, while supplying a valid client ID and client
+secret, along with the grant type, which is always ``client\_credentials''. The
+request specification is documented in \autoref{DBAPIOAuthEndpointTable}.\nl
 
 If the supplied credentials are valid as per the information stored in the
 database, the request responds with a long-lived token that uniquely identifies
 the client, be it a worker or the \ac{GUI}. This token must then be sent in the
-header of every request as a bearer token.\nl
+header of every request as a \textc{bearer} token.\nl
 
 \begin{table}[H]
 \centering
@@ -235,7 +241,7 @@ POST & /oauth/token  & \ttt{string} grant\_type \\
 ~    & ~             & \ttt{string} client\_secret \\
 \hline
 \end{tabular}
-\caption{\ac{API} endpoints for authorisation.}
+\caption{\ac{API} endpoints for authentication.}
 \label{DBAPIOAuthEndpointTable}
 \end{table}
 

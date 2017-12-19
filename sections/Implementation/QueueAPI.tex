@@ -1,40 +1,44 @@
 \chapter{Queue \acs{API}}\label{queueAPI}
-As we use a web-application front-end, which should be accessible to many
-simultanious users, we need a way to queue and schedule the order in which
-requests from the different users are handled. As such, this chapter will be
-used to describe our Queue Server Library and its \ac{API}.
+As we use a web application front-end, which should be accessible to many
+simultaneous users, we need a way to queue and schedule the order in which
+requests from the different users are handled. This chapter describes our queue
+server and its \ac{API}.\nl
 
-\section{Implementation}
-To make a request to the Queue Server, the front-end must make a
-request to our Queue Server \ac{API}. This \ac{API} is implemented using the 
-C\# language, such that it uses the same language as the Queue Server Library.
+In \autoref{sec:queueimpl}, we describe how the queue server is implemented, and
+how it handles the queueing and scheduling of threads. In
+\autoref{sec:queueReq}, we shortly describe the queue server \ac{API} and its endpoints. 
+
+\section{Implementation}\label{sec:queueimpl}
+To make a request to the queue server, the front-end must make a
+request to our queue server's \ac{API}. This \ac{API} is implemented using the 
+C\# language, such that it uses the same language as the queue server.
 Using the same language for these system parts allows the \ac{API} to use
-existing code from the Queue Server Library and the Worker class. When the
-\ac{API} recieves an incoming request, it calls a number of methods in the Queue
-Server Library, which handles scheduling and queueing.
+existing code from the queue server and the worker class. When the
+\ac{API} receives an incoming request, it calls a number of methods in the queue
+server library \textc{QSLib}, which handles scheduling and queueing.
 
 \subsection{Queue Server \ac{API}}
-The Queue Server \ac{API} is based on the \ac{REST} principles
-\citep{principlesREST}, and utilizes the ASP.net framework
+The queue server \ac{API} is based on the \ac{REST} principles
+\citep{principlesREST} and utilises the ASP.NET framework
 \citep{aspNEToverview}. Most of the \ac{API} has been automatically generated as
-a \textc{APS.NET Web Application} template from Visual Studio 2017
-\citep{vsMainPage}. As such, we have added a single controller class
-called \textc{AnalyzeTwitterAccountController}. This controller handles the post
-request by the \ac{GUI} by running the AddTask function from the
-\textc{QueueServerInstance} described in \autoref{sub:queueserver}.
+an \textc{ASP.NET Web Application} template from Visual Studio 2017
+\citep{vsMainPage}. We have added a single controller class
+called \textc{AnalyzeTwitterAccountController}. This controller handles the
+\textc{POST} requests by the \ac{GUI} by running the \textc{AddTask} function
+from the \\\textc{QueueServerInstance} described in \autoref{sub:queueserver}.
 
 \subsection{Queue server} \label{sub:queueserver}
-At the core of the Queue Server Library is the \textc{QueueServerInstance}
+At the core of the queue server library is the \textc{QueueServerInstance}
 singleton class, which contains the logic needed to queue requests. When the
 front-end makes a request, the \textc{AnalyzeTwitterAccountController} calls the
 \textc{AddTask} method in the \textc{QueueServerInstance}. This method adds the
 requested Twitter account to a \textc{Queue} called \textc{nonAddedRequests}.
 Whenever the \textc{QueueServerInstance} class is first instantiated, it calls
 an asynchronous method named \textc{TaskQueue}, which runs a \textc{while(true)}
-loop, and is executed on its own thread. In each iteration of the loop, it
+loop and is executed on its own thread. In each iteration of the loop, it
 checks if there are any entries in \textc{nonAddedRequests}. If there are, it
 makes a task for each of them and adds them to a \textc{Queue} of tasks called
-\textc{taskQueue}. Afterwards, it starts each task asynchronously so that at
+\textc{taskQueue}. Afterwards, it starts each task asynchronously such that at
 most five are running at the same time.
 Afterwards, it checks the list of running tasks and removes the finished ones. A
 code example of how requests are converted to tasks can be seen in
@@ -64,31 +68,33 @@ public async void TaskQueue()
 \end{minipage}
 
 On \textbf{line 4}, it ensures that it runs once for every request. \\
-On \textbf{lines 6}, it recieves the next request in line.\\
-On \textbf{lines 8-12}, it adds a servertask corresponding to the request.\\
-On \textbf{line 13 and 14}, it adds the task to the task queue and removes the
-request from the queue of requests.\\
+On \textbf{line 6}, it receives the next request in line.\\
+On \textbf{lines 8-12}, it adds a \textc{ServerTask} corresponding to the
+request.\\
+On \textbf{lines 13 and 14}, it adds the task to the task queue and removes the
+request from the request queue.\\
 
 \subsection{Twitter account}
 The class \textc{TwitterAcc} is used for every instance of a Twitter account. It
 contains all necessary information about a specific Twitter account, such as its
-\textc{Access Token}, Twitter name and \textc{Access Token secret}. These
-concepts relating to access tokens and secrets are covered in
-\autoref{cha:twitterAPI}.
+\textc{Access Token}, Twitter name and \textc{Access Token Secret}. These 
+concepts are covered in \autoref{cha:twitterAPI}.
 
 \subsection{Server task}
 An instance of the class \textc{ServerTask} is created when a task is created.
-It is used to parse the Twitter authorisation values and the screen name of the
+It is used to pass the Twitter authorisation values and the screen name of the
 Twitter account being processed to the worker.
 
-\section{Requests}
+\section{Requests}\label{sec:queueReq}
 The \ac{API} only has one post request, which is: \nl
 
 \say{http://localhost:62020/api/AnalyzeTwitterAccount}\nl
 
-Here, the Content-Type header must be ``application/x-www-form-urlencoded'',
-where the body contains a value for Name, Token and Secret.
-The request returns a response of whether the job was successfully added to the
-queue or not.
+Here, the \textc{Content-Type} header must be
+``application/x-www-form-urlencoded'', where the body contains a value for
+\textc{Name}, \textc{Token} and \textc{Secret}. This header describes that the
+content must be encoded using an url encoding where non-alphanumeric characters are replaced with '\%' and
+hexadecimal values \citep[sec. 17.13.4]{urlencoded}. The request returns a
+response of whether the job was successfully added to the queue or not. 
 
 

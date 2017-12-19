@@ -1,61 +1,71 @@
 \chapter{Testing}\label{cha:testing}
-In order to determine the quality of the developed software solution, we have
+To determine the quality of the developed software solution, we have
 performed a number of tests. These tests aim to assure the quality of the
-determined results, and to ensure that the software is operating as
+determined results and to ensure that the software is operating as
 expected.\nl
 
-The tests were performed on a PC running Windows 10, and having a i5-7200U
-3.1GHz processor, 256GB SSD, 8GB DDR4 RAM, and a 100/100mbps internet
-connection.
+The tests were performed on a PC running Windows 10, an i5-7200U
+3.1GHz processor, 256GB SSD, 8GB DDR4 RAM and a 100/100Mbps internet
+connection.\nl
+
+In \autoref{speedtestlavel}, we present a test which documents how many tweets
+the Bag-of-Words and Naive Bayes Classifiers can classify per second. In
+\autoref{sec:accTest}, we determine how accurate the two models are when
+classifying a user's political leaning. In \autoref{test:tweetRetr}, we
+determine how many tweets we can receive from the Twitter API per second. In
+\autoref{test:stress}, we perform a stress test to determine if the system can
+handle a large number of system users simultaneously.  
 
 \section{Speed Tests}\label{speedtestlavel}
-The purposes of these tests are to document the speed of both the
+The purpose of these tests is to document the speed of the
 classification models, discussed in \autoref{sec:BoW} and
 \autoref{sec:NBImp}, using prefetched tweets. The first test is to test the
-effiency of multi threading the Bag-Of-Words model, while the second test is
-used to compare speed of the two models.
+efficiency of multithreading the Bag-of-Words model while the second test is
+used to compare the speed of the two models.
 
-\subsection{Bag-Of-Words Speed Test}\label{test:multithread}
+\subsection{Bag-of-Words Speed Test}\label{test:multithread}
 The purpose of this test is to document the reason behind implementing a
 multithreaded version of the classification method, which was described in
 \autoref{subs:multithread}. 
-The result of the running both the multi threaded bag of words algorithm and the
-single threaded version on the same input. The result can be seen in
+The result of running both the multithreaded Bag-of-Words model and the
+singlethreaded version on the same input can be seen in
 \autoref{speedTestResSingleThread} and \autoref{speedTestResMultiThread}.
 
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|}
 \hline
-3060	&	Tweets pr batch 	\\\hline
+3060	&	Tweets per batch 	\\\hline
 500		&	Batches				\\\hline
-17394	&	milliseconds		\\\hline
+17394	&	Milliseconds		\\\hline
 34.7	&	ms/batch 			\\\hline
 \end{tabular}
-\caption{Results from the single threaded speed test}
+\caption{Results from the singlethreaded speed test.}
 \label{speedTestResSingleThread}
 \end{table}
 
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|}
 \hline
-3060	&	Tweets pr batch 	\\\hline
+3060	&	Tweets per batch 	\\\hline
 500		&	Batches				\\\hline
-9928 	&	milliseconds		\\\hline
+9928 	&	Milliseconds		\\\hline
 19.8	&	ms/batch 			\\\hline
 \end{tabular}
-\caption{Results from the multi threaded speed test}
+\caption{Results from the multithreaded speed test.}
 \label{speedTestResMultiThread}
 \end{table}
 
+
+
 The results of the test shows that the time it takes to analyse tweets has been
-cut by 43\% by using the multi threaded version of algorithm 
+cut 43\% by using the multi threaded version of the model. 
 
 \subsection{Speed Test Comparison}
-In this test the classification speed of both the models will be compared. The
-effeciency will be evaluated based on the time necessary to process a given
-number of tweets. As such, each approach will process 819.200 tweets in batches
+In this test the classification speed of both models will be compared. The
+efficiency is evaluated based on the time necessary to process a given
+number of tweets. Each approach will process 819.200 tweets in batches
 of 3200. These numbers have been chosen as we need a high enough amount to
-accurately determine the average time necessary, and because each tweet
+accurately determine the average time necessary and because each tweet
 analysis will process a maximum of 3200 tweets, as this is the maximum amount
 of tweets retrievable from a person.\nl
 
@@ -66,51 +76,54 @@ full dataset can be found in \autoref{app:speedTest}.
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|l|l|l|}
 \hline
-Try Nr.:	&	BoW (ms)	&	BoW Tweet/s	&	Bayes (ms)	&	Bayes Tweet/s	\\\hline
+\textbf{Try No.:}	&	\textbf{BoW (ms):}	&	\textbf{BoW Tweet/s:}	&	\textbf{Bayes
+(ms):}	& \textbf{Bayes Tweet/s:} \\\hline 
 1	&	55	&	58181	&	493	&	6490 \\\hline
 2	&	22	&	145454	&	353	&	9065 \\\hline
 3	&	30	&	106666	&	334	&	9580 \\\hline
 4	&	23	&	139130	&	328	&	9756 \\\hline		
 \end{tabular}
-\caption{Subset of the results from the speed test}
+\caption{Subset of the results from the speed test.}
 \label{table:stest}
 \end{table}
 
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|l|}\hline
-					&	\textbf{BoW Tweet/s}	&	\textbf{Bayes Tweet/s}	\\\hline
+					&	\textbf{BoW Tweet/s:}	&	\textbf{Bayes Tweet/s:}	\\\hline
 \textbf{Average:}	&	124007				&	9410 					\\\hline	
 \end{tabular}
-\caption{Average number of tweets processed per second}
+\caption{Average number of tweets processed per second.}
 \label{AvgTweetsPs}
 \end{table}
 
-The results from this test show that the Bag-Of-Words model is the fastest
+The results from this test show that the Bag-of-Words model is the fastest
 approach, being capable of processing around 120.000 tweets per second, while
 the Naive Bayes model is capable of processing around 9500 tweets per second.
 To put this into perspective, if a user were to follow 500 accounts, it would
-result in a maximum of 16.000.000 tweets, which would take around 2 minutes to
-process for the Bag-Of-Words model, and 26 minutes for the Naive Bayes model.
+result in a maximum of 16.000.000 tweets, which would take around two minutes to
+process for the Bag-Of-Words model and 26 minutes for the Naive Bayes model.
 Considering that this amount of followed users is above average, we consider
-this processing time as being acceptable for both of them.
+this processing time as being acceptable.
 
 \section{Accuracy Tests}\label{sec:accTest}
-The purposes of these tests are to document the accuracy of both the
-classification models. The first test is an accuracy of the Naive Bayes model,
-while the second test is a comparison of the two models predictions.
+The purpose of these tests is to document the accuracy of both the
+classification models. The first test is used to determine the accuracy of the
+Naive Bayes model, while the second is used test the Bag-of-Words model, and
+compare the predictions from two models.
 
 
-\subsection{Naive Bayes Cross Validation}\label{subsec:NBCV}
-The purpose of this test is to test the accuracy of the model by performing
-cross validation on the training data. The idea is to split the training sets into two
-parts, a training segment and a testing segment \citep[Ch. 7.5.2]{MIBook}. Due
-to time constraints, the cross validation is done 4 times with 90 labeled
-training tweets and 30 labeled testing tweets. These tweets have been shuffled
-to not be in any particular order, and the sets are not balanced.\nl
+\subsection{Naive Bayes Cross-Validation}\label{subsec:NBCV}
+The purpose of this test is to determine the accuracy of the Naive Bayes model
+by performing cross-validation on the training data. The idea is to split the
+training sets into two parts, one for training and one for testing \citep[Ch.
+7.5.2]{MIBook}. Due to time constraints, the cross-validation is done four times
+with 90 labelled training tweets and 30 labelled testing tweets. These tweets have
+been shuffled to avoid being in any particular order and the sets are not
+balanced.\nl
 
-Combining the results of the cross validation, the following confusion
+Combining the results of the cross-validation, the following confusion
 matrix is constructed, see \autoref{tab:ConfMat}. The matrix shows the
-hit rate of the the prediction compared to the labeled result
+hit rate of the prediction compared to the labelled result
 \citep{ConfusionMatrix}.
 
 \begin{table}[H]
@@ -118,17 +131,17 @@ hit rate of the the prediction compared to the labeled result
 \begin{tabular}{l|l|l|l|}
 \cline{2-4}
 & Predicted Left & Predicted Neutral & Predicted Right \\ \hline 
-\multicolumn{1}{|l|}{Labeled Left} & \textbf{25} & 9 & 3 \\ \hline
-\multicolumn{1}{|l|}{Labeled Neutral} & 7 & \textbf{15} & 8  \\ \hline
-\multicolumn{1}{|l|}{Labeled Right} & 6 & 7 & \textbf{40} \\ \hline
+\multicolumn{1}{|l|}{Labelled Left} & \textbf{25} & 9 & 3 \\ \hline
+\multicolumn{1}{|l|}{Labelled Neutral} & 7 & \textbf{15} & 8  \\ \hline
+\multicolumn{1}{|l|}{Labelled Right} & 6 & 7 & \textbf{40} \\ \hline
 \end{tabular}
-\caption{Confusion Matrix for the combined results of the validation tests}
+\caption{Confusion matrix for the combined results of the validation tests.}
 \label{tab:ConfMat}
 \end{table}
 
-The accuracy of each of the validation can be seen in \autoref{tab:CrossVal}.
-The table shows how many of the tweets were correctly predicted, as well as
-the average accuracy. 
+The accuracy of each of the validation tests can be seen in
+\autoref{tab:CrossVal}. The table shows how many of the tweets were correctly
+predicted, as well as the average accuracy.
 
 \begin{table}[H]
 \centering
@@ -141,13 +154,13 @@ Accuracy &  20/30 = 0.67 & 18/30 = 0.60 & 21/30 = 0.70 & 21/30 = 0.70 & 80/120 =
 \\ \hline
 \end{tabular}
 }
-\caption{Accuracy for each of the cross validations}
+\caption{Accuracy for each of the cross validations.}
 \label{tab:CrossVal}
 \end{table}
 
-In addition it is also of interest to look at the precision, which is how often
+In addition, it is also of interest to look at the precision, which is how often
 the prediction class is the correct class. Calculating the precision helps
-measure if the accuracy is scewered towards a specific class. Using
+measure if the accuracy is skewed towards a specific class. Using
 \autoref{tab:ConfMat} the average precision is calculated in \autoref{e:PL},
 \autoref{e:PN} and \autoref{e:PR}.
 
@@ -159,45 +172,45 @@ Precision(Neutral) = \cfrac{15}{9+15+7} = 0.48
 \end{equation}
 \begin{equation}\label{e:PR}
 Precision(Right) = \cfrac{40}{3+8+40} = 0.78
-\end{equation}
+\end{equation}\nl
 
-Based on these tests it is possible to see that the model is very bad at
+Based on these tests, it is possible to see that the model is very bad at
 predicting tweets belonging to the \textit{neutral} class, while it is far
 better at predicting tweets belonging to the \textit{right} class. The accuracy
-and precision could be improved by training on a larger set, and insuring the
-the the validation sets are balanced.
+and precision could be improved by training on a larger set and ensuring the
+validation sets are balanced.
 
 \subsection{Accuracy Test Comparison}
 The purpose of this test is to compare the accuracy of the two different
 approaches to classification discussed in \autoref{sec:BoW} and
-\autoref{sec:NBImp}. The accuracy will be determined by comparing the results
-from the classification with a set of manually pre-classified twitter users.
-The chosen users consists of politicians, activists, and a set of average
-twitter users. A subset of the results from the accuracy test can be seen in
+\autoref{sec:NBImp}. The accuracy is determined by comparing the results
+from the classification with a set of manually pre-classified Twitter users.
+The chosen users consist of politicians, activists and a set of average
+Twitter users. A subset of the results from the accuracy test can be seen in
 \autoref{speedTestReslabel} together with the percentage success in
 \autoref{AccPercent}. The full dataset can be found in
 \autoref{app:AccuracyTest}.\nl
 
 A subset of the dataset from the accuracy test can be seen below in
-\autoref{speedTestReslabel}. Each test shows one pre-classified user, and the
-results determined from the bag-of-words model and the Naive Bayes model. As
-stated in \autoref{cha:classification}, the result consist of a value between -10 and 10,
-where a low value implies left-leaing views, and a high value implies right-leaning views. The
-bag-of-words (BoW) model also has a conclusion, which is dependent on the
-percentage of tweets considered political, and the size of the determined value.
+\autoref{speedTestReslabel}. Each test shows one pre-classified user and the
+results determined from the Bag-of-Words model and the Naive Bayes model. As
+stated in \autoref{cha:classification}, the result consists of a value between
+-10 and 10, where a low value implies left-leaning views, and a high value
+implies right-leaning views. The Bag-of-Words model also has a conclusion, which is dependent on the
+percentage of tweets considered political and the size of the determined value.
 For the BoW model, a user with less than 1\% political tweets, or a determined
-value between 1 and -1, is automatically considered as neutral. The percentage
-accuracy of each model can be seen in \autoref{AccPercent}.
-The columns represent the following, from left to right:\nl
+value between -1 and 1, is automatically considered as neutral. The percentage
+accuracy of each model can be seen in \autoref{AccPercent}. The columns
+represent the following, from left to right:\nl
 
 \begin{itemize}
   \item The percentage of tweets the BoW model
-consider political in nature.
+consider political.
 \item Numeric result from BoW model.
 \item Conclusion from BoW model.
 \item Numeric result from the Bayes model.
 \item Conclusion from the Bayes model.
-\item Actual political leaning of the analyzed user.
+\item Actual political leaning of the analysed user.
 \end{itemize}
 
 
@@ -214,7 +227,7 @@ consider political in nature.
 1.39	&	0.5		&	Right/Neutral (Result is 0 +/- 1)	&	3.51	&	Right		&	Right	\\\hline
 \end{tabular}
 }
-\caption{Results from the speed test}
+\caption{Results from the accuracy test.}
 \label{speedTestReslabel}
 \end{table}
 
@@ -226,58 +239,59 @@ consider political in nature.
 \textbf{Accuracy BoW}	&	\textbf{Accuracy Bayes}	\\\hline
 96.67\%					&	43.33\%					\\\hline	
 \end{tabular}
-\caption{Average number of tweets processed per second}
+\caption{Accuracy of the two model.}
 \label{AccPercent}
 \end{table}
 
-The results from this test show that the Bag-Of-Words model is capable of
-accurately classifying 96\% of the test users. The Naive Bayes models has
+The results of the test show that the Bag-of-Words model is capable of
+accurately classifying 96\% of the test users. The Naive Bayes model has
 problems with classifying real users, as it has classified every user as being
-biased towards the right, this has provided it with an accuracy of 43.33\%. As
-such we consider the Bag-Of-Words model to be the most succesful until the Naive
-Bayes model has received more training.
+biased towards the right. This has resulted in an accuracy of 43.33\%. As
+such we consider the Bag-of-Words model to be the most successful until the
+Naive Bayes model has received more training.
 
-\section{Tweet Retrieval Test}
+\section{Tweet Retrieval Test}\label{test:tweetRetr}
 The purpose of this test is to document the limitations of retrieving tweets
 through the Twitter API. This is important as the speed at which we can retrieve
 tweets sets an upper limit to how fast we can present an output to the user.
-The speed will be determined by calling the twitter API from the worker class,
-and documenting the amount of tweets we can receive over a set amount of time.
-The \textc{Worker} class and tweet retrieval is discussed in
+The speed will be determined by calling the Twitter API from the worker class
+and documenting the number of tweets we can receive over a predefined amount of
+time. The \textc{Worker} class and tweet retrieval are discussed in
 \autoref{workerLabel}.\nl
 
-Each test shows the retrieval of tweets from 5 different users, and the result
-is the total tweets retrieval per second in total from all five concurrent
-threads. The fastest, slowest and the average tweets per second can be seen in
+Each test shows the retrieval of tweets from five different users and the
+result is the total amount of tweets retrieved per second from all five
+concurrent threads. The fastest, slowest and the average tweets per second can be seen in
 \autoref{tweetRetReslabel} while the full dataset can be found in
 \autoref{app:tweetRet}.
 
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|l|l|}
 \hline
-\textbf{} & \textbf{Nr.:}	&	\textbf{Time (ms):}	&	\textbf{Tweets/s:} \\\hline
+\textbf{} & \textbf{No.:}	&	\textbf{Time (ms):}	&	\textbf{Tweets/s:} \\\hline
 Fastest & 13	&	7705	&	371.3\\\hline
 Slowest & 9	&	13203	&	216.7\\\hline
 Average & 	&	8905	&	310.0 \\\hline
 \end{tabular}
-\caption{Subset of the results from the tweet retrieval test}
+\caption{Subset of the results from the tweet retrieval test.}
 \label{tweetRetReslabel}
 \end{table}
 
-The results from this test show that we can retrieve a maximum of 310 tweets per
-second. Considering the speed of processing these tweets, as shown in
+The results from this test show that we can retrieve an average of 310 tweets
+per second. Considering the speed of processing these tweets, as shown in
 \autoref{speedtestlavel}, this represents the greatest bottleneck for the
 system.
  
-\section{Stress Testing}
+\section{Stress Testing}\label{test:stress}
 The purpose of this test is to ensure the system's ability to queue requests
 from multiple users. This is important, as the system should be scalable such
-that it can handle an undefined amount of users at a time. The test consists of
+that it can handle an undefined number of users at a time. The test consists of
 calling the code in \autoref{stressTestCode} 25 times. This code sends a request
-to our Queue API at the address \textc{localhost:62020}.\nl
+to our queue API at the address \textc{localhost:62020}.\nl
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = Code initiating the stress test, label = stressTestCode] 
+\begin{lstlisting}[caption = Code initiating the stress test., label =
+stressTestCode] 
 bool DatabaseSendDataRequest(params string[] parameters){
 ...
 	HttpWebRequest request = (HttpWebRequest)WebRequest.Create("localhost:62020/API/AnalyzeTwitterAccount");
@@ -286,8 +300,8 @@ bool DatabaseSendDataRequest(params string[] parameters){
 \end{lstlisting}
 \end{minipage}
 
-The results of this test was that the system was indeed capable of handling the
-requests. This shows that the system is scalable in that it can handle an
+The result of this test was that the system was indeed capable of handling
+the requests. This shows that the system is scalable as it can handle an
 undefined amount of requests from different people at a time.
 
 

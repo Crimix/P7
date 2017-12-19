@@ -1,71 +1,57 @@
 \chapter{Worker}\label{workerLabel}
-When the Queue Server begins executing a queued request, it instantiates a
-\textc{Worker}, which begins to retrieve and classify Tweets. Each task in the
-queue corresponds to a single \textc{Worker}. \nl
+When the queue server receives a request to analyse a user's filter bubble, it
+starts by creating a new instance of the \textc{Worker} class. The worker
+acts as the central class when retrieving and analysing users' tweets.
+Whenever a user is to be analysed, a new \textc{Worker} is created for that
+task. As such, each task in the queue corresponds to a single worker.\nl
 
-
-%Replace with:
-% When the Queue Server recieves a request to analyse a user's filter bubble, it
-% starts by creating a new instance of the \textc{Worker} class. The
-% \textc{Worker} functions as the central class when retrieving and analysing
-% users' Tweets. Whenever a user is to be analysed, a new Worker is created for
-% that task, and as such, each task in the queue corresponds to a single
-% \textc{Worker}.\nl
-% 
-% In \autoref{sec:workerImpl} we start by describe how the worker functions, and
-% present the process in which a \textc{Worker} retrieves and analyses tweets.
-% Then in \autoref{sec:rateLimit} we discuss how the worker handles Twitter's
-% imposed rate limits, which were described in \autoref{cha:twitterAPI}.
+In \autoref{sec:workerImpl}, we start by describing how the worker acts
+and present the process in which a worker retrieves and analyses tweets.
+In \autoref{sec:rateLimit}, we discuss how the worker handles Twitter's
+imposed rate limits, which were described in \autoref{cha:twitterAPI}.
 
 \section{Implementation}\label{sec:workerImpl}
-The \textc{Worker} starts by requesting a \textc{User} object for the user for
-which we want to determine a filter bubble. Then, it retrieves a list of up to
-3200 most recent tweets created by the user. The next step for the worker is to
-retrieve the list of users that the user is following, retrieve their tweets and
-analyse the tweets. The retrieval and analysis of tweets are done in parallel by
-splitting them into tasks. To retrieve and analyze tweets, it uses the functions
+The worker starts by requesting a \textc{User} object for the relevant user.
+Then, it retrieves a list of up to 3200 most recent tweets created by the user.
+The next step for the worker is to retrieve the list of users that the user is
+following, and retrieve and analyse their tweets. The retrieval and analysis of
+tweets are done in parallel by splitting them into tasks. To retrieve and
+analyse tweets, it uses the functions
 \textc{GetTweetsFromUserAndAnalyse} and \textc{GetTweetsFromFriendsAndAnalyse}
 to receive and analyse tweets from the user and the users it follows
 respectively. These methods are found in the class called
 \textc{TweetRetriever}.\nl
 
-After analyzing all tweets for necessary for determining a user's filter bubble,
-the worker sends the result to the Database \ac{API}, which then stored the
-resulting value on the Database. During this, the Database \ac{API} also sends a
-message to the front-end, telling it that a result is ready to be presented.
+After analysing all the tweets necessary for determining a user's filter bubble,
+the worker sends the result to the Database \ac{API}, which then stores the
+resulting value in the database. During this, the Database \ac{API} also
+notifies the front-end that a result is ready to be presented.
 
-\subsection{Splitting up in tasks}\label{sec:taskSplit}
-To speed up retrieval of tweets it is split up into tasks that are
-run in parallel. It is split such that each user, the user is following,
-corresponds to a task. This way, the tasks are somewhat equally split.
-When the worker analyses the tweets, be it while retrieving, from a file or just
-a list of tweets, it also needs to split the list of tweets into tasks, such
-that it is possible to work on a smaller subset of the problem. Here, the
-splitting is done such that each task gets an equal amount of tweets.
-
-The main difference between how the task splits are done in the retrieval
-part and the analysis part is that in the retrieval part, a predefined number
-of tasks can run at the same time, even though the total number of tasks may be
-higher, whereas the analysis part always has all its predefined number of tasks
-running at the same time. The predefined number of the latter may be one higher
-if it can not split the tasks equally. In this case, the excess tasks are put in
-their own small task.
+\subsection{Multithreading}\label{sec:taskSplit}
+To speed up the retrieval of tweets, the process is split into a predefined
+number of tasks that are run in parallel. This split is made such that each
+account, the user is following, corresponds to a task. This approach is also
+used when the worker analyses the tweets, such that each task can work on a
+smaller subset of the problem. Here, the splitting is done such that each task
+gets an equal amount of tweets. The analysis of tweets is also split into a
+predefined number of tasks, but this amount may be increased by 1 if the
+tweets can not be split among the tasks equally.
 
 \subsection{Tweet retriever} \label{sub:tweetretriever}
-There are two versions of the whole tweet retrieval process. The first version
-is a legacy version that retrieves tweets and returns them as one list such that
-they can be saved in files locally or to be analyzed at a later point.
-The new implementation retrieves and analyzes each Twitter account on their own
+There are two versions of the tweet retrieval process. The first version
+is a legacy version that retrieves tweets and returns them as one list, such
+that they can be saved in files locally or to be analysed at a later point.
+The new implementation retrieves and analyses each Twitter account on their own
 thread to save time, as described in \autoref{sec:taskSplit}. The code from the
 legacy version is moved to the helper function \textc{GetTweetsFromUserHelper},
 which both of the versions wrap around. To make this work, the helper method,
 among others, receives the \textc{retrieveMethod} as a parameter. Since this
 parameter is of the type \textc{Func<List<Tweet>>}, the helper method can take
 any method as a parameter if it returns a list of tweets. This can be
-seen on the three methods in the three code examples \autoref{legacyUserTweet},
-\autoref{NewUserTweet} and \autoref{UserTweetHelper} where the calls on
-\textbf{line 3} in the two wrapper methods give the last parameter as a lambda
-expression / anonymous function, which takes no input as seen by \textc{()=>}.\\
+seen on the three methods in the three code examples \autoref{legacyUserTweet}
+and \autoref{NewUserTweet} where the calls on \textbf{line 3}, in the two
+wrapper methods, give the last parameter as a lambda expression, which takes no
+input as seen by \textc{()=>}.\\
 
 \begin{minipage}[H]{\linewidth}
 \begin{lstlisting}[caption = Legacy method call. , label = legacyUserTweet ] 
@@ -87,8 +73,8 @@ public void GetTweetsFromUserAndAnalyse(User user, AuthObj auth, Func<User, bool
 \end{minipage}
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = The GetTweetsFromUserHelper., label =
-UserTweetHelper]
+\begin{lstlisting}[caption = The \textc{GetTweetsFromUserHelper} method., label
+= UserTweetHelper]
 private List<Tweet> GetTweetsFromUserHelper(User user, AuthObj auth, Func<List<Tweet>> retrieveMethod)
 {
     List<Tweet> tweetList = new List<Tweet>();
@@ -102,17 +88,17 @@ private List<Tweet> GetTweetsFromUserHelper(User user, AuthObj auth, Func<List<T
 \end{lstlisting}
 \end{minipage}
 
-The helper was made to reuse code because the only change would be the method
-to be called in the task on \textbf{line 4}.\\
+The helper \autoref{UserTweetHelper}, was made to reuse code because the only
+change would be the method to be called in the task on \textbf{line 4}.\\
 
 \subsubsection{Retrieve method}
 As mentioned in \autoref{sub:tweetretriever}, the \textc{retrieveMethod}
 parameter can be replaced with any method that returns a list of tweets. Both
-versions send the method \textc{TweetThreadMethod}, shown on
+versions send the method \textc{TweetThreadMethod}, shown in
 \autoref{tweetthreadmethod}. \\
 
 \begin{minipage}[H]{\linewidth}
-\begin{lstlisting}[caption = The TweetThreadMethod function., label =
+\begin{lstlisting}[caption = The \textc{TweetThreadMethod} method., label =
 tweetthreadmethod]
 private List<Tweet> TweetThreadMethod(User user, AuthObj auth, Func<User, bool> checkDB = null, Func<List<Tweet>, AnalysisResultObj> classifyMethod = null, Func<AnalysisResultObj, User, bool> postToDB = null)
 {
@@ -143,31 +129,31 @@ private List<Tweet> TweetThreadMethod(User user, AuthObj auth, Func<User, bool> 
 
 \end{minipage}
 The difference is that this method has a bunch of optional parameters. The
-legacy version only parses a user and an authorization object, while the new
-version also parses the methods \textc{checkDB}, \textc{classifyMethod} and
+legacy version only passes a user and an authorisation object, while the new
+version also passes the methods \textc{checkDB}, \textc{classifyMethod} and
 \textc{postToDB}.
 \textc{checkDB} is used to check if the user is already in the database. If it
-is, it skips the tweet retrievement and analysis of the particular user. If it
-is not, it retrieves the tweets and analyses them if it is the new version.\\
+is, it skips the tweet retrieval and analysis of the particular user.\\
 
 \subsection{Parameter Methods}
 The three methods mentioned in \autoref{sub:tweetretriever} -
 \textc{checkDB}, \textc{classifyMethod} \\and \textc{postToDB} are defined in
-the worker class under the names of \\\textc{CheckIfResultExistOnDB},
-\textc{ClassifyTweet} and \textc{PostResultToDB} respectively, where
+the \textc{Worker} class under the names of \\\textc{CheckIfResultExistOnDB},
+\textc{ClassifyTweet} and \textc{PostResultToDB} respectively. Here,
 \textc{CheckIfResultExistOnDB} and \textc{PostResultToDB} also have a version
-that links the user being analysed to the overall user. The methods are defined
+that links the followee being analysed to the user. The methods are defined
 in \textc{Worker}, rather than \textc{TweetRetriever}, because they are
 different for each worker, since the \\\textc{userRecordId} is different for
-each request. Such a thing cannot be defined in the singleton class without the need
-to pass the ID to each method. This way, it is still the worker's methods that
-are used in a context where they have access to what is defined in the worker.
+each request. Such a thing cannot be defined in the singleton class without the
+need to pass the ID to each method. This way, it is still the worker's methods
+that are used in a context where they have access to what is defined in the
+worker.
 
 \section{Rate Limits}\label{sec:rateLimit}
-As described in \autoref{cha:req} our system is required to adhere to Twitter's
+As described in \autoref{cha:req}, our system is required to adhere to Twitter's
 rules regarding rate limits. This means that we can only make a limited number of
 requests per 15-minute interval. As such, we need to monitor how many requests
-we use, and how many we have left. And whenever we run out of requests, we must
+we use and how many we have left. Whenever we run out of requests, we must
 be able to put the retrieval of tweets on hold until we can make more requests.
 In order to handle this, we have a number of methods in the \textc{LimitHelper}
 class, which monitors how many requests we have left. This is done by sending a
@@ -176,10 +162,10 @@ request to the Twitter \ac{API} endpoint: \nl
 \say{https://api.twitter.com/1.1/application/rate\_limit\_status.json} \nl
 
 It should be noted that these requests come from a different pool of requests
-than those to recieve tweets. As such, these requests do not limit our tweet
-retrieval. This requests is only made once for each Worker, which then store how
-many requests it have, and when the next batch of requests are available.
-Whenever we run out of requests, we put the threads to sleep, and wait for the
+than those to receive tweets. As such, these requests do not limit our tweet
+retrieval. These requests are only made once for each worker, which then stores
+how many requests it have and when the next batch of requests are available.
+Whenever we run out of requests, we put the threads to sleep and wait for the
 next batch of requests.
 
 
