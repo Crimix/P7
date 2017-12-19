@@ -1,0 +1,66 @@
+\subsection{Week 45}
+\subsubsection{What Happened This Week}
+We managed to make most of the individual parts work, though they currently are
+not able to act together. We have a very simple mockup \ac{GUI}. The \ac{API}
+for the QueueServer has been created in C\# such that it is possible to create
+jobs given just a Twitter account name and \ac{API} key. We have also begun to
+devote slightly more time to write the report. An issue we have encountered when
+we tried using Neural Networks is if a feature vector contains more than about
+100 features, the network use up all available memory and crash. This is a
+problem as we estimate that a simple training set should have about 1000. We
+have also looked at other models such as Naive Bayes, Bag-Of-Words and Support
+Vector Machines.
+
+\subsubsection{Reflection} 
+In hindsight it might have been better to focus on the simpler models such as
+Naive Bayes and Bag-Of-Words, as the more advanced models such as Neural
+Networks have problems with too many features. 
+
+\subsubsection{Next Week}
+Next week we want to continue development on the solution and begin
+describing it in the report.
+
+% The primary aspects of the GUI has been completed. It can initiate a new
+% request, asking the user for permission to use their account for requests, as
+% well as asking for the Twitter account they wish to check and the
+% email-address they would like to receive notifications on when the work has
+% been completed. The requests are added to a queue for asynchronous
+% transmission of details to the QueueServer.
+%  The API for the QueueServer has been created in C# such that it is possible
+% to create jobs given just a twitter name and API key. In the report the
+% implementation section now contains documentation about the Database API and
+% the new API, the new API is not that well documented yet.
+% It is now possible to add requests to the queue in the form of tasks, which
+% are executed in parallel.
+%  This week we have continued using libraries to create a neural network
+% several issues have appeared as the we tried the network on a data sample of
+% reviews.
+% Currently we are using a sparse feature vector, each feature is represented by
+% a position in a array, this means that as the dictionary grows, so too does
+% the feature vector. This represents a problem as on a sample of 5000 reviews
+% provides more than 20000 features. With the current library we are using we
+% quickly run out of memory as the features grow, limit seems to be around 150
+% features.
+% We have tried shifting to using Naive Bayes and Support Vector Machines, which
+% allows us to have a larger dictionary before we run out of memory.
+%  A couple of questions regarding machine learning and models:
+% Do you know who we need to ask for further information use of a server
+% cluster? Do you have any experience with Dense Feature Vectors? Do you any
+% possible solutions/ideas?   Meeting:
+% Spent some time getting Klaus op to speed.
+%  Using a web gui, which communicates with a queue server, which forwards work
+% to a worker.
+% The worker does the number crunching.
+%  The database server uses a rest interface, it connects the workers and the
+% queue server.
+%  We have two different approaches:
+% Use a Machine Learning model:
+% Neural Network is highly limited as it runs out of memory if there’s more than
+% 150 inputs Naive Bayes runs out of memory at around 70.000 different words
+% Support Vector Machine is slow.
+% Use an Algorithm:
+% Use links, keywords and hashtags which each has a value Different parts have
+% different values Needs to be optimized as it feels slow  Simple GUI which
+% allows for connections with Twitter, it does not have any connections with the
+% other parts currently.
+%  Need to contact Stefan regarding the server.
