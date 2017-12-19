@@ -1,11 +1,11 @@
 \chapter{Speed Test Results}\label{app:speedTest}
-The data set from the speed test can be seen below in \autoref{speedTestRes}.
+The data set from the speed test can be seen below in \autoref{speedTestRes2}.
 Each test shows the time required to process 3200 tweets.
 
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|l|l|l|}
 \hline
-Try Nr.:	&	BoW (ms)	&	BoW Tweets/Sek	&	Bayes (ms)	&	Bayes Tweets/Sek	\\\hline
+Try No.:	&	BoW (ms)	&	BoW tweets/sec	&	Bayes (ms)	&	Bayes tweets/sec	\\\hline
 1	&	55	&	58181	&	493	&	6490 \\\hline
 2	&	22	&	145454	&	353	&	9065 \\\hline
 3	&	30	&	106666	&	334	&	9580 \\\hline
@@ -27,16 +27,17 @@ Try Nr.:	&	BoW (ms)	&	BoW Tweets/Sek	&	Bayes (ms)	&	Bayes Tweets/Sek	\\\hline
 19	&	24	&	133333	&	322	&	9937 \\\hline
 20	&	24	&	133333	&	333	&	9609 \\\hline
 \end{tabular}
-\caption{Results from the speed test}
-\label{speedTestRes}
+\caption{Results from the speed test.}
+\label{speedTestRes2}
 \end{table}
 
 \chapter{Accuracy Test Results}\label{app:AccuracyTest}
-The data set from the accuracy test can be seen below in \autoref{speedTestRes}.
+The data set from the accuracy test can be seen below in
+\autoref{speedTestRes3}.
 Each test shows one pre-classified user, and the results determined from the
-bag-of-words model and the Naive Bayes model. The result consist of a value
-between -10 and 10, where a low value implies left-leaing views, and a high
-value implies right-leaning views. The bag-of-words (BoW) model also has a
+Bag-of-Words model and the Naive Bayes model. The result consist of a value
+between -10 and 10, where a low value implies left-leaning views and a high
+value implies right-leaning views. The Bag-of-Words model also has a
 conclusion, which is dependent on the percentage of tweets considered political,
 and the size of the determined value. The columns represent the following, from
 left to right:\nl
@@ -48,7 +49,7 @@ consider political in nature.
 \item Conclusion from BoW model.
 \item Numeric result from the Bayes model.
 \item Conclusion from the Bayes model.
-\item Actual political leaning of the analyzed user.
+\item Actual political leaning of the analysed user.
 \end{itemize}
 
 \begin{table}[H]\centering
@@ -90,43 +91,43 @@ consider political in nature.
 0.25	&	-0.28	&	Left/Neutral (Pol\%/Val too low)	&	2.86	&	Right		&	Neutral	\\\hline
 
 \end{tabular}}
-\caption{Results from the speed test}
-\label{speedTestRes}
+\caption{Results from the accurary test.}
+\label{speedTestRes3}
 \end{table}
 
 
 
 
 
-\chapter{Tweet Retreival Test}\label{app:tweetRet}
+\chapter{Tweet Retrieval Test}\label{app:tweetRet}
 The data from the tweet retrieval test can be seen in \autoref{tab:tweetRet}.
 
 
 
 \begin{table}[H]\centering
 \begin{tabular}{|l|l|l|}\hline
-\textbf{Nr.:}	&	\textbf{Time (ms):}	&	\textbf{Tweets/Sek:} \\\hline
-1	&	8603	&	332,6	\\\hline
-2	&	9385	&	304,8	\\\hline
-3	&	8229	&	347,7	\\\hline
-4	&	9454	&	302,6	\\\hline
-5	&	10801	&	264,9	\\\hline
-6	&	10243	&	279,3	\\\hline
-7	&	10138	&	282,2	\\\hline
-8	&	12835	&	222,9	\\\hline
-9	&	13203	&	216,7	\\\hline
-10	&	10494	&	272,6	\\\hline
-11	&	8353	&	342,5	\\\hline
-12	&	8718	&	328,2	\\\hline
-13	&	7705	&	371,3	\\\hline
-14	&	9100	&	314,4	\\\hline
-15	&	9310	&	307,3	\\\hline
-16	&	8128	&	352,0	\\\hline
-17	&	7731	&	370,1	\\\hline
-18	&	8875	&	322,4	\\\hline
-19	&	8028	&	356,4	\\\hline
+\textbf{No.:}	&	\textbf{Time (ms):}	&	\textbf{tweets/sec:} \\\hline
+1	&	8603	&	332.6	\\\hline
+2	&	9385	&	304.8	\\\hline
+3	&	8229	&	347.7	\\\hline
+4	&	9454	&	302.6	\\\hline
+5	&	10801	&	264.9	\\\hline
+6	&	10243	&	279.3	\\\hline
+7	&	10138	&	282.2	\\\hline
+8	&	12835	&	222.9	\\\hline
+9	&	13203	&	216.7	\\\hline
+10	&	10494	&	272.6	\\\hline
+11	&	8353	&	342.5	\\\hline
+12	&	8718	&	328.2	\\\hline
+13	&	7705	&	371.3	\\\hline
+14	&	9100	&	314.4	\\\hline
+15	&	9310	&	307.3	\\\hline
+16	&	8128	&	352.0	\\\hline
+17	&	7731	&	370.1	\\\hline
+18	&	8875	&	322.4	\\\hline
+19	&	8028	&	356.4	\\\hline
 \end{tabular}
-\caption{Dataset from the tweet retrieval test}
+\caption{Dataset from the tweet retrieval test.}
 \label{tab:tweetRet}
 \end{table}
 
